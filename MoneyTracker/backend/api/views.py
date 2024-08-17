@@ -5,6 +5,8 @@ from .serializers import UserSerializer, NoteSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Note
 
+from rest_framework.permissions import IsAdminUser
+
 class NoteListCreate(generics.ListAPIView):
 	serializer_class = NoteSerializer
 	permission_classes = [IsAuthenticated]
@@ -32,5 +34,10 @@ class CreateUserView(generics.CreateAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 	permission_classes = [AllowAny]
+
+class DeleteUserView(generics.DestroyAPIView):
+    queryset = User.objects.all()
+    lookup_field = 'username'
+    permission_classes = [IsAdminUser]
 
 # Create your views here.
