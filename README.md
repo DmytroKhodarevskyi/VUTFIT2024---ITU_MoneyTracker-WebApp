@@ -31,3 +31,17 @@ cd frontend
 ```bash
 npm install axios react-router-dom jwt-decode
 ```
+
+
+### RUNNING THE APPLICATION
+1. Start two terminals, one for the frontend and the other for the backend.
+2. Navigate to the `frontend` directory in one terminal and run the following command:
+```bash
+npm run dev
+```
+3. Navigate to backend directory in the other terminal and run the following command:
+```bash
+python manage.py runserver
+```
+4. Open the browser on adress specified in frontend terminal 
+ (For example: `http://localhost:5173/`)
