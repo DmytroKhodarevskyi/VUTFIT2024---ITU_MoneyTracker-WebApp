@@ -45,3 +45,16 @@ python manage.py runserver
 ```
 4. Open the browser on adress specified in frontend terminal 
  (For example: `http://localhost:5173/`)
+
+### SUPERVISING DATABASE
+1. Create a superuser by running the following command in the terminal:
+```bash
+python manage.py createsuperuser
+```
+2. Enter the required details and the superuser will be created.
+3. Navigate to the admin page by running the following command in the terminal:
+```bash
+python manage.py runserver
+```
+4. Open the browser on `http://localhost:8000/admin/` and login with the superuser credentials.
+5. You can now supervise the database by adding, updating or deleting the data.
