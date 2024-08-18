@@ -22,23 +22,25 @@ function Home() {
 
     return (
         <>
-            <div className="home-title-container">
-                <h1 className="home-title">Hello again, {nickname}!</h1>
-                <h2 className="home-subtitle">Here is your brief finances overview, keep track!</h2>
-            </div>
+            <div className="main-container">
+                <div className="home-title-container">
+                    <h1 className="home-title">Hello again, {nickname}!</h1>
+                    <h2 className="home-subtitle">Here is your brief finances overview, keep track!</h2>
+                </div>
 
-            <div className="navigation-container">
-                <ul className="navigation-list">
-                    <li className="navigation-item">
-                        <p>Overview</p>
-                    </li>
-                    <li className="navigation-item">
-                        <p>Update</p>
-                    </li>
-                    <li className="navigation-item">
-                        <p>Profile</p>
-                    </li>
-                </ul>
+                <div className="navigation-container">
+                    <ul className="navigation-list">
+                        <li className="navigation-item">
+                            <p>Overview</p>
+                        </li>
+                        <li className="navigation-item">
+                            <p>Update</p>
+                        </li>
+                        <li className="navigation-item">
+                            <p>Profile</p>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </>
     )
