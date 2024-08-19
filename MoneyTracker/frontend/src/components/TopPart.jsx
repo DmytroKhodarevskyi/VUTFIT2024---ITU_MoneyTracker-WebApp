@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import api from "../api"
 import "../styles/TopPart.css"
+import Logo from "../assets/AppLogo.svg"
 
 function TopPart() {
 
@@ -23,6 +24,9 @@ function TopPart() {
     return (
         <>
             <div className="top-container">
+                <img className='app-logo' src={Logo} alt="Logo" />
+
+
                 <div className="home-title-container">
                     <h1 className="home-title">Hello again, {nickname}!</h1>
                     <h2 className="home-subtitle">Here is your brief finances overview, keep track!</h2>
