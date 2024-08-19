@@ -1,8 +1,11 @@
 .SummaryCards-container {
     display: grid;
-    width: 1256px;
+    /* width: 100%; */
+
+    /* TODO: NEED TO FIX WIDTH */
+    width: calc(100% - 205px);
     height: 191px;
-    grid-template-columns: 408px 408px 408px;
+    grid-template-columns: 33% 33% 33%;
     column-gap: 16px;
 
     position: absolute;
