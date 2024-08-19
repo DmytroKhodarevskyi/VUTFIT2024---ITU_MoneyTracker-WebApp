@@ -3,12 +3,16 @@
     /* width: 100%; */
 
     /* TODO: NEED TO FIX WIDTH */
-    width: calc(100% - 205px);
+    /* width: calc(100% - 205px); */
     height: 191px;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 16px;
 
-    position: absolute;
+    padding: 0px 92px 0px 92px;
+    margin-top: -45px;
+}
+
+    /* position: absolute;
     left: 92px;
     top: 313px;
-}
+} */
