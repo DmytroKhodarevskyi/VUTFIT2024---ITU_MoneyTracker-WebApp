@@ -1,0 +1,11 @@
+.main-container {
+    min-height: 100vh; /* Ensures it covers the full viewport height */
+    width: 100%; /* Covers full width */
+    padding: 0px 92px 0px 92px;
+
+    background: 
+    /* White sub-background as a centered box */
+    linear-gradient(#F8F8F8, #F8F8F8) bottom/100% 65% no-repeat,
+    /* Dark background */
+    #14213D;
+}

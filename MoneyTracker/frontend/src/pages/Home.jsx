@@ -1,49 +1,31 @@
 import { useState, useEffect } from "react"
 import api from "../api"
 import "../styles/Home.css"
+import MainContainer from "../components/MainContainer"
+import TopPart from "../components/TopPart"
+import SummaryCard from "../components/SummaryCard"
 
 function Home() {
 
-    const [nickname, setNickname] = useState("")
-
-    useEffect(() => {
-        const fetchNickname = async () => {
-            try {
-                const response = await api.get("/api/user/profile/"); // Adjust the endpoint according to your API
-                setNickname(response.data.username); // Adjust the response structure according to your API
-            } catch (error) {
-                console.error("Failed to fetch nickname", error);
-            }
-        };
-
-        fetchNickname();
-    }, []);
-
+    const currency = "$";
 
     return (
         <>
-            <div className="main-container">
-                <div className="home-title-container">
-                    <h1 className="home-title">Hello again, {nickname}!</h1>
-                    <h2 className="home-subtitle">Here is your brief finances overview, keep track!</h2>
+            <MainContainer>
+                <TopPart />
+                <div className="SummaryCards-container">
+                    <SummaryCard 
+                        title={"Total Balance"}
+                        date={"2 September - 1 July 2024"}
+                        amount={currency + "1.000.000,01"}
+                        trends={"+52% LastYear"}
+                        style_trends={{color: '#00BCD4'}}
+                        img_src={"somepath"}
+                    />
                 </div>
-
-                <div className="navigation-container">
-                    <ul className="navigation-list">
-                        <li className="navigation-item">
-                            <p>Overview</p>
-                        </li>
-                        <li className="navigation-item">
-                            <p>Update</p>
-                        </li>
-                        <li className="navigation-item">
-                            <p>Profile</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            </MainContainer>
         </>
     )
 }
 
-export default Home
+export default Home;
