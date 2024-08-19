@@ -8,14 +8,49 @@ import WalletIcon from "../assets/wallet-icon.svg"
 import BagIcon from "../assets/BagIcon.svg"
 import CardIcon from "../assets/CardIcon.svg"
 
+// import ClipLoader from "react-spinners/ClipLoader";
+
 function Home() {
 
     const currency = "$";
 
+    const [nickname, setNickname] = useState("")
+
+    const [isLoaded, setIsLoaded] = useState(false);
+
+
+    useEffect(() => {
+        const fetchNickname = async () => {
+          try {
+            const response = await api.get("/api/user/profile/");
+            setNickname(response.data.username);
+            setIsLoaded(true); // Mark data as loaded
+          } catch (error) {
+            console.error("Failed to fetch nickname", error);
+            setIsLoaded(true); // Even if there’s an error, consider data loaded to prevent infinite loading
+          }
+        };
+    
+        fetchNickname();
+      }, []);
+
+
+    if (!isLoaded) {
+        // Optionally, you can return a loading spinner or some placeholder content here
+        return (
+            // <div className="loading-spinner">
+            //     <ClipLoader color={"#123abc"} loading={!isLoaded} size={150} />
+            // </div>
+            <div className="loading-container">
+                <h1 className="loading-text">Hold up, loading data...</h1>
+            </div>
+        )
+      }
+
     return (
         <>
             <MainContainer>
-                <TopPart />
+                <TopPart nickname={nickname}/>
                 <div className="SummaryCards-container">
                     <SummaryCard 
                         title={"Total Balance"}

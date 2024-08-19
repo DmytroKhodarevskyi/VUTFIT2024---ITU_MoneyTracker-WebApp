@@ -3,22 +3,38 @@ import api from "../api"
 import "../styles/TopPart.css"
 import Logo from "../assets/AppLogo.svg"
 
-function TopPart() {
+function TopPart({nickname}) {
 
-    const [nickname, setNickname] = useState("")
+    // const [nickname, setNickname] = useState("")
 
-    useEffect(() => {
-        const fetchNickname = async () => {
-            try {
-                const response = await api.get("/api/user/profile/"); // Adjust the endpoint according to your API
-                setNickname(response.data.username); // Adjust the response structure according to your API
-            } catch (error) {
-                console.error("Failed to fetch nickname", error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchNickname = async () => {
+    //         try {
+    //             const response = await api.get("/api/user/profile/"); // Adjust the endpoint according to your API
+    //             setNickname(response.data.username); // Adjust the response structure according to your API
+    //         } catch (error) {
+    //             console.error("Failed to fetch nickname", error);
+    //         }
+    //     };
 
-        fetchNickname();
-    }, []);
+    //     fetchNickname();
+    // }, []);
+
+    // useEffect(() => {
+    //     console.log("TOP PART COMPONENT MOUNTED");
+    //     const fetchNickname = async () => {
+    //       try {
+    //         const response = await api.get("/api/user/profile/");
+    //         setNickname(response.data.username);
+    //         setIsLoaded(true); // Mark data as loaded
+    //       } catch (error) {
+    //         console.error("Failed to fetch nickname", error);
+    //         setIsLoaded(true); // Even if there’s an error, consider data loaded to prevent infinite loading
+    //       }
+    //     };
+    
+    //     fetchNickname();
+    //   }, [setIsLoaded]);
 
 
     return (
