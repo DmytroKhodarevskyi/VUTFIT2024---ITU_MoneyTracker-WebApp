@@ -7,6 +7,19 @@ from .models import Note
 
 from rest_framework.permissions import IsAdminUser
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            "username": user.username  # Assuming the nickname is stored in the username field
+        })
+
 class NoteListCreate(generics.ListAPIView):
 	serializer_class = NoteSerializer
 	permission_classes = [IsAuthenticated]

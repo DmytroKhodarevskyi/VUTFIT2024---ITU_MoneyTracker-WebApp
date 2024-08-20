@@ -11,7 +11,7 @@ function Form({route, method}){
     const [email, setEmail] = useState("")
     const [loading, setLoading] = useState("")
     const navigate = useNavigate()
-    const name = method === "login" ? "Who Is it?" : "Introduce Yourself."
+    const name = method === "login" ? "Who Is It?" : "Introduce Yourself."
     const button = method === "login" ? "Login" : "Register"
 
 
@@ -95,6 +95,7 @@ function Form({route, method}){
                 <div className="input-container">
 
                 <input
+                    id="username"
                     className="form-input"
                     type="text"
                     value={username}
@@ -104,6 +105,7 @@ function Form({route, method}){
 
                 {method === "register" && (
                     <input
+                        id="email"
                         className="form-input"
                         type="email"
                         value={email}
@@ -113,6 +115,7 @@ function Form({route, method}){
                 )}
 
                 <input
+                    id="password"
                     className="form-input"
                     type="password"
                     value={password}
@@ -122,6 +125,7 @@ function Form({route, method}){
 
                 {method === "register" && (
                     <input
+                        id="passwordrepeat"
                         className="form-input"
                         type="password"
                         value={repeatPassword}
