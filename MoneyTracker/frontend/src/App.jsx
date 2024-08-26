@@ -30,7 +30,6 @@ function App() {
       element={
         <ProtectedRoute>
           <Home />
-          <Profile />
         </ProtectedRoute>
       }
       />
@@ -38,8 +37,15 @@ function App() {
       <Route path="/login" element={<Login />}/>
       <Route path="/logout" element={<Logout />}/>
       <Route path="/register" element={<RegisterAndLogout />}/>
-      <Route path="/profile" element={<Profile/>}/>
-      <Route path="*" element={<NotFound />}/>
+      <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
 
      </Routes>
     </BrowserRouter>
