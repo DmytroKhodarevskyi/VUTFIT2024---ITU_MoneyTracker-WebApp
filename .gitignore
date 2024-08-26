@@ -31,3 +31,5 @@ __pycache__
 MoneyTracker/backend/db.sqlite3
 
 .env
+
+schema.yaml
