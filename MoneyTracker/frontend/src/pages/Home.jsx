@@ -8,6 +8,8 @@ import WalletIcon from "../assets/wallet-icon.svg"
 import BagIcon from "../assets/BagIcon.svg"
 import CardIcon from "../assets/CardIcon.svg"
 
+import Transactions from "../components/Transactions"
+
 // import ClipLoader from "react-spinners/ClipLoader";
 
 function Home() {
@@ -77,6 +79,10 @@ function Home() {
                         img_src={BagIcon}
                     />
                 </div>
+                <div className="trans-graph-container">
+                    <Transactions />
+                </div>
+
             </MainContainer>
         </>
     )

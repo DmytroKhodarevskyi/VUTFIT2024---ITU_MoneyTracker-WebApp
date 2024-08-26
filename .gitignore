@@ -29,3 +29,7 @@ dist-ssr
 /save
 __pycache__
 MoneyTracker/backend/db.sqlite3
+
+.env
+
+schema.yaml
