@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import UserSerializer, NoteSerializer
+# from .serializers import UserSerializer, NoteSerializer
+from .serializers import UserSerializer, TransactionSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Note
+# from .models import Note
+from .models import Transaction
 
 from rest_framework.permissions import IsAdminUser
 
@@ -20,13 +22,28 @@ class UserProfileView(APIView):
             "username": user.username  # Assuming the nickname is stored in the username field
         })
 
-class NoteListCreate(generics.ListAPIView):
-	serializer_class = NoteSerializer
+# class NoteListCreate(generics.ListAPIView):
+# 	serializer_class = TransactionSerializer
+# 	permission_classes = [IsAuthenticated]
+
+# 	def get_queryset(self):
+# 		user = self.request.user
+# 		return Note.objects.filter(author=user)
+	
+# 	def perform_create(self, serializer):
+# 		if serializer.is_valid():
+# 			serializer.save(author=self.request.user)
+# 		else:
+# 			print(serializer.errors)
+
+# class TransactionListCreate(generics.ListAPIView):
+class TransactionListCreate(generics.ListCreateAPIView):
+	serializer_class = TransactionSerializer
 	permission_classes = [IsAuthenticated]
 
 	def get_queryset(self):
 		user = self.request.user
-		return Note.objects.filter(author=user)
+		return Transaction.objects.filter(author=user)
 	
 	def perform_create(self, serializer):
 		if serializer.is_valid():
@@ -34,14 +51,26 @@ class NoteListCreate(generics.ListAPIView):
 		else:
 			print(serializer.errors)
 
-class NoteDelete(generics.DestroyAPIView):
-	serializer_class = NoteSerializer
+# class NoteDelete(generics.DestroyAPIView):
+# 	serializer_class = NoteSerializer
+# 	permission_classes = [IsAuthenticated]
+
+# 	def get_queryset(self):
+# 		user = self.request.user
+# 		return Note.objects.filter(author=user)
+	
+class TransactionDelete(generics.DestroyAPIView):
+	serializer_class = TransactionSerializer
 	permission_classes = [IsAuthenticated]
 
 	def get_queryset(self):
 		user = self.request.user
-		return Note.objects.filter(author=user)
+		return Transaction.objects.filter(author=user)
 	
+# class CreateTransactionView(generics.CreateAPIView):
+# 	queryset = Transaction.objects.all()
+# 	serializer_class = TransactionSerializer
+# 	permission_classes = [IsAuthenticated]
 
 class CreateUserView(generics.CreateAPIView):
 	queryset = User.objects.all()
