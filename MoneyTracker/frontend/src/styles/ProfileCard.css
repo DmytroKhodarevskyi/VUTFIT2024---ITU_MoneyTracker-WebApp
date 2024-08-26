@@ -1,0 +1,153 @@
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start; 
+    gap: 25px;
+    width: 100vw; 
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+
+.profile-card {
+    background-color: white;
+    border-radius: 17px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    flex: 1 1 60%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden; 
+}
+
+.profile-sidebar {
+    background-color: white;
+    border-radius: 17px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    flex: 1 1 40%; 
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden; 
+}
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: rgb(199, 199, 199);
+    border-radius: 20px;
+    padding: 15px;
+    padding-left: 24px;
+}
+
+.profile-header-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 10px;
+    flex-grow: 1;
+}
+
+.profile-image {
+    width: 275px;
+    height: 275px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.profile-details {
+    margin-top: 15px;
+    margin-bottom: 40px;
+}
+
+.profile-name {
+    margin: 0;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.profile-job-title {
+    color: rgb(144, 143, 143);
+    font-size: 25px;
+}
+
+
+.profile-box {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid rgba(0, 0, 0, 0.1); 
+}
+
+.profile-contact-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+}
+
+.profile-contact-info .profile-box {
+    background-color: rgb(199, 199, 199);
+    padding: 8px, 16px, 8px, 16px;
+    border-radius: 7px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    max-width: none;
+}
+
+.label-contacts {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7);
+    margin-bottom: 5px; 
+}
+
+.personal-info-header {
+    font-size: 24px;
+    margin-bottom: 15px;
+
+}
+
+.profile-personal-info {
+    display: flex;
+    justify-content: space-between; 
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-item {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 5px; 
+}
+
+.label-personal-info {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+
+.profile-financial-info {
+    display: flex;
+    justify-content: space-between; 
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-item-financial {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 5px; 
+}
+
+.label-financial {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
