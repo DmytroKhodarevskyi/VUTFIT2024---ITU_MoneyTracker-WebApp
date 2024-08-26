@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Note
+# from .models import Note
+from .models import Transaction
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,8 +21,14 @@ class UserSerializer(serializers.ModelSerializer):
         )
         return user
     
-class NoteSerializer(serializers.ModelSerializer):
+# class NoteSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Note
+#         fields = ["id", "title", "content", "created_at", "author"]
+#         extra_kwargs = {"author": {"read_only": True}}
+
+class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Note
-        fields = ["id", "title", "content", "created_at", "author"]
+        model = Transaction
+        fields = ["id", "title", "category", "created_at", "amount", "incomeOrSpend", "author"]
         extra_kwargs = {"author": {"read_only": True}}
