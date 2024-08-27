@@ -49,7 +49,8 @@ class UserSerializer(serializers.ModelSerializer):
             country=profile_data.get('country', ''),
             city=profile_data.get('city', ''),
             gender=profile_data.get('gender', 'N'),
-            job=profile_data.get('job', 'Unemployed')
+            job=profile_data.get('job', 'Unemployed'),
+            profile_image=profile_data.get('profile_image', None)
         )
         return user
     
@@ -68,6 +69,7 @@ class UserSerializer(serializers.ModelSerializer):
         profile.city = profile_data.get('city', profile.city)
         profile.gender = profile_data.get('gender', profile.gender)
         profile.job = profile_data.get('job', profile.job)
+        profile.profile_image = profile_data.get('profile_image', profile.profile_image)
         profile.save()
 
         return instance
