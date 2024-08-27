@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+
 .profile-container {
     display: flex;
     flex-direction: row;
@@ -22,16 +25,13 @@
 }
 
 .profile-sidebar {
-    background-color: white;
-    border-radius: 17px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-    padding: 20px;
-    flex: 1 1 40%; 
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
-    overflow: hidden; 
+    justify-content: space-between; 
+    flex: 1 1 40%;  
+    height: 100%; 
 }
+
 .profile-header {
     display: flex;
     align-items: center;
@@ -151,3 +151,115 @@
     margin: 0;
 }
 
+.profile-sidebar-buttons {
+    background-color: white;
+    border-radius: 17px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    box-sizing: border-box;
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.profile-sidebar-bottom {
+    background-color: white;
+    border-radius: 17px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+    box-sizing: border-box;
+    justify-content: center; 
+}
+
+.change-profile-button, .setup-reminder-button {
+    background-color: #00BCD4;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    padding: 20px 15px;
+    margin-bottom: 15px;
+    border-radius: 17px;
+    border: 1px solid;
+}
+
+.label-currency {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px; 
+    margin-bottom: 10px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.currency-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.reminder-info {
+    background-color: rgba(5, 220, 249, 0.4);
+    border-radius: 17px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+}
+
+.reminder-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-right: 100px;
+    margin-left: 100px;
+}
+
+.reminder-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    margin-top: 15px;
+}
+
+.reminder-item {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+}
+
+
+.label-reminder {
+    display: flex;
+
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.text-reminder {
+    color: #333;
+}
+
+.deadline-reminder {
+    color: #F44336;
+    font-weight: 600;
+}
+
+.amount-reminder {
+    color:#F44336;
+    font-weight: 600;
+}
+
+
+.label-deadline, .label-amount {
+    color: #333;
+    font-size: 1.1em;
+}
