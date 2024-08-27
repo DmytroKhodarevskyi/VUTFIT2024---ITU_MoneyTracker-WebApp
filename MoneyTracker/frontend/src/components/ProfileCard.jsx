@@ -1,6 +1,8 @@
 import React from 'react';
 import "../styles/ProfileCard.css";
 
+
+
 function ProfileCard({
     profileImg, 
     fullname, 
@@ -72,9 +74,40 @@ function ProfileCard({
                 </div>
             </div>
             <div className="profile-sidebar">
-                <p> <b>TODO FUTURE </b></p>
-                <p> <b>TODO FUTURE </b></p>
-                <p> <b>TODO FUTURE </b></p>
+                    <div className="profile-sidebar-buttons">
+                        <button className="change-profile-button"> Change Profile</button>
+                        <button className="setup-reminder-button"> Setup Reminders</button>
+                    </div>
+
+                    <div className='profile-sidebar-bottom'>
+                        <div className='profile-currency'>
+                        <label for="currency" className='label-currency'>Currency</label>
+                        <select id="currency" name="currency" className='currency-select'>
+                            <option value="usd">USD - United States Dollar</option>
+                            <option value="uah">UAH - Ukrainian Hryvnia</option>
+                            <option value="czk">CZK - Czech Koruna</option>
+                        </select>
+                        </div>
+
+                        <div className='profile-reminder'>
+                            <div className='reminder-info'>
+                                <p className="label-reminder">Reminder</p>
+                                    <p className='text-reminder'>Reminder Text</p>
+
+                                    <div className="reminder-row">
+                                    <div className="reminder-item">
+                                        <p className="label-deadline">Deadline:</p>
+                                        <p className='deadline-reminder'> Date Text</p>
+                                    </div>
+
+                                    <div className="reminder-item">
+                                            <p className="label-amount">Amount:</p>
+                                            <p className='amount-reminder'> Amount Text</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     );
