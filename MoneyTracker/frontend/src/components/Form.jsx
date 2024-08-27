@@ -9,6 +9,7 @@ function Form({route, method}){
     const [password, setPassword] = useState("")
     const [repeatPassword, setRepeatPassword] = useState("")
     const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("");
     const [loading, setLoading] = useState("")
     const navigate = useNavigate()
     const name = method === "login" ? "Who Is It?" : "Introduce Yourself."
@@ -26,9 +27,17 @@ function Form({route, method}){
         }
 
         try {
-            const payload = { username, password };
+            const payload = { username, password, profile: {
+                phone,
+                country: "",  
+                city: "",
+                gender: "N",  
+                job: "Unemployed"  
+                }
+            };
             if (method === "register") {
                 payload.email = email;
+                payload.phone = phone;
             }
 
             const res = await api.post(route, payload);
@@ -39,8 +48,20 @@ function Form({route, method}){
             } else {
                 navigate("/login");
             }
-        } catch (error) {
-            alert(error);
+        }  catch (error) {
+            if (error.response) {
+                // Log the full error response
+                console.error("Error response:", error.response);
+                // Extract and display the error message
+                const errorMessage = error.response.data.detail || JSON.stringify(error.response.data);
+                alert(`Error: ${errorMessage}`);
+            } else if (error.request) {
+                console.error("Error request:", error.request);
+                alert("Network error. Please try again.");
+            } else {
+                console.error("Error message:", error.message);
+                alert(`Error: ${error.message}`);
+            }
         } finally {
             setLoading(false);
         }
@@ -111,6 +132,18 @@ function Form({route, method}){
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
+                    />
+                )}
+
+                {method === "register" && (
+                    <input
+                        id="phone"
+                        className="form-input"
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="Phone Number"
+                     
                     />
                 )}
 
