@@ -72,6 +72,8 @@ class TransactionDelete(generics.DestroyAPIView):
 # 	serializer_class = TransactionSerializer
 # 	permission_classes = [IsAuthenticated]
 
+
+
 class CreateUserView(generics.CreateAPIView):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
