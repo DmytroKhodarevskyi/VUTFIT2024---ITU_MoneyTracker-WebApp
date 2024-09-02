@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import api from "../api"
+import { Link } from 'react-router-dom';
 import "../styles/TopPart.css"
 import Logo from "../assets/AppLogo.svg"
 
@@ -51,13 +52,13 @@ function TopPart({nickname}) {
                 <div className="navigation-container">
                     <ul className="navigation-list">
                         <li className="navigation-item">
-                            <p>Overview</p>
+                            <Link to ="/">Overview</Link>
                         </li>
                         <li className="navigation-item">
                             <p>Update</p>
                         </li>
                         <li className="navigation-item">
-                            <p>Profile</p>
+                            <Link to="/profile">Profile</Link>
                         </li>
                     </ul>
                 </div>
