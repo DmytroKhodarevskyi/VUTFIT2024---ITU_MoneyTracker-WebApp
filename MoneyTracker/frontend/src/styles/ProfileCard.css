@@ -5,10 +5,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start; 
+    align-items: stretch;
     gap: 25px;
-    width: 100vw; 
+    width: 100%; 
     padding: 20px; 
+    margin-top: -45px;
     box-sizing: border-box; 
 }
 
@@ -26,10 +27,9 @@
 
 .profile-sidebar {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
+    flex-direction: column; 
     flex: 1 1 40%;  
-    height: 100%; 
+    box-sizing: border-box;
 }
 
 .profile-header {
@@ -158,11 +158,11 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
     box-sizing: border-box;
-    flex-grow: 1;
     margin-bottom: 20px;
+    flex: 0 0 auto; 
 }
+
 
 .profile-sidebar-bottom {
     background-color: white;
@@ -171,10 +171,11 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; 
     box-sizing: border-box;
-    justify-content: center; 
+    flex: 1 1 auto;
+    overflow: auto;
 }
+
 
 .change-profile-button, .setup-reminder-button {
     background-color: #00BCD4;
@@ -186,6 +187,14 @@
     margin-bottom: 15px;
     border-radius: 17px;
     border: 1px solid;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.change-profile-button:hover, .setup-reminder-button:hover {
+    background-color: #1de5ff;
+    transform: translateY(-8px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 .label-currency {
@@ -211,7 +220,9 @@
     background-color: rgba(5, 220, 249, 0.4);
     border-radius: 17px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 75px;
 }
 
 .reminder-info {
