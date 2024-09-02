@@ -8,21 +8,64 @@ import testImage from './test.jpeg';
 
 
 function Profile() {
+
+
+    const [profileData, setProfileData] = useState(null)
+
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    const [error, setError] = useState(null);
+
+    useEffect( () => {
+        async function fetchProfileData() {
+            try {
+                const response = await api.get("/api/user/profile_detail/");  
+                setProfileData(response.data);
+                setIsLoaded(true);
+            } catch (error) {
+                window.alert("Failed to fetch profile data", error);
+                setIsLoaded(false);
+            }
+        }
+        fetchProfileData();
+    }, []);
+
+    
+    if (error) {
+        return (
+            <div className="error-container">
+                <h1 className="error-text">Failed to load profile data</h1>
+                <p>Details: {error.message}</p>
+                <p>Please check the console for more information.</p>
+            </div>
+        );
+    }
+
+
+    if (!isLoaded) {
+        return (
+            <div className="loading-container">
+                <h1 className="loading-text">Hold up, loading data...</h1>
+            </div>
+        )
+      }
+
+
     return (
     <MainContainer>
-        <TopPart nickname="denys"/>
+        <TopPart nickname={profileData.username} />
         <div className="profile-container">
             <ProfileCard 
-            profileImg={testImage}
-            fullname="Denys Chernenko"
-            jobTitle="Junior"
-            email="den@gmail.com"
-            phone="+420771230136"
-            country="Ukraine"
-            city="Kiyv"
-            gender="Male"
-            totalSpends="1000"
-            totalIncome="1000"
+                profileImg={profileData.profileImg}
+                fullname={profileData.fullname}
+                jobTitle={profileData.jobTitle}
+                email={profileData.email}
+                phone={profileData.phone}
+                country={profileData.country}
+                city={profileData.city}
+                gender={profileData.gender}
+                totalSpends={profileData.totalSpends}
+                totalIncome={profileData.totalIncome}
             />
         </div>
     </MainContainer>

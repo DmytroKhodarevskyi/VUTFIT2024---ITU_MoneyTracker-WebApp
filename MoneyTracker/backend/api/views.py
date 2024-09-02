@@ -13,6 +13,33 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
+class UserProfileDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        profile = user.profile
+        
+        transactions = user.transactions.all()
+        total_spends = sum(t.amount for t in transactions if not t.incomeOrSpend)
+        total_income = sum(t.amount for t in transactions if t.incomeOrSpend)
+        
+        data = {
+			"fullname": f"{user.first_name} {user.last_name}",
+			"username": f"{user.username}",
+    		"email": user.email,
+            "phone": profile.phone,
+            "country": profile.country,
+            "city": profile.city,
+            "gender": profile.get_gender_display(),  
+            "jobTitle": profile.job,
+            "profileImg": profile.profile_image.url,  
+            "totalSpends": total_spends,
+            "totalIncome": total_income
+		}
+        return Response(data)
+
+
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import "../styles/ProfileCard.css";
-
+import defaultImageUrl from '../../../backend/media/profile_images/default.png';
 
 
 function ProfileCard({
@@ -14,12 +14,14 @@ function ProfileCard({
     gender,
     totalSpends,
     totalIncome
+
 }) {
+
     return (
         <div className="profile-container">
             <div className="profile-card">
                 <div className="profile-header">
-                    <img src={profileImg} alt={`${fullname}'s profile`} className="profile-image" />
+                    <img src={defaultImageUrl} alt={`${fullname}'s profile`} className="profile-image" />
                     <div className="profile-header-info">
                         <div className="profile-details">
                             <h2 className="profile-name">{fullname}</h2>

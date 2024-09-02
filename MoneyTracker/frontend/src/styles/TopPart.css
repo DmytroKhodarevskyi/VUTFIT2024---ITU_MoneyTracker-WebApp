@@ -69,3 +69,18 @@
     color: white;
     font-weight: 400;
 }
+
+.navigation-item a {
+    color: white; 
+    text-decoration: none; 
+    font-size: 16px; 
+    font-weight: 400;
+}
+
+.navigation-item a:hover {
+    text-decoration: underline; 
+}
+
+.navigation-item a.active {
+    font-weight: 700; 
+}
