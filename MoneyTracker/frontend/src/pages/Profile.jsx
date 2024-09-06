@@ -4,7 +4,7 @@ import MainContainer from "../components/MainContainer"
 import TopPart from "../components/TopPart"
 import "../styles/Profile.css"
 import ProfileCard from '../components/ProfileCard'
-import testImage from './test.jpeg';
+
 
 
 function Profile() {

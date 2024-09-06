@@ -83,14 +83,16 @@
     border-color: #00a0b4;
     cursor: pointer;
 
-    .form-button-text {
+}
 
-        font-weight: 800;
-        font-size: 18px;
-    }
+.form-button-text {
+
+    font-weight: 800;
+    font-size: 18px;
+}
 
     /* transition: background-color 0.2s ease-in-out; */
-}
+
   
 .form-registerbtn-container {
     display: flex;
