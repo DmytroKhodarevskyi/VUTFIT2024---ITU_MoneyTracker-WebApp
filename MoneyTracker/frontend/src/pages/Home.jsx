@@ -25,7 +25,8 @@ function Home() {
         const fetchNickname = async () => {
           try {
             const response = await api.get("/api/user/profile/");
-            setNickname(response.data.username);
+            // setNickname(response.data.username);
+            setNickname(response.data.first_name);
             setIsLoaded(true); // Mark data as loaded
           } catch (error) {
             console.error("Failed to fetch nickname", error);
@@ -73,7 +74,7 @@ function Home() {
                     <SummaryCard 
                         title={"Total Spending"}
                         date={"2 September - 1 July 2024"}
-                        amount={currency + "228.000,00"}
+                        amount={"-" + currency + "228.000,00"}
                         trends={"+15% LastYear"}
                         style_trends={{color: '#F44336'}}
                         img_src={BagIcon}
