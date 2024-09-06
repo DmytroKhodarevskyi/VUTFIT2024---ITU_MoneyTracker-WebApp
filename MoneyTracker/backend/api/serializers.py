@@ -8,7 +8,7 @@ from .models import Transaction, Profile
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['country', 'city', 'gender', 'phone', 'job']
+        fields = ['country', 'city', 'gender', 'phone', 'job', 'profile_image']
         extra_kwargs = {
             'phone': {'required': True},
         }
@@ -52,7 +52,7 @@ class UserSerializer(serializers.ModelSerializer):
             city=profile_data.get('city', ''),
             gender=profile_data.get('gender', 'N'),
             job=profile_data.get('job', 'Unemployed'),
-            profile_image=profile_data.get('profile_image', None)
+            profile_image=profile_data.get('profile_image', 'profile_images/default.png')
         )
         return user
     
