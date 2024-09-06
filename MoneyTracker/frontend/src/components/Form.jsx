@@ -6,13 +6,17 @@ import "../styles/Form.css"
 
 function Form({route, method}){
     const [username, setUsername] = useState("")
+
+    const [first_name, setFirstName] = useState("")
+    const [last_name, setLastName] = useState("")
+
     const [password, setPassword] = useState("")
     const [repeatPassword, setRepeatPassword] = useState("")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("");
     const [loading, setLoading] = useState("")
     const navigate = useNavigate()
-    const name = method === "login" ? "Who Is It?" : "Introduce Yourself."
+    const head = method === "login" ? "Who Is It?" : "Introduce Yourself."
     const button = method === "login" ? "Login" : "Register"
 
 
@@ -27,18 +31,26 @@ function Form({route, method}){
         }
 
         try {
-            const payload = { username, password, profile: {
-                phone,
-                country: "",  
-                city: "",
-                gender: "N",  
-                job: "Unemployed"  
+            const payload = { 
+                username, 
+                password, 
+                profile: {
+                    phone,
+                    country: "",  
+                    city: "",
+                    gender: "N",  
+                    job: "Unemployed"  
                 }
             };
+
             if (method === "register") {
                 payload.email = email;
                 payload.phone = phone;
+                payload.first_name = first_name;
+                payload.last_name = last_name;
             }
+
+            console.log(payload);
 
             const res = await api.post(route, payload);
             if (method === "login") {
@@ -66,51 +78,11 @@ function Form({route, method}){
             setLoading(false);
         }
 
-        // try {
-        //     const res = await api.post(route, {username, password})
-        //     if (method === "login") {
-        //         localStorage.setItem(ACCESS_TOKEN, res.data.access);
-        //         localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-        //         navigate("/")
-        //     } else {
-        //         navigate("/login")
-        //     }
-        // } catch (error) {
-        //     alert(error)
-        // } finally {
-        //     setLoading(false)
-        // }
     }
-
-    // return  (
-    //     <form onSubmit={handleSubmit} className="form-container" >
-    //         <h1> {name} </h1>
-
-    //         <input
-    //             className="form-input"
-    //             type="text"
-    //             value={username}
-    //             onChange={(e) => setUsername(e.target.value)}
-    //             placeholder="Username"
-    //         />
-
-    //         <input
-    //             className="form-input"
-    //             type="password"
-    //             value={password}
-    //             onChange={(e) => setPassword(e.target.value)}
-    //             placeholder="Password"
-    //         />
-
-    //         <button className="form-button" type="submit">
-    //             {name}
-    //         </button>
-    //     </form>
-    // )
 
     return (
         <form onSubmit={handleSubmit} className="form-container">
-            <h1 className="form-headertext">{name}</h1>
+            <h1 className="form-headertext">{head}</h1>
 
             <div className="inputbtn-container">
                 <div className="input-container">
@@ -123,6 +95,28 @@ function Form({route, method}){
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Username"
                 />
+
+                {method === "register" && (
+                    <input
+                        id="first_name"
+                        className="form-input"
+                        type="text"
+                        value={first_name}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        placeholder="Name"
+                    />
+                )}
+
+                {method === "register" && (
+                    <input
+                        id="last_name"
+                        className="form-input"
+                        type="text"
+                        value={last_name}
+                        onChange={(e) => setLastName(e.target.value)}
+                        placeholder="Surname"
+                    />
+                )}
 
                 {method === "register" && (
                     <input

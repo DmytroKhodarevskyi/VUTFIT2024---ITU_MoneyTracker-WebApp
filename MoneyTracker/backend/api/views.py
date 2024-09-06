@@ -46,6 +46,7 @@ class UserProfileView(APIView):
     def get(self, request):
         user = request.user
         return Response({
+			"first_name": user.first_name,
             "username": user.username  # Assuming the nickname is stored in the username field
         })
 
