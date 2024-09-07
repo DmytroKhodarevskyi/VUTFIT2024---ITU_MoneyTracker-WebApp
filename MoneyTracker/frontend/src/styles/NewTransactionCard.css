@@ -1,0 +1,164 @@
+.card-trans {
+    background-color: white;
+    border-radius: 17px;
+
+    min-width: 350px;
+
+    padding: 32px 24px;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.card-title-container {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card-title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.card-title-hint {
+    margin: 0;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.card-input-title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.card-input-hint {
+    margin: 0;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.card-amount-container {
+    display: flex;
+    align-content: bottom;
+    justify-content: space-between;
+}
+
+.card-date {
+    margin: 0;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.5)
+}
+
+.card-amount-button-container {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.card-input {
+    border: 2px solid #d9d9d9;
+    border-radius: 8px;
+
+    padding: 12px 9px;
+    height: 12px;
+
+    width: 100%;
+
+    color: #444444;
+    font-weight: 500;
+
+    -webkit-appearance: none;
+    appearance: textfield;
+
+    /* For Chrome, Safari, Edge, Opera */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* For Firefox */
+    &::-moz-appearance {
+        appearance: none;
+    }
+}
+
+.card-input-date {
+    border: 2px solid #d9d9d9;
+    border-radius: 8px;
+
+    padding: 12px 9px;
+    height: 12px;
+
+    width: auto;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #444444;
+
+}
+
+.card-input-currency {
+    /* border: 2px solid #d9d9d9;
+    border-radius: 8px;
+
+    padding: 12px 9px;
+    height: 12px;
+
+    width: 100%; */
+
+    border: 2px solid #d9d9d9;
+    border-radius: 8px;
+    
+    /* Set fixed height to 40px */
+    height: 40px;
+    
+    /* Ensure padding fits within the box height */
+    padding: 0 9px; /* Adjust padding for vertical alignment */
+  
+    /* Full width */
+    width: 100%;
+    
+    /* Use Inter font */
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #444444;
+    /* Font size and line height */
+    font-size: 16px;
+    line-height: 1.5;
+  
+    /* Ensure the padding and borders are included in the element's height */
+    box-sizing: border-box;
+    
+    /* Optional: cursor style for better user experience */
+    cursor: pointer;
+}
+
+.card-button {
+    height: 40px;
+    width: 40px;
+}
+
+.card-amount-input-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.card-currency-date-container {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+}
