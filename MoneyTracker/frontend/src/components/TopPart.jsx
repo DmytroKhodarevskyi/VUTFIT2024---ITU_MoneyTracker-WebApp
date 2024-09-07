@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import "../styles/TopPart.css"
 import Logo from "../assets/AppLogo.svg"
 
-function TopPart({nickname}) {
+function TopPart({nickname, selectedItem}) {
 
     // const [nickname, setNickname] = useState("")
 
@@ -51,13 +51,22 @@ function TopPart({nickname}) {
 
                 <div className="navigation-container">
                     <ul className="navigation-list">
-                        <li className="navigation-item">
+                        {/* <li className="navigation-item">
                             <Link to ="/">Overview</Link>
                         </li>
                         <li className="navigation-item">
                             <p>Update</p>
                         </li>
                         <li className="navigation-item">
+                            <Link to="/profile">Profile</Link>
+                        </li> */}
+                        <li className={`navigation-item ${selectedItem === 'overview' ? 'navigation-item-selected' : ''}`}>
+                        <Link to="/">Overview</Link>
+                        </li>
+                        <li className={`navigation-item ${selectedItem === 'update' ? 'navigation-item-selected' : ''}`}>
+                            <Link to="/update"><p>Update</p></Link>
+                        </li>
+                        <li className={`navigation-item ${selectedItem === 'profile' ? 'navigation-item-selected' : ''}`}>
                             <Link to="/profile">Profile</Link>
                         </li>
                     </ul>

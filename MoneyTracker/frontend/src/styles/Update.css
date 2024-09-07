@@ -1,0 +1,13 @@
+.cards-container {
+    display: grid;
+    /* width: 100%; */
+
+    /* TODO: NEED TO FIX WIDTH */
+    /* width: calc(100% - 205px); */
+    height: 191px;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+
+    padding: 0px 92px 0px 92px;
+    margin-top: -45px;
+}

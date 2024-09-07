@@ -35,6 +35,7 @@ urlpatterns = [
     path("api/user/profile/", UserProfileView.as_view(), name="user_profile"),
     path("api/user/profile_detail/", UserProfileDetailView.as_view(), name="user_profile_detail"),
 
+
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
