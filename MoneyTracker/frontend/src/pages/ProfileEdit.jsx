@@ -51,7 +51,7 @@ function ProfileEdit() {
 
     return (
         <MainContainer>
-        <TopPart nickname={profileData.username} />
+        <TopPart nickname={profileData.username} selectedItem={"profile"}/>
         <div className="profile-container">
             <ProfileEditCard 
                 profileImg={profileData.profileImg}

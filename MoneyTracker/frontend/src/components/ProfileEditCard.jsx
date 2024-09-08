@@ -22,6 +22,7 @@ function ProfileEditCard({
                 <div className="profile-header-section">
                     <div className="profile-picture-section">
                         <img 
+                            draggable="false"
                             src={defaultImageUrl} 
                             alt={`${fullname}'s profile`} 
                             className="profile-picture" 
