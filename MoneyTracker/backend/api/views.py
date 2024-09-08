@@ -29,6 +29,7 @@ class UserProfileDetailView(APIView):
         
         data = {
 			"firstname": user.first_name,
+            "lastname": user.last_name,
 			"fullname": f"{user.first_name} {user.last_name}",
 			"username": f"{user.username}",
     		"email": user.email,
