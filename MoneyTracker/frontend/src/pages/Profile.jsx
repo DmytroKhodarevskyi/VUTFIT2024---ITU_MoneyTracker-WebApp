@@ -53,8 +53,7 @@ function Profile() {
 
     return (
     <MainContainer>
-        <TopPart nickname={profileData.username} />
-        <div className="profile-container">
+        <TopPart nickname={profileData.firstname} selectedItem={"profile"} />
             <ProfileCard 
                 profileImg={profileData.profileImg}
                 fullname={profileData.fullname}
@@ -67,7 +66,6 @@ function Profile() {
                 totalSpends={profileData.totalSpends}
                 totalIncome={profileData.totalIncome}
             />
-        </div>
     </MainContainer>
     )
 }

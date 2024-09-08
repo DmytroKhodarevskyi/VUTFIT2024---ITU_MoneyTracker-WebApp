@@ -1,6 +1,7 @@
 import React from 'react';
 import "../styles/ProfileCard.css";
 import defaultImageUrl from '../../../backend/media/profile_images/default.png';
+import Arrow from '../assets/ArrowRight.svg'
 
 
 function ProfileCard({
@@ -21,42 +22,52 @@ function ProfileCard({
         <div className="profile-container">
             <div className="profile-card">
                 <div className="profile-header">
-                    <img src={defaultImageUrl} alt={`${fullname}'s profile`} className="profile-image" />
+                    <div className='profile-image'>
+                        <img src={defaultImageUrl} alt={`${fullname}'s profile`} className="profile-image" draggable="false"/>
+                    </div>
                     <div className="profile-header-info">
                         <div className="profile-details">
                             <h2 className="profile-name">{fullname}</h2>
                             <p className="profile-job-title">{jobTitle}</p>
                         </div>
-                        <div className="profile-contact-info">
-                            <p className="label-contacts">Email</p>
-                            <div className="profile-box">
-                                <p>{email}</p>
+                        {/* <div className="profile-contact-info"> */}
+                            <div className="profile-form">
+                                <p className="label-contacts">Email</p>
+                                <div className="profile-box">
+                                    <p>{email}</p>
+                                </div>
                             </div>
-                            <p className="label-contacts">Phone</p>
-                            <div className="profile-box">
-                                <p>{phone}</p>
+
+                            <div className="profile-form">
+                                <p className="label-contacts">Phone</p>
+                                <div className="profile-box">
+                                    <p>{phone}</p>
+                                </div>
                             </div>
-                        </div>
+                        {/* </div> */}
                     </div>
                 </div>
-                <h3 className="personal-info-header">Personal Info</h3>
-                <div className="profile-personal-info">
-                    <div className="profile-item">
-                        <p className="label-personal-info">Country</p>
-                        <div className="profile-box">
-                            <p>{country}</p>
+
+                <div className="personal-container">
+                    <h3 className="personal-info-header">Personal Info</h3>
+                    <div className="profile-personal-info">
+                        <div className="profile-item">
+                            <p className="label-personal-info">Country</p>
+                            <div className="profile-box">
+                                <p>{country}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="profile-item">
-                        <p className="label-personal-info">City</p>
-                        <div className="profile-box">
-                            <p>{city}</p>
+                        <div className="profile-item">
+                            <p className="label-personal-info">City</p>
+                            <div className="profile-box">
+                                <p>{city}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="profile-item">
-                        <p className="label-personal-info">Gender</p>
-                        <div className="profile-box">
-                            <p>{gender}</p>
+                        <div className="profile-item">
+                            <p className="label-personal-info">Gender</p>
+                            <div className="profile-box">
+                                <p>{gender}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -83,7 +94,7 @@ function ProfileCard({
 
                     <div className='profile-sidebar-bottom'>
                         <div className='profile-currency'>
-                        <label for="currency" className='label-currency'>Currency</label>
+                        <label htmlFor="currency" className='label-currency'>Currency</label>
                         <select id="currency" name="currency" className='currency-select'>
                             <option value="usd">USD - United States Dollar</option>
                             <option value="uah">UAH - Ukrainian Hryvnia</option>
@@ -94,20 +105,27 @@ function ProfileCard({
                         <div className='profile-reminder'>
                             <div className='reminder-info'>
                                 <p className="label-reminder">Reminder</p>
-                                    <p className='text-reminder'>Reminder Text</p>
 
-                                    <div className="reminder-row">
-                                    <div className="reminder-item">
-                                        <p className="label-deadline">Deadline:</p>
-                                        <p className='deadline-reminder'> Date Text</p>
-                                    </div>
+                                    <div className="reminder-text-deadline-amount">
+                                        <p className="text-reminder">
+                                            There will be <span className="text-teal">*Some Taxes*</span> soon, don’t forget to pay for it!
+                                        </p>
 
-                                    <div className="reminder-item">
-                                            <p className="label-amount">Amount:</p>
-                                            <p className='amount-reminder'> Amount Text</p>
+                                        <div className="reminder-row">
+                                            <div className="reminder-item">
+                                                <p className="label-deadline">Deadline:</p>
+                                                <p className='deadline-reminder'> *Some Deadline*</p>
+                                            </div>
+
+                                            <div className="reminder-item">
+                                                    <p className="label-amount">Amount:</p>
+                                                    <p className='amount-reminder'> *Some Amount*</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
                             </div>
+
+                            <img src={Arrow} className='arrow-btn' draggable="false"/>
                         </div>
                     </div>
             </div>
