@@ -8,6 +8,7 @@ import Register from './pages/register'
 import Profile from './pages/Profile'
 import Update from './pages/Update'
 import ProtectedRoute from './components/ProtectedRoute'
+import ProfileEdit from './pages/ProfileEdit'
 
 function Logout() {
   localStorage.clear()
@@ -56,6 +57,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+      <Route 
+        path="/edit-profile"
+        element={
+          <ProtectedRoute>
+            <ProfileEdit />
+          </ProtectedRoute>
+        }
+      />
 
       <Route path="*" element={<NotFound />} />
 

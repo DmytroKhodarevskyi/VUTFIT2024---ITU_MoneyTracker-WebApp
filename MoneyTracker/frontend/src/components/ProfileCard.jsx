@@ -2,6 +2,7 @@ import React from 'react';
 import "../styles/ProfileCard.css";
 import defaultImageUrl from '../../../backend/media/profile_images/default.png';
 import Arrow from '../assets/ArrowRight.svg'
+import { useNavigate } from 'react-router-dom'
 
 
 function ProfileCard({
@@ -17,6 +18,12 @@ function ProfileCard({
     totalIncome
 
 }) {
+
+    const navigate = useNavigate();
+
+    const handleChangeProfile = () => {
+        navigate('/edit-profile'); 
+    };
 
     return (
         <div className="profile-container">
@@ -88,7 +95,7 @@ function ProfileCard({
             </div>
             <div className="profile-sidebar">
                     <div className="profile-sidebar-buttons">
-                        <button className="change-profile-button"> Change Profile</button>
+                        <button className="change-profile-button" onClick={handleChangeProfile}> Change Profile</button>
                         <button className="setup-reminder-button"> Setup Reminders</button>
                     </div>
 
@@ -108,7 +115,7 @@ function ProfileCard({
 
                                     <div className="reminder-text-deadline-amount">
                                         <p className="text-reminder">
-                                            There will be <span className="text-teal">*Some Taxes*</span> soon, don’t forget to pay for it!
+                                            There will be <span className="text-teal">*Some Taxes*</span> soon, don`t forget to pay for it!
                                         </p>
 
                                         <div className="reminder-row">
