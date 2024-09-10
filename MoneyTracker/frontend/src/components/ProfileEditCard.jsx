@@ -1,7 +1,7 @@
 import React from 'react';
 import "../styles/ProfileEdit.css";
 import defaultImageUrl from '../../../backend/media/profile_images/default.png';
-
+import api from "../api"
 
 function ProfileEditCard({
     profileImg, 
@@ -14,8 +14,11 @@ function ProfileEditCard({
     country,
     city,
     gender,
-    handleInputChange
+    genderChoices,
+    handleInputChange,
+    handleSave
 }) {
+
     return (
         <div className="profile-wrapper">
             <div className="profile-details-card">
@@ -50,7 +53,7 @@ function ProfileEditCard({
                                 type="text" 
                                 className="input-name" 
                                 value={lastname} 
-                                onChange={e => handleInputChange('secondname', e.target.value)} 
+                                onChange={e => handleInputChange('lastname', e.target.value)} 
                                 placeholder="Surname"
                             />
                         </div>
@@ -95,10 +98,11 @@ function ProfileEditCard({
                             className="input-box" 
                             value={gender} 
                             onChange={e => handleInputChange('gender', e.target.value)}>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Non-Binary">Non-Binary</option>
-                            <option value="Other">Other</option>
+                            {genderChoices.map(choice => (
+                                <option key={choice.value} value={choice.value}>
+                                    {choice.label}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div className='adress-info'>
@@ -128,7 +132,7 @@ function ProfileEditCard({
 
             <div className="sidebar-actions">
                 <div className="action-buttons">
-                    <button className="button-save-profile">Save</button>
+                    <button className="button-save-profile" onClick={handleSave}>Save</button>
                     <button className="button-discard-profile">Discard</button>
                 </div>
             </div>

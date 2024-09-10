@@ -12,6 +12,8 @@ function ProfileEdit() {
 
     const [error, setError] = useState(null);
 
+    const [genderChoices, setGenderChoices] = useState([]);
+
     useEffect( () => {
         async function fetchProfileData() {
             try {
@@ -19,14 +21,41 @@ function ProfileEdit() {
                 setProfileData(response.data);
                 setIsLoaded(true);
             } catch (error) {
-                window.alert("Failed to fetch profile data", error);
+                window.alert("Failed to fetch profile dataa", error);
                 setIsLoaded(false);
             }
         }
         fetchProfileData();
+
+
+        async function fetchGenderChoices() {
+            try {
+                const response = await api.get("/api/gender-choices/");
+                setGenderChoices(response.data)
+            } catch (error) {
+                console.error("Failed to fetch gender choices", error);
+            }
+        }
+        fetchGenderChoices();
     }, []);
 
+    const handleInputChange = (field, value) => {
+        setProfileData((prevData) => ({
+            ...prevData,
+            [field]: value
+        }));
+    };
+
     
+    const handleSave = async () => {
+        try {
+            const response = await api.patch("/api/user/profile_detail/", profileData);
+            window.alert('Profile saved successfully!');
+        } catch (error) {
+            window.alert(error);
+        }
+    };
+
     if (error) {
         return (
             <div className="error-container">
@@ -46,8 +75,7 @@ function ProfileEdit() {
         )
       }
 
-    console.log('ProfileEdit component rendered');
-
+    
 
     return (
         <MainContainer>
@@ -64,6 +92,9 @@ function ProfileEdit() {
                 country={profileData.country}
                 city={profileData.city}
                 gender={profileData.gender}
+                genderChoices={genderChoices}  
+                handleInputChange={handleInputChange}
+                handleSave={handleSave}
             />
         </div>
     </MainContainer>
