@@ -89,3 +89,13 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = ["id", "title", "category", "created_at", "amount", "incomeOrSpend", "author"]
         extra_kwargs = {"author": {"read_only": True}}
+        
+
+class GenderChoicesSerializer(serializers.ModelSerializer):
+    value = serializers.CharField()
+    label = serializers.CharField()
+
+    @staticmethod
+    def get_gender_choices():
+        return [{'value': choice[0], 'label': choice[1]} for choice in Profile.GENDER_CHOICES]
+        

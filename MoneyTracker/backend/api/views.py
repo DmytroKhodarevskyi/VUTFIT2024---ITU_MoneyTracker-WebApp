@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics
 # from .serializers import UserSerializer, NoteSerializer
-from .serializers import UserSerializer, TransactionSerializer
+from .serializers import UserSerializer, TransactionSerializer, GenderChoicesSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 # from .models import Note
+from rest_framework import status
 from .models import Transaction
 
 from rest_framework.permissions import IsAdminUser
@@ -43,7 +44,84 @@ class UserProfileDetailView(APIView):
             "totalIncome": total_income
 		}
         return Response(data)
+    
+    def put(self, request):
+        user = request.user
+        profile = user.profile
+        
+        firstname = request.data.get('firstname')
+        lastname = request.data.get('lastname')
+        email = request.data.get('email')
+        phone = request.data.get('phone')
+        country = request.data.get('country')
+        city = request.data.get('city')
+        gender = request.data.get('gender')
+        job_title = request.data.get('jobTitle')
 
+        if firstname:
+            user.first_name = firstname
+        if lastname:
+            user.last_name = lastname
+        if email:
+            user.email = email
+        user.save()
+
+        if phone:
+            profile.phone = phone
+        if country:
+            profile.country = country
+        if city:
+            profile.city = city
+        if gender:
+            profile.gender = gender
+        if job_title:
+            profile.job = job_title
+        profile.save()
+        
+        return Response({"detail": "Profile updated successfully."}, status=status.HTTP_200_OK)
+    
+    def patch(self, request):
+        user = request.user
+        profile = user.profile
+        
+        firstname = request.data.get('firstname')
+        lastname = request.data.get('lastname')
+        email = request.data.get('email')
+        phone = request.data.get('phone')
+        country = request.data.get('country')
+        city = request.data.get('city')
+        gender = request.data.get('gender')
+        job_title = request.data.get('jobTitle')
+
+        if firstname is not None:
+            user.first_name = firstname
+        if lastname is not None:
+            user.last_name = lastname
+        if email is not None:
+            user.email = email
+        if phone is not None:
+            profile.phone = phone
+        if country is not None:
+            profile.country = country
+        if city is not None:
+            profile.city = city
+        if gender is not None:
+            match gender:
+                case "Male":
+                    profile.gender = "M"
+                case "Female":
+                    profile.gender = "F"
+                case "Croissant":
+                    profile.gender = "C"
+                case "Prefer not to say":
+                    profile.gender = "N"
+        if job_title is not None:
+            profile.job = job_title
+        
+        user.save()
+        profile.save()
+
+        return Response({"detail": "Profile updated successfully."}, status=status.HTTP_200_OK)
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
@@ -116,5 +194,10 @@ class DeleteUserView(generics.DestroyAPIView):
     queryset = User.objects.all()
     lookup_field = 'username'
     permission_classes = [IsAdminUser]
+
+class GenderChoiceView(APIView):
+    def get(self, request):
+        choices = GenderChoicesSerializer.get_gender_choices()
+        return Response(choices)
 
 # Create your views here.

@@ -111,6 +111,18 @@
 
 .upload-photo-button {
     background-color: #00BCD4;
+    white-space: nowrap;
+}
+
+.upload-photo-button:hover {
+    background-color: #00A7BB;
+    transform: translateY(-1px);
+}
+
+.delete-photo-button:hover {
+    background-color: #ed1515; 
+    transform: translateY(-1px);
+    opacity: 70%;
 }
 
 .delete-photo-button {
@@ -157,6 +169,18 @@
 .button-save-profile {
     background-color: #4CAF50;
 }
+
+
+.button-save-profile:hover {
+    background-color: #45A049; 
+    transform: translateY(-1px);
+} 
+
+.button-discard-profile:hover {
+    background-color: #D32F2F;
+    transform: translateY(-1px);
+}  
+
 
 .info-item {
     display: flex;
