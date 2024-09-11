@@ -13,6 +13,8 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 class UserProfileDetailView(APIView):
     permission_classes = [IsAuthenticated]
@@ -106,15 +108,8 @@ class UserProfileDetailView(APIView):
         if city is not None:
             profile.city = city
         if gender is not None:
-            match gender:
-                case "Male":
-                    profile.gender = "M"
-                case "Female":
-                    profile.gender = "F"
-                case "Croissant":
-                    profile.gender = "C"
-                case "Prefer not to say":
-                    profile.gender = "N"
+            # profile.gender = gender
+            profile.gender = 'F'
         if job_title is not None:
             profile.job = job_title
         
@@ -122,6 +117,38 @@ class UserProfileDetailView(APIView):
         profile.save()
 
         return Response({"detail": "Profile updated successfully."}, status=status.HTTP_200_OK)
+
+
+class UserProfilePhotoView(APIView):
+     permission_classes = [IsAuthenticated]
+     
+     def delete(self, request):
+         user = request.user
+         profile = user.profile
+         profile.profile_image = 'profile_images/default.png'
+
+         profile.save()
+         
+         return Response({"detail:": "Photo was deleted successfully"}, status=status.HTTP_200_OK)
+     
+     def post(self, request):
+        user = request.user
+        profile = user.profile
+        
+        if 'profile_image' not in request.FILES:
+            return Response({"error": "No file provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+        profile_image = request.FILES['profile_image']
+        
+        print(profile_image)
+        profile.profile_image = profile_image
+        
+
+        profile.save()
+
+        return Response({"detail": "Photo was uploaded successfully"}, status=status.HTTP_200_OK)
+         
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]

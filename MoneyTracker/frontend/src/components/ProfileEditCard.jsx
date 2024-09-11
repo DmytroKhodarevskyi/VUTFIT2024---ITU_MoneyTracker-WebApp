@@ -1,7 +1,5 @@
 import React from 'react';
 import "../styles/ProfileEdit.css";
-import defaultImageUrl from '../../../backend/media/profile_images/default.png';
-import api from "../api"
 
 function ProfileEditCard({
     profileImg, 
@@ -15,9 +13,16 @@ function ProfileEditCard({
     city,
     gender,
     genderChoices,
+    fileInputRef,
     handleInputChange,
-    handleSave
+    handleSave,
+    handleFileChange,
+    handleFileSelect,
+    handleUploadPhoto,
+    handleDeletePhoto
 }) {
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const fullImageUrl = `${baseUrl}${profileImg}`;
 
     return (
         <div className="profile-wrapper">
@@ -26,15 +31,23 @@ function ProfileEditCard({
                     <div className="profile-picture-section">
                         <img 
                             draggable="false"
-                            src={defaultImageUrl} 
+                            src={fullImageUrl} 
                             alt={`${fullname}'s profile`} 
                             className="profile-picture" 
                         />
                     </div>
                 <div className="header-info-section">
                     <div className="photo-buttons">
-                        <button className="upload-photo-button">Upload a new photo</button>
-                        <button className="delete-photo-button">Delete Photo</button>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }} 
+                            onChange={handleFileChange}
+                            onInput={handleFileSelect} 
+                        />
+                        <button className="upload-photo-button" onClick={handleUploadPhoto}>Upload a new photo</button>
+                        <button className="delete-photo-button" onClick={handleDeletePhoto}>Delete Photo</button>
                     </div>
                     <div className="details-section">
                         <div className='info-item'>
