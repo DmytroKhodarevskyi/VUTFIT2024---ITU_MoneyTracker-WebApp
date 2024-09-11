@@ -1,6 +1,5 @@
 import React from 'react';
 import "../styles/ProfileCard.css";
-import defaultImageUrl from '../../../backend/media/profile_images/default.png';
 import Arrow from '../assets/ArrowRight.svg'
 import { useNavigate } from 'react-router-dom'
 
@@ -18,8 +17,12 @@ function ProfileCard({
     totalIncome
 
 }) {
+    const baseUrl = import.meta.env.VITE_API_URL;
+    const fullImageUrl = profileImg ? `${baseUrl}${profileImg}` : `${baseUrl}media/profile_images/default.png`;
 
+    
     const navigate = useNavigate();
+
 
     const handleChangeProfile = () => {
         navigate('/edit-profile'); 
@@ -30,7 +33,7 @@ function ProfileCard({
             <div className="profile-card">
                 <div className="profile-header">
                     <div className='profile-image'>
-                        <img src={defaultImageUrl} alt={`${fullname}'s profile`} className="profile-image" draggable="false"/>
+                        <img src={fullImageUrl} alt={`${fullname}'s profile`} className="profile-image" draggable="false"/>
                     </div>
                     <div className="profile-header-info">
                         <div className="profile-details">

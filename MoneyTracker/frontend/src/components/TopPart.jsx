@@ -41,7 +41,7 @@ function TopPart({nickname, selectedItem}) {
     return (
         <>
             <div className="top-container">
-                <img className='app-logo' src={Logo} alt="Logo" />
+                <img draggable="false" className='app-logo' src={Logo} alt="Logo" />
 
 
                 <div className="home-title-container">
