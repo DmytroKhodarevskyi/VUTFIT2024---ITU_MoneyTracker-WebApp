@@ -4,6 +4,7 @@ import "../styles/Update.css"
 import MainContainer from "../components/MainContainer"
 import TopPart from "../components/TopPart"
 import NewTransactions from "../components/NewTransactions"
+import NewCategory from "../components/NewCategory"
 
 import Transactions from "../components/Transactions"
 
@@ -56,7 +57,7 @@ function Home() {
                
                 <div className="cards-container">
                     <NewTransactions />
-
+                    <NewCategory />
                 </div>
 
             </MainContainer>
