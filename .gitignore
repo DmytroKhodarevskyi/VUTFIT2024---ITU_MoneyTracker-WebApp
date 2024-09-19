@@ -34,4 +34,4 @@ MoneyTracker/backend/db.sqlite3
 
 schema.yaml
 
-/MoneyTracker/backend/media/
+/MoneyTracker/backend/media
