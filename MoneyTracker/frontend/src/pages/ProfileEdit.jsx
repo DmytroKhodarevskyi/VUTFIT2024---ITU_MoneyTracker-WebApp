@@ -86,8 +86,11 @@ function ProfileEdit() {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPhotoPreview(reader.result);
+                setDeletePhoto(false);
             };
             reader.readAsDataURL(file);
+
+            event.target.value = null;
         }
     }
     
@@ -111,6 +114,11 @@ function ProfileEdit() {
     const handleSave = async () => {
         try {
 
+            if (deletePhoto) {
+                await api.delete("/api/user/profile-photo/");
+                setDeletePhoto(false); 
+            }
+
             if (selectedFile) {
                 const formData = new FormData();
                 formData.append('profile_image', selectedFile);
@@ -119,12 +127,8 @@ function ProfileEdit() {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
+                setSelectedFile(null);
             }  
-
-            if (deletePhoto) {
-                await api.delete("/api/user/profile-photo/");
-                setDeletePhoto(false); 
-            }
 
             const response = await api.patch("/api/user/profile_detail/", profileData);
             navigate('/profile');
