@@ -19,10 +19,21 @@ function ProfileEditCard({
     handleFileChange,
     handleFileSelect,
     handleUploadPhoto,
-    handleDeletePhoto
+    handleDeletePhoto,
+    photoPreview,
+    deletePhoto
 }) {
+
     const baseUrl = import.meta.env.VITE_API_URL;
-    const fullImageUrl = `${baseUrl}${profileImg}`;
+    let displayImageUrl;
+
+    if (deletePhoto) {
+        displayImageUrl = `${baseUrl}/media/profile_images/default.png`
+    } else if (photoPreview) {
+        displayImageUrl = photoPreview;
+    } else {
+        displayImageUrl = `${baseUrl}${profileImg}`;
+    }
 
     return (
         <div className="profile-wrapper">
@@ -31,7 +42,7 @@ function ProfileEditCard({
                     <div className="profile-picture-section">
                         <img 
                             draggable="false"
-                            src={fullImageUrl} 
+                            src={displayImageUrl} 
                             alt={`${fullname}'s profile`} 
                             className="profile-picture" 
                         />
