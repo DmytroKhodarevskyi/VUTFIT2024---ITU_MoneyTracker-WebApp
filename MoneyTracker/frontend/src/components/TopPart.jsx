@@ -1,11 +1,18 @@
+import React from 'react';
+import {useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react"
 import api from "../api"
 import { Link } from 'react-router-dom';
 import "../styles/TopPart.css"
 import Logo from "../assets/AppLogo.svg"
+import Face from "./Bohdan_Bečka.jpg"
 
 function TopPart({nickname, selectedItem}) {
-
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        
+        navigate('/logout');
+    };
     // const [nickname, setNickname] = useState("")
 
     // useEffect(() => {
@@ -43,6 +50,11 @@ function TopPart({nickname, selectedItem}) {
             <div className="top-container">
                 <img draggable="false" className='app-logo' src={Logo} alt="Logo" />
 
+                <div className="img_butt">
+                <img draggable="false" className='mini_foto' src={Face} alt="Face" />
+
+                    <button className="logout" onClick={handleLogout}>Logout</button>
+                </div>
 
                 <div className="home-title-container">
                     <h1 className="home-title">Hello again, {nickname}!</h1>

@@ -33,3 +33,5 @@ MoneyTracker/backend/db.sqlite3
 .env
 
 schema.yaml
+MoneyTracker/frontend/package-lock.json
+MoneyTracker/frontend/package.json
