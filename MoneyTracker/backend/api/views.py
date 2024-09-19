@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+import os
+from django.conf import settings
+from django.core.files.storage import default_storage
 from rest_framework import generics
 # from .serializers import UserSerializer, NoteSerializer
 from .serializers import UserSerializer, TransactionSerializer, GenderChoicesSerializer
@@ -13,7 +16,7 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from django.core.files.storage import default_storage
+
 from django.core.files.base import ContentFile
 
 class UserProfileDetailView(APIView):
@@ -108,8 +111,8 @@ class UserProfileDetailView(APIView):
         if city is not None:
             profile.city = city
         if gender is not None:
-            # profile.gender = gender
-            profile.gender = 'F'
+            print(gender)
+            profile.gender = gender
         if job_title is not None:
             profile.job = job_title
         
@@ -125,8 +128,15 @@ class UserProfilePhotoView(APIView):
      def delete(self, request):
          user = request.user
          profile = user.profile
+         
+         if profile.profile_image and profile.profile_image.name != 'profile_images/default.png':
+             image_path = os.path.join(settings.MEDIA_ROOT, profile.profile_image.name)
+             
+             if default_storage.exists(image_path):
+                 default_storage.delete(image_path
+                                        
+                                        )
          profile.profile_image = 'profile_images/default.png'
-
          profile.save()
          
          return Response({"detail:": "Photo was deleted successfully"}, status=status.HTTP_200_OK)
@@ -141,7 +151,7 @@ class UserProfilePhotoView(APIView):
 
         profile_image = request.FILES['profile_image']
         
-        print(profile_image)
+     
         profile.profile_image = profile_image
         
 

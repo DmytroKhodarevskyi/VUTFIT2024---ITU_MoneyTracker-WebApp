@@ -17,6 +17,12 @@ function ProfileEdit() {
 
     const [selectedFile, setSelectedFile] = useState(null);
 
+    const [deletePhoto, setDeletePhoto] = useState(false);
+
+    const [photoPreview, setPhotoPreview] = useState(null);
+
+    
+
     const fileInputRef = useRef(null);
 
     const navigate = useNavigate(); 
@@ -43,8 +49,28 @@ function ProfileEdit() {
                 console.error("Failed to fetch gender choices", error);
             }
         }
-        fetchGenderChoices();
-    }, []);
+
+
+        async function mapGenderCode() {
+            await fetchProfileData();
+            await fetchGenderChoices();
+
+            if (profileData && genderChoices.length > 0) {
+                const genderLabel = profileData.gender;
+
+                const matchingChoice = genderChoices.find(choice => choice.label === genderLabel);
+
+                if (matchingChoice) {
+                    setProfileData(prevData => ({
+                        ...prevData,
+                        gender: matchingChoice.value 
+                    }));
+                }
+            }
+        }
+
+        mapGenderCode();
+    }, [genderChoices.length]);
 
     const handleInputChange = (field, value) => {
         setProfileData((prevData) => ({
@@ -54,7 +80,15 @@ function ProfileEdit() {
     };
 
     const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+        const file = event.target.files[0];
+        if (file) {
+            setSelectedFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPhotoPreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
     }
     
     const handleUploadPhoto = () => {
@@ -63,46 +97,35 @@ function ProfileEdit() {
         }
     }
 
-    const handleFileSelect = async () => {
-        if(!selectedFile) {
-            window.alert("Select a file to upload");
-            return;
+    const handleFileSelect = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
         }
-
-        const formData = new FormData();
-        formData.append('profile_image', selectedFile)
-
-        try {
-            setIsLoaded(true); 
-            await api.post('/api/user/profile-photo/', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-
-        const response = await api.get("/api/user/profile_detail/");
-        setProfileData(response.data)
-        } catch (error) {
-            window.alert("Failed to upload photo", error)
-        } finally {
-            setIsLoaded(false);
-        }
-    };
+    }
 
     const handleDeletePhoto = async () => {
-
-        try {
-            await api.delete("api/user/profile-photo/");
-
-            const response = await api.get("/api/user/profile_detail");
-            setProfileData(response.data);
-        } catch (error) {
-            window.alert("Failed to delete photo", error)
-        }
+        setPhotoPreview(null);
+        setDeletePhoto(true);
     }
 
     const handleSave = async () => {
         try {
+
+            if (selectedFile) {
+                const formData = new FormData();
+                formData.append('profile_image', selectedFile);
+                await api.post('/api/user/profile-photo/', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+            }  
+
+            if (deletePhoto) {
+                await api.delete("/api/user/profile-photo/");
+                setDeletePhoto(false); 
+            }
+
             const response = await api.patch("/api/user/profile_detail/", profileData);
             navigate('/profile');
         } catch (error) {
@@ -154,6 +177,8 @@ function ProfileEdit() {
                 handleFileSelect={handleFileSelect}
                 handleUploadPhoto={handleUploadPhoto}
                 handleDeletePhoto={handleDeletePhoto}
+                photoPreview={photoPreview}
+                deletePhoto={deletePhoto}
             />
         </div>
     </MainContainer>
