@@ -33,5 +33,3 @@ MoneyTracker/backend/db.sqlite3
 .env
 
 schema.yaml
-
-# MoneyTracker/backend/media/profile_images/
