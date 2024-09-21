@@ -12,7 +12,7 @@ function NewTransactionCard() {
 
     useEffect(() => {
         const currentDate = new Date();
-        const formattedDate = currentDate.toISOString().split('T')[0];
+        const formattedDate = currentDate.toISOString().slice(0, 16);
         setDate(formattedDate);
     }, []);
 
@@ -79,7 +79,7 @@ function NewTransactionCard() {
                         {//TODO: add custom date picker 
                         }
                         <input 
-                            type="date" 
+                            type="datetime-local" 
                             className='card-input-date' 
                             value={date}
                             onChange={handleDateChange}
