@@ -7,7 +7,9 @@ function NewTransactionCard() {
 
     const [date, setDate] = useState('');
 
-    const [IncomeOrSpend, setIncomeOrSpend] = useState(false);
+    const [IncOrSpndHint, setIncOrSpndHint] = useState('This will count as Income');
+
+    const [IncomeOrSpend, setIncomeOrSpend] = useState(true);
     const [isAnimating, setIsAnimating] = useState(false); // Track animation state
 
     useEffect(() => {
@@ -24,6 +26,13 @@ function NewTransactionCard() {
         setIsAnimating(true); // Start animation
         setTimeout(() => {
             setIncomeOrSpend(!IncomeOrSpend);
+
+            if (IncomeOrSpend == true) {
+                setIncOrSpndHint('This will count as Expense');
+            } else {    
+                setIncOrSpndHint('This will count as Income');
+            }
+
             setIsAnimating(false); // Reset after animation
         }, 100); // Match timeout with animation duration (0.5s)
     }
@@ -38,29 +47,39 @@ function NewTransactionCard() {
 
             <div className="card-inputs-container">
 
-                <div className='card-amount-input-title-container'>
-                    <div className='card-amount-container'>
-                        <h1 className='card-input-title'>Amount</h1>
-                        <h2 className='card-input-hint'>This will count as Income</h2>
+                <div className="card-transaction-top-container">
+
+                    <div className="card-amount-input-title-container">
+                        <h1 className='card-input-title'>Name</h1>
+                        <input className='card-input-currency' type="text"/>
                     </div>
 
-                    <div className='card-amount-button-container'>
-                        <input
-                            className='card-input' 
-                            type="number"
-                            min="0"
+                    <div className='card-amount-input-title-container'>
+                        <div className='card-amount-container'>
+                            <h1 className='card-input-title'>Amount</h1>
+                            <h2 className='card-input-hint'>{IncOrSpndHint}</h2>
+                        </div>
 
-                        />
-                        {IncomeOrSpend == true && (
-                                <img className={`card-button ${isAnimating ? "fade-out" : "fade-in"}`}  src={Plus} onClick={handleIncomeOrSpend} alt="Plus" draggable="false"/>
-                            )
-                        }
-                        {IncomeOrSpend == false && (
-                                <img className={`card-button ${isAnimating ? "fade-out" : "fade-in"}`} src={Minus} onClick={handleIncomeOrSpend} alt="Minus" draggable="false"/>
-                            )
-                        }
+                        <div className='card-amount-button-container'>
+                            <input
+                                className='card-input' 
+                                type="number"
+                                min="0"
+
+                            />
+                            {IncomeOrSpend == true && (
+                                    <img className={`card-button ${isAnimating ? "fade-out" : "fade-in"}`}  src={Plus} onClick={handleIncomeOrSpend} alt="Plus" draggable="false"/>
+                                )
+                            }
+                            {IncomeOrSpend == false && (
+                                    <img className={`card-button ${isAnimating ? "fade-out" : "fade-in"}`} src={Minus} onClick={handleIncomeOrSpend} alt="Minus" draggable="false"/>
+                                )
+                            }
+                        </div>
                     </div>
+
                 </div>
+
 
                 <div className="card-currency-date-container">
                     <div className='card-amount-input-title-container'>
