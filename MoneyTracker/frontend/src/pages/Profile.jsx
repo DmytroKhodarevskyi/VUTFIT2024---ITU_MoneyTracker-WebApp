@@ -14,13 +14,20 @@ function Profile() {
 
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const [profilePhoto, setProfilePhoto] = useState(null)
+
     const [error, setError] = useState(null);
 
     useEffect( () => {
         async function fetchProfileData() {
             try {
-                const response = await api.get("/api/user/profile_detail/");  
+                const [response, photoResponse] = 
+                await Promise.all([
+                    api.get("/api/user/profile_detail/"),
+                    api.get("/api/user/profile/")
+                ])
                 setProfileData(response.data);
+                setProfilePhoto(photoResponse.data.profileImg)
                 setIsLoaded(true);
             } catch (error) {
                 window.alert("Failed to fetch profile data", error);
@@ -53,7 +60,7 @@ function Profile() {
 
     return (
     <MainContainer>
-        <TopPart nickname={profileData.firstname} selectedItem={"profile"} />
+        <TopPart nickname={profileData.firstname} selectedItem={"profile"} profilePhoto={profilePhoto}/>
             <ProfileCard 
                 profileImg={profileData.profileImg}
                 fullname={profileData.fullname}

@@ -19,58 +19,49 @@ function ProfileEdit() {
 
     const [deletePhoto, setDeletePhoto] = useState(false);
 
-    const [photoPreview, setPhotoPreview] = useState(null);
+    const [profilePhoto, setProfilePhoto] = useState(null);
 
-    
+    const [photoPreview, setPhotoPreview] = useState(null);
 
     const fileInputRef = useRef(null);
 
     const navigate = useNavigate(); 
 
-    useEffect( () => {
+    useEffect(() => {
         async function fetchProfileData() {
             try {
-                const response = await api.get("/api/user/profile_detail/");  
-                setProfileData(response.data);
+                const [profileResponse, genderResponse, photoResponse] = await Promise.all([
+                    api.get("/api/user/profile_detail/"),
+                    api.get("/api/gender-choices/"),
+                    api.get("/api/user/profile/")
+                ]);
+
+                setProfileData(profileResponse.data);
+                setGenderChoices(genderResponse.data);
+                setProfilePhoto(photoResponse.data.profileImg);
                 setIsLoaded(true);
             } catch (error) {
-                window.alert("Failed to fetch profile dataa", error);
+                setError(error);
                 setIsLoaded(false);
             }
         }
+
         fetchProfileData();
+    }, []);
 
+    useEffect(() => {
+        if (profileData && genderChoices.length > 0) {
+            const genderLabel = profileData.gender;
+            const matchingChoice = genderChoices.find(choice => choice.label === genderLabel);
 
-        async function fetchGenderChoices() {
-            try {
-                const response = await api.get("/api/gender-choices/");
-                setGenderChoices(response.data)
-            } catch (error) {
-                console.error("Failed to fetch gender choices", error);
+            if (matchingChoice) {
+                setProfileData(prevData => ({
+                    ...prevData,
+                    gender: matchingChoice.value 
+                }));
             }
         }
-
-
-        async function mapGenderCode() {
-            await fetchProfileData();
-            await fetchGenderChoices();
-
-            if (profileData && genderChoices.length > 0) {
-                const genderLabel = profileData.gender;
-
-                const matchingChoice = genderChoices.find(choice => choice.label === genderLabel);
-
-                if (matchingChoice) {
-                    setProfileData(prevData => ({
-                        ...prevData,
-                        gender: matchingChoice.value 
-                    }));
-                }
-            }
-        }
-
-        mapGenderCode();
-    }, [genderChoices.length]);
+    }, [profileData, genderChoices]);
 
     const handleInputChange = (field, value) => {
         setProfileData((prevData) => ({
@@ -114,6 +105,49 @@ function ProfileEdit() {
     const handleSave = async () => {
         try {
 
+            const jobTitleRegex = /^[A-Za-z][A-Za-z0-9\s]*$/;    
+            const nameRegex = /^[A-Za-z\s]+$/; 
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^[+]?[1-9][0-9]{7,14}$/; 
+
+            const { firstname, lastname, jobTitle, country, city, email, phone } = profileData;
+
+            if (!nameRegex.test(firstname)) {
+                window.alert('First name can only contain letters and spaces.');
+                return;
+            }
+
+            if (!nameRegex.test(lastname)) {
+                window.alert('Last name can only contain letters and spaces.');
+                return;
+            }
+
+            if (!jobTitleRegex.test(jobTitle)) {
+                window.alert('Job can only contain letters and spaces. And numbers (But not as a first char)');
+                return;
+            }
+
+            if (!nameRegex.test(country) && country.length != 0) {
+                window.alert('Country can only contain letters and spaces.');
+                return;
+            }
+
+            if (!nameRegex.test(city) && city.length != 0) {
+                window.alert('City can only contain letters and spaces.');
+                return;
+            }
+            
+            if (!emailRegex.test(email)) {
+                window.alert('Email can only contain letters and spaces.');
+                return;
+            }
+
+            if (!phoneRegex.test(phone)) {
+                window.alert('Phone can only contain letters and spaces and start with either + or any number except 0');
+                return;
+            }
+            
+            
             if (deletePhoto) {
                 await api.delete("/api/user/profile-photo/");
                 setDeletePhoto(false); 
@@ -155,12 +189,10 @@ function ProfileEdit() {
             </div>
         )
       }
-
     
-
     return (
         <MainContainer>
-        <TopPart nickname={profileData.username} selectedItem={"profile"}/>
+        <TopPart nickname={profileData.username} selectedItem={"profile"} profilePhoto={profilePhoto}/>
         <div className="profile-container">
             <ProfileEditCard 
                 profileImg={profileData.profileImg}

@@ -165,9 +165,13 @@ class UserProfileView(APIView):
 
     def get(self, request):
         user = request.user
+        profile = user.profile
+        
+        print(profile.profile_image)
         return Response({
 			"first_name": user.first_name,
-            "username": user.username  # Assuming the nickname is stored in the username field
+            "username": user.username, 
+            "profileImg": request.build_absolute_uri(profile.profile_image.url)
         })
 
 # class NoteListCreate(generics.ListAPIView):

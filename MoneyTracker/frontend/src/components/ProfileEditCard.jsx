@@ -69,6 +69,7 @@ function ProfileEditCard({
                             value={firstname} 
                             onChange={e => handleInputChange('firstname', e.target.value)} 
                             placeholder="Name"
+                            maxLength="15"
                         />
                         </div>
                         <div className="info-item">
@@ -79,6 +80,7 @@ function ProfileEditCard({
                                 value={lastname} 
                                 onChange={e => handleInputChange('lastname', e.target.value)} 
                                 placeholder="Surname"
+                                maxLength="15"
                             />
                         </div>
                         <div className='info-item'>
@@ -88,7 +90,8 @@ function ProfileEditCard({
                             className="input-box" 
                             value={phone} 
                             onChange={e => handleInputChange('phone', e.target.value)} 
-                            placeholder="Phone"
+                            placeholder="Phone" 
+                            maxLength="15"
                         />
                         </div>
                     </div>
@@ -104,6 +107,8 @@ function ProfileEditCard({
                                 value={email} 
                                 onChange={e => handleInputChange('email', e.target.value)} 
                                 placeholder="Email"
+                                maxLength="29"
+                                // TODO maybe email should be any, but needed to change profile card then 
                             />
                     </div>
                     <div className="info-item">
@@ -114,6 +119,7 @@ function ProfileEditCard({
                                 value={jobTitle} 
                                 onChange={e => handleInputChange('jobTitle', e.target.value)} 
                                 placeholder="Job Title"
+                                maxLength="25" 
                             />
                     </div>
                     <div className="info-item">
@@ -138,6 +144,7 @@ function ProfileEditCard({
                                 value={country} 
                                 onChange={e => handleInputChange('country', e.target.value)} 
                                 placeholder="Country"
+                                maxLength="20" 
                             />
                         </div>
                         <div className="info-item">
@@ -148,6 +155,7 @@ function ProfileEditCard({
                                 value={city} 
                                 onChange={e => handleInputChange('city', e.target.value)} 
                                 placeholder="City"
+                                maxLength="25" 
                             />
                          </div>
                     </div>    
