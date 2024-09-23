@@ -18,13 +18,17 @@ function Home() {
 
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const [profilePhoto, setProfilePhoto] = useState(null)
+
 
     useEffect(() => {
         const fetchNickname = async () => {
           try {
+            
             const response = await api.get("/api/user/profile/");
             // setNickname(response.data.username);
             setNickname(response.data.first_name);
+            setProfilePhoto(response.data.profileImg);
             setIsLoaded(true); // Mark data as loaded
           } catch (error) {
             console.error("Failed to fetch nickname", error);
@@ -53,7 +57,7 @@ function Home() {
     return (
         <>
             <MainContainer>
-                <TopPart nickname={nickname} selectedItem={"update"}/>
+                <TopPart nickname={nickname} selectedItem={"update"} profilePhoto={profilePhoto}/>
                
                 <div className="cards-container">
                     <NewTransactions />

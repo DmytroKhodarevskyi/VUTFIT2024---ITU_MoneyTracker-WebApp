@@ -7,12 +7,14 @@ import "../styles/TopPart.css"
 import Logo from "../assets/AppLogo.svg"
 import Face from "./Bohdan_Bečka.jpg"
 
-function TopPart({nickname, selectedItem}) {
+function TopPart({nickname, selectedItem, profilePhoto}) {
     const navigate = useNavigate();
     const handleLogout = () => {
         
         navigate('/logout');
     };
+
+
     // const [nickname, setNickname] = useState("")
 
     // useEffect(() => {
@@ -45,13 +47,14 @@ function TopPart({nickname, selectedItem}) {
     //   }, [setIsLoaded]);
 
 
+
     return (
         <>
             <div className="top-container">
                 <img draggable="false" className='app-logo' src={Logo} alt="Logo" />
 
                 <div className="img_butt">
-                <img draggable="false" className='mini_foto' src={Face} alt="Face" />
+                <img draggable="false" className='mini_foto' src={profilePhoto} alt="Face" />
 
                     <button className="logout" onClick={handleLogout}>Logout</button>
                 </div>
