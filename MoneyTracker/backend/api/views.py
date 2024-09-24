@@ -167,7 +167,6 @@ class UserProfileView(APIView):
         user = request.user
         profile = user.profile
         
-        print(profile.profile_image)
         return Response({
 			"first_name": user.first_name,
             "username": user.username, 

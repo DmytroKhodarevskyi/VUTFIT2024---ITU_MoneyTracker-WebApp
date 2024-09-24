@@ -122,43 +122,57 @@ function ProfileEdit() {
         try {
 
             const jobTitleRegex = /^[A-Za-z][A-Za-z0-9\s]*$/;    
-            const nameRegex = /^[A-Za-z\s]+$/; 
+            const nameRegex = /^[A-Za-z]+$/; 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const phoneRegex = /^[+]?[1-9][0-9]{7,14}$/; 
 
-            const { firstname, lastname, jobTitle, country, city, email, phone } = profileData;
+            let { firstname, lastname, jobTitle, country, city, email, phone } = profileData;
 
-            if (!nameRegex.test(firstname)) {
+            profileData.firstname = firstname.trim();
+            profileData.lastname = lastname.trim();
+            profileData.jobTitle = jobTitle.trim();
+            profileData.country = country.trim();
+            profileData.city = city.trim();
+            profileData.email = email.trim();
+            profileData.phone = phone.trim();
+
+
+            if(jobTitle.length == 0) {
+                profileData.jobTitle = "Unemployed";
+                jobTitle = "Unemployed";
+            }
+
+            if (!nameRegex.test(firstname.trim())) {
                 window.alert('First name can only contain letters and spaces.');
                 return;
             }
 
-            if (!nameRegex.test(lastname)) {
+            if (!nameRegex.test(lastname.trim())) {
                 window.alert('Last name can only contain letters and spaces.');
                 return;
             }
 
-            if (!jobTitleRegex.test(jobTitle)) {
+            if (!jobTitleRegex.test(jobTitle.trim())) {
                 window.alert('Job can only contain letters and spaces. And numbers (But not as a first char)');
                 return;
             }
 
-            if (!nameRegex.test(country) && country.length != 0) {
+            if (!nameRegex.test(country.trim()) && country.length != 0) {
                 window.alert('Country can only contain letters and spaces.');
                 return;
             }
 
-            if (!nameRegex.test(city) && city.length != 0) {
+            if (!nameRegex.test(city.trim()) && city.length != 0) {
                 window.alert('City can only contain letters and spaces.');
                 return;
             }
             
-            if (!emailRegex.test(email)) {
+            if (!emailRegex.test(email.trim())) {
                 window.alert('Email can only contain letters and spaces.');
                 return;
             }
 
-            if (!phoneRegex.test(phone)) {
+            if (!phoneRegex.test(phone.trim())) {
                 window.alert('Phone can only contain letters and spaces and start with either + or any number except 0');
                 return;
             }
