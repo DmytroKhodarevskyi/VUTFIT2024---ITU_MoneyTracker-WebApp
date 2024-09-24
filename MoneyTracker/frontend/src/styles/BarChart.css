@@ -1,0 +1,45 @@
+.card {
+    padding: '12px';
+    border: '2px solid #ccc';
+    width: auto;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 12px;
+    border-radius: 8px;
+    width: 100%;
+    height: 67px;
+}
+
+.text-h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 36.31px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    margin: 0;
+}
+
+.button {
+    padding: 9px 12px;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 15px;
+    /* Вирівнюємо елементи по вертикалі */
+    display: flex;
+    /* Використовуємо Flexbox для вирівнювання тексту та іконки */
+    border: 2px solid #D9D9D9;
+    border-radius: 8px;
+    width: 177px;
+    height: 40px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    line-height: 19.36px;
+    letter-spacing: -2%;
+}
