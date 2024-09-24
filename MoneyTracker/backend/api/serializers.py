@@ -87,7 +87,8 @@ class UserSerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ["id", "title", "category", "created_at", "amount", "incomeOrSpend", "author"]
+        fields = '__all__'
+        # fields = ["id", "title", "category", "created_at", "transaction_datetime", "currency", "transaction_type", "amount", "incomeOrSpend", "author"]
         extra_kwargs = {"author": {"read_only": True}}
         
 

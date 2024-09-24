@@ -194,7 +194,7 @@ class TransactionListCreate(generics.ListCreateAPIView):
 
 	def get_queryset(self):
 		user = self.request.user
-		return Transaction.objects.filter(author=user)
+		return Transaction.objects.filter(author=user).order_by('-transaction_datetime')
 	
 	def perform_create(self, serializer):
 		if serializer.is_valid():

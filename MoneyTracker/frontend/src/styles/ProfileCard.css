@@ -29,7 +29,8 @@
     overflow: hidden; 
 
     height: fit-content;
-    min-width: 660px;
+    min-width: 780px;
+    /* width: fit-content; */
     gap: 20px;
 }
 
@@ -93,6 +94,7 @@
 
 .profile-box {
     /* background-color: #f0f0f0; */
+    /* min-width: 145px; */
     display: flex;
     height: 34px;
     align-items: center;
@@ -101,7 +103,8 @@
     padding: 8px 16px;
     font-size: 18px;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    width: auto; 
+    width: auto;
+    min-width: fit-content; 
 }
 
 .profile-contact-info {

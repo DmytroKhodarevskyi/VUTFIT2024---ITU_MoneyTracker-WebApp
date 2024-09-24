@@ -2,14 +2,20 @@ import React, { useState, useEffect } from 'react'
 import "../styles/NewTransactionCard.css"
 import Plus from "../assets/PlusIcon.svg"
 import Minus from "../assets/MinusIcon.svg"
+import api from "../api"
 
 function NewTransactionCard() {
 
     const [date, setDate] = useState('');
 
+    const [amount, setAmount] = useState(0);
+    const [name, setName] = useState('');
+    const [category, setCategory] = useState('Groceries');
+    const [currency, setCurrency] = useState('USD (United States Dollar)');
+    const [IncomeOrSpend, setIncomeOrSpend] = useState(true);
+
     const [IncOrSpndHint, setIncOrSpndHint] = useState('This will count as Income');
 
-    const [IncomeOrSpend, setIncomeOrSpend] = useState(true);
     const [isAnimating, setIsAnimating] = useState(false); // Track animation state
 
     useEffect(() => {
@@ -17,6 +23,44 @@ function NewTransactionCard() {
         const formattedDate = currentDate.toISOString().slice(0, 16);
         setDate(formattedDate);
     }, []);
+
+    const handleSubmit = async () => {
+
+        if (name === '') {
+            alert('Transaction title is required');
+            return;
+        }
+
+        if (amount <= 0) {
+            alert('Transaction amount must be greater than 0');
+            return;
+        }
+
+        if (amount > 999999999) {
+            alert('Transaction amount is too large');
+            return;
+        }
+
+        const transactionData = {
+            title: name,  // Assuming title corresponds to name
+            category: category,
+            transaction_datetime: date,  // Map date to transaction_datetime
+            currency: currency.split(" ")[0].toLowerCase(),  // Extract the currency code like "USD"
+            transaction_type: IncomeOrSpend ? 'INCOME' : 'EXPENSE',  // Map the boolean to the transaction type
+            amount: parseFloat(amount).toFixed(2),  // Convert amount to decimal format with 2 decimal places
+            incomeOrSpend: IncomeOrSpend,  // This boolean field seems optional based on your structure
+        };
+
+        console.log(transactionData);
+
+        try {
+            const response = await api.post("/api/transactions/", transactionData);
+            console.log('Transaction created:', response.data);
+        } catch (error) {
+            console.error('There was an error creating the transaction:', error);
+        }
+
+    };
 
     const handleDateChange = (e) => {
         setDate(e.target.value);
@@ -50,8 +94,13 @@ function NewTransactionCard() {
                 <div className="card-transaction-top-container">
 
                     <div className="card-amount-input-title-container">
-                        <h1 className='card-input-title'>Name</h1>
-                        <input className='card-input-currency' type="text"/>
+                        <h1 className='card-input-title'>Title</h1>
+                        <input 
+                            className='card-input-currency' 
+                            type="text" 
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                    />
                     </div>
 
                     <div className='card-amount-input-title-container'>
@@ -65,6 +114,8 @@ function NewTransactionCard() {
                                 className='card-input' 
                                 type="number"
                                 min="0"
+                                value={amount}
+                                onChange={(e) => setAmount(e.target.value)}
 
                             />
                             {IncomeOrSpend == true && (
@@ -86,7 +137,11 @@ function NewTransactionCard() {
                         <h1 className='card-input-title'>Payment Currency</h1>
                         {//TODO: add custom picker or fix the arrow position
                         }
-                        <select id="picker-currency" className="card-input-currency">
+                        <select 
+                            id="picker-currency" 
+                            className="card-input-currency" 
+                            value={currency}
+                            onChange={e => {setCurrency(e.target.value)}}>
                             <option value="USD (United States Dollar)">USD (United States Dollar)</option>
                             <option value="CZK (Czech Koruna)">CZK (Czech Koruna)</option>
                             <option value="EUR (Euro)">EUR (Euro)</option>
@@ -113,7 +168,11 @@ function NewTransactionCard() {
                         </div>
                         {//TODO: add custom picker or fix the arrow position
                         }
-                        <select id="picker-category" className="card-input-currency">
+                        <select 
+                            id="picker-category" 
+                            className="card-input-currency" 
+                            value={category} 
+                            onChange={(e) => {setCategory(e.target.value)}}>
                             <option value="Groceries">Groceries</option>
                             <option value="Direct Payment">Direct Payment</option>
                             <option value="Sports">Sports</option>
@@ -121,7 +180,7 @@ function NewTransactionCard() {
                 </div>
             </div>
 
-            <button className='add-button'>
+            <button className='add-button' onClick={handleSubmit}>
                  Add
             </button>
 
