@@ -20,6 +20,7 @@ function ProfileEditCard({
     handleFileSelect,
     handleUploadPhoto,
     handleDeletePhoto,
+    handleDiscard,
     photoPreview,
     deletePhoto
 }) {
@@ -165,7 +166,7 @@ function ProfileEditCard({
             <div className="sidebar-actions">
                 <div className="action-buttons">
                     <button className="button-save-profile" onClick={handleSave}>Save</button>
-                    <button className="button-discard-profile">Discard</button>
+                    <button className="button-discard-profile" onClick={handleDiscard}>Discard</button>
                 </div>
             </div>
         </div>
