@@ -48,6 +48,7 @@ function Transactions({}) {
         return title;
     };
 
+
     const currency = "$";
 
   return (
@@ -65,7 +66,8 @@ function Transactions({}) {
                 <div className='transaction-title-date-container'>
                     <div className='transaction-title-container'>
                     <h2 className='transaction-title'>
-                        {truncateTitle(transaction.title, 10)}
+                        {truncateTitle(transaction.title, 12)}
+                        {/* {transaction.title} */}
                     </h2>
                     <h2 className='transaction-category'>{transaction.category}</h2>
                     </div>
@@ -81,11 +83,11 @@ function Transactions({}) {
                     // )
 
                     transaction.transaction_type === 'INCOME' ? (
-                        // <h2 className='transaction-income'>+{currency}{transaction.amount}</h2>  
-                        <h2 className='transaction-income'>+{currency}{truncateTitle(transaction.amount, 5)}</h2>  
+                        <h2 className='transaction-income'>+{currency}{transaction.amount}</h2>  
+                        // <h2 className='transaction-income'>+{currency}{truncateTitle(transaction.amount, 5)}</h2>  
                     ) : (
-                        // <h2 className='transaction-spend'>-{currency}{transaction.amount}</h2>
-                        <h2 className='transaction-spend'>-{currency}{truncateTitle(transaction.amount, 5)}</h2>  
+                        <h2 className='transaction-spend'>-{currency}{transaction.amount}</h2>
+                        // <h2 className='transaction-spend'>-{currency}{truncateTitle(transaction.amount, 5)}</h2>  
                     )
                 }
 

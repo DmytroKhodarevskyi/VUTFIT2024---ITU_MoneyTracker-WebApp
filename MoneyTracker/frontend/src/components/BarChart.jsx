@@ -1,4 +1,8 @@
 'use client';
+import api from "../api"
+
+import React from 'react';
+import { useState, useEffect } from 'react';
 import "../styles/BarChart.css"
 import Desk_fill from "./Desk_fill.png"
 import {
@@ -46,10 +50,92 @@ const income_expenses = [
 ];
 
 const BarChartComponent = () => {
+
+    const [incomeExpenses, setIncomeExpenses] = useState([]);
+
+    const getMonthName = (dateString) => {
+        const date = new Date(dateString);
+        const monthNames = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
+        return monthNames[date.getMonth()];
+    };
+
+    const StatsHandler = async (Month) => {
+        try {
+            const response = await api.get("/api/transactions/");
+            let income = 0;
+            let spending = 0;
+
+            // console.log(response.data);
+
+            response.data.forEach(transaction => {
+
+                // console.log(Month + " IT IS MONTH" + " " + getMonthName(transaction.transaction_datetime.month) + " IT IS MONTH");
+                // console.log(getMonthName(transaction.transaction_datetime) + " IT IS MONTH");
+                // if (transaction.transaction_type === "INCOME" && transaction.date.includes(Month)) {
+                if (transaction.transaction_type === "INCOME" && getMonthName(transaction.transaction_datetime) === Month) {
+                    
+                    // console.log(transaction.amount + " INCOME");
+                    income += parseFloat(transaction.amount);
+                } else if (getMonthName(transaction.transaction_datetime) === Month) {
+                    spending += parseFloat(transaction.amount);
+                }
+            });
+    
+            return [income, spending];
+        } catch (error) {
+            console.error("Failed to fetch transactions", error);
+            return [0, 0];
+        }
+    }
+    
+    const getLastSixMonths = () => {
+        const months = [];
+        const date = new Date();
+        for (let i = 0; i < 6; i++) {
+            // const year = date.getFullYear();
+            const monthName = getMonthName(date);
+            // months.push(`${year}-${monthName}`);
+            months.push(`${monthName}`);
+            date.setMonth(date.getMonth() - 1);
+        }
+        return months.reverse(); // Reverse to get the oldest month first
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const months = getLastSixMonths();
+            const updatedData = await Promise.all(months.map(async (month) => {
+                
+                // console.log(month + " SENDING TO STATS HANDLER");
+                const [income, expense] = await StatsHandler(month);
+                return { name: month, income, expense };
+            }));
+            setIncomeExpenses(updatedData);
+        };
+
+        fetchData();
+    }, []);
+
     return (
-        <div className="card">
-            <div className="chart-header">
-                <h2 className="text-h2">Balance Overview</h2>
+        <div className="card-graph">
+            <div className="top-container-graph">
+                <div className="chart-header">
+                    <h2 className="text-h2">Balance Overview</h2>
+                    <div className="legend">
+                        <div className="legend-item" style={{ color: '#00000080' }}>
+                        <span className="legend-circle" style={{ backgroundColor: '#4CAF50' }}></span>
+                            Total income
+                        </div>
+                        <div className="legend-item" style={{ color: '#00000080' }}>
+                        <span className="legend-circle" style={{ backgroundColor: '#F44336' }}></span>
+                            Total Spending
+                        </div>
+                    </div>
+                </div>
+                
                 <button className="button">
                     Last 6 month
                     <span style={{ marginLeft: '5px' }} role="img" aria-label="calendar">
@@ -58,20 +144,10 @@ const BarChartComponent = () => {
                 </button>
             </div>
 
-            <div className="legend">
-                <div className="legend-item" style={{ color: '#00000080' }}>
-                <span className="legend-circle" style={{ backgroundColor: '#4CAF50' }}></span>
-                    Total income
-                </div>
-                <div className="legend-item" style={{ color: '#00000080' }}>
-                <span className="legend-circle" style={{ backgroundColor: '#F44336' }}></span>
-                    Total Spending
-                </div>
-            </div>
 
 
             <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={income_expenses} margin={{ top: 20, right: 0, left: 20, bottom: 0 }}>
+                <BarChart data={incomeExpenses} margin={{ top: 20, right: 0, left: 20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" /> {/* Змінено колір сітки */}
                     <XAxis dataKey="name" stroke="#333" /> {/* Колір осі */}
                     <YAxis stroke="#333" /> {/* Колір осі */}

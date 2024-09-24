@@ -25,9 +25,9 @@ function Home() {
 
     const [profilePhoto, setProfilePhoto] = useState(null);
 
-    const [Income, setIncome] = useState(0);
-    const [Spending, setSpending] = useState(0);
-    const [Balance, setBalance] = useState(0);
+    const [Income, setIncome] = useState(0.0);
+    const [Spending, setSpending] = useState(0.0);
+    const [Balance, setBalance] = useState(0.0);
 
     const FindBalance = async () => {
         try {
@@ -54,11 +54,17 @@ function Home() {
         }
     }
 
+    const formatAmount = (amount) => {
+        return new Intl.NumberFormat('de-DE', {
+            style: 'decimal',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(amount);
+    };
+
     useEffect(() => {
         FindBalance();
     }, []);
-
-
 
     useEffect(() => {
         const fetchNickname = async () => {
@@ -96,12 +102,15 @@ function Home() {
         <>
             <MainContainer>
                 <TopPart nickname={nickname} selectedItem={"overview"} profilePhoto={profilePhoto}/>
-                <div className="SummaryCards-container">
+                
+                <div className="grid-container">
+
+                {/* <div className="SummaryCards-container"> */}
                     <SummaryCard 
                         title={"Total Balance"}
                         date={"2 September - 1 July 2024"}
                         // amount={currency + "1.000.000,01"}
-                        amount={currency + Balance}
+                        amount={currency + formatAmount(Balance.toFixed(2))}
                         trends={"+52% LastYear"}
                         style_trends={{color: '#00BCD4'}}
                         img_src={WalletIcon}
@@ -110,7 +119,7 @@ function Home() {
                         title={"Total Income"}
                         date={"2 September - 1 July 2024"}
                         // amount={currency + "520.000,01"}
-                        amount={currency + Income}
+                        amount={"+" + currency + formatAmount(Income.toFixed(2))}
                         trends={"+12% Last Month"}
                         style_trends={{color: '#4CAF50'}}
                         img_src={CardIcon}
@@ -119,15 +128,16 @@ function Home() {
                         title={"Total Spending"}
                         date={"2 September - 1 July 2024"}
                         // amount={"-" + currency + "228.000,00"}
-                        amount={"-" + currency + Spending}
+                        amount={"-" + currency + formatAmount(Spending.toFixed(2))}
                         trends={"+15% LastYear"}
                         style_trends={{color: '#F44336'}}
                         img_src={BagIcon}
                     />
-                </div>
-                <div className="trans-graph-container">
+                {/* </div> */}
+                {/* <div className="trans-graph-container"> */}
                     <Transactions />
                     <BarChart />
+                {/* </div> */}
                 </div>
 
             </MainContainer>
