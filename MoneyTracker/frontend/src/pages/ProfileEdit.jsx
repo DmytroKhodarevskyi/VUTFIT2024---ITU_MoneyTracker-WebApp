@@ -3,6 +3,7 @@ import api from "../api"
 import MainContainer from "../components/MainContainer"
 import TopPart from "../components/TopPart"
 import ProfileEditCard from "../components/ProfileEditCard"
+import DiscardForm from "../components/DiscardForm"
 import { useNavigate } from 'react-router-dom';
 
 function ProfileEdit() {
@@ -22,6 +23,8 @@ function ProfileEdit() {
     const [profilePhoto, setProfilePhoto] = useState(null);
 
     const [photoPreview, setPhotoPreview] = useState(null);
+
+    const [showDiscardModal, setShowDiscardModal] = useState(false);
 
     const fileInputRef = useRef(null);
 
@@ -63,6 +66,19 @@ function ProfileEdit() {
         }
     }, [profileData, genderChoices]);
 
+    const handleDiscard = () => {
+        setShowDiscardModal(true);
+    };
+
+    const confirmDiscard = () => {
+        navigate('/profile');
+    };
+    
+    const cancelDiscard = () => {
+        setShowDiscardModal(false);
+    };
+
+    
     const handleInputChange = (field, value) => {
         setProfileData((prevData) => ({
             ...prevData,
@@ -213,10 +229,18 @@ function ProfileEdit() {
                 handleFileSelect={handleFileSelect}
                 handleUploadPhoto={handleUploadPhoto}
                 handleDeletePhoto={handleDeletePhoto}
+                handleDiscard={handleDiscard}
                 photoPreview={photoPreview}
                 deletePhoto={deletePhoto}
             />
         </div>
+
+        {showDiscardModal && (
+                <DiscardForm
+                    onConfirm={confirmDiscard}
+                    onCancel={cancelDiscard}
+                />
+            )}
     </MainContainer>
     )
 }

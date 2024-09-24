@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    padding: 35px;
+    border-radius: 5px;
+    text-align: center;
+    width: 300px;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+    width: 100%;
+}
+
+.button-confirm {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button-cancel {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    background-color: #00BCD4;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button-confirm:hover {
+    background-color: #da3833;
+    transform: translateY(-1px);
+}
+
+.button-cancel:hover {
+    background-color: #00A7BB;
+    transform: translateY(-1px);
+}

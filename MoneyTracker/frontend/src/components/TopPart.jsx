@@ -5,7 +5,6 @@ import api from "../api"
 import { Link } from 'react-router-dom';
 import "../styles/TopPart.css"
 import Logo from "../assets/AppLogo.svg"
-import Face from "./Bohdan_Bečka.jpg"
 
 function TopPart({nickname, selectedItem, profilePhoto}) {
     const navigate = useNavigate();
