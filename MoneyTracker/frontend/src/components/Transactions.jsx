@@ -41,6 +41,13 @@ function Transactions({}) {
         return new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short' }).format(date);
     };
 
+    const truncateTitle = (title, maxLength) => {
+        if (title.length > maxLength) {
+            return title.substring(0, maxLength) + '...';
+        }
+        return title;
+    };
+
     const currency = "$";
 
   return (
@@ -57,18 +64,28 @@ function Transactions({}) {
 
                 <div className='transaction-title-date-container'>
                     <div className='transaction-title-container'>
-                    <h2 className='transaction-title'>{transaction.title}</h2>
+                    <h2 className='transaction-title'>
+                        {truncateTitle(transaction.title, 10)}
+                    </h2>
                     <h2 className='transaction-category'>{transaction.category}</h2>
                     </div>
 
-                    <h2 className='transaction-date'>{formatDate(transaction.created_at)}</h2>
+                    <h2 className='transaction-date'>{formatDate(transaction.transaction_datetime)}</h2>
                 </div>
 
                 {
-                    transaction.incomeOrSpend ? (
-                        <h2 className='transaction-income'>+{currency}{transaction.amount}</h2>  
+                    // transaction.incomeOrSpend ? (
+                    //     <h2 className='transaction-income'>+{currency}{transaction.amount}</h2>  
+                    // ) : (
+                    //     <h2 className='transaction-spend'>-{currency}{transaction.amount}</h2>  
+                    // )
+
+                    transaction.transaction_type === 'INCOME' ? (
+                        // <h2 className='transaction-income'>+{currency}{transaction.amount}</h2>  
+                        <h2 className='transaction-income'>+{currency}{truncateTitle(transaction.amount, 5)}</h2>  
                     ) : (
-                        <h2 className='transaction-spend'>-{currency}{transaction.amount}</h2>  
+                        // <h2 className='transaction-spend'>-{currency}{transaction.amount}</h2>
+                        <h2 className='transaction-spend'>-{currency}{truncateTitle(transaction.amount, 5)}</h2>  
                     )
                 }
 

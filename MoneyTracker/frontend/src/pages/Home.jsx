@@ -22,6 +22,40 @@ function Home() {
 
     const [profilePhoto, setProfilePhoto] = useState(null);
 
+    const [Income, setIncome] = useState(0);
+    const [Spending, setSpending] = useState(0);
+    const [Balance, setBalance] = useState(0);
+
+    const FindBalance = async () => {
+        try {
+            const response = await api.get("/api/transactions/");
+            let income = 0;
+            let spending = 0;
+            response.data.forEach(transaction => {
+                if (transaction.transaction_type === "INCOME") {
+                    income += parseFloat(transaction.amount);
+                } else {
+                    spending += parseFloat(transaction.amount);
+                }
+            });
+
+            // console.log(income);
+            // console.log(spending);
+            // console.log(income - spending);
+
+            setBalance(income - spending);
+            setIncome(income);
+            setSpending(spending);
+        } catch (error) {
+            console.error("Failed to fetch transactions", error);
+        }
+    }
+
+    useEffect(() => {
+        FindBalance();
+    }, []);
+
+
 
     useEffect(() => {
         const fetchNickname = async () => {
@@ -53,7 +87,7 @@ function Home() {
                 </div>
             </MainContainer>
         )
-      }
+    }
 
     return (
         <>
@@ -63,7 +97,8 @@ function Home() {
                     <SummaryCard 
                         title={"Total Balance"}
                         date={"2 September - 1 July 2024"}
-                        amount={currency + "1.000.000,01"}
+                        // amount={currency + "1.000.000,01"}
+                        amount={currency + Balance}
                         trends={"+52% LastYear"}
                         style_trends={{color: '#00BCD4'}}
                         img_src={WalletIcon}
@@ -71,7 +106,8 @@ function Home() {
                     <SummaryCard 
                         title={"Total Income"}
                         date={"2 September - 1 July 2024"}
-                        amount={currency + "520.000,01"}
+                        // amount={currency + "520.000,01"}
+                        amount={currency + Income}
                         trends={"+12% Last Month"}
                         style_trends={{color: '#4CAF50'}}
                         img_src={CardIcon}
@@ -79,7 +115,8 @@ function Home() {
                     <SummaryCard 
                         title={"Total Spending"}
                         date={"2 September - 1 July 2024"}
-                        amount={"-" + currency + "228.000,00"}
+                        // amount={"-" + currency + "228.000,00"}
+                        amount={"-" + currency + Spending}
                         trends={"+15% LastYear"}
                         style_trends={{color: '#F44336'}}
                         img_src={BagIcon}
