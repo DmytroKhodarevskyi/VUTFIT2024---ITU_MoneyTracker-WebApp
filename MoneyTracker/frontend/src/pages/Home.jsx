@@ -8,7 +8,10 @@ import WalletIcon from "../assets/wallet-icon.svg"
 import BagIcon from "../assets/BagIcon.svg"
 import CardIcon from "../assets/CardIcon.svg"
 
+
 import Transactions from "../components/Transactions"
+import BarChart from "../components/BarChart.jsx"
+
 
 // import ClipLoader from "react-spinners/ClipLoader";
 
@@ -124,6 +127,7 @@ function Home() {
                 </div>
                 <div className="trans-graph-container">
                     <Transactions />
+                    <BarChart />
                 </div>
 
             </MainContainer>
