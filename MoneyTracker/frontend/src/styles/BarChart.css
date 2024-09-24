@@ -8,31 +8,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 9px 12px;
-    border-radius: 8px;
     width: 100%;
-    height: 67px;
+    height: auto;
+    margin-bottom: 0;
 }
 
 .text-h2 {
     font-family: 'Inter', sans-serif;
     font-size: 30px;
     font-weight: 500;
-    line-height: 36.31px;
-    letter-spacing: -0.01em;
-    text-align: left;
+    line-height: 1.2;
     margin: 0;
 }
 
 .button {
     padding: 9px 12px;
     background-color: white;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-right: 15px;
-    /* Вирівнюємо елементи по вертикалі */
-    display: flex;
-    /* Використовуємо Flexbox для вирівнювання тексту та іконки */
     border: 2px solid #D9D9D9;
     border-radius: 8px;
     width: 177px;
@@ -42,4 +36,23 @@
     font-weight: 500;
     line-height: 19.36px;
     letter-spacing: -2%;
+    margin-top: 0;
+}
+
+.legend {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+}
+
+.legend-circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
 }

@@ -49,28 +49,29 @@ const BarChartComponent = () => {
     return (
         <div className="card">
             <div className="chart-header">
-                
                 <h2 className="text-h2">Balance Overview</h2>
                 <button className="button">
                     Last 6 month
                     <span style={{ marginLeft: '5px' }} role="img" aria-label="calendar">
-                        <img src={Desk_fill} alt="calendar icon" style={{height:'24px', width:'24px' }}></img>
+                        <img src={Desk_fill} alt="calendar icon" style={{ height: '24px', width: '24px' }} />
                     </span>
                 </button>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center',  gap: '1px' }}>
-                <div style={{ color: '#4CAF50', display: 'flex', alignItems: 'center' }}>
-                    <span style={{ width: '12px', height: '12px', backgroundColor: '#4CAF50', borderRadius: '50%', marginRight: '5px' }}></span>
-                    Total Income
+
+            <div className="legend">
+                <div className="legend-item" style={{ color: '#00000080' }}>
+                <span className="legend-circle" style={{ backgroundColor: '#4CAF50' }}></span>
+                    Total income
                 </div>
-                <div style={{ color: '#F44336', display: 'flex', alignItems: 'center' }}>
-                    <span style={{ width: '12px', height: '12px', backgroundColor: '#F44336', borderRadius: '50%', marginRight: '5px' }}></span>
+                <div className="legend-item" style={{ color: '#00000080' }}>
+                <span className="legend-circle" style={{ backgroundColor: '#F44336' }}></span>
                     Total Spending
-                    
                 </div>
             </div>
-            <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={income_expenses} margin={{ top: 20, right: 30, left: 20, bottom: 0 }}>
+
+
+            <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={income_expenses} margin={{ top: 20, right: 0, left: 20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" /> {/* Змінено колір сітки */}
                     <XAxis dataKey="name" stroke="#333" /> {/* Колір осі */}
                     <YAxis stroke="#333" /> {/* Колір осі */}
