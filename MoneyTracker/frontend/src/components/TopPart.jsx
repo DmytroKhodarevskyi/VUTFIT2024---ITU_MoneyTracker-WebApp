@@ -83,6 +83,7 @@ function TopPart({nickname, selectedItem, profilePhoto}) {
                         <li className={`navigation-item ${selectedItem === 'profile' ? 'navigation-item-selected' : ''}`}>
                             <Link to="/profile">Profile</Link>
                         </li>
+                        
                     </ul>
                 </div>
             </div>

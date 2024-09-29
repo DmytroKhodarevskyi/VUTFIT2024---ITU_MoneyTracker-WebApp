@@ -9,6 +9,7 @@ import Profile from './pages/Profile'
 import Update from './pages/Update'
 import ProtectedRoute from './components/ProtectedRoute'
 import ProfileEdit from './pages/ProfileEdit'
+import CategoriesAndStatistics from './pages/CategoriesAndStatistics'
 
 function Logout() {
   localStorage.clear()
@@ -63,6 +64,15 @@ function App() {
         element={
           <ProtectedRoute>
             <ProfileEdit />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route 
+        path="/categories-statistics"
+        element={
+          <ProtectedRoute>
+            <CategoriesAndStatistics />
           </ProtectedRoute>
         }
       />
