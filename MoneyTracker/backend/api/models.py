@@ -51,5 +51,13 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
     
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    color = models.CharField(max_length=7, default="#FFFFFF")  # Default color is white, using hex color codes
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='categories', null=True)
+
+    def __str__(self):
+        return self.name
     
 # Create your models here.

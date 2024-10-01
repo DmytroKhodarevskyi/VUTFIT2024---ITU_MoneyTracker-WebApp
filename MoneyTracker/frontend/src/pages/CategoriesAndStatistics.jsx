@@ -16,6 +16,7 @@ const staticCategories = [
 
 function CategoriesAndStatistics() {
   const [categories, setCategories] = useState(staticCategories); // Use static categories initially
+  const [selectedCategories, setSelectedCategories] = useState([]); // Стейт для вибраних категорій
   const [profileData, setProfileData] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -56,6 +57,17 @@ function CategoriesAndStatistics() {
     );
   }
 
+  // Коректно працююча функція для вибору чекбоксів
+  const handleCheckboxChange = (category) => {
+    if (selectedCategories.includes(category.id)) {
+      setSelectedCategories(
+        selectedCategories.filter((id) => id !== category.id)
+      );
+    } else {
+      setSelectedCategories([...selectedCategories, category.id]);
+    }
+  };
+
   return (
     <MainContainer>
       <TopPart
@@ -64,59 +76,78 @@ function CategoriesAndStatistics() {
         profilePhoto={profilePhoto}
       />
       <div className="category-container">
-        <div className="content-container">
+        <div className="left-container">
           {/* Categories Section */}
           <div className="categories-section">
             <div className="text-block">
-            <h2 className="category-text-h2">Categories</h2>
-            <p className="category-subtext">List of your categories</p>
+              <h2 className="category-text-h2">Categories</h2>
+              <p className="category-subtext">List of your categories</p>
             </div>
             <div className="table-block">
-            <table className="categories-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Color</th>
-      <th>Creation Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    {categories.map((category) => (
-      <tr key={category.id}>
-        <td>
-          <label style={{ display: 'flex', alignItems: 'center' }}>
-            <input type="radio" name="category" value={category.name} />
-            <span className="custom-radio"></span>
-            {category.name}
-          </label>
-        </td>
-        <td>
-          <span
-            style={{
-              backgroundColor: category.color,
-              display: 'inline-block',
-              width: '15px',
-              height: '15px',
-              borderRadius: '50%',
-            }}
-          ></span>
-        </td>
-        <td>
-          {category.created_at
-            ? new Date(category.created_at).toLocaleDateString('en-GB').replace(/\//g, '.')
-            : 'Date'}
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-
-
+              <table className="categories-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Color</th>
+                    <th>Creation Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categories.map((category) => (
+                    <tr key={category.id}>
+                      <td>
+                        <label style={{ display: 'flex', alignItems: 'center' }}>
+                          <input 
+                            type="checkbox" 
+                            name="category" 
+                            value={category.name} 
+                            checked={selectedCategories.includes(category.id)}
+                            onChange={() => handleCheckboxChange(category)} 
+                          />
+                          <span className="custom-checkbox"></span>
+                          {category.name}
+                        </label>
+                      </td>
+                      <td>
+                        <span
+                          style={{
+                            backgroundColor: category.color,
+                            display: 'inline-block',
+                            width: '25px',
+                            height: '25px',
+                            borderRadius: '25%',
+                          }}
+                        ></span>
+                      </td>
+                      <td>
+                        {category.created_at
+                          ? new Date(category.created_at).toLocaleDateString('en-GB').replace(/\//g, '.')
+                          : 'Date'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-            <div className="delete-section">
-              <p className="delete-text">Delete Selected</p>
+            <div className="bottom-part">
+              {/* Відображення кількості вибраних категорій */}
+              <p>{selectedCategories.length} row(s) of {categories.length} selected.</p>
+              
+              <div className="delete-section">
+                {/*<p
+                className={`delete-text ${selectedCategories.length === 0 ? 'disabled' : ''}`}
+                onClick={selectedCategories.length > 0 ? handleDeleteSelected : null}
+                >
+                Delete Selected
+                </p>
+                */}
+    </div>
+              
             </div>
           </div>
+        </div>
+        <div className="right-container">
+          
         </div>
       </div>
     </MainContainer>

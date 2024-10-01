@@ -5,11 +5,11 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from rest_framework import generics
 # from .serializers import UserSerializer, NoteSerializer
-from .serializers import UserSerializer, TransactionSerializer, GenderChoicesSerializer
+from .serializers import UserSerializer, TransactionSerializer, GenderChoicesSerializer,CategorySerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 # from .models import Note
 from rest_framework import status
-from .models import Transaction
+from .models import Transaction,Category
 
 from rest_framework.permissions import IsAdminUser
 
@@ -240,4 +240,10 @@ class GenderChoiceView(APIView):
         choices = GenderChoicesSerializer.get_gender_choices()
         return Response(choices)
 
+class CategoryListAPIView(APIView):
+    
+    def get(self, request, *args, **kwargs):
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 # Create your views here.

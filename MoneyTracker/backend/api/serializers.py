@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 # from .models import Note
-from .models import Transaction, Profile
+from .models import Transaction, Profile, Category
+
 
 
 
@@ -100,3 +101,20 @@ class GenderChoicesSerializer(serializers.ModelSerializer):
     def get_gender_choices():
         return [{'value': choice[0], 'label': choice[1]} for choice in Profile.GENDER_CHOICES]
         
+        
+class CategorySerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')  # To display the username of the author
+
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'color', 'created_at', 'author']  # Specify fields to be serialized
+        read_only_fields = ['id', 'created_at', 'author']  # Fields that should not be writable
+
+    def validate_name(self, value):
+        """
+        Ensure the category name is unique for the user.
+        """
+        request = self.context.get('request')
+        if Category.objects.filter(name=value, author=request.user).exists():
+            raise serializers.ValidationError("You already have a category with this name.")
+        return value        

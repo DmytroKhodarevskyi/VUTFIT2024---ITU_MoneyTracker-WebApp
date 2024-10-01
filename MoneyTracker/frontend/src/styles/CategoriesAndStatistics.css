@@ -1,5 +1,24 @@
-.content-container {
+.left-container {
     width: 521px;
+    /* Fixed width */
+    height: 615px;
+    /* Fixed height */
+    border-radius: 17px;
+    /* Radius */
+    padding: 28px 32px 28px 32px;
+    /* Padding (top-bottom, left-right) */
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    /* Gap between child elements */
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.right-container {
+    width: 719px;
     /* Fixed width */
     height: 615px;
     /* Fixed height */
@@ -33,6 +52,11 @@
     margin: 0;
 }
 
+.category-subtext {
+    padding-top: 4px;
+    color: #808080;
+}
+
 .table-block {
     border: 1px solid #BEC4CD;
     border-radius: 7px;
@@ -59,7 +83,7 @@
     height: 43px;
     background-color: #233A6C0D;
     font-weight: 500;
-    color: #333;
+    color: rgb(0, 0, 0);
     border-bottom: 1px solid #BEC4CD;
     /* Нижня межа для заголовків */
 }
@@ -68,6 +92,7 @@
     height: 63px;
     background-color: #f9f9f9;
     border-bottom: 1px solid #BEC4CD;
+    color: #000000B2;
     /* Нижня межа між рядками */
 }
 
@@ -101,49 +126,75 @@
 /* Style the custom radio button (check ring) */
 
 
-/* Стилізація для кастомного радіо-кнопки */
+/* Стилізація для кастомної радіо-кнопки */
 
-.custom-radio {
+
+/* Стилізація для кастомного чекбокса */
+
+.custom-checkbox {
     display: inline-block;
     width: 24px;
     height: 24px;
-    border: 2px solid #BEC4CD;
+    border: 1px solid #BEC4CD;
     border-radius: 50%;
+    /* Округлі краї, як у радіо-кнопки */
     position: relative;
     background-color: white;
-    background-image: none;
     margin-right: 10px;
-    /* Спочатку кільце пусте */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: none;
 }
 
 
-/* Коли радіо-кнопка вибрана, додаємо зображення */
+/* Коли чекбокс вибраний, додаємо зображення */
 
-.categories-table input[type="radio"]:checked+.custom-radio {
+.categories-table input[type="checkbox"]:checked+.custom-checkbox {
     background-image: url('../pages/Check_ring.png');
-    /* Замінити на шлях до вашого зображення */
-    background-size: cover;
+    /* Шлях до зображення */
+    background-size: 100% 100%;
+    /* Зображення заповнює повністю кільце */
     background-position: center;
 }
 
 
-/* Стиль для прихованої стандартної радіо-кнопки */
+/* Стиль для прихованого стандартного чекбокса */
 
-.categories-table input[type="radio"] {
+.categories-table input[type="checkbox"] {
     position: absolute;
     opacity: 0;
     cursor: pointer;
 }
 
-.delete-section {
+.bottom-part {
+    width: 100%;
+    /* Встановлюємо ширину на 100%, щоб адаптувати до розміру контейнера */
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    /* Вирівнюємо текст і кнопку по боках */
+    align-items: center;
+    /* Центруємо по вертикалі */
+    padding-top: 16px;
+    font-size: 18px;
+    /* Налаштовуємо розмір шрифту */
+    font-weight: 500;
+    color: #808080;
+    /* Встановлюємо світло-сірий колір для кількості рядків */
 }
 
 .delete-text {
-    color: red;
+    color: #FF6347;
+    /* Світло-червоний колір для активної кнопки */
     cursor: pointer;
-    font-weight: 600;
     text-decoration: underline;
-    padding-top: 16px;
+    padding-left: 16px;
+}
+
+.delete-text.disabled {
+    color: #F88E86;
+    /* Світло-сірий для неактивної кнопки */
+    cursor: not-allowed;
+    text-decoration: none;
+    /* Вимикаємо підкреслення для неактивної кнопки */
 }
