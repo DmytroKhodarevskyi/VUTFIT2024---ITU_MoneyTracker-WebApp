@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 # from .models import Note
-from .models import Transaction, Profile
+from .models import Transaction, Profile, Comment, Publication
 
 
 
@@ -34,9 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        print("Validated data:", validated_data)
         profile_data = validated_data.pop('profile')
-        # user = User.objects.create_user(**validated_data)
         user = User.objects.create_user(
             username=validated_data['username'],
             first_name=validated_data['first_name'],
@@ -99,4 +97,33 @@ class GenderChoicesSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_gender_choices():
         return [{'value': choice[0], 'label': choice[1]} for choice in Profile.GENDER_CHOICES]
-        
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True) 
+    publication = serializers.StringRelatedField(read_only=True)  
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'publication', 'author', 'stars', 'text', 'created_at']  
+        read_only_fields = ['created_at', 'stars'] 
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        validated_data['author'] = request.user  
+        return super().create(validated_data)
+    
+    
+class PublicationSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True) 
+    comments = CommentSerializer(many=True, read_only=True)  
+
+    class Meta:
+        model = Publication
+        fields = ['id', 'title', 'tags', 'content_text', 'content_media', 'author', 'stars', 'comments', 'created_at', 'updated_at']
+        read_only_fields = ['created_at', 'updated_at', 'stars', 'comments']  
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        validated_data['author'] = request.user  
+        return super().create(validated_data)

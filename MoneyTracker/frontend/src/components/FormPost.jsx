@@ -1,30 +1,59 @@
 import React, { useState } from "react";
 import "../styles/FormPost.css";
+import api from "../api";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import { useNavigate } from 'react-router-dom'
 
 function CreatePost() {  
- 
+  
+  const navigate = useNavigate();
+
 
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [media, setMedia] = useState(null); 
   const [tags, setTags] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(""); 
 
   const handleFileChange = (e) => {
     setMedia(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const newPost = {
-      title,
-      text,
-      media,
-      tags: tags.split(",").map(tag => tag.trim()), 
-    };
+    const newPost = new FormData();
+    newPost.append("title", title);
+    newPost.append("content_text", text);
+    newPost.append("content_media", media);
+    newPost.append("tags", tags);
 
-    console.log("Post created:", newPost);
+
+    try {
+      const res = await api.post("/api/publications/", newPost, {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`, 
+        },
+      });
+      console.log("Post created:", res.data);
+
+      navigate("/my-feed");
+  } catch (error) {
+      if (error.response) {
+        console.error("Error response:", error.response);
+        const errorMessage = error.response.data.detail || "Something went wrong.";
+        setError(errorMessage); 
+      } else {
+        console.error("Error message:", error.message);
+        setError("Network error. Please try again."); 
+      }
+    } finally {
+      setLoading(false); 
+    }
   };
+
 
   return (
     <div className="create-post-container">
