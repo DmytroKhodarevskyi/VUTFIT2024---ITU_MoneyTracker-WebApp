@@ -9,6 +9,8 @@ import Profile from './pages/Profile'
 import Update from './pages/Update'
 import ProtectedRoute from './components/ProtectedRoute'
 import ProfileEdit from './pages/ProfileEdit'
+import MyFeed from './pages/MyFeed'
+import CreatePost from './pages/CreatePost'
 
 function Logout() {
   localStorage.clear()
@@ -66,6 +68,26 @@ function App() {
           </ProtectedRoute>
         }
       />
+
+      <Route 
+        path="/my-feed"
+        element={
+          <ProtectedRoute>
+            <MyFeed />
+          </ProtectedRoute>
+        }
+      />
+
+      
+      <Route
+          path="/create-post"
+          element={
+            <ProtectedRoute>
+              <CreatePost />
+            </ProtectedRoute>
+          }
+        />
+
 
       <Route path="*" element={<NotFound />} />
 
