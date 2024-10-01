@@ -28,6 +28,10 @@ function ProfileCard({
         navigate('/edit-profile'); 
     };
 
+    const handleMyPublicationsButton = () => {
+        navigate('/my-feed');
+    }
+
     return (
         <div className="profile-container">
             <div className="profile-card">
@@ -99,6 +103,7 @@ function ProfileCard({
             <div className="profile-sidebar">
                     <div className="profile-sidebar-buttons">
                         <button className="change-profile-button" onClick={handleChangeProfile}> Change Profile</button>
+                        <button className="setup-reminder-button" onClick={handleMyPublicationsButton}> My Publications</button>
                         <button className="setup-reminder-button"> Setup Reminders</button>
                     </div>
 

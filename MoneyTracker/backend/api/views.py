@@ -5,12 +5,12 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from rest_framework import generics
 # from .serializers import UserSerializer, NoteSerializer
-from .serializers import UserSerializer, TransactionSerializer, GenderChoicesSerializer
+from .serializers import UserSerializer, TransactionSerializer, GenderChoicesSerializer, PublicationSerializer, CommentSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 # from .models import Note
 from rest_framework import status
-from .models import Transaction
-
+from .models import Transaction, Publication, Comment
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAdminUser
 
 from rest_framework.views import APIView
@@ -239,5 +239,40 @@ class GenderChoiceView(APIView):
     def get(self, request):
         choices = GenderChoicesSerializer.get_gender_choices()
         return Response(choices)
+    
+class CreatePublicationView(generics.CreateAPIView):
+    queryset = Publication.objects.all()
+    serializer_class = PublicationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print(f"Validation errors: {serializer.errors}")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+        
+        
+class PublicationListView(generics.ListAPIView):
+    serializer_class = PublicationSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        user = self.request.user
+        return Publication.objects.filter(author=user).order_by('-created_at')  
+        
+        
+class CreateCommentView(generics.CreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated] 
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)  
 
 # Create your views here.

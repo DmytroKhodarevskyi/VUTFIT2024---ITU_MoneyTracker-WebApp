@@ -52,4 +52,34 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
     
     
+class Publication(models.Model):
+    
+    title = models.CharField(max_length=128, blank=False, default="")
+    tags = models.CharField(max_length=255, blank=True) 
+    
+    content_text = models.TextField(blank=True, null=True) 
+    content_media = models.FileField(upload_to='publications/', blank=True, null=True)
+    
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='publications', null=True)
+    
+    stars = models.PositiveIntegerField(default=0)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f'{self.title} - publication name'
+    
+    
+class Comment(models.Model):
+    publication = models.ForeignKey(Publication, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    stars = models.PositiveIntegerField(default=0)
+    text = models.TextField()
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comment by {self.author} on {self.publication}'
+    
 # Create your models here.
