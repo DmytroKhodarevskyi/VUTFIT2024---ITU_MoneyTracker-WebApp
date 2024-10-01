@@ -16,6 +16,8 @@ function MyFeed () {
 
     const [error, setError] = useState(null);
 
+    const [publications, setPublications] = useState([]); 
+
     const navigate = useNavigate();
 
     const handleNewPost = () => {
@@ -26,14 +28,19 @@ function MyFeed () {
     useEffect( () => {
         async function fetchProfileData() {
             try {
-                const [response, photoResponse] = 
+                const [response, photoResponse, publicationsResponse] = 
                 await Promise.all([
                     api.get("/api/user/profile_detail/"),
-                    api.get("/api/user/profile/")
+                    api.get("/api/user/profile/"),
+                    api.get("/api/publications/my/") 
                 ])
                 setProfileData(response.data);
                 setProfilePhoto(photoResponse.data.profileImg)
+                setPublications(publicationsResponse.data);
                 setIsLoaded(true);
+
+                console.log("Publications:: ", publicationsResponse.data);
+
             } catch (error) {
                 window.alert("Failed to fetch profile data", error);
                 setIsLoaded(false);
@@ -62,20 +69,42 @@ function MyFeed () {
         )
       }
 
-
-    return (
+      return (
         <MainContainer>
-            <TopPart nickname={profileData.firstname} selectedItem={"profile"} profilePhoto={profilePhoto}/>
-                <div>
-                    <button className="add-post-button" onClick={handleNewPost}>Add new post</button>
-                 </div>
-                <MyFeedCard 
-                 profileImg={profileData.profileImg}
-                 fullname={profileData.fullname}
-                 />
-        </MainContainer>
-        )
+        <TopPart nickname={profileData?.firstname} selectedItem={"profile"} profilePhoto={profilePhoto} />
+        
+        <div>
+            <button className="add-post-button" onClick={handleNewPost}>Add new post</button>
+        </div>
+        
+        <div className="feed-container">
+            {publications && publications.length > 0 ? (
+                publications.map((publication, index) => {
+                    if (publication) {
+                        return (
+                            <MyFeedCard
+                                key={index}
+                                profileImg={profileData.profileImg}
+                                fullname={profileData.fullname}
+                                publication={publication}
+                            />
+                        );
+                    } else {
+                        return (
+                            <div key={index} className="end-message">
+                                <p>End of publications</p>
+                            </div>
+                        );
+                    }
+                })
+            ) : (
+                <div className="no-publications-message">
+                    <p>None of the publications were published</p>
+                </div>
+            )}
+        </div>
+    </MainContainer>
+    );
 }
-
 
 export default MyFeed;

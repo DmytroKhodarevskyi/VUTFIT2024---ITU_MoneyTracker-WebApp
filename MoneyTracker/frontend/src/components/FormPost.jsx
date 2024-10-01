@@ -27,7 +27,9 @@ function CreatePost() {
     const newPost = new FormData();
     newPost.append("title", title);
     newPost.append("content_text", text);
-    newPost.append("content_media", media);
+    if(media) {
+      newPost.append("content_media", media);
+    }
     newPost.append("tags", tags);
 
 
