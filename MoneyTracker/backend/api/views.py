@@ -172,6 +172,21 @@ class UserProfileView(APIView):
             "username": user.username, 
             "profileImg": request.build_absolute_uri(profile.profile_image.url)
         })
+    
+class SelectedUserProfileView(APIView):
+    permission_classes = [IsAuthenticated]  # Optional: if you want to secure the endpoint
+
+    def get(self, request, user_id):
+        try:
+            user = User.objects.get(id=user_id)
+            profile = user.profile
+            return Response({
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "profileImg": request.build_absolute_uri(profile.profile_image.url)
+            }, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
 
 # class NoteListCreate(generics.ListAPIView):
 # 	serializer_class = TransactionSerializer
@@ -265,6 +280,13 @@ class PublicationListView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return Publication.objects.filter(author=user).order_by('-created_at')  
+        
+class PublicationsFeedListView(generics.ListAPIView):
+    serializer_class = PublicationSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Publication.objects.all().order_by('-created_at')  
         
         
 class CreateCommentView(generics.CreateAPIView):

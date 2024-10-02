@@ -162,7 +162,7 @@ function Form({route, method}){
                 )}
                 </div>
 
-                <button className="form-button" type="submit" disabled={loading}>
+                <button className="form-button-loginregister" type="submit" disabled={loading}>
                     <p className="form-button-text"> {button} </p> 
                 </button>
 

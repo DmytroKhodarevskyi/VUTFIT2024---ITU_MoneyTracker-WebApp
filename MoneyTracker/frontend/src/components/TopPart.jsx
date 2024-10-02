@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import "../styles/TopPart.css"
 import Logo from "../assets/AppLogo.svg"
 
-function TopPart({nickname, selectedItem, profilePhoto}) {
+function TopPart({nickname, selectedItem, profilePhoto, titletext, subtitletext}) {
     const navigate = useNavigate();
     const handleLogout = () => {
         
@@ -59,8 +59,16 @@ function TopPart({nickname, selectedItem, profilePhoto}) {
                 </div>
 
                 <div className="home-title-container">
-                    <h1 className="home-title">Hello again, {nickname}!</h1>
-                    <h2 className="home-subtitle">Here is your brief finances overview, keep track!</h2>
+                    {/* <h1 className="home-title">Hello again, {nickname}!</h1>
+                    <h2 className="home-subtitle">Here is your brief finances overview, keep track!</h2> */}
+
+                    { titletext == null ?
+                    <h1 className="home-title">Hello again, {nickname}!</h1> 
+                    : <h1 className="home-title">{titletext}</h1>  }
+
+                    { subtitletext == null ?
+                     <h2 className="home-subtitle">Here is your brief finances overview, keep track!</h2> 
+                    : <h2 className="home-subtitle">{subtitletext}</h2> }
                 </div>
 
                 <div className="navigation-container">
@@ -74,8 +82,11 @@ function TopPart({nickname, selectedItem, profilePhoto}) {
                         <li className="navigation-item">
                             <Link to="/profile">Profile</Link>
                         </li> */}
+                        <li className={`navigation-item ${selectedItem === 'feed' ? 'navigation-item-selected' : ''}`}>
+                            <Link to="/feed">Feed</Link>
+                        </li>
                         <li className={`navigation-item ${selectedItem === 'overview' ? 'navigation-item-selected' : ''}`}>
-                        <Link to="/">Overview</Link>
+                            <Link to="/">Overview</Link>
                         </li>
                         <li className={`navigation-item ${selectedItem === 'update' ? 'navigation-item-selected' : ''}`}>
                             <Link to="/update"><p>Update</p></Link>

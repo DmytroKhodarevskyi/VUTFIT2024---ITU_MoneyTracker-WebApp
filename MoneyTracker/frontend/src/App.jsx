@@ -10,6 +10,7 @@ import Update from './pages/Update'
 import ProtectedRoute from './components/ProtectedRoute'
 import ProfileEdit from './pages/ProfileEdit'
 import MyFeed from './pages/MyFeed'
+import Feed from './pages/Feed'
 import CreatePost from './pages/CreatePost'
 
 function Logout() {
@@ -78,6 +79,14 @@ function App() {
         }
       />
 
+      <Route 
+        path="/feed"
+        element={
+          <ProtectedRoute>
+            <Feed />
+          </ProtectedRoute>
+        }
+      />
       
       <Route
           path="/create-post"
