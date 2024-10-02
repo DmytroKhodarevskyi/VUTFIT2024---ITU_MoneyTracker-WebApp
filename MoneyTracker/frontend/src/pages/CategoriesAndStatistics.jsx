@@ -75,16 +75,16 @@ function CategoriesAndStatistics() {
         selectedItem={"update"}
         profilePhoto={profilePhoto}
       />
-      <div className="category-container">
-        <div className="left-container">
+      <div className="CategoriesAndStatistics-category-container">
+        <div className="CategoriesAndStatistics-left-container">
           {/* Categories Section */}
-          <div className="categories-section">
-            <div className="text-block">
-              <h2 className="category-text-h2">Categories</h2>
-              <p className="category-subtext">List of your categories</p>
+          <div className="CategoriesAndStatistics-categories-section">
+            <div className="CategoriesAndStatistics-text-block">
+              <h2 className="CategoriesAndStatistics-category-text-h2">Categories</h2>
+              <p className="CategoriesAndStatistics-category-subtext">List of your categories</p>
             </div>
-            <div className="table-block">
-              <table className="categories-table">
+            <div className="CategoriesAndStatistics-table-block">
+              <table className="CategoriesAndStatistics-categories-table">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -104,7 +104,7 @@ function CategoriesAndStatistics() {
                             checked={selectedCategories.includes(category.id)}
                             onChange={() => handleCheckboxChange(category)} 
                           />
-                          <span className="custom-checkbox"></span>
+                          <span className="CategoriesAndStatistics-custom-checkbox"></span>
                           {category.name}
                         </label>
                       </td>
@@ -129,11 +129,11 @@ function CategoriesAndStatistics() {
                 </tbody>
               </table>
             </div>
-            <div className="bottom-part">
+            <div className="CategoriesAndStatistics-bottom-part">
               {/* Відображення кількості вибраних категорій */}
               <p>{selectedCategories.length} row(s) of {categories.length} selected.</p>
               
-              <div className="delete-section">
+              <div className="CategoriesAndStatistics-delete-section">
                 {/*<p
                 className={`delete-text ${selectedCategories.length === 0 ? 'disabled' : ''}`}
                 onClick={selectedCategories.length > 0 ? handleDeleteSelected : null}
@@ -146,7 +146,7 @@ function CategoriesAndStatistics() {
             </div>
           </div>
         </div>
-        <div className="right-container">
+        <div className="CategoriesAndStatistics-right-container">
           
         </div>
       </div>

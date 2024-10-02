@@ -1,4 +1,4 @@
-.left-container {
+.CategoriesAndStatistics-left-container {
     width: 521px;
     /* Fixed width */
     height: 615px;
@@ -17,7 +17,7 @@
     font-weight: 500;
 }
 
-.right-container {
+.CategoriesAndStatistics-right-container {
     width: 719px;
     /* Fixed width */
     height: 615px;
@@ -36,7 +36,7 @@
     font-weight: 500;
 }
 
-.category-container {
+.CategoriesAndStatistics-category-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 16px;
@@ -46,40 +46,40 @@
     height: fit-content;
 }
 
-.category-text-h2 {
+.CategoriesAndStatistics-category-text-h2 {
     font-size: 30px;
     line-height: 36.31px;
     margin: 0;
 }
 
-.category-subtext {
+.CategoriesAndStatistics-category-subtext {
     padding-top: 4px;
     color: #808080;
 }
 
-.table-block {
+.CategoriesAndStatistics-table-block {
     border: 1px solid #BEC4CD;
     border-radius: 7px;
     margin-top: 20px;
     overflow: hidden;
 }
 
-.categories-table {
+.CategoriesAndStatistics-categories-table {
     font-size: 20px;
     width: 100%;
     border-collapse: collapse;
     /* Об'єднання меж між осередками */
 }
 
-.categories-table th,
-.categories-table td {
+.CategoriesAndStatistics-categories-table th,
+.CategoriesAndStatistics-categories-table td {
     padding: 0px 12px;
     text-align: left;
     border-bottom: 1px solid #BEC4CD;
     /* Лише нижня межа для кожного рядка */
 }
 
-.categories-table th {
+.CategoriesAndStatistics-categories-table th {
     height: 43px;
     background-color: #233A6C0D;
     font-weight: 500;
@@ -88,7 +88,7 @@
     /* Нижня межа для заголовків */
 }
 
-.categories-table td {
+.CategoriesAndStatistics-categories-table td {
     height: 63px;
     background-color: #f9f9f9;
     border-bottom: 1px solid #BEC4CD;
@@ -99,24 +99,24 @@
 
 /* Забираємо верхні і бічні межі */
 
-.categories-table th:first-child,
+.CategoriesAndStatistics-categories-table th:first-child,
 .categories-table td:first-child {
     border-left: none;
 }
 
-.categories-table th:last-child,
-.categories-table td:last-child {
+.CategoriesAndStatistics-categories-table th:last-child,
+.CategoriesAndStatistics-categories-table td:last-child {
     border-right: none;
 }
 
-.categories-table input[type="radio"] {
+.CategoriesAndStatistics-categories-table input[type="radio"] {
     margin-right: 8px;
 }
 
 
 /* Hide the default radio button */
 
-.categories-table input[type="radio"] {
+.CategoriesAndStatistics-categories-table input[type="radio"] {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -131,7 +131,7 @@
 
 /* Стилізація для кастомного чекбокса */
 
-.custom-checkbox {
+.CategoriesAndStatistics-custom-checkbox {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -150,7 +150,7 @@
 
 /* Коли чекбокс вибраний, додаємо зображення */
 
-.categories-table input[type="checkbox"]:checked+.custom-checkbox {
+.CategoriesAndStatistics-categories-table input[type="checkbox"]:checked+.CategoriesAndStatistics-custom-checkbox {
     background-image: url('../pages/Check_ring.png');
     /* Шлях до зображення */
     background-size: 100% 100%;
@@ -161,13 +161,13 @@
 
 /* Стиль для прихованого стандартного чекбокса */
 
-.categories-table input[type="checkbox"] {
+.CategoriesAndStatistics-categories-table input[type="checkbox"] {
     position: absolute;
     opacity: 0;
     cursor: pointer;
 }
 
-.bottom-part {
+.CategoriesAndStatistics-bottom-part {
     width: 100%;
     /* Встановлюємо ширину на 100%, щоб адаптувати до розміру контейнера */
     display: flex;
@@ -183,7 +183,7 @@
     /* Встановлюємо світло-сірий колір для кількості рядків */
 }
 
-.delete-text {
+.CategoriesAndStatistics-delete-text {
     color: #FF6347;
     /* Світло-червоний колір для активної кнопки */
     cursor: pointer;
@@ -191,7 +191,7 @@
     padding-left: 16px;
 }
 
-.delete-text.disabled {
+.CategoriesAndStatistics-delete-text.disabled {
     color: #F88E86;
     /* Світло-сірий для неактивної кнопки */
     cursor: not-allowed;

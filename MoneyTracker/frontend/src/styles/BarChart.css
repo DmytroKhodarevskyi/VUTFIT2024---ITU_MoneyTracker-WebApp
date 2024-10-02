@@ -1,30 +1,27 @@
-.card-graph {
+.BarChart-card-graph {
     /* padding: '12px'; */
     /* border: '2px solid #ccc'; */
     width: auto;
     min-width: 750px;
-
     background-color: white;
     border-radius: 17px;
     /* min-width: 350px; */
     padding: 20px;
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
     grid-column: 2 / 4;
     grid-row: 2;
-
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.top-container-graph {
+.BarChart-top-container-graph {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
 
-.chart-header {
+.BarChart-chart-header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -35,7 +32,7 @@
     margin-bottom: 0;
 }
 
-.text-h2 {
+.BarChart-text-h2 {
     font-family: 'Inter', sans-serif;
     font-size: 30px;
     font-weight: 500;
@@ -43,7 +40,7 @@
     margin: 0;
 }
 
-.button {
+.BarChart-button {
     padding: 9px 12px;
     background-color: white;
     display: flex;
@@ -61,18 +58,18 @@
     margin-top: 0;
 }
 
-.legend {
+.BarChart-legend {
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-.legend-item {
+.BarChart-legend-item {
     display: flex;
     align-items: center;
 }
 
-.legend-circle {
+.BarChart-legend-circle {
     width: 12px;
     height: 12px;
     border-radius: 50%;
