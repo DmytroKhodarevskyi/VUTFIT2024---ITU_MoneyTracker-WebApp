@@ -24,7 +24,7 @@ function MyFeed () {
         navigate('/create-post'); 
     };
 
-
+    
     useEffect( () => {
         async function fetchProfileData() {
             try {
@@ -69,6 +69,8 @@ function MyFeed () {
         )
       }
 
+      console.log(publications)
+
       return (
         <MainContainer>
         <TopPart nickname={profileData?.firstname} selectedItem={"profile"} profilePhoto={profilePhoto} />
@@ -87,6 +89,7 @@ function MyFeed () {
                                 profileImg={profileData.profileImg}
                                 fullname={profileData.fullname}
                                 publication={publication}
+                                mediaFiles={publication.media_files}
                             />
                         );
                     } else {

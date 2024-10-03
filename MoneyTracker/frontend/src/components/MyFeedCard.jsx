@@ -8,6 +8,7 @@ function MyFeedCard ({
     profileImg, 
     fullname, 
     publication,
+    mediaFiles,
 }) 
 {
 
@@ -35,9 +36,36 @@ function MyFeedCard ({
             <div className="post-content">
                 <div className="post-name">{title || "Untitled Post"}</div>
                     <p>{content_text || "No content available."}</p>
-                    {content_media && (
-                         <img src={fullContentMediaUrl} alt="Publication media" className="post-media" />
-                    )}
+
+                    {mediaFiles && mediaFiles.length > 0 && (
+                    <div className="my-feed-media-container">
+                        {mediaFiles.map((mediaItem, index) => (
+                            <div key={index} className="my-feed-media-item">
+                                {mediaItem.media_type === 'image' && (
+                                    <img 
+                                        src={mediaItem.file} 
+                                        alt={`Publication image ${index}`} 
+                                        className="my-feed-post-media" 
+                                    />
+                                )}
+                                {mediaItem.media_type === 'video' && (
+                                    <video controls className="my-feed-post-video">
+                                        <source src={mediaItem.file} type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                )}
+                                {mediaItem.media_type === 'gif' && (
+                                    <img 
+                                        src={mediaItem.file} 
+                                        alt={`Publication GIF ${index}`} 
+                                        className="my-feed-post-gif" 
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                )}
+
                     <div className='tag-container'>
                       <span className='post-tags'>Tags: </span>
                       {tags  ? (
