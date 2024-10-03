@@ -240,7 +240,7 @@ class GenderChoiceView(APIView):
     def get(self, request):
         choices = GenderChoicesSerializer.get_gender_choices()
         return Response(choices)
-    
+
 class CreatePublicationView(generics.CreateAPIView):
     queryset = Publication.objects.all()
     serializer_class = PublicationSerializer
@@ -258,7 +258,7 @@ class CreatePublicationView(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
         
-        
+# http get
 class PublicationListView(generics.ListAPIView):
     serializer_class = PublicationSerializer
     permission_classes = [IsAuthenticated]

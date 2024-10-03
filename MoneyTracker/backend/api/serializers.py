@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 # from .models import Note
-from .models import Transaction, Profile, Comment, Publication
-
+from .models import Transaction, Profile, Comment, Publication, Media
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -99,31 +98,53 @@ class GenderChoicesSerializer(serializers.ModelSerializer):
         return [{'value': choice[0], 'label': choice[1]} for choice in Profile.GENDER_CHOICES]
 
 
+class MediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Media
+        fields = ['media_type', 'file']
+        
 class CommentSerializer(serializers.ModelSerializer):
-    author = UserSerializer(read_only=True) 
-    publication = serializers.StringRelatedField(read_only=True)  
-
     class Meta:
         model = Comment
-        fields = ['id', 'publication', 'author', 'stars', 'text', 'created_at']  
-        read_only_fields = ['created_at', 'stars'] 
-
-    def create(self, validated_data):
-        request = self.context.get('request')
-        validated_data['author'] = request.user  
-        return super().create(validated_data)
+        fields = ['id', 'author', 'text', 'stars', 'created_at']
     
     
 class PublicationSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True) 
     comments = CommentSerializer(many=True, read_only=True)  
+    media_files = MediaSerializer(many=True, read_only=True)
+
+    media = serializers.ListField(
+        child=serializers.FileField(allow_empty_file=False),
+        write_only=True,
+        required=False
+    )
 
     class Meta:
         model = Publication
-        fields = ['id', 'title', 'tags', 'content_text', 'content_media', 'author', 'stars', 'comments', 'created_at', 'updated_at']
-        read_only_fields = ['created_at', 'updated_at', 'stars', 'comments']  
+        fields = ['id', 'title', 'tags', 'content_text', 'author', 'stars', 'comments', 'media', 'media_files', 'created_at', 'updated_at']
+        read_only_fields = ['created_at', 'updated_at', 'stars', 'comments', 'media_files']  
 
     def create(self, validated_data):
         request = self.context.get('request')
+        media_files = validated_data.pop('media', [])
         validated_data['author'] = request.user  
-        return super().create(validated_data)
+        
+        publication = Publication.objects.create(**validated_data)
+        
+        if len(media_files) > 3:
+            raise serializers.ValidationError("Reached max limit files of 3 files")
+        
+        for media_file in media_files:
+            content_type = media_file.content_type
+            
+            if content_type in ['image/jpeg', 'image/png', 'image/gif']:
+                media_type = 'image' if content_type != 'image/gif' else 'gif'
+            elif content_type == 'video/mp4':
+                media_type = 'video'
+            else:
+                raise serializers.ValidationError(f"{content_type} is not supported media type")
+            
+            Media.objects.create(publication=publication, media_type=media_type, file=media_file)
+            
+        return publication

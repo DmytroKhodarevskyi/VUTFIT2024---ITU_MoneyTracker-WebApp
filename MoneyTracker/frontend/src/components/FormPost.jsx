@@ -1,8 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import "../styles/FormPost.css";
-import api from "../api";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
-import { useNavigate } from 'react-router-dom'
 import gif_icon from "../assets/gif_icon.svg";
 import img_icon from "../assets/img_icon.svg";
 import video_icon from "../assets/video_icon.svg";
@@ -10,62 +7,30 @@ import video_icon from "../assets/video_icon.svg";
 
 function FormPost({
   fullname,
-  profileImg
+  profileImg,
+  title,
+  text,
+  media,
+  tags,
+  imageInputRef,
+  gifInputRef,
+  videoInputRef,
+  handleDiscard,
+  handleFileChange,
+  handleUploadPhoto,
+  handleUploadGif,
+  handleUploadVideo,
+  handleSubmit,
+  handleRemoveFile,
+  setTitle,  
+  setText,   
+  setTags,   
+  addEmoji,
+  emojiArray,
 }
 ) 
   {  
-  
-  const navigate = useNavigate();
-
-  const emojiArray = new Array(24).fill('😊');
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
-  const [media, setMedia] = useState(null); 
-  const [tags, setTags] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(""); 
-
-  const handleFileChange = (e) => {
-    setMedia(e.target.files[0]);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const newPost = new FormData();
-    newPost.append("title", title);
-    newPost.append("content_text", text);
-    if(media) {
-      newPost.append("content_media", media);
-    }
-    newPost.append("tags", tags);
-
-
-    try {
-      const res = await api.post("/api/publications/", newPost, {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`, 
-        },
-      });
-      console.log("Post created:", res.data);
-
-      navigate("/my-feed");
-  } catch (error) {
-      if (error.response) {
-        console.error("Error response:", error.response);
-        const errorMessage = error.response.data.detail || "Something went wrong.";
-        setError(errorMessage); 
-      } else {
-        console.error("Error message:", error.message);
-        setError("Network error. Please try again."); 
-      }
-    } finally {
-      setLoading(false); 
-    }
-  };
-  
-
+    
   return (
     <div className="create-post-container">
       <div className="create-post">
@@ -74,7 +39,7 @@ function FormPost({
           <p className="post-fullname">{fullname}</p>
         </div>
 
-        <form className="post-form-container" onSubmit={handleSubmit} encType="multipart/form-data">
+        <form className="post-form-container">
           <div className="post-title-form">
             <label htmlFor="post-form-title"></label>
             <input
@@ -98,6 +63,27 @@ function FormPost({
             ></textarea>
           </div>
 
+          <div className="form-post-selected-media">
+          {media.map((mediaItem, index) => (
+              <div 
+                  key={index} 
+                  className="post-form-media-file" 
+                  onClick={() => handleRemoveFile(index)} 
+              >
+                  {mediaItem.file.type.startsWith('image/') && (
+                      <img src={mediaItem.url} alt={mediaItem.file.name} className="post-form-media-preview" />
+                  )}
+                  {mediaItem.file.type.startsWith('video/') && (
+                      <video src={mediaItem.url} controls className="post-form-media-preview" />
+                  )}
+                  {mediaItem.file.type === 'gif' && (
+                      <img src={mediaItem.url} alt={mediaItem.file.name} className="post-form-media-preview" />
+                  )} 
+
+              </div>
+          ))}
+      </div>
+
           <div className="post-tags-form">
             <label htmlFor="post-form-tags"></label>
             <input
@@ -110,19 +96,47 @@ function FormPost({
           </div>
         </form>
       </div>
-      <div className="form-sidebar">
+      <div className="post-form-sidebar">
         <div className="form-buttons-container">
-          <button className="post-button">Post</button>
-          <button className="post-discard-button">Discard</button>
+
+        <input
+            type="file"
+            accept="image/*"
+            ref={imageInputRef}
+            onChange={handleFileChange}
+            style={{ display: 'none' }} 
+            multiple
+          />
+          <input
+            type="file"
+            accept="video/*"
+            ref={videoInputRef}
+            onChange={handleFileChange}
+            style={{ display: 'none' }} 
+            multiple
+          />
+          <input
+            type="file"
+            accept=".gif"
+            ref={gifInputRef}
+            onChange={handleFileChange}
+            style={{ display: 'none' }} 
+            multiple
+          />
+
+          <button className="post-button" onClick={handleSubmit}>Post</button>
+          <button className="post-discard-button" onClick={handleDiscard}>Discard</button>
         </div>
         <div className="form-files-container">
-          <button className="post-action-buttons"><img src={gif_icon} alt="GIF Icon"/></button>
-          <button className="post-action-buttons"><img src={img_icon} alt="IMG Icon"/></button>
-          <button className="post-action-buttons"><img src={video_icon} alt="VIDEO Icon"/></button>
+          <button className="post-action-buttons" onClick={handleUploadGif}><img src={gif_icon} alt="GIF Icon"/></button>
+          <button className="post-action-buttons" onClick={handleUploadPhoto}><img src={img_icon} alt="IMG Icon"/></button>
+          <button className="post-action-buttons" onClick={handleUploadVideo}><img src={video_icon} alt="VIDEO Icon"/></button>
         </div>
         <div className="emoji-grid-container">
             {emojiArray.map((emoji, index) => (
-              <div key={index} className="emoji-box">
+              <div key={index} 
+                   className="emoji-box"
+                   onClick={() => addEmoji(emoji)}>
                 <span className="emoji">{emoji}</span>
               </div>
             ))}
