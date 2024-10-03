@@ -169,6 +169,7 @@ class UserProfileView(APIView):
         
         return Response({
 			"first_name": user.first_name,
+            "last_name": user.last_name,
             "username": user.username, 
             "profileImg": request.build_absolute_uri(profile.profile_image.url)
         })

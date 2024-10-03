@@ -1,14 +1,13 @@
 import React from 'react';
 import { useState, useEffect } from "react"
 import "../styles/MyFeedCard.css";
-import star_picture from "./star.svg";
-import comment_picture from "./comment.svg";
+import star_picture from "../assets/star.svg";
+import comment_picture from "../assets/comment.svg";
 
 function MyFeedCard ({
     profileImg, 
     fullname, 
     publication,
-    onSwipe,
 }) 
 {
 
