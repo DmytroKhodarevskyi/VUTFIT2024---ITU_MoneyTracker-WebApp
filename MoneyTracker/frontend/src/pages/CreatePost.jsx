@@ -9,6 +9,8 @@ const CreatePost = () => {
 
     const [nickname, setNickname] = useState("");
 
+    const [fullname, setFullname] = useState("")
+
     const [profilePhoto, setProfilePhoto] = useState(null);
 
     const [isLoaded, setIsLoaded] = useState(false);
@@ -21,6 +23,7 @@ const CreatePost = () => {
           const response = await api.get("/api/user/profile/");
 
           setNickname(response.data.first_name);
+          setFullname(response.data.first_name + " " + response.data.last_name)
           setProfilePhoto(response.data.profileImg);
           setIsLoaded(true); 
         } catch (error) {
@@ -56,7 +59,10 @@ const CreatePost = () => {
   return (
     <MainContainer>
       <TopPart nickname={nickname} selectedItem={"profile"} profilePhoto={profilePhoto}/>
-      <FormPost />
+      <FormPost 
+      fullname={fullname}
+      profileImg={profilePhoto}
+      />
     </MainContainer>
   );
 };
