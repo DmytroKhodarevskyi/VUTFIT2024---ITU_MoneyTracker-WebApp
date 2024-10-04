@@ -11,6 +11,7 @@ function MyFeedCard ({
     mediaFiles,
     handleNewPost,
     handleEditPost,
+    handleDeletePost,
 }) 
 {
 
@@ -81,9 +82,9 @@ function MyFeedCard ({
             </div>
             <div className="post-footer">
               <div className="post-actions">
-                <button className="like-button">
-                      <span className="like-count">3</span> 
-                      <img src={star_picture} alt="Star" className="star-icon" />
+                <button className="my-feed-like-button">
+                      <span className="my-feed-like-count">3</span> 
+                      <img src={star_picture} alt="Star" className="my-feed-star-icon" />
                   </button>
               </div>
             </div>
@@ -91,7 +92,7 @@ function MyFeedCard ({
           <div className="my-feed-sidebar">
                 <div className="my-feed-buttons-container">
                   <button className="my-feed-edit-button" onClick={handleEditPost}>Edit Post</button>
-                  <button className="my-feed-delete-button"> Delete</button> 
+                  <button className="my-feed-delete-button" onClick={() => handleDeletePost(publication.id)}> Delete</button> 
                 </div>
                 <div className="my-feed-create-container">
                         <button className='my-feed-create-button' onClick={handleNewPost}> Create Post</button>
