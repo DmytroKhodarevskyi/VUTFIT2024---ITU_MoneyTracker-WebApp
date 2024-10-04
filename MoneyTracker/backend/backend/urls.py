@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from api.views import CreateUserView, UserProfileView, UserProfileDetailView, GenderChoiceView, UserProfilePhotoView
-from api.views import CreatePublicationView, CreateCommentView, PublicationListView
+from api.views import CreatePublicationView, CreateCommentView, PublicationListView, DeletePublicationView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from django.urls import path
@@ -39,7 +39,8 @@ urlpatterns = [
     path("api/gender-choices/", GenderChoiceView.as_view(), name="gender-choices"),
 
     path("api/publications/", CreatePublicationView.as_view(), name="create_publication"),
-    path("api/publications/my/", PublicationListView.as_view(), name="list_user_publications"), 
+    path("api/publications/my/", PublicationListView.as_view(), name="list_user_publications"),
+    path("api/publications/<int:pk>/delete/", DeletePublicationView.as_view(), name="delete_publication"),
     path("api/comments/", CreateCommentView.as_view(), name="create_comment"),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

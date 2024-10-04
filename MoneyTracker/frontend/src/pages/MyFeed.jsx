@@ -28,7 +28,15 @@ function MyFeed () {
         navigate('/create-post'); 
     };
 
-    
+    const handleDeletePost = async (publicationId) => {
+        try {
+            await api.delete(`/api/publications/${publicationId}/delete/`);
+            setPublications(publications.filter(publication => publication.id !== publicationId));
+        } catch (error) {
+            console.error("failed to delete publication:", error)
+        }
+    }
+
     
     useEffect( () => {
         async function fetchProfileData() {
@@ -92,6 +100,7 @@ function MyFeed () {
                                 mediaFiles={publication.media_files}
                                 handleNewPost={handleNewPost}
                                 handleEditPost={handleEditPost}
+                                handleDeletePost={handleDeletePost}
                             />
                         );
                     } else {

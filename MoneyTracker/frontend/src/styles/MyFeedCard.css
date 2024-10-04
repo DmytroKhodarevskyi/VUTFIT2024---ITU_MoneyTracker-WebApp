@@ -133,9 +133,7 @@
     gap: 20px;
 }
 
-.like-button,
-.comment-button,
-.edit-button {
+.my-feed-like-button {
     display: flex;
     align-items: center;
     color: rgba(0, 0, 0, 0.7);
@@ -143,35 +141,32 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 7px;
     padding: 9px 12px;
+    gap: 8px;
     cursor: pointer;
     font-size: 16px;
     font-family: 'Inter', sans-serif;
 }
 
-.like-count, .comment-count{
-    margin-left: 16px;
+.my-feed-like-count {
     font-size: 16px;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
 }
 
-.star-icon, .comment-icon {
-    margin-left: 8px;
+.my-feed-star-icon {
     width: 16px;
     height: 16px;
 }
 
-.like-button:hover,
-.comment-button:hover,
-.edit-button:hover {
+.my-feed-like-button:hover
+{
     background-color: #98cbff; 
     color: #ffffff; 
     border-color: #98cbff; 
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.star-icon:hover,
-.comment-icon:hover {
+.star-icon:hover {
     filter: brightness(0.8); 
 }
 
