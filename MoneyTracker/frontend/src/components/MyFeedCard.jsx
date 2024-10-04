@@ -9,6 +9,8 @@ function MyFeedCard ({
     fullname, 
     publication,
     mediaFiles,
+    handleNewPost,
+    handleEditPost,
 }) 
 {
 
@@ -80,20 +82,22 @@ function MyFeedCard ({
             <div className="post-footer">
               <div className="post-actions">
                 <button className="like-button">
-                      I Like this! <span className="like-count">3</span> 
+                      <span className="like-count">3</span> 
                       <img src={star_picture} alt="Star" className="star-icon" />
                   </button>
-
-                  <button className="comment-button">
-                      Comment <span className="comment-count">3</span> 
-                      <img src={comment_picture} alt="Comment" className="comment-icon" />
-                </button>
               </div>
-              <button className="edit-button">
-                Edit
-              </button>
             </div>
           </div>
+          <div className="my-feed-sidebar">
+                <div className="my-feed-buttons-container">
+                  <button className="my-feed-edit-button" onClick={handleEditPost}>Edit Post</button>
+                  <button className="my-feed-delete-button"> Delete</button> 
+                </div>
+                <div className="my-feed-create-container">
+                        <button className='my-feed-create-button' onClick={handleNewPost}> Create Post</button>
+
+                </div>
+            </div>
         </div>
       );
     }

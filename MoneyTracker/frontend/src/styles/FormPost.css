@@ -4,21 +4,21 @@
 .create-post-container {
     display: flex;
     justify-content: space-between;
-    align-items: stretch; 
+    align-items: flex-start;
     height: 100vh;
-    background-color: #f5f5f5; 
+    background-color: #F8F8F8;
     gap: 16px;
     box-sizing: border-box;
     margin-left: 92px;
     margin-right: 92px;
-    
+
 }
 
 .create-post {
     flex-basis: 60%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content:  flex-start;  
     align-items: stretch;
     gap: 16px;
     background-color: white;
@@ -26,11 +26,11 @@
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
     padding: 28px 32px;
     margin-top: -45px;
+    margin-bottom: 144px;
     box-sizing: border-box;
     width: 50%;
-    min-height: 0;
-    overflow: hidden; 
-    
+    max-height: 100vh; 
+    overflow-y: auto; 
 }
 
 .post-head {
@@ -88,7 +88,6 @@
     outline: none; 
     width: 100%;
     box-sizing: border-box;
-    min-height: 300px;
     max-height: 350px;
     font-size: 24px;
     font-weight: 400;
@@ -117,13 +116,14 @@
     flex-basis: 40%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content:  flex-start;
     align-items: center;
     margin-top: -45px;
     border: none;
     gap: 16px;
     border-radius: 10px;
     width: 50%;
+    margin-bottom: 144px;
     min-height: 0;
 }
 
