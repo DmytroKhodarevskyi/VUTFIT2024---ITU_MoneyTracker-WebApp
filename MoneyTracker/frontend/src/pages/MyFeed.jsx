@@ -24,6 +24,11 @@ function MyFeed () {
         navigate('/create-post'); 
     };
 
+    const handleEditPost = () => {
+        navigate('/create-post'); 
+    };
+
+    
     
     useEffect( () => {
         async function fetchProfileData() {
@@ -73,12 +78,7 @@ function MyFeed () {
 
       return (
         <MainContainer>
-        <TopPart nickname={profileData?.firstname} selectedItem={"profile"} profilePhoto={profilePhoto} />
-        
-        <div>
-            <button className="add-post-button" onClick={handleNewPost}>Add new post</button>
-        </div>
-        
+        <TopPart nickname={profileData?.firstname} selectedItem={"profile"} profilePhoto={profilePhoto} />        
         <div className="feed-container">
             {publications && publications.length > 0 ? (
                 publications.map((publication, index) => {
@@ -90,6 +90,8 @@ function MyFeed () {
                                 fullname={profileData.fullname}
                                 publication={publication}
                                 mediaFiles={publication.media_files}
+                                handleNewPost={handleNewPost}
+                                handleEditPost={handleEditPost}
                             />
                         );
                     } else {
