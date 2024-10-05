@@ -34,3 +34,4 @@ MoneyTracker/backend/db.sqlite3
 
 schema.yaml
 vite.config.js.*
+vite.config.js
