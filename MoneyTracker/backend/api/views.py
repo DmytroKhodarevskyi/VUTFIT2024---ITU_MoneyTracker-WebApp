@@ -169,6 +169,7 @@ class UserProfileView(APIView):
         
         return Response({
 			"first_name": user.first_name,
+            "last_name": user.last_name,
             "username": user.username, 
             "profileImg": request.build_absolute_uri(profile.profile_image.url)
         })
@@ -254,7 +255,7 @@ class GenderChoiceView(APIView):
     def get(self, request):
         choices = GenderChoicesSerializer.get_gender_choices()
         return Response(choices)
-    
+
 class CreatePublicationView(generics.CreateAPIView):
     queryset = Publication.objects.all()
     serializer_class = PublicationSerializer
@@ -272,7 +273,6 @@ class CreatePublicationView(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
         
-        
 class PublicationListView(generics.ListAPIView):
     serializer_class = PublicationSerializer
     permission_classes = [IsAuthenticated]
@@ -280,6 +280,19 @@ class PublicationListView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return Publication.objects.filter(author=user).order_by('-created_at')  
+
+class DeletePublicationView(generics.DestroyAPIView):
+    queryset = Publication.objects.all()
+    serializer_class = PublicationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        publication = self.get_object()  
+        if publication.author != request.user:  
+            return Response({"detail": "You do not have permission to delete this publication."},
+                            status=status.HTTP_403_FORBIDDEN)
+        self.perform_destroy(publication)  
+        return Response(status=status.HTTP_204_NO_CONTENT)
         
 class PublicationsFeedListView(generics.ListAPIView):
     serializer_class = PublicationSerializer
@@ -288,7 +301,7 @@ class PublicationsFeedListView(generics.ListAPIView):
     def get_queryset(self):
         return Publication.objects.all().order_by('-created_at')  
         
-        
+
 class CreateCommentView(generics.CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer

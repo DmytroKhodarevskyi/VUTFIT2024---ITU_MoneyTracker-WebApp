@@ -1,14 +1,17 @@
 import React from 'react';
 import { useState, useEffect } from "react"
 import "../styles/MyFeedCard.css";
-import star_picture from "./star.svg";
-import comment_picture from "./comment.svg";
+import star_picture from "../assets/star.svg";
+import comment_picture from "../assets/comment.svg";
 
 function MyFeedCard ({
     profileImg, 
     fullname, 
     publication,
-    onSwipe,
+    mediaFiles,
+    handleNewPost,
+    handleEditPost,
+    handleDeletePost,
 }) 
 {
 
@@ -36,9 +39,36 @@ function MyFeedCard ({
             <div className="post-content">
                 <div className="post-name">{title || "Untitled Post"}</div>
                     <p>{content_text || "No content available."}</p>
-                    {content_media && (
-                         <img src={fullContentMediaUrl} alt="Publication media" className="post-media" />
-                    )}
+
+                    {mediaFiles && mediaFiles.length > 0 && (
+                    <div className="my-feed-media-container">
+                        {mediaFiles.map((mediaItem, index) => (
+                            <div key={index} className="my-feed-media-item">
+                                {mediaItem.media_type === 'image' && (
+                                    <img 
+                                        src={mediaItem.file} 
+                                        alt={`Publication image ${index}`} 
+                                        className="my-feed-post-media" 
+                                    />
+                                )}
+                                {mediaItem.media_type === 'video' && (
+                                    <video controls className="my-feed-post-video">
+                                        <source src={mediaItem.file} type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                )}
+                                {mediaItem.media_type === 'gif' && (
+                                    <img 
+                                        src={mediaItem.file} 
+                                        alt={`Publication GIF ${index}`} 
+                                        className="my-feed-post-gif" 
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                )}
+
                     <div className='tag-container'>
                       <span className='post-tags'>Tags: </span>
                       {tags  ? (
@@ -52,21 +82,23 @@ function MyFeedCard ({
             </div>
             <div className="post-footer">
               <div className="post-actions">
-                <button className="like-button">
-                      I Like this! <span className="like-count">3</span> 
-                      <img src={star_picture} alt="Star" className="star-icon" />
+                <button className="my-feed-like-button">
+                      <span className="my-feed-like-count">3</span> 
+                      <img src={star_picture} alt="Star" className="my-feed-star-icon" />
                   </button>
-
-                  <button className="comment-button">
-                      Comment <span className="comment-count">3</span> 
-                      <img src={comment_picture} alt="Comment" className="comment-icon" />
-                </button>
               </div>
-              <button className="edit-button">
-                Edit
-              </button>
             </div>
           </div>
+          <div className="my-feed-sidebar">
+                <div className="my-feed-buttons-container">
+                  <button className="my-feed-edit-button" onClick={handleEditPost}>Edit Post</button>
+                  <button className="my-feed-delete-button" onClick={() => handleDeletePost(publication.id)}> Delete</button> 
+                </div>
+                <div className="my-feed-create-container">
+                        <button className='my-feed-create-button' onClick={handleNewPost}> Create Post</button>
+
+                </div>
+            </div>
         </div>
       );
     }

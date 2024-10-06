@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from api.views import CreateUserView, UserProfileView, UserProfileDetailView, GenderChoiceView, UserProfilePhotoView
 from api.views import CreatePublicationView, CreateCommentView, PublicationListView, PublicationsFeedListView
 from api.views import SelectedUserProfileView
+
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from django.urls import path
@@ -43,6 +44,7 @@ urlpatterns = [
     path("api/publications/", CreatePublicationView.as_view(), name="create_publication"),
     path("api/publications/my/", PublicationListView.as_view(), name="list_user_publications"), 
     path("api/publications/feed/", PublicationsFeedListView.as_view(), name="list_feed_publications"), 
+    path("api/publications/<int:pk>/delete/", DeletePublicationView.as_view(), name="delete_publication"),
     path("api/comments/", CreateCommentView.as_view(), name="create_comment"),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

@@ -24,7 +24,20 @@ function MyFeed () {
         navigate('/create-post'); 
     };
 
+    const handleEditPost = () => {
+        navigate('/create-post'); 
+    };
 
+    const handleDeletePost = async (publicationId) => {
+        try {
+            await api.delete(`/api/publications/${publicationId}/delete/`);
+            setPublications(publications.filter(publication => publication.id !== publicationId));
+        } catch (error) {
+            console.error("failed to delete publication:", error)
+        }
+    }
+
+    
     useEffect( () => {
         async function fetchProfileData() {
             try {
@@ -69,14 +82,11 @@ function MyFeed () {
         )
       }
 
+      console.log(publications)
+
       return (
         <MainContainer>
-        <TopPart nickname={profileData?.firstname} selectedItem={"profile"} profilePhoto={profilePhoto} />
-        
-        <div>
-            <button className="add-post-button" onClick={handleNewPost}>Add new post</button>
-        </div>
-        
+        <TopPart nickname={profileData?.firstname} selectedItem={"profile"} profilePhoto={profilePhoto} />        
         <div className="feed-container">
             {publications && publications.length > 0 ? (
                 publications.map((publication, index) => {
@@ -87,6 +97,10 @@ function MyFeed () {
                                 profileImg={profileData.profileImg}
                                 fullname={profileData.fullname}
                                 publication={publication}
+                                mediaFiles={publication.media_files}
+                                handleNewPost={handleNewPost}
+                                handleEditPost={handleEditPost}
+                                handleDeletePost={handleDeletePost}
                             />
                         );
                     } else {
