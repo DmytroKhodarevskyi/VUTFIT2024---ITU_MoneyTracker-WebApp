@@ -26,7 +26,17 @@
     max-height: 577px;  /* Limit the height of the post */
 
     top: 0;                      /* Align all posts to the top */
-    transition: all 0.3s ease;  /* Smooth transitions */
+
+    transition: z-index 0.3s ease-in-out, 
+                transform 0.3s ease-in-out,
+                position 0.4 ease-in-out
+                filter 0.5 ease-in-out;  /* Transition for z-index and transform */
+
+    transition:  height 0.3s ease-out, transform 0.3s ease-in-out, position 0.3s;
+}
+
+.FeedPost-postwrap {
+    width: 100%;
 }
 
 .FeedPost-card-main-container {

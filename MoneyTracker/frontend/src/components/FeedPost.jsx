@@ -1,11 +1,12 @@
 import React from 'react';
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { useNavigation } from '../components/NavigationContext';
 import "../styles/FeedPost.css";
 import star_picture from "./star.svg";
 import comment_picture from "./comment.svg";
 import api from '../api';
 
-function FeedPost ({ publication, IsCenter, IsLeft, IsRight, shouldDisplay }) {
+function FeedPost ({ publication, IsCenter, IsLeft, IsRight, shouldDisplay, onClick }) {
 
     const {author, title, content_text, content_media, tags, stars } = publication; 
 
@@ -18,9 +19,36 @@ function FeedPost ({ publication, IsCenter, IsLeft, IsRight, shouldDisplay }) {
 
     const [CardStyle, setCardStyle] = useState({});
 
+    const postRef = useRef(null);
+    const { handlePrevious, handleNext } = useNavigation(); // Use the context to get navigation functions
+
     useEffect(() => {
-      console.log(`Post ID: ${publication.id}, shouldDisplay: ${shouldDisplay}`);
-  }, [shouldDisplay, publication.id]);
+        const handleClick = () => {
+          if (IsLeft) {
+            console.log("Clicked left post");
+            handlePrevious(); // Call the previous function from context
+          } else if (IsRight) {
+            console.log("Clicked right post");
+            handleNext(); // Call the next function from context
+          }
+          // Center post doesn’t need any click handler
+        };
+    
+        const post = postRef.current;
+        if (post) {
+          post.addEventListener("click", handleClick);
+        }
+    
+        // Clean up listener
+        return () => {
+          if (post) {
+            post.removeEventListener("click", handleClick);
+          }
+        };
+      }, [IsLeft, IsRight, handlePrevious, handleNext]);
+//     useEffect(() => {
+//       console.log(`Post ID: ${publication.id}, shouldDisplay: ${shouldDisplay}`);
+//   }, [shouldDisplay, publication.id]);
 
     if (!shouldDisplay) {
         return (
@@ -56,12 +84,12 @@ function FeedPost ({ publication, IsCenter, IsLeft, IsRight, shouldDisplay }) {
         setCardStyle({
             backgroundColor: '#FFFFFF',
             zIndex: 10,          
-            'box-shadow': 'rgba(20, 33, 61, 0.1) 0px 4px 10px',
+            boxShadow: 'rgba(20, 33, 61, 0.1) 0px 4px 10px',
         });
 
     } else if (IsLeft) {
         setCardStyle({
-            "margin-right": '-200px',
+            marginRight: '-200px',
             backgroundColor: '#FCFCFC',
             zIndex: 5,
             transform: 'scale(0.96)',
@@ -76,7 +104,7 @@ function FeedPost ({ publication, IsCenter, IsLeft, IsRight, shouldDisplay }) {
 
     } else if (IsRight) {
           setCardStyle({
-            "margin-left": '-200px',
+            marginLeft: '-200px',
             backgroundColor: '#FCFCFC',
             zIndex: 5,
             transformOrigin: 'right',
@@ -113,6 +141,7 @@ function FeedPost ({ publication, IsCenter, IsLeft, IsRight, shouldDisplay }) {
 
         <div className="FeedPost-card-container" 
               style={CardStyle}
+              onClick={IsLeft ? handlePrevious : IsRight ? handleNext : IsCenter ? null : null}
         >
               <div className="FeedPost-card-top">
                 <div className="FeedPost-card-header">
