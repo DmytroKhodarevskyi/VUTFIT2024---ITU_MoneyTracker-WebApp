@@ -24,8 +24,8 @@ function MyFeed () {
         navigate('/create-post'); 
     };
 
-    const handleEditPost = () => {
-        navigate('/create-post'); 
+    const handleEditPost = (publicationId) => {
+        navigate(`/edit-post/${publicationId}`);
     };
 
     const handleDeletePost = async (publicationId) => {
@@ -82,43 +82,37 @@ function MyFeed () {
         )
       }
 
-      console.log(publications)
-
       return (
         <MainContainer>
         <TopPart nickname={profileData?.firstname} selectedItem={"profile"} profilePhoto={profilePhoto} />        
         <div className="feed-container">
-            {publications && publications.length > 0 ? (
-                publications.map((publication, index) => {
-                    if (publication) {
-                        return (
+            {publications.length > 0 ? (
+                publications.map((publication, index) => (
                             <MyFeedCard
                                 key={index}
                                 profileImg={profileData.profileImg}
                                 fullname={profileData.fullname}
                                 publication={publication}
-                                mediaFiles={publication.media_files}
+                                mediaFiles={publication.media_files}    
                                 handleNewPost={handleNewPost}
-                                handleEditPost={handleEditPost}
+                                handleEditPost={handleEditPost} 
                                 handleDeletePost={handleDeletePost}
                             />
-                        );
-                    } else {
-                        return (
-                            <div key={index} className="end-message">
-                                <p>End of publications</p>
-                            </div>
-                        );
-                    }
-                })
-            ) : (
-                <div className="no-publications-message">
-                    <p>None of the publications were published</p>
+                        ))
+                        ) : (
+                        <MyFeedCard
+                            profileImg={profileData.profileImg}
+                            fullname={profileData.fullname}
+                            publication={null}
+                            mediaFiles={null}    
+                            handleNewPost={handleNewPost}
+                            handleEditPost={handleEditPost} 
+                            handleDeletePost={handleDeletePost}
+                        />
+                    )}
                 </div>
-            )}
-        </div>
     </MainContainer>
     );
-}
+ };
 
 export default MyFeed;

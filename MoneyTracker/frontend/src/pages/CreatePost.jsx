@@ -6,10 +6,14 @@ import TopPart from "../components/TopPart";
 import { ACCESS_TOKEN } from "../constants";
 import api from "../api";
 import DiscardForm from "../components/DiscardForm"; 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams  } from 'react-router-dom';
 
 const CreatePost = () => {
 
+
+    const { id } = useParams();
+    const [isEdit, setIsEdit] = useState(false);
+    
     const emojiArray = [
       "😊", "😂", "😍", "🥺", "😢", "😎", "🤔", "🙄", "😡", "🥳", "😴", "🤯",
       "🤩", "😜", "🤗", "💪", "🎉", "🔥", "❤️", "👍", "🤝", "👏", "💥", "😇"
@@ -55,12 +59,42 @@ const CreatePost = () => {
       fetchNickname();
     }, []);
 
+    useEffect(() => {
+      const fetchPostData = async () => {
+        if (id) {
+          setIsEdit(true);
+          try {
+            const response = await api.get(`/api/publications/${id}/`);
+            console.log("Fetched post data for editing:", response.data); 
+            const { title, content_text, tags, media_files } = response.data;
+            setTitle(title);
+            setText(content_text);
+            setTags(tags);
+            const mediaArray = media_files.map(file => ({
+              id: file.id,
+              file: {
+                type: file.media_type, 
+                name: file.file.split('/').pop(), 
+              },
+              url: file.file,
+            }));
+          setMedia(mediaArray);
+        } catch (error) {
+          console.error("Failed to fetch post data:", error);
+          }
+      }
+    };
+    fetchPostData();
+    }, [id]);
+
+
   const handleFileChange = (e) => {
       const files = Array.from(e.target.files);
-      const newMedia = files.map(file => {
-          const url = URL.createObjectURL(file); 
-          return { file, url }; 
-      });
+      const newMedia = files.map(file => ({
+          id: null,
+          file,
+          url: URL.createObjectURL(file),
+      }));
 
       const uniqueMedia = newMedia.filter(newItem => 
         !media.some(existingItem => existingItem.file.name === newItem.file.name)
@@ -106,17 +140,38 @@ const CreatePost = () => {
     newPost.append("tags", tags);
     
     media.forEach(mediaItem => {
-        newPost.append("media", mediaItem.file);
-    });
-   
+        if (mediaItem.file instanceof File) {
+          newPost.append("media", mediaItem.file);
+      }
+      });
+    
+      const existingMediaIds = media
+      .filter(mediaItem => mediaItem.id !== undefined)
+      .map(mediaItem => mediaItem.id);
+
+      existingMediaIds.forEach(id => {
+          if (Number.isInteger(id)) { 
+            newPost.append("existing_media", id);
+        } else {
+            console.error(`Invalid media ID: ${id}`);       
+          }
+      });
 
     try {
-      const res = await api.post("/api/publications/", newPost, {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`, 
-        },
-      });
-      console.log("Post created:", res.data);
+      let res;
+      if(isEdit) {
+          res = await api.patch(`/api/publications/${id}/update/`, newPost, {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`,
+          },
+          });
+      } else {
+          res = await api.post("/api/publications/", newPost, {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`, 
+          },
+        });
+    }
 
       navigate("/my-feed");
 
@@ -131,14 +186,21 @@ const CreatePost = () => {
         setError("Network error. Please try again."); 
       }
     } finally {
-      setLoading(false); 
+      setIsLoaded(false); 
     }
   };
 
   const handleRemoveFile = (index) => {
-    URL.revokeObjectURL(media[index].url); 
+    if (media[index].id) {
+      URL.revokeObjectURL(media[index].url); 
+      setMedia(prevMedia => {
+        return prevMedia.filter((_, i) => i !== index);
+    });
+  } else {
+    URL.revokeObjectURL(media[index].url);
     setMedia(prevMedia => prevMedia.filter((_, i) => i !== index));
-  };
+  }
+};
 
   const addEmoji = (emoji) => {
     setText((prevText) => prevText + emoji); 
