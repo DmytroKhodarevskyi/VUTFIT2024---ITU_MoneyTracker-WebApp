@@ -30,7 +30,7 @@ function FormPost({
 }
 ) 
   {  
-    
+
   return (
     <div className="create-post-container">
       <div className="create-post">
@@ -64,24 +64,27 @@ function FormPost({
           </div>
 
           <div className="form-post-selected-media">
-          {media.map((mediaItem, index) => (
-              <div 
-                  key={index} 
-                  className="post-form-media-file" 
-                  onClick={() => handleRemoveFile(index)} 
-              >
-                  {mediaItem.file.type.startsWith('image/') && (
-                      <img src={mediaItem.url} alt={mediaItem.file.name} className="post-form-media-preview" />
-                  )}
-                  {mediaItem.file.type.startsWith('video/') && (
-                      <video src={mediaItem.url} controls className="post-form-media-preview" />
-                  )}
-                  {mediaItem.file.type === 'gif' && (
-                      <img src={mediaItem.url} alt={mediaItem.file.name} className="post-form-media-preview" />
-                  )} 
+          {media.map((mediaItem, index) => {
+            console.log(mediaItem);
 
-              </div>
-          ))}
+            return (
+                <div 
+                    key={index} 
+                    className="post-form-media-file" 
+                    onClick={() => handleRemoveFile(index)} 
+                >
+                    {mediaItem.file.type.startsWith('image') && (
+                        <img src={mediaItem.url} alt={mediaItem.file.name} className="post-form-media-preview" />
+                    )}
+                    {mediaItem.file.type.startsWith('video') && (
+                        <video src={mediaItem.url} controls className="post-form-media-preview" />
+                    )}
+                    {mediaItem.file.type === 'gif' && (
+                        <img src={mediaItem.url} alt={mediaItem.file.name} className="post-form-media-preview" />
+                    )}
+                </div>
+            );
+        })}
       </div>
 
           <div className="post-tags-form">

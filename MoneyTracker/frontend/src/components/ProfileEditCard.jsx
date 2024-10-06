@@ -35,7 +35,6 @@ function ProfileEditCard({
     } else {
         displayImageUrl = `${baseUrl}${profileImg}`;
     }
-
     return (
         <div className="profile-wrapper">
             <div className="profile-details-card">

@@ -1,8 +1,6 @@
 import React from 'react';
-import { useState, useEffect } from "react"
 import "../styles/MyFeedCard.css";
 import star_picture from "../assets/star.svg";
-import comment_picture from "../assets/comment.svg";
 
 function MyFeedCard ({
     profileImg, 
@@ -15,15 +13,26 @@ function MyFeedCard ({
 }) 
 {
 
-
+      if (!publication) {
+        return (
+            <div className="post-container">
+                <div className="post-card">
+                    <p className="my-feed-no-publication-message">No publications available.</p>
+                </div>
+                <div className="my-feed-sidebar">
+                    <div className="my-feed-buttons-container">
+                        <button className="my-feed-create-button" onClick={handleNewPost}>Create Post</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     const { title, content_text, content_media, tags } = publication; 
 
     const baseUrl = import.meta.env.VITE_API_URL;
     const fullImageUrl = profileImg ? `${baseUrl}${profileImg}` : `${baseUrl}media/profile_images/default.png`;
 
-    const fullContentMediaUrl = content_media && content_media.startsWith('http')
-    ? content_media
-    : `${baseUrl}${content_media}`;
+
 
       return (
         <div className="post-container">
@@ -91,7 +100,7 @@ function MyFeedCard ({
           </div>
           <div className="my-feed-sidebar">
                 <div className="my-feed-buttons-container">
-                  <button className="my-feed-edit-button" onClick={handleEditPost}>Edit Post</button>
+                  <button className="my-feed-edit-button" onClick={() => handleEditPost(publication.id)}>Edit Post</button>
                   <button className="my-feed-delete-button" onClick={() => handleDeletePost(publication.id)}> Delete</button> 
                 </div>
                 <div className="my-feed-create-container">
@@ -103,4 +112,4 @@ function MyFeedCard ({
       );
     }
     
-    export default MyFeedCard;
+    export default MyFeedCard;  

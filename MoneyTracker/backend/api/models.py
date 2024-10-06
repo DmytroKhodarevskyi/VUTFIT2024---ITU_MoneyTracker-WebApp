@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 class Transaction(models.Model):
     INCOME = 'INCOME'
@@ -94,6 +95,9 @@ class Publication(models.Model):
         if self.media_files.count() >= 3:
              raise ValueError("Cannot upload more than 3 media files.")
         Media.objects.create(publication=self, media_type=media_type, file=media_file)
+        
+    def get_file_url(self):
+        return f"{settings.MEDIA_URL}{self.file.name}"
     
     
 class Comment(models.Model):

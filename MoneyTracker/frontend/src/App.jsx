@@ -97,6 +97,16 @@ function App() {
           }
         />
 
+      <Route
+          path="/edit-post/:id"  
+          element={
+              <ProtectedRoute>
+                  <CreatePost />
+              </ProtectedRoute>
+          }
+      />
+
+
 
       <Route path="*" element={<NotFound />} />
 
