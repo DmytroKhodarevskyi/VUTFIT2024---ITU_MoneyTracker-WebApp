@@ -65,11 +65,11 @@ const CreatePost = () => {
           setIsEdit(true);
           try {
             const response = await api.get(`/api/publications/${id}/`);
-            console.log("Fetched post data for editing:", response.data); 
             const { title, content_text, tags, media_files } = response.data;
             setTitle(title);
             setText(content_text);
             setTags(tags);
+            console.log("Media ISSSSSS ${media_files}")
             const mediaArray = media_files.map(file => ({
               id: file.id,
               file: {
@@ -78,6 +78,7 @@ const CreatePost = () => {
               },
               url: file.file,
             }));
+          console.log("Media Array to be set:", mediaArray);
           setMedia(mediaArray);
         } catch (error) {
           console.error("Failed to fetch post data:", error);
@@ -145,11 +146,11 @@ const CreatePost = () => {
       }
       });
     
-      const existingMediaIds = media
+    const existingMediaIds = media
       .filter(mediaItem => mediaItem.id !== undefined)
       .map(mediaItem => mediaItem.id);
-
-      existingMediaIds.forEach(id => {
+    
+    existingMediaIds.forEach(id => {
           if (Number.isInteger(id)) { 
             newPost.append("existing_media", id);
         } else {

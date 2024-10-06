@@ -104,7 +104,7 @@ class GenderChoicesSerializer(serializers.ModelSerializer):
 class MediaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Media
-        fields = ['media_type', 'file']
+        fields = ['id', 'media_type', 'file']
         
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -143,19 +143,6 @@ class PublicationSerializer(serializers.ModelSerializer):
         
         if len(media_files) > 3:
             raise serializers.ValidationError("Reached max limit files of 3 files")
-        
-        for media_file in media_files:
-            content_type = media_file.content_type
-            
-            if content_type in ['image/jpeg', 'image/png', 'image/gif']:
-                media_type = 'image' if content_type != 'image/gif' else 'gif'
-            elif content_type == 'video/mp4':
-                media_type = 'video'
-            else:
-                raise serializers.ValidationError(f"{content_type} is not supported media type")
-            
-            media = Media.objects.create(publication=publication, media_type=media_type, file=media_file)
-            print(media)
             
         return publication
     

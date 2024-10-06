@@ -261,16 +261,30 @@ class CreatePublicationView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            self.perform_create(serializer)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            print(f"Validation errors: {serializer.errors}")
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        publication_serializer = self.get_serializer(data=request.data)
         
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        if publication_serializer.is_valid():
+            publication = publication_serializer.save(author=request.user)
+            
+            media_files = request.FILES.getlist('media')
+            media_ids = []
+             
+            for media_file in media_files:
+                media_instance = Media.objects.create(
+                    publication=publication,
+                    media_type=media_file.content_type.split('/')[0], 
+                    file=media_file
+                )
+                media_ids.append(media_instance.id) 
+                
+            response_data = publication_serializer.data
+            response_data['media_ids'] = media_ids 
+            
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        else:
+            print(f"Validation errors: {publication_serializer.errors}")
+            return Response(publication_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
         
 class PublicationListView(generics.ListAPIView):
     serializer_class = PublicationSerializer
