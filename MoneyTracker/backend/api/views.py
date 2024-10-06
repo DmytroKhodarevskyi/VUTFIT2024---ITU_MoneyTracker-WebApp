@@ -299,7 +299,8 @@ class PublicationsFeedListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
-        return Publication.objects.all().order_by('-created_at')  
+        # return Publication.objects.all().order_by('-created_at')  
+        return Publication.objects.all().order_by('?')  
         
 
 class CreateCommentView(generics.CreateAPIView):
