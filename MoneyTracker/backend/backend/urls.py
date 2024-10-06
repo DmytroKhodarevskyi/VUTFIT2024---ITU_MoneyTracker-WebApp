@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from api.views import CreateUserView, UserProfileView, UserProfileDetailView, GenderChoiceView, UserProfilePhotoView
 from api.views import CreatePublicationView, CreateCommentView, PublicationListView, PublicationsFeedListView
-from api.views import SelectedUserProfileView
+from api.views import SelectedUserProfileView, DeletePublicationView
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 

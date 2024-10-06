@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigation } from "../components/NavigationContext";
 import "../styles/FeedPost.css";
-import star_picture from "./star.svg";
-import comment_picture from "./comment.svg";
+import star_picture from "../assets/star.svg";
+import comment_picture from "../assets/comment.svg";
 import api from "../api";
 
 function FeedPost({
