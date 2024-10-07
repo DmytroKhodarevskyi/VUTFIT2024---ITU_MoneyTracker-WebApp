@@ -172,7 +172,7 @@ function CategoriesAndStatistics() {
             width: '7px',
             height: '57px',
             backgroundColor: category.color,
-            marginRight: '8px',
+            marginRight: '16px',
           }}
         ></span>
         <div style={{ display: 'inline-block' }}>
@@ -201,7 +201,7 @@ function CategoriesAndStatistics() {
             width: '7px',
             height: '57px',
             backgroundColor: category.color,
-            marginRight: '8px',
+            marginRight: '16px',
           }}
         ></span>
         <div style={{ display: 'inline-block' }}>
