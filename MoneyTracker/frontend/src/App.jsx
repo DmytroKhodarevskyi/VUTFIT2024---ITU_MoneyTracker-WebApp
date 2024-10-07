@@ -68,7 +68,7 @@ function App() {
         }
       />
 
-      <Route 
+<Route 
         path="/categories-statistics"
         element={
           <ProtectedRoute>

@@ -10,7 +10,7 @@ import Transactions from "../components/Transactions"
 
 // import ClipLoader from "react-spinners/ClipLoader";
 
-function Home() {
+function Update() {
 
     const currency = "$";
 
@@ -69,4 +69,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default Update;
