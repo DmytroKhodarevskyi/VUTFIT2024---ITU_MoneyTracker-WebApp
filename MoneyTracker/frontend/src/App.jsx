@@ -10,6 +10,9 @@ import Update from './pages/Update'
 import ProtectedRoute from './components/ProtectedRoute'
 import ProfileEdit from './pages/ProfileEdit'
 import CategoriesAndStatistics from './pages/CategoriesAndStatistics'
+import MyFeed from './pages/MyFeed'
+import Feed from './pages/Feed'
+import CreatePost from './pages/CreatePost'
 
 function Logout() {
   localStorage.clear()
@@ -68,13 +71,47 @@ function App() {
         }
       />
 
-<Route 
+      <Route 
         path="/categories-statistics"
         element={
           <ProtectedRoute>
             <CategoriesAndStatistics />
           </ProtectedRoute>
         }
+      />
+      <Route 
+        path="/my-feed"
+        element={
+          <ProtectedRoute>
+            <MyFeed />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route 
+        path="/feed"
+        element={
+          <ProtectedRoute>
+            <Feed />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+          path="/create-post"
+          element={
+            <ProtectedRoute>
+              <CreatePost />
+            </ProtectedRoute>
+          }
+        />
+
+      <Route
+          path="/edit-post/:id"  
+          element={
+              <ProtectedRoute>
+                  <CreatePost />
+              </ProtectedRoute>
+          }
       />
 
       <Route path="*" element={<NotFound />} />
