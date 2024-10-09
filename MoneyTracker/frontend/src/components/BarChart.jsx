@@ -120,23 +120,23 @@ const BarChartComponent = () => {
     }, []);
 
     return (
-        <div className="card-graph">
-            <div className="top-container-graph">
-                <div className="chart-header">
-                    <h2 className="text-h2">Balance Overview</h2>
-                    <div className="legend">
-                        <div className="legend-item" style={{ color: '#00000080' }}>
-                        <span className="legend-circle" style={{ backgroundColor: '#4CAF50' }}></span>
+        <div className="BarChart-card-graph">
+            <div className="BarChart-top-container-graph">
+                <div className="BarChart-chart-header">
+                    <h2 className="BarChart-text-h2">Balance Overview</h2>
+                    <div className="BarChart-legend">
+                        <div className="BarChart-legend-item" style={{ color: '#00000080' }}>
+                        <span className="BarChart-legend-circle" style={{ backgroundColor: '#4CAF50' }}></span>
                             Total income
                         </div>
-                        <div className="legend-item" style={{ color: '#00000080' }}>
-                        <span className="legend-circle" style={{ backgroundColor: '#F44336' }}></span>
+                        <div className="BarChart-legend-item" style={{ color: '#00000080' }}>
+                        <span className="BarChart-legend-circle" style={{ backgroundColor: '#F44336' }}></span>
                             Total Spending
                         </div>
                     </div>
                 </div>
                 
-                <button className="button">
+                <button className="BarChart-button">
                     Last 6 month
                     <span style={{ marginLeft: '5px' }} role="img" aria-label="calendar">
                         <img src={Desk_fill} alt="calendar icon" style={{ height: '24px', width: '24px' }} />

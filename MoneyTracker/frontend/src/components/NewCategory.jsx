@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import {useNavigate } from 'react-router-dom';
 import "../styles/NewTransactionCard.css"
 import Picker from "../assets/ColorPickIcon.svg"
 import ColorPicker from './ColorPicker';
@@ -27,6 +28,12 @@ function NewTransactionCard() {
             setIsAnimating(false); // Reset after animation
         }, 100); // Match timeout with animation duration (0.5s)
     }
+
+    const navigate = useNavigate();
+    const handleStatistics = () => {
+        
+        navigate('/categories-statistics');
+    };
 
   return (
     <>
@@ -69,7 +76,7 @@ function NewTransactionCard() {
 
             <div className='card-buttons'>
                 <button className='blue-buttons'> Transaction List </button>
-                <button className='blue-buttons'> Category List </button>
+                <button className='blue-buttons'onClick={handleStatistics}> Category List </button>
             </div>
         </div>
 

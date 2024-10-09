@@ -9,6 +9,7 @@ import Profile from './pages/Profile'
 import Update from './pages/Update'
 import ProtectedRoute from './components/ProtectedRoute'
 import ProfileEdit from './pages/ProfileEdit'
+import CategoriesAndStatistics from './pages/CategoriesAndStatistics'
 import MyFeed from './pages/MyFeed'
 import Feed from './pages/Feed'
 import CreatePost from './pages/CreatePost'
@@ -71,6 +72,14 @@ function App() {
       />
 
       <Route 
+        path="/categories-statistics"
+        element={
+          <ProtectedRoute>
+            <CategoriesAndStatistics />
+          </ProtectedRoute>
+        }
+      />
+      <Route 
         path="/my-feed"
         element={
           <ProtectedRoute>
@@ -87,7 +96,6 @@ function App() {
           </ProtectedRoute>
         }
       />
-      
       <Route
           path="/create-post"
           element={
@@ -105,8 +113,6 @@ function App() {
               </ProtectedRoute>
           }
       />
-
-
 
       <Route path="*" element={<NotFound />} />
 
