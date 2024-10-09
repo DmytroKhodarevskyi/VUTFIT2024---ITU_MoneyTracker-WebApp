@@ -5,7 +5,6 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch; 
-    height: 100vh;
     background-color: #f5f5f5; 
     gap: 16px;
     box-sizing: border-box;
@@ -28,7 +27,6 @@
     box-sizing: border-box;
     width: 50%;
     margin-bottom: 144px;
-    height: 100vh;
 }
 
 .post-head {
@@ -123,7 +121,6 @@
     border-radius: 10px;
     width: 50%;
     margin-bottom: 144px;
-    height: 100vh;
 }
 
 .form-buttons-container {
