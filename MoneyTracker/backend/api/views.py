@@ -5,11 +5,11 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from rest_framework import generics
 # from .serializers import UserSerializer, NoteSerializer
-from .serializers import UserSerializer, TransactionSerializer, GenderChoicesSerializer, PublicationSerializer, CommentSerializer
+from .serializers import UserSerializer, TransactionSerializer, GenderChoicesSerializer, PublicationSerializer, CommentSerializer, CategorySerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 # from .models import Note
 from rest_framework import status
-from .models import Transaction, Publication, Comment, Media
+from .models import Transaction, Publication, Comment, Media, Category
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAdminUser
 
@@ -378,5 +378,61 @@ class CreateCommentView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)  
+    
+class CreateCategoryView(generics.CreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]  
 
+    def perform_create(self, serializer):
+      
+        serializer.save(author=self.request.user)
+    
+class ListCategoryView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated] 
+    def get_object(self):
+        category = super().get_object()
+        if category.author != self.request.user:
+            raise PermissionError({"detail": "You do not have permission to view this category."})
+        return category 
+ 
+class RetrieveCategoryView(generics.RetrieveAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self):
+        category = super().get_object()
+        if category.author != self.request.user:
+            raise PermissionError({"detail": "You do not have permission to view this category."})
+        return category    
+    
+class UpdateCategoryView(generics.UpdateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self):
+        category = super().get_object()
+        
+        if category.author != self.request.user:
+            raise PermissionError({"detail": "You do not have permission to edit this category."})
+        
+        return category  
+    
+class DeleteCategoryView(generics.DestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self, request, *args, **kwargs):
+        category = self.get_object()  
+        if category.author != request.user:  
+            return Response({"detail": "You do not have permission to delete this publication."},
+                            status=status.HTTP_403_FORBIDDEN)  
+            
+        self.perform_destroy(category)  
+        return Response(status=status.HTTP_204_NO_CONTENT)       
 # Create your views here.

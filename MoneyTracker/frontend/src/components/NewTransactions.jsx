@@ -7,10 +7,11 @@ import api from "../api"
 function NewTransactionCard() {
 
     const [date, setDate] = useState('');
-
+    const [categoriesList, setCategoriesList] = useState([]);
+    const [category, setCategory] = useState('');
     const [amount, setAmount] = useState(0);
     const [name, setName] = useState('');
-    const [category, setCategory] = useState('Groceries');
+    
     const [currency, setCurrency] = useState('USD (United States Dollar)');
     const [IncomeOrSpend, setIncomeOrSpend] = useState(true);
 
@@ -23,6 +24,27 @@ function NewTransactionCard() {
         const formattedDate = currentDate.toISOString().slice(0, 16);
         setDate(formattedDate);
     }, []);
+
+    
+    useEffect(() => {
+        const fetchCategories = async () => {
+          try {
+            
+            const response = await api.get("/api/categories/");
+            // setNickname(response.data.username);
+            
+            setCategoriesList(response.data);
+            
+          
+          } catch (error) {
+            console.error("Failed to fetch nickname", error);
+            
+          }
+        };
+    
+        fetchCategories();
+      }, []);
+
 
     const handleSubmit = async () => {
 
@@ -40,6 +62,8 @@ function NewTransactionCard() {
             alert('Transaction amount is too large');
             return;
         }
+
+        console.log(category)
 
         const transactionData = {
             title: name,  // Assuming title corresponds to name
@@ -81,6 +105,7 @@ function NewTransactionCard() {
         }, 100); // Match timeout with animation duration (0.5s)
     }
 
+ console.log(categoriesList)
   return (
     <>
           <div className='card-trans'>
@@ -172,10 +197,14 @@ function NewTransactionCard() {
                             id="picker-category" 
                             className="card-input-currency" 
                             value={category} 
-                            onChange={(e) => {setCategory(e.target.value)}}>
-                            <option value="Groceries">Groceries</option>
-                            <option value="Direct Payment">Direct Payment</option>
-                            <option value="Sports">Sports</option>
+                            onChange={(e) => setCategory(e.target.value)}
+                            >
+                                <option value="" disabled>Select a category</option>
+                                {categoriesList.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>
+                                        {cat.name}
+                                    </option>
+                                ))}
                         </select>
                 </div>
             </div>
