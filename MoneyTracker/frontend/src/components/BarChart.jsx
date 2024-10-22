@@ -16,38 +16,7 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 
-const income_expenses = [
-    {
-        name: 'Jan',
-        income: 100,
-        expense: 50,
-    },
-    {
-        name: 'Feb',
-        income: 120,
-        expense: 50,
-    },
-    {
-        name: 'Mar',
-        income: 150,
-        expense: 50,
-    },
-    {
-        name: 'Apr',
-        income: 80,
-        expense: 50,
-    },
-    {
-        name: 'May',
-        income: 400,
-        expense: 50,
-    },
-    {
-        name: 'Jun',
-        income: 1000,
-        expense: 500,
-    }
-];
+
 
 const BarChartComponent = () => {
 

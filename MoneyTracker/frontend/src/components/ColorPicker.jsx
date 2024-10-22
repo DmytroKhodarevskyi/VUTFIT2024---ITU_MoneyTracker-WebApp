@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "../styles/NewTransactionCard.css"
 
 
-function ColorPicker() {
+function ColorPicker( {onChange} ) {
   // Default color is set to red
   const [selectedColor, setSelectedColor] = useState("#ff0000");
 
   // Handler to update color when user picks a new one
   const handleColorChange = (event) => {
     setSelectedColor(event.target.value);
+    onChange(event.target.value);
   };
 
   return (
@@ -17,7 +18,6 @@ function ColorPicker() {
           id="color-picker"
           type="color"
           onChange={handleColorChange} // Update color when 
-  
         />
       </div>
   );

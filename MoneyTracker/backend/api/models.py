@@ -2,6 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    color = models.CharField(max_length=7, default="#000000")  
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='categories', null=True)
+    
+
+    def __str__(self):
+        return self.name
+    
 class Transaction(models.Model):
     INCOME = 'INCOME'
     EXPENSE = 'EXPENSE'
@@ -11,7 +22,7 @@ class Transaction(models.Model):
     ]
 
     title = models.CharField(max_length=100)
-    category = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='categories', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     transaction_datetime = models.DateTimeField(default=None)
     currency = models.CharField(max_length=50, default="USD")
@@ -52,14 +63,7 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
     
-class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    color = models.CharField(max_length=7, default="#FFFFFF")  # Default color is white, using hex color codes
-    created_at = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='categories', null=True)
 
-    def __str__(self):
-        return self.name
     
 class Media(models.Model):
     IMAGE = "image"

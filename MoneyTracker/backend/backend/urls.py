@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from api.views import CreateUserView, UserProfileView, UserProfileDetailView, GenderChoiceView, UserProfilePhotoView
 from api.views import CreatePublicationView, CreateCommentView, PublicationListView, PublicationsFeedListView
 from api.views import SelectedUserProfileView, DeletePublicationView, UpdatePublicationView, PublicationDetailView
+from api.views import CreateCategoryView, ListCategoryView, UpdateCategoryView, RetrieveCategoryView, DeleteCategoryView
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -48,6 +49,12 @@ urlpatterns = [
     path("api/publications/<int:pk>/update/", UpdatePublicationView.as_view(), name="update_publication"),
     path("api/publications/<int:pk>/", PublicationDetailView.as_view(), name="detail_publication"),
     path("api/comments/", CreateCommentView.as_view(), name="create_comment"),
+    
+    path("api/categories/create/", CreateCategoryView.as_view(), name="category-create"),
+    path("api/categories/", ListCategoryView.as_view(), name="category-list"),
+    path("api/categories/<int:pk>/", RetrieveCategoryView.as_view(), name="category-detail"),
+    path("api/categories/<int:pk>/update/", UpdateCategoryView.as_view(), name="category-udate"),
+    path("api/categories/<int:pk>/delete/", DeleteCategoryView.as_view(), name="category-delete"),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

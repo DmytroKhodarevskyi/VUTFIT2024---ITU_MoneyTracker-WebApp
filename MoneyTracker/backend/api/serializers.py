@@ -4,7 +4,7 @@ from rest_framework import serializers
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import os
 from django.conf import settings
-from .models import Transaction, Profile, Comment, Publication, Media
+from .models import Transaction, Profile, Comment, Publication, Media, Category
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -84,13 +84,7 @@ class UserSerializer(serializers.ModelSerializer):
 #         fields = ["id", "title", "content", "created_at", "author"]
 #         extra_kwargs = {"author": {"read_only": True}}
 
-class TransactionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Transaction
-        fields = '__all__'
-        # fields = ["id", "title", "category", "created_at", "transaction_datetime", "currency", "transaction_type", "amount", "incomeOrSpend", "author"]
-        extra_kwargs = {"author": {"read_only": True}}
-        
+
 
 class GenderChoicesSerializer(serializers.ModelSerializer):
     value = serializers.CharField()
@@ -181,3 +175,20 @@ class PublicationSerializer(serializers.ModelSerializer):
                     Media.objects.create(publication=instance, media_type=media_type, file=media_file)
                 
         return instance
+    
+    
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'color', 'created_at', 'author']
+        extra_kwargs = {"author": {"read_only": True}}
+        
+        
+class TransactionSerializer(serializers.ModelSerializer):
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
+
+    class Meta:
+        model = Transaction
+        fields = '__all__'
+        extra_kwargs = {"author": {"read_only": True}}
+        

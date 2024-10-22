@@ -14,15 +14,7 @@ const data = [
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-const staticCategories = [
-  { id: 1, name: "Groceries", color: "green", created_at: "2024-09-21" },
-  { id: 2, name: "Direct Payment", color: "navy", created_at: "" },
-  { id: 3, name: "Medical", color: "red", created_at: "" },
-  { id: 4, name: "Entertainment", color: "cyan", created_at: "" },
-  { id: 5, name: "Name", color: "green", created_at: "" },
-  { id: 6, name: "Name", color: "green", created_at: "" },
-  { id: 7, name: "Utilities", color: "yellow", created_at: "2024-10-01" }
-];
+
 
 const topCategories = [
   { name: 'Direct Payment', value: 3456.56, color: 'navy' },
@@ -34,7 +26,7 @@ const topCategories = [
 
 
 function CategoriesAndStatistics() {
-  const [categories, setCategories] = useState(staticCategories); 
+  const [categories, setCategories] = useState([]); 
   const [selectedCategories, setSelectedCategories] = useState([]); 
   const [profileData, setProfileData] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
@@ -44,10 +36,13 @@ function CategoriesAndStatistics() {
   useEffect(() => {
     async function fetchData() {
       try {
+        const categoriesListResponce = await api.get("/api/categories/"); 
         const profileResponse = await api.get("/api/user/profile/"); 
         setProfileData(profileResponse.data);
-        setProfilePhoto(profileResponse.data.profileImg); 
+        setProfilePhoto(profileResponse.data.profileImg);
+        setCategories(categoriesListResponce.data); 
         setIsLoaded(true);
+        
       } catch (error) {
         window.alert("Failed to fetch profile", error);
         setError(error);
@@ -83,6 +78,33 @@ function CategoriesAndStatistics() {
     } else {
       setSelectedCategories([...selectedCategories, category.id]);
     }
+  };
+
+  const handleDelete = async () => {
+    if (selectedCategories.length === 0) {
+        alert('Please select at least one category to delete.');
+        return;
+    }
+
+    try {
+        
+   
+        await Promise.all(
+            selectedCategories.map(async (categoryId) => {
+                console.log(categoryId);
+                await api.delete(`/api/categories/${categoryId}/delete/`);
+            })
+        );
+
+        
+        setCategories(categories.filter((category) => !selectedCategories.includes(category.id)));
+
+        
+        setSelectedCategories([]);
+    } catch (error) {
+        console.error('There was an error deleting the categories:', error);
+        alert('Failed to delete the selected categories. Please try again.');
+      }
   };
 
   return (
@@ -148,7 +170,7 @@ function CategoriesAndStatistics() {
             <div className="CategoriesAndStatistics-bottom-part">
               <p>{selectedCategories.length} row(s) of {categories.length} selected.</p>
               <div className="CategoriesAndStatistics-delete-text">
-                <p>Delete Selected</p>
+                <button className="CategoriesAndStatistics-delete-text" onClick={handleDelete}>Delete Selected</button>
               </div>
             </div>
           </div>
@@ -229,7 +251,7 @@ function CategoriesAndStatistics() {
 
 
 <div className="CategoriesAndStatistics-pie-chart">
-  <ResponsiveContainer width="100%" height={400}> {/* Встановіть чітке значення висоти */}
+  <ResponsiveContainer width="100%" height={400}> 
     <PieChart>
       <Pie
         data={data}

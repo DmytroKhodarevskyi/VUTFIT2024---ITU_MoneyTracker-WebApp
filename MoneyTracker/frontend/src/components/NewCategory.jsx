@@ -3,13 +3,17 @@ import {useNavigate } from 'react-router-dom';
 import "../styles/NewTransactionCard.css"
 import Picker from "../assets/ColorPickIcon.svg"
 import ColorPicker from './ColorPicker';
+import api from "../api";
 
 function NewTransactionCard() {
 
     const [date, setDate] = useState('');
 
     const [IncomeOrSpend, setIncomeOrSpend] = useState(false);
-    const [isAnimating, setIsAnimating] = useState(false); // Track animation state
+    const [isAnimating, setIsAnimating] = useState(false); 
+    const [categoryName, setCategoryName] = useState('');
+    const [categoryList, setCategoryList] = useState([]);
+    const [categoryColor, setCategoryColor] = useState("#000000");
 
     useEffect(() => {
         const currentDate = new Date();
@@ -22,11 +26,55 @@ function NewTransactionCard() {
     };
 
     const handleIncomeOrSpend = (e) => {
-        setIsAnimating(true); // Start animation
+        setIsAnimating(true); 
         setTimeout(() => {
             setIncomeOrSpend(!IncomeOrSpend);
-            setIsAnimating(false); // Reset after animation
-        }, 100); // Match timeout with animation duration (0.5s)
+            setIsAnimating(false); 
+        }, 100); 
+    }
+    const handleColorChange = (newColor) => {
+        setCategoryColor(newColor); 
+        
+        
+    };
+
+    const handleSubmit = async () => {
+        if (categoryName === '') {
+            alert('Category title is required');
+            return;
+        }
+
+        const categoryData = {
+            name: categoryName,  
+            color: categoryColor,
+        };
+
+        try {
+    
+            const responseList = await api.get("/api/categories/", categoryList);
+            const existingCategories = responseList.data;
+
+            const duplicateCategory = existingCategories.find(
+                (category) => category.name === categoryName
+            );
+    
+            if (duplicateCategory) {
+                alert('Category with this name already exists');
+                return; 
+            }
+
+
+            
+    
+            const response = await api.post("/api/categories/create/", categoryData);
+            console.log('Category created:', response.data);
+
+            setCategoryList([...categoryList, response.data]);
+        } catch (error) {
+            console.error('There was an error creating the category:', error);
+            console.log('Checkobj:', categoryData);
+            
+        }
     }
 
     const navigate = useNavigate();
@@ -55,6 +103,8 @@ function NewTransactionCard() {
                                 className='card-input-category' 
                                 type="text"
                                 min="0"
+                                value={categoryName}
+                                onChange={(e) => setCategoryName(e.target.value)}
                             />
                     </div>
 
@@ -62,13 +112,13 @@ function NewTransactionCard() {
                         <h2 className='card-title-hint'>Pick color</h2>
                         <div className='picker-container'>
                             {/* <div className='color-square'></div> */}
-                            <ColorPicker></ColorPicker>
+                            <ColorPicker onChange={handleColorChange} />
                             <img src={Picker} alt="Picker" />
                         </div>
                     </div>
                 </div>
 
-                <button className='add-button-category'>
+                <button className='add-button-category' onClick={handleSubmit}>
                     Add
                 </button>
 
