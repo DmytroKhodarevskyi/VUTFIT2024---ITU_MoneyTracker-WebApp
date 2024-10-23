@@ -10,6 +10,7 @@ import Update from './pages/Update'
 import ProtectedRoute from './components/ProtectedRoute'
 import ProfileEdit from './pages/ProfileEdit'
 import CategoriesAndStatistics from './pages/CategoriesAndStatistics'
+import TransactionsList from './pages/TransactionsList'
 import MyFeed from './pages/MyFeed'
 import Feed from './pages/Feed'
 import CreatePost from './pages/CreatePost'
@@ -76,6 +77,14 @@ function App() {
         element={
           <ProtectedRoute>
             <CategoriesAndStatistics />
+          </ProtectedRoute>
+        }
+      />
+      <Route 
+        path="/transactions-list"
+        element={
+          <ProtectedRoute>
+            <TransactionsList />
           </ProtectedRoute>
         }
       />
