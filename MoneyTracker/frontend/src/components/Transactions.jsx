@@ -6,6 +6,7 @@ import "../styles/Transactions.css"
 function Transactions({}) {
 
     const [transactions, setTransactions] = useState([]);
+    const [categoryNames, setCategoryNames] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -23,8 +24,27 @@ function Transactions({}) {
                     throw new Error('Network response was not ok');
                 }
 
-                const data = response.data; // Assuming you're using axios or a similar library
-                setTransactions(data);
+                const data = response.data; 
+                const categoryPromises = data.map(async (transaction) => {
+                    const categoryResponse = await api.get(`/api/categories/${transaction.category}/`);
+                    return {
+                        id: transaction.category,
+                        name: categoryResponse.data.name,
+                    };
+                });
+
+                const categories = await Promise.all(categoryPromises);
+
+                const transactionsWithCategoryNames = data.map((transaction) => {
+                    const category = categories.find(cat => cat.id === transaction.category);
+                    return {
+                        ...transaction,
+                        categoryName: category.name,
+                    };
+                });
+        
+                setTransactions(transactionsWithCategoryNames);
+                setCategoryNames(categories);
             } catch (error) {
                 setError(error.message);
                 console.error(error.message);
@@ -60,6 +80,7 @@ function Transactions({}) {
 
         <ul>
         {transactions.slice(0, 5).map((transaction) => (
+            
           <li key={transaction.id}>
             <div className='transaction-container'>
 
@@ -69,7 +90,7 @@ function Transactions({}) {
                         {truncateTitle(transaction.title, 12)}
                         {/* {transaction.title} */}
                     </h2>
-                    <h2 className='transaction-category'>{transaction.category}</h2>
+                    <h2 className='transaction-category'>{transaction.categoryName}</h2>
                     </div>
 
                     <h2 className='transaction-date'>{formatDate(transaction.transaction_datetime)}</h2>
