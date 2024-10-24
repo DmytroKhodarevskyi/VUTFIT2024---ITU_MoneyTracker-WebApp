@@ -16,7 +16,8 @@ const CreatePost = () => {
     
     const emojiArray = [
       "😊", "😂", "😍", "🥺", "😢", "😎", "🤔", "🙄", "😡", "🥳", "😴", "🤯",
-      "🤩", "😜", "🤗", "💪", "🎉", "🔥", "❤️", "👍", "🤝", "👏", "💥", "😇"
+      "🤩", "😜", "🤗", "💪", "🎉", "🔥", "❤️", "👍", "🤝", "👏", "💥", "😇",
+      
     ];
 
 
@@ -138,8 +139,17 @@ const CreatePost = () => {
     const newPost = new FormData();
     newPost.append("title", title);
     newPost.append("content_text", text);
-    newPost.append("tags", tags);
     
+    const tagArray = tags.split(/\s+/).map(tag => tag.trim()).filter(tag => tag);
+    const uniqueTags = Array.from(new Set(tagArray));
+
+    const validInput = /^[A-Za-z0-9\-.]*$/;
+    const invalidTags = tagArray.filter(tag => !validInput.test(tag));
+    if (invalidTags.length > 0) {
+      alert("Tags can only contain letters, numbers, hyphens (-), and periods (.)");
+      return;
+  }
+    newPost.append("tags", uniqueTags.join(' '));
     media.forEach(mediaItem => {
         if (mediaItem.file instanceof File) {
           newPost.append("media", mediaItem.file);
@@ -216,7 +226,31 @@ const CreatePost = () => {
           </div>
       );
   }
+  const handleTagChange = (e) => {
+    const inputValue = setTags(e.target.value); 
+    const validInput = inputValue.match(/^[A-Za-z0-9\-.]*$/);
 
+    const tagArray = inputValue.split(/\s+/).map(tag => tag.trim()).filter(tag => tag);
+    const validTags = tagArray.filter(tag => validInput.test(tag));
+    const hasInvalidTags = tagArray.length > validTags.length;
+
+
+    if (hasInvalidTags) {
+      alert("Tags can only contain letters, numbers, hyphens (-), and periods (.)");
+    }
+
+
+    setTags(validTags.join(' ') + (validTags.length > 0 ? ' ' : ''));
+};
+
+  const handleKeyDown = (e) => {
+      if (e.key === " ") { 
+          e.preventDefault();
+          const tagArray = tags.split(/\s+/).map(tag => tag.trim()).filter(tag => tag); 
+          const uniqueTags = Array.from(new Set(tagArray)); 
+          setTags(uniqueTags.join(' ') + ' '); 
+      }
+  };
 
   if (!isLoaded) {
     return (
@@ -248,7 +282,8 @@ const CreatePost = () => {
       handleRemoveFile={handleRemoveFile}
       setTitle={setTitle}        
       setText={setText}         
-      setTags={setTags}          
+      handleTagChange={handleTagChange}       
+      handleKeyDown={handleKeyDown}   
       addEmoji={addEmoji}
       emojiArray={emojiArray}
       />

@@ -405,7 +405,7 @@ class RetrieveCategoryView(generics.RetrieveAPIView):
     
     def get_object(self):
         category = super().get_object()
-        if category.author != self.request.user:
+        if category.author != self.request.user and category.name != "Default":
             raise PermissionError({"detail": "You do not have permission to view this category."})
         return category    
     

@@ -24,7 +24,8 @@ function FormPost({
   handleRemoveFile,
   setTitle,  
   setText,   
-  setTags,   
+  handleTagChange,
+  handleKeyDown,   
   addEmoji,
   emojiArray,
 }
@@ -93,8 +94,9 @@ function FormPost({
               type="text"
               id="post-form-tags"
               value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="Enter tags (comma separated)"
+              onChange={handleTagChange}
+              onKeyDown={handleKeyDown} 
+              placeholder="Enter tags (space separated)"
             />
           </div>
         </form>
