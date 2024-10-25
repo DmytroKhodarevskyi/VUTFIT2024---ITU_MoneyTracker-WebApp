@@ -35,7 +35,7 @@ function ProfileEdit() {
             try {
                 const [profileResponse, genderResponse, photoResponse] = await Promise.all([
                     api.get("/api/user/profile_detail/"),
-                    api.get("/api/gender-choices/"),
+                    api.get("/api/user/gender-choices/"),
                     api.get("/api/user/profile/")
                 ]);
 
