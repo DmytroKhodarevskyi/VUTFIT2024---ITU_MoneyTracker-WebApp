@@ -1,0 +1,60 @@
+.card {
+    background-color: white;
+    border-radius: 17px;
+
+    min-width: 350px;
+
+    padding: 20px;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    width: auto;
+
+    grid-row: 1;
+}
+
+.card-title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.card-date {
+    margin: 0;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.5)
+}
+
+.card-amount {
+    margin: 0;
+    font-weight: 600;
+    font-size: 32px;
+}
+
+.card-trends {
+    margin: 0;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.card-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card-top-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-bottom-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
