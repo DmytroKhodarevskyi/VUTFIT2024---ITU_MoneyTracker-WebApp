@@ -120,7 +120,7 @@
 }
 
 .CategoriesAndStatistics-categories-table input[type="checkbox"]:checked+.CategoriesAndStatistics-custom-checkbox {
-    background-image: url('../pages/Check_ring.png');
+    background-image: url('./Check_ring.png');
     background-size: 100% 100%;
     background-position: center;
 }
