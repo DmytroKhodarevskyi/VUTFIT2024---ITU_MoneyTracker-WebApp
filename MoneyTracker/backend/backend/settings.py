@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     'api.publication',
     'api.transaction',
     'api.category',
+    'api.custom_admin',
     'api.group',
 ]
 
