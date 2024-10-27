@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'api.transaction',
     'api.category',
     'api.custom_admin',
+    'api.group',
 ]
 
 MIDDLEWARE = [
