@@ -1,10 +1,10 @@
 from .serializers import PublicationSerializer, MediaSerializer, CommentSerializer
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework import status
-from .models import Publication, Comment, Media
+from .models import Publication, Comment, Media, Star
 
 
 class CreatePublicationView(generics.CreateAPIView):
@@ -128,4 +128,122 @@ class CreateCommentView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated] 
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)  
+        publication_id = self.kwargs.get('publication')
+        try:
+            publication = Publication.objects.get(id=publication_id)
+        except Publication.DoesNotExist:
+            return Response({"detail": "Publication not found."}, status=404)
+
+        serializer.save(author=self.request.user, publication=publication)  
+        
+class CommentaryListView(generics.ListAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    def get_queryset(self):
+        publication_id = self.kwargs.get('publication')
+        try:
+            publication = Publication.objects.get(id=publication_id)
+        except Publication.DoesNotExist:
+            return Response({"detail": "Publication not found."}, status=404)
+        return Comment.objects.filter(publication=publication)
+    
+class RetrieveCommentView(generics.RetrieveAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        publication_id = self.kwargs.get('publication')
+        try:
+            publication = Publication.objects.get(id=publication_id)
+        except Publication.DoesNotExist:
+            return Response({"detail": "Publication not found."}, status=404)
+        return Comment.objects.filter(publication=publication)
+    
+class UpdateCommentView(generics.UpdateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self):
+        commentary = super().get_object()
+        return commentary
+
+    def update(self, request, *args, **kwargs):
+        commentary = self.get_object()
+
+        if commentary.author != request.user:
+            return Response({"detail": "You do not have permission to update this comment."}, status=403)
+
+        if 'text' not in request.data:
+            return Response({"detail": "Only the text field can be updated."}, status=400)
+
+        partial = kwargs.pop('partial', False)
+        serializer = self.get_serializer(commentary, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+        
+class DeleteCommentView(generics.DestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self):
+        return super().get_object()
+    
+    def destroy(self, request, *args, **kwargs):
+        commentary = self.get_object()
+        publication = commentary.publication
+        
+        if commentary.author == request.user or publication.author == request.user:
+            self.perform_destroy(commentary)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        return Response({"detail": "You do not have permission to delete this comment."}, status=status.HTTP_403_FORBIDDEN)
+    
+class LikePublicationView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, publication_id):
+        try:
+            publication = Publication.objects.get(id=publication_id)
+            publication.like(request.user)
+            return Response({"detail": "Publication liked."}, status=status.HTTP_201_CREATED)
+        except Publication.DoesNotExist:
+            return Response({"detail": "Publication not found."}, status=status.HTTP_404_NOT_FOUND)
+
+class UnlikePublicationView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, publication_id):
+        try:
+            publication = Publication.objects.get(id=publication_id)
+            publication.unlike(request.user)
+            return Response({"detail": "Publication unliked."}, status=status.HTTP_204_NO_CONTENT)
+        except Publication.DoesNotExist:
+            return Response({"detail": "Publication not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+class LikeCommentView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, comment_id):
+        try:
+            comment = Comment.objects.get(id=comment_id)
+            comment.like(request.user)
+            return Response({"detail": "Comment liked."}, status=status.HTTP_201_CREATED)
+        except Comment.DoesNotExist:
+            return Response({"detail": "Comment not found."}, status=status.HTTP_404_NOT_FOUND)
+
+class UnlikeCommentView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, comment_id):
+        try:
+            comment = Comment.objects.get(id=comment_id)
+            comment.unlike(request.user)
+            return Response({"detail": "Comment unliked."}, status=status.HTTP_204_NO_CONTENT)
+        except Comment.DoesNotExist:
+            return Response({"detail": "Comment not found."}, status=status.HTTP_404_NOT_FOUND)
