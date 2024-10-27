@@ -17,8 +17,9 @@ class Profile(models.Model):
     phone = models.CharField(max_length=15, unique=True)
     job = models.CharField(max_length=100, default="Unemployed")
     profile_image = models.ImageField(upload_to='profile_images/', default='profile_images/default.png', blank=True)
-    
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    stars_count = models.PositiveIntegerField(default=0) 
 
     def __str__(self):
         return f'{self.user.username} Profile'
