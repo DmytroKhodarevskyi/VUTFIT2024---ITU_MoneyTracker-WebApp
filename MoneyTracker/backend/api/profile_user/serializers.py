@@ -11,9 +11,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         }
 
     def validate_phone(self, value):
-        """
-        Check that the phone number is unique.
-        """
         if Profile.objects.filter(phone=value).exists():
             raise serializers.ValidationError("This phone number is already in use.")
         return value
@@ -75,7 +72,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     
     
-class GenderChoicesSerializer(serializers.ModelSerializer):
+class GenderChoicesSerializer(serializers.Serializer):
     value = serializers.CharField()
     label = serializers.CharField()
 

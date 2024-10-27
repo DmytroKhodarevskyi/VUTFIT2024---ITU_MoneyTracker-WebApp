@@ -12,7 +12,17 @@ class MediaSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', 'author', 'text', 'stars', 'created_at']
+        fields = ['id', 'publication', 'author', 'stars', 'text', 'created_at']
+        read_only_fields  = ['id', 'author', 'publication', 'created_at']
+        
+        def validate_stars(self, value):
+            if value < 0:
+                raise serializers.ValidationError("Stars cannot be negative.")
+            return value
+
+        def create(self, validated_data):
+            validated_data['stars'] = validated_data.get('stars', 0)
+            return Comment.objects.create(**validated_data)
     
     
 class PublicationSerializer(serializers.ModelSerializer):

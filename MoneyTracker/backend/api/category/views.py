@@ -11,18 +11,17 @@ class CreateCategoryView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]  
 
     def perform_create(self, serializer):
-      
         serializer.save(author=self.request.user)
     
 class ListCategoryView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated] 
-    def get_object(self):
-        category = super().get_object()
-        if category.author != self.request.user:
-            raise PermissionError({"detail": "You do not have permission to view this category."})
-        return category 
+    
+    def get_queryset(self):
+        user = self.request.user
+        return Category.objects.filter(author=user)
+    
  
 class RetrieveCategoryView(generics.RetrieveAPIView):
     queryset = Category.objects.all()
