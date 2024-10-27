@@ -10,10 +10,19 @@ from django.core.files.storage import default_storage
 from rest_framework import status
 
 class CreateUserView(generics.CreateAPIView):
-	queryset = User.objects.all()
-	serializer_class = UserSerializer
-	permission_classes = [AllowAny]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
 class DeleteUserView(generics.DestroyAPIView):
     queryset = User.objects.all()
     lookup_field = 'username'
