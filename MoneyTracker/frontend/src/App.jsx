@@ -21,8 +21,10 @@ import Feed from "./pages/Feed/Feed";
 import CreatePost from "./pages/CreatePost/CreatePost";
 import CustomAdmin from "./pages/Admin/Admin";
 import AdminRoute from "./pages/Admin/AdminRoute";
-import UserEdit from "./pages/Admin/UserEdit";
 
+import UserEdit from "./pages/Admin/UserEdit";
+import TransactionsEdit from "./pages/Admin/TransactionsEdit";
+import CategoriesEdit from "./pages/Admin/CategoriesEdit";
 function Logout() {
   localStorage.clear();
   return <Navigate to="/login" />;
@@ -82,7 +84,40 @@ function App() {
         />
 
         <Route
-          path="/custom-admin/users/:id"
+          path="/custom-admin/users/:pk"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <UserEdit />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/custom-admin/users/:pk/transactions"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <TransactionsEdit />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/custom-admin/users/:pk/categories"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <CategoriesEdit />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/custom-admin/users/:pk/publications"
           element={
             <ProtectedRoute>
               <AdminRoute>

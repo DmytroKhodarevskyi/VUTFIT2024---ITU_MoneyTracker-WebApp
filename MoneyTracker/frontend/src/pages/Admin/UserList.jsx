@@ -45,7 +45,7 @@ const UserList = () => {
 
   return (
     <div>
-      <h1>User List</h1>
+      <h1 className="admin-header">User List</h1>
       <ul className="admin-userlist">
         {users.map((user) => (
           <li key={user.id}>

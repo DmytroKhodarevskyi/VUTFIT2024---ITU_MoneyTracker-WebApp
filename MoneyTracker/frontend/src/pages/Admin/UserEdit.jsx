@@ -1,98 +1,89 @@
 // src/components/UserEdit.js
 
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import api from '../../api';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"; // Import Link for navigation
+
+import api from "../../api";
+import "./Admin.css";
 
 const UserEdit = () => {
-    const { pk } = useParams();  // Use pk to extract the ID from the URL
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        first_name: '',
-        last_name: ''
-    });
-    const navigate = useNavigate();
+  const { pk } = useParams(); // Use pk to extract the ID from the URL
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [username, setUsername] = useState("");
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const response = await api.get(`/api/users/${pk}/`);  // Make sure to use pk here
-                setUser(response.data);
-                setFormData(response.data);
-            } catch (err) {
-                console.error(err);
-                setError('Failed to load user');
-            } finally {
-                setLoading(false);
-            }
-        };
+  const navigate = useNavigate();
 
-        fetchUser();
-    }, [pk]); // Use pk as a dependency to fetch the correct user
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const username = await api.get(
+            `/api/custom_admin/users/${pk}/username/`
+          );
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setUsername(username.data.username);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load user");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await api.put(`/api/users/${pk}/`, formData);
-            navigate('/admin/users');
-        } catch (err) {
-            console.error(err);
-            setError('Failed to update user');
-        }
-    };
+    fetchUser();
+  }, [pk]); // Use pk as a dependency to fetch the correct user
 
-    if (loading) return <p>Loading user...</p>;
-    if (error) return <p>{error}</p>;
+  // const handleChange = (e) => {
+  //     const { name, value } = e.target;
+  //     setFormData({ ...formData, [name]: value });
+  // };
 
-    return (
-        <div>
-            <h1>Edit User</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    placeholder="Username"
-                    required
-                />
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    required
-                />
-                <input
-                    type="text"
-                    name="first_name"
-                    value={formData.first_name}
-                    onChange={handleChange}
-                    placeholder="First Name"
-                    required
-                />
-                <input
-                    type="text"
-                    name="last_name"
-                    value={formData.last_name}
-                    onChange={handleChange}
-                    placeholder="Last Name"
-                    required
-                />
-                <button type="submit">Save Changes</button>
-            </form>
-        </div>
-    );
+  // const handleSubmit = async (e) => {
+  //     e.preventDefault();
+  //     try {
+  //         await api.put(`/api/users/${pk}/`, formData);
+  //         navigate('/admin/users');
+  //     } catch (err) {
+  //         console.error(err);
+  //         setError('Failed to update user');
+  //     }
+  // };
+
+  if (loading) return <p>Loading user...</p>;
+  if (error) return <p>{error}</p>;
+
+  return (
+    <>
+      <div className="admin-main-buttons">
+        <h1 className="admin-header">{username}'s Data</h1>
+        <Link
+          to={`/custom-admin/users/${pk}/transactions`}
+          className="admin-useritem"
+        >
+          <button className="admin-user-button">
+            <a> Transactions</a>
+          </button>
+        </Link>
+        <Link
+          to={`/custom-admin/users/${pk}/categories`}
+          className="admin-useritem"
+        >
+          <button className="admin-user-button">
+            <a> Categories</a>
+          </button>
+        </Link>
+        <Link
+          to={`/custom-admin/users/${pk}/publications`}
+          className="admin-useritem"
+        >
+          <button className="admin-user-button">
+            <a> Publications</a>
+          </button>
+        </Link>
+      </div>
+    </>
+  );
 };
 
 export default UserEdit;
