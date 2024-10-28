@@ -181,6 +181,7 @@ class UserProfileView(APIView):
         profile = user.profile
         
         return Response({
+            "id": user.id,
 			"first_name": user.first_name,
             "last_name": user.last_name,
             "username": user.username, 

@@ -6,7 +6,8 @@ class GroupSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Group
-        fields = ['id', 'name', 'description', 'creator', 'subscribers_count', 'created_at', 'updated_at']
+        fields = ['id', 'name', 'description', 'creator', 'subscribers_count', 'group_image', 'created_at', 'updated_at']
+        read_only_fields = ['creator', 'subscribers_count', 'created_at', 'updated_at']
         
         def validate_name(self, value):
             if not value.strip():  

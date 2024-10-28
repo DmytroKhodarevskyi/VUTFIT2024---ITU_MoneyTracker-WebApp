@@ -12,16 +12,20 @@ function FeedPost({
   IsLeft,
   IsRight,
   shouldDisplay,
-  onClick,
 }) {
-  const { author, title, content_text, media_files, tags, stars } = publication;
+  const { author, title, content_text, media_files, tags, stars, isLiked} = publication;
 
   const [Name, setName] = useState("");
   const [Surname, setSurname] = useState("");
 
+  const [starsCount, setStars] = useState(stars);
+  const [liked, setLiked] = useState(isLiked);
+
+
   const [profileImg, setProfileImg] = useState(null);
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isLiking, setIsLiking] = useState(false);
 
   const [CardStyle, setCardStyle] = useState({});
 
@@ -33,6 +37,35 @@ function FeedPost({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  useEffect(() => {
+    setStars(publication.stars); 
+  }, [publication]);
+
+ 
+  useEffect(() => {
+    setLiked(isLiked);
+  }, [isLiked]);
+
+  const handleLike = async () => {
+    if (isLiking) return; 
+
+    setIsLiking(true);
+    try {
+        if (liked) {
+            await api.delete(`/api/publications/${publication.id}/unlike/`);
+            setLiked(false);
+            setStars((prevCount) => prevCount - 1);
+        } else {
+            await api.post(`/api/publications/${publication.id}/like/`);
+            setLiked(true);
+            setStars((prevCount) => prevCount + 1);
+        }
+    } catch (error) {
+        console.error("Error while liking/unliking the publication", error);
+    } finally {
+        setIsLiking(false); 
+    }
+};
   const openModal = (image) => {
     if (Disabled)
       return;
@@ -49,12 +82,11 @@ function FeedPost({
     const handleClick = () => {
       if (IsLeft) {
         console.log("Clicked left post");
-        handlePrevious(); // Call the previous function from context
+        handlePrevious(); 
       } else if (IsRight) {
         console.log("Clicked right post");
-        handleNext(); // Call the next function from context
+        handleNext(); 
       }
-      // Center post doesn’t need any click handler
     };
 
     const post = postRef.current;
@@ -62,27 +94,24 @@ function FeedPost({
       post.addEventListener("click", handleClick);
     }
 
-    // Clean up listener
     return () => {
       if (post) {
         post.removeEventListener("click", handleClick);
       }
     };
   }, [IsLeft, IsRight, handlePrevious, handleNext]);
-  //     useEffect(() => {
-  //       console.log(`Post ID: ${publication.id}, shouldDisplay: ${shouldDisplay}`);
-  //   }, [shouldDisplay, publication.id]);
+
 
   if (!shouldDisplay) {
     return <div className="FeedPost-card-container" style={CardStyle}></div>;
   }
 
+
   useEffect(() => {
     const fetchAuthor = async () => {
       try {
         const response = await api.get(`/api/user/profile/${author.id}/`);
-        // console.log("Author response firstname - " + response.data.first_name);
-        // console.log("Author response lastname - " + response.data.last_name);
+
 
         setName(response.data.first_name);
         setSurname(response.data.last_name);
@@ -254,25 +283,17 @@ function FeedPost({
         </div>
 
         <div className="FeedPost-card-actions">
-          <button
-            disabled={Disabled}
-            className={
-              Disabled
-                ? "FeedPost-like-button disabled"
-                : "FeedPost-like-button"
-            }
-          >
-            <p> I Like this! </p>
-
-            <div className="FeedPost-amounticon-container">
-              <span className="FeedPost-like-count">{stars}</span>
-              <img
-                src={star_picture}
-                alt="Star"
-                className="FeedPost-star-icon"
-              />
-            </div>
-          </button>
+        <button
+          onClick={handleLike}
+          disabled={Disabled || isLiking} 
+          className={Disabled || isLiking ? "FeedPost-like-button disabled" : "FeedPost-like-button"}
+      >
+          <p>{liked ? "Unlike" : "I Like this!"}</p>
+          <div className="FeedPost-amounticon-container">
+              <span className="FeedPost-like-count">{starsCount}</span>
+              <img src={star_picture} alt="Star" className="FeedPost-star-icon" />
+          </div>
+      </button>
 
           <button
             disabled={Disabled}

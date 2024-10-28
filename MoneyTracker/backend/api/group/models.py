@@ -8,6 +8,8 @@ class Group(models.Model):
     subscribers_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)  
     updated_at = models.DateTimeField(auto_now=True) 
+    
+    group_image = models.ImageField(upload_to='group_images/', default='group_images/default.png', blank=True, null=True)
 
     def __str__(self):
         return self.name
