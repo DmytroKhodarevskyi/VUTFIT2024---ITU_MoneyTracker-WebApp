@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
-import MainContainer from "../components/MainContainer";
-import TopPart from "../components/TopPart";
-import "../styles/TransactionsList.css";
-
+import api from "../../api";
+import MainContainer from "../../components/MainContainer/MainContainer";
+import TopPart from "../../components/TopPart/TopPart";
+import "./TransactionsList.css"
 
 function formatDate(dateString) {
   const date = new Date(dateString);
