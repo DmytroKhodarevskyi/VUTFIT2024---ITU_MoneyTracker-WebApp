@@ -143,7 +143,7 @@ function CategoriesAndStatistics() {
                             onChange={() => handleCheckboxChange(category)} 
                           />
                           <span className="CategoriesAndStatistics-custom-checkbox"></span>
-                          {category.name}
+                          <p className="CategoriesAndStatistics-categories-names">{category.name}</p>
                         </label>
                       </td>
                       <td>

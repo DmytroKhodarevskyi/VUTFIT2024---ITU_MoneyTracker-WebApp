@@ -218,3 +218,10 @@
     color: #000;
     margin-top: 4px;
 }
+
+.CategoriesAndStatistics-categories-names {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

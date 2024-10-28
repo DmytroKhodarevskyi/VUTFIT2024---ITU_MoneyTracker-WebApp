@@ -22,6 +22,7 @@ from api.views import CreateUserView, UserProfileView, UserProfileDetailView, Ge
 from api.views import CreatePublicationView, CreateCommentView, PublicationListView, PublicationsFeedListView
 from api.views import SelectedUserProfileView, DeletePublicationView, UpdatePublicationView, PublicationDetailView
 from api.views import CreateCategoryView, ListCategoryView, UpdateCategoryView, RetrieveCategoryView, DeleteCategoryView
+from api.views import TransactionListCreate, TransactionDelete, RetrieveTransactionView
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -55,6 +56,10 @@ urlpatterns = [
     path("api/categories/<int:pk>/", RetrieveCategoryView.as_view(), name="category-detail"),
     path("api/categories/<int:pk>/update/", UpdateCategoryView.as_view(), name="category-udate"),
     path("api/categories/<int:pk>/delete/", DeleteCategoryView.as_view(), name="category-delete"),
+    
+    path("api/transactions/", TransactionListCreate.as_view(), name="transaction-list-create"),
+    path("api/transactions/<int:pk>/", RetrieveTransactionView.as_view(), name="transaction-detail"),
+    path("api/transactions/<int:pk>/delete/", TransactionDelete.as_view(), name="transaction-delete"),
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

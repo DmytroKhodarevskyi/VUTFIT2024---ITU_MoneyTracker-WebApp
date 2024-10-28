@@ -217,6 +217,17 @@ class TransactionListCreate(generics.ListCreateAPIView):
 		else:
 			print(serializer.errors)
 
+
+class RetrieveTransactionView(generics.RetrieveAPIView):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self):
+        transaction = super().get_object()
+        if transaction.author != self.request.user:
+            raise PermissionError({"detail": "You do not have permission to view this transaction."})
+        return transaction  
 # class NoteDelete(generics.DestroyAPIView):
 # 	serializer_class = NoteSerializer
 # 	permission_classes = [IsAuthenticated]
