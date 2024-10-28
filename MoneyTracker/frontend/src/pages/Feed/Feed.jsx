@@ -23,7 +23,13 @@ function Feed() {
 
   const [publications, setPublications] = useState([]);
 
-  const [currentIndex, setCurrentIndex] = useState(0); // Track the current index
+  const [currentIndex, setCurrentIndex] = useState(0); 
+
+  const navigate = useNavigate();
+
+  const handleComment = (publicationId) => {
+    navigate(`/publication_detail/${publicationId}`);
+  };
 
 
   useEffect(() => {
@@ -42,7 +48,6 @@ function Feed() {
         }));
         
         setPublications(publicationWithLikes);
-        console.log("Publications is: ", publicationWithLikes)
         setDisplayedPosts(publicationWithLikes.slice(0, 2)); 
         setProfilePhoto(profileResponse.data.profileImg);
         setIsLoaded(true); 
@@ -123,6 +128,7 @@ function Feed() {
           IsLeft={false}
           IsRight={false}
           shouldDisplay={true}
+          handleComment={handleComment}
         />
       );
     }
@@ -140,6 +146,7 @@ function Feed() {
             IsLeft={false}
             IsRight={false}
             shouldDisplay={true}
+            handleComment={handleComment}
           />
           <FeedPost
             key={displayedPosts[1].id}
@@ -148,6 +155,7 @@ function Feed() {
             IsLeft={false}
             IsRight={true}
             shouldDisplay={true}
+            handleComment={handleComment}
           />
         </>
       );
@@ -169,6 +177,7 @@ function Feed() {
             IsLeft={true}
             IsRight={false}
             shouldDisplay={true}
+            handleComment={handleComment}
 
             // onClick={handlePrevious()}
           />
@@ -180,6 +189,7 @@ function Feed() {
             IsLeft={false}
             IsRight={false}
             shouldDisplay={true}
+            handleComment={handleComment}
           />
         </>
       );
@@ -197,6 +207,7 @@ function Feed() {
             IsLeft={true}
             IsRight={false}
             shouldDisplay={true}
+            handleComment={handleComment}
           />
           <FeedPost
             key={displayedPosts[1].id}
@@ -205,6 +216,7 @@ function Feed() {
             IsLeft={false}
             IsRight={false}
             shouldDisplay={true}
+            handleComment={handleComment}
           />
           <FeedPost
             key={displayedPosts[2].id}
@@ -213,6 +225,7 @@ function Feed() {
             IsLeft={false}
             IsRight={true}
             shouldDisplay={true}
+            handleComment={handleComment}
           />
         </>
       );

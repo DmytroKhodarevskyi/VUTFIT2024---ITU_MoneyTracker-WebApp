@@ -1,0 +1,204 @@
+.publication-detail-card-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #F8F8F8;
+    gap: 16px;
+    box-sizing: border-box;
+    margin-left: 92px;
+    margin-right: 92px;
+}
+
+.publication-detail-info {
+    background-color: white;
+    border-radius: 17px;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: -45px;
+    box-sizing: border-box;
+    overflow: hidden; 
+    gap: 20px;
+    height: 100%;
+    overflow-y: auto;   
+    margin-bottom: 144px;
+    flex-grow: 1;
+}
+
+.publication-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F1F1F1;
+    gap: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    gap: 12px;
+    padding: 8px 12px;
+    margin-top: 28px;
+    margin-right: 32px;
+    margin-left: 32px;
+}
+
+.publication-detail-header-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 27px;
+    flex-shrink: 0;
+}
+
+.publication-detail-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.publication-detail-author {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.publication-detail-fullname {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.publication-detail-name {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+}
+
+.publication-detail-content {
+    font-size: 20px;
+    margin-top: 16px;
+    margin-right: 32px;
+    margin-left: 32px;
+    font-family: 'Inter', sans-serif;
+    flex-grow: 1;
+}
+
+.publication-detail-tags {
+    margin-top: 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+}
+
+.publication-detail-hashtag {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    color: rgba(0, 188, 212, 0.7);
+}
+
+
+.publication-detail-media {
+    width: 100%;
+    max-width: 300px; 
+    height: auto; 
+}
+
+.publication-detail-media-container {
+    display: flex;               
+    flex-wrap: wrap;          
+    justify-content: space-between;
+    gap: 12px;       
+}
+
+.publication-detail-media-item {          
+    margin-top: 12px; 
+    flex-grow: 1;
+    min-width: 200px;
+}
+
+.publication-detail-post-media, .publication-detail-post-video, .publication-detail-post-gif {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    
+}
+
+.star-icon:hover {
+    filter: brightness(0.8); 
+}
+
+.publication-detail-footer {
+    margin-top: auto; 
+    margin-right: 32px;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.publication-detail-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.publication-detail-like-button, .publication-detail-comment-button {
+    display: flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 500;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    padding: 9px 12px;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+}
+
+.publication-detail-like-count, .publication-detail-comment-text {
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
+.publication-detail-star-icon, .publication-detail-comment-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.publication-detail-like-button:hover, .publication-detail-comment-button:hover
+{
+    background-color: #98cbff; 
+    color: #ffffff; 
+    border-color: #98cbff; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.publication-detail-commentary-section {
+    flex: 0 0 40%; 
+    background-color: white;
+    border-radius: 17px;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: -45px;
+    box-sizing: border-box;
+    overflow: hidden; 
+    gap: 20px;
+    max-height: 100vh;  
+    height:100%;
+    overflow-y: auto;   
+    margin-bottom: 144px;
+}
+
+.publication-detail-commentary-item {
+    border-bottom: 2px solid;
+}
+
+.publication-detail-like-button {
+    margin-bottom: 16px;
+}

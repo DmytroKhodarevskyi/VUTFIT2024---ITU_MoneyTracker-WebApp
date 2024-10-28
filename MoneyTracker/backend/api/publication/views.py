@@ -144,7 +144,7 @@ class CommentaryListView(generics.ListAPIView):
         try:
             publication = Publication.objects.get(id=publication_id)
         except Publication.DoesNotExist:
-            return Response({"detail": "Publication not found."}, status=404)
+            return Comment.objects.none()
         return Comment.objects.filter(publication=publication)
     
 class RetrieveCommentView(generics.RetrieveAPIView):
@@ -267,9 +267,9 @@ class StarDetailByUserAndCommentView(generics.RetrieveAPIView):
         try:
             star = Star.objects.get(user_id=user_id, comment_id=comment_id)
             serializer = self.serializer_class(star)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({"detail": "Star found.", "isLiked": True}, status=status.HTTP_200_OK)
         except Star.DoesNotExist:
-            return Response({"detail": "Star not found."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "Star not found.", "isLiked": False}, status=status.HTTP_200_OK)
 
 class StarDetailByPublicationAndUserView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]

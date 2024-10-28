@@ -12,8 +12,10 @@ function FeedPost({
   IsLeft,
   IsRight,
   shouldDisplay,
+  handleComment,
+
 }) {
-  const { author, title, content_text, media_files, tags, stars, isLiked} = publication;
+  const { id, author, title, content_text, media_files, tags, stars, isLiked} = publication;
 
   const [Name, setName] = useState("");
   const [Surname, setSurname] = useState("");
@@ -32,7 +34,7 @@ function FeedPost({
   const [TextConatinerStyle, setTextContainerStyle] = useState({});
 
   const postRef = useRef(null);
-  const { handlePrevious, handleNext } = useNavigation(); // Use the context to get navigation functions
+  const { handlePrevious, handleNext } = useNavigation(); 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -302,6 +304,7 @@ function FeedPost({
                 ? "FeedPost-comment-button disabled"
                 : "FeedPost-comment-button"
             }
+            onClick={() => handleComment(id)}
           >
             <p>Comment</p>
             <div className="FeedPost-amounticon-container">

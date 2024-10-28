@@ -21,6 +21,7 @@ import Feed from "./pages/Feed/Feed";
 import CreatePost from "./pages/CreatePost/CreatePost";
 import CustomAdmin from "./pages/Admin/Admin";
 import AdminRoute from "./pages/Admin/AdminRoute";
+import PublicationDetail from "./pages/PublicationDetail/PublicationDetail"
 
 import UserEdit from "./pages/Admin/UserEdit";
 import TransactionsEdit from "./pages/Admin/TransactionsEdit";
@@ -171,6 +172,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/publication_detail/:publicationId"
+          element={
+            <ProtectedRoute>
+              <PublicationDetail />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/create-post"
           element={

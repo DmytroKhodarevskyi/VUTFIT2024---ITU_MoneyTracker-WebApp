@@ -24,7 +24,7 @@ class Media(models.Model):
     
 class Publication(models.Model):
     
-    title = models.CharField(max_length=128, blank=False, default="")
+    title = models.CharField(max_length=128, blank=False, null=False)
     tags = models.CharField(max_length=255, blank=True) 
     
     content_text = models.TextField(blank=True, null=True) 
