@@ -1,0 +1,139 @@
+.TransactionsList-container {
+    margin-left: 92px;
+    margin-right: 92px;
+    margin-top: -45px;
+    height: fit-content;
+    min-width: 1256px;
+    width: auto;
+    height: 643px;
+    border-radius: 17px;
+    padding: 28px 32px 28px 32px;
+    display: flex;
+    gap: 20px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.TransactionsList-text-block {
+    width: 100%;
+}
+
+.TransactionsList-text-h2 {
+    font-size: 30px;
+    line-height: 36.31px;
+    margin: 0;
+}
+
+.TransactionsList-subtext {
+    padding-top: 4px;
+    color: #808080;
+    font-size: 16px;
+}
+
+.TransactionsList-delete-text {
+    color: #FF6347;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding-left: 16px;
+    background-color: white;
+    font-size: 18px;
+}
+
+.TransactionsList-delete-text:hover {
+    color: #bb00ea;
+}
+
+.TransactionsList-info {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 500;
+    color: #808080;
+}
+
+.TransactionsList-table-block {
+    border: 1px solid #BEC4CD;
+    border-radius: 7px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.TransactionsList-table {
+    font-size: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.TransactionsList-table th,
+.TransactionsList-table td {
+    padding: 0px 12px;
+    text-align: left;
+    border-bottom: 1px solid #BEC4CD;
+}
+
+.TransactionsList-table th {
+    height: 43px;
+    background-color: #233A6C0D;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+    border-bottom: 1px solid #BEC4CD;
+}
+
+.TransactionsList-table td {
+    height: 63px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #BEC4CD;
+    color: #000000B2;
+}
+
+.TransactionsList-table th:first-child,
+.TransactionsList td:first-child {
+    border-left: none;
+}
+
+.TransactionsList-table th:last-child,
+.TransactionsList-table td:last-child {
+    border-right: none;
+}
+
+.TransactionsList-table input[type="radio"] {
+    margin-right: 8px;
+}
+
+.TransactionsList-table input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.TransactionsList-checkbox {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #BEC4CD;
+    border-radius: 50%;
+    position: relative;
+    background-color: white;
+    margin-right: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: none;
+}
+
+.TransactionsList-table input[type="checkbox"]:checked+.TransactionsList-checkbox {
+    background-image: url('../pages/Check_ring.png');
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.TransactionsList-table input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}

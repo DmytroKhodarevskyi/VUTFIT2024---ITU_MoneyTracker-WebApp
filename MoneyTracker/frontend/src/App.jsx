@@ -25,6 +25,7 @@ import AdminRoute from "./pages/Admin/AdminRoute";
 import UserEdit from "./pages/Admin/UserEdit";
 import TransactionsEdit from "./pages/Admin/TransactionsEdit";
 import CategoriesEdit from "./pages/Admin/CategoriesEdit";
+import TransactionsList from "./pages/TransactionsList/TransactionsList";
 function Logout() {
   localStorage.clear();
   return <Navigate to="/login" />;
@@ -103,6 +104,15 @@ function App() {
               </AdminRoute>
             </ProtectedRoute>
           }
+        />
+
+        <Route 
+        path="/transactions-list"
+        element={
+          <ProtectedRoute>
+            <TransactionsList />
+          </ProtectedRoute>
+        }
         />
 
         <Route

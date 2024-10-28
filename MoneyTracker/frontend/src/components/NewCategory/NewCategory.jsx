@@ -83,6 +83,11 @@ function NewTransactionCard() {
         navigate('/categories-statistics');
     };
 
+    const handleTransactionsList = () => {
+        
+        navigate('/transactions-list');
+    };
+
   return (
     <>
         <div className='right-container'>
@@ -125,7 +130,7 @@ function NewTransactionCard() {
             </div>
 
             <div className='card-buttons'>
-                <button className='blue-buttons'> Transaction List </button>
+                <button className='blue-buttons'onClick={handleTransactionsList}> Transaction List </button>
                 <button className='blue-buttons'onClick={handleStatistics}> Category List </button>
             </div>
         </div>
