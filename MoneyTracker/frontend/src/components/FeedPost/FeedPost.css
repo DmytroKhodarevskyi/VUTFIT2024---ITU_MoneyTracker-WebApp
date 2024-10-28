@@ -72,10 +72,20 @@
 .FeedPost-card-content {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  height: auto;
+  height: 100%;
+  /* max-height: auto; */
+  /* max-height: 350px; */
+}
+
+.FeedPost-card-texttoppart {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   height: auto;
   max-height: 100%;
-  /* max-height: 350px; */
 }
 
 .FeedPost-card-name {
@@ -91,6 +101,8 @@
   overflow: scroll;
   height: 100%;
   max-height: 100%;
+  border-radius: 8px;
+  /* max-height: 200px; */
   padding: 0;
 }
 
@@ -132,19 +144,78 @@
   overflow: hidden;
 }
 
-.feed-wrapper {
+.FeedPost-media-container {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0px 92px;
-  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 16px;
   height: 100%;
-  box-sizing: border-box;
-  padding-bottom: 32px;
-
-  position: relative;
-  /* Allows child posts to be positioned absolutely */
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
 }
+
+.FeedPost-media-item {
+  height: 150px;
+  width: 200px;
+  min-width: 200px;
+  object-fit: cover;
+  /* border-radius: 10px; */
+}
+
+.FeedPost-media-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 12px;
+
+  cursor: pointer;
+}
+
+.FeedPost-media-image {
+  cursor: pointer; /* Shows that the image is clickable */
+}
+
+.FeedPost-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  transition: background-color 0.3s ease-in-out;
+}
+
+.FeedPost-modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.FeedPost-fullsize-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: default;
+
+  max-height: 90vh;
+  max-width: 90vh;
+
+  min-width: 50vh;
+  min-height: 50vh;
+
+  transition: all 0.3s ease-in-out;
+}
+
 
 .FeedPost-like-button,
 .FeedPost-comment-button {
