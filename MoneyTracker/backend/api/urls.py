@@ -1,10 +1,10 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
 
-urlpatterns = [
-    path("transactions/", views.TransactionListCreate.as_view(), name="transaction-list"),
-    # path("transactions/create", views.CreateTransactionView.as_view(), name="transaction-create"),
-    path("transactions/delete/<int:pk>/", views.TransactionDelete.as_view(), name="delete-transaction"),
-    
-    path('users/<str:username>/', views.DeleteUserView.as_view(), name="delete-user")
+urlpatterns = [    
+    path("user/", include("api.profile_user.urls")),
+    path("publications/", include("api.publication.urls")),
+    path("transactions/", include("api.transaction.urls")),
+    path("categories/", include("api.category.urls")),
+    path("custom_admin/", include("api.custom_admin.urls")),
+    path("groups/", include("api.group.urls"))
 ]

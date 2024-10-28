@@ -1,0 +1,227 @@
+.CategoriesAndStatistics-left-container {
+    min-width: 521px;
+    width: auto;
+    height: 615px;
+    border-radius: 17px;
+    padding: 28px 32px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.CategoriesAndStatistics-right-container {
+    width: 675px;
+    height: 615px;
+    border-radius: 17px;
+    padding: 28px 32px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.CategoriesAndStatistics-category-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    padding-left: 92px;
+    margin-top: -45px;
+    padding-bottom: 32px;
+    height: fit-content;
+    padding-right: 92px;
+}
+
+.CategoriesAndStatistics-category-text-h2 {
+    font-size: 30px;
+    line-height: 36.31px;
+    margin: 0;
+}
+
+.CategoriesAndStatistics-category-subtext {
+    padding-top: 4px;
+    color: #808080;
+}
+
+.CategoriesAndStatistics-table-block {
+    border: 1px solid #BEC4CD;
+    border-radius: 7px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.CategoriesAndStatistics-categories-table {
+    font-size: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.CategoriesAndStatistics-categories-table th,
+.CategoriesAndStatistics-categories-table td {
+    padding: 0px 12px;
+    text-align: left;
+    border-bottom: 1px solid #BEC4CD;
+}
+
+.CategoriesAndStatistics-categories-table th {
+    height: 43px;
+    background-color: #233A6C0D;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+    border-bottom: 1px solid #BEC4CD;
+}
+
+.CategoriesAndStatistics-categories-table td {
+    height: 63px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #BEC4CD;
+    color: #000000B2;
+}
+
+.CategoriesAndStatistics-categories-table th:first-child,
+.categories-table td:first-child {
+    border-left: none;
+}
+
+.CategoriesAndStatistics-categories-table th:last-child,
+.CategoriesAndStatistics-categories-table td:last-child {
+    border-right: none;
+}
+
+.CategoriesAndStatistics-categories-table input[type="radio"] {
+    margin-right: 8px;
+}
+
+.CategoriesAndStatistics-categories-table input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.CategoriesAndStatistics-custom-checkbox {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #BEC4CD;
+    border-radius: 50%;
+    position: relative;
+    background-color: white;
+    margin-right: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: none;
+}
+
+.CategoriesAndStatistics-categories-table input[type="checkbox"]:checked+.CategoriesAndStatistics-custom-checkbox {
+    background-image: url('./Check_ring.png');
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.CategoriesAndStatistics-categories-table input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.CategoriesAndStatistics-bottom-part {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #808080;
+}
+
+.CategoriesAndStatistics-delete-text {
+    color: #FF6347;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding-left: 16px;
+    background-color: white;
+    font-size: 18px;
+}
+
+.CategoriesAndStatistics-delete-text:hover {
+    color: #bb00ea;
+}
+
+.CategoriesAndStatistics-pie-chart {
+    width: 100%;
+    height: 200px;
+    margin: auto;
+    margin-top: 40px;
+    ;
+}
+
+.CategoriesAndStatistics-pie-chart .recharts-responsive-container {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.CategoriesAndStatistics-pie-chart:focus,
+.CategoriesAndStatistics-pie-chart *:focus {
+    outline: none;
+    border: none;
+}
+
+.CategoriesAndStatistics-right-top-categories {
+    font-size: 24px;
+    line-height: 29.05px;
+}
+
+.CategoriesAndStatistics-right-list-of-categories {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px;
+}
+
+.category-row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 16px;
+    justify-content: center;
+    padding-left: 40px;
+    color: #000000B2;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    text-align: left;
+    padding-right: 4px;
+}
+
+.category-label {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+
+.category-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+    margin-top: 4px;
+}
+
+.CategoriesAndStatistics-categories-names {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

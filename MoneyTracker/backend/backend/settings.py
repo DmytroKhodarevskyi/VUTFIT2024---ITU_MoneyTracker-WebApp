@@ -72,6 +72,12 @@ INSTALLED_APPS = [
     "corsheaders",
     'drf_spectacular',
     'drf_spectacular_sidecar',
+    'api.profile_user',
+    'api.publication',
+    'api.transaction',
+    'api.category',
+    'api.custom_admin',
+    'api.group',
 ]
 
 MIDDLEWARE = [
