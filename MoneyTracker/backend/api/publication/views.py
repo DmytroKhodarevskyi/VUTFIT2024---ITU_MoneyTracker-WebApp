@@ -1,4 +1,4 @@
-from .serializers import PublicationSerializer, MediaSerializer, CommentSerializer
+from .serializers import PublicationSerializer, MediaSerializer, CommentSerializer, StarSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import generics
@@ -83,8 +83,6 @@ class PublicationDetailView(generics.RetrieveAPIView):
 
     def get_object(self):
         publication = super().get_object()
-        if publication.author != self.request.user:
-            raise PermissionError({"detail": "You do not have permission to view this publication."})
         return publication
 
     def get(self, request, *args, **kwargs):
@@ -210,6 +208,9 @@ class LikePublicationView(generics.CreateAPIView):
     def post(self, request, publication_id):
         try:
             publication = Publication.objects.get(id=publication_id)
+            if publication.author == request.user:
+                return Response({"detail": "You cannot like your own publication."}, status=status.HTTP_400_BAD_REQUEST)
+            
             publication.like(request.user)
             return Response({"detail": "Publication liked."}, status=status.HTTP_201_CREATED)
         except Publication.DoesNotExist:
@@ -221,6 +222,10 @@ class UnlikePublicationView(generics.DestroyAPIView):
     def delete(self, request, publication_id):
         try:
             publication = Publication.objects.get(id=publication_id)
+            
+            if publication.author == request.user:
+                return Response({"detail": "You cannot unlike your own publication."}, status=status.HTTP_400_BAD_REQUEST)
+            
             publication.unlike(request.user)
             return Response({"detail": "Publication unliked."}, status=status.HTTP_204_NO_CONTENT)
         except Publication.DoesNotExist:
@@ -232,6 +237,9 @@ class LikeCommentView(generics.CreateAPIView):
     def post(self, request, comment_id):
         try:
             comment = Comment.objects.get(id=comment_id)
+            if comment.author == request.user:
+                return Response({"detail": "You cannot like your own comment."}, status=status.HTTP_400_BAD_REQUEST)
+            
             comment.like(request.user)
             return Response({"detail": "Comment liked."}, status=status.HTTP_201_CREATED)
         except Comment.DoesNotExist:
@@ -243,7 +251,34 @@ class UnlikeCommentView(generics.DestroyAPIView):
     def delete(self, request, comment_id):
         try:
             comment = Comment.objects.get(id=comment_id)
+            if comment.author == request.user:
+                return Response({"detail": "You cannot unlike your own comment."}, status=status.HTTP_400_BAD_REQUEST)
+            
             comment.unlike(request.user)
             return Response({"detail": "Comment unliked."}, status=status.HTTP_204_NO_CONTENT)
         except Comment.DoesNotExist:
             return Response({"detail": "Comment not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+class StarDetailByUserAndCommentView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = StarSerializer
+
+    def get(self, request, user_id, comment_id):
+        try:
+            star = Star.objects.get(user_id=user_id, comment_id=comment_id)
+            serializer = self.serializer_class(star)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Star.DoesNotExist:
+            return Response({"detail": "Star not found."}, status=status.HTTP_404_NOT_FOUND)
+
+class StarDetailByPublicationAndUserView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = StarSerializer
+
+    def get(self, request, user_id, publication_id):
+        try:
+            star = Star.objects.get(user_id=user_id, publication_id=publication_id)
+            serializer = self.serializer_class(star)
+            return Response({"detail": "Star found.", "isLiked": True}, status=status.HTTP_200_OK)
+        except Star.DoesNotExist:
+            return Response({"detail": "Star not found.", "isLiked": False}, status=status.HTTP_200_OK)

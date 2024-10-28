@@ -19,30 +19,37 @@ function Feed() {
 
   const [displayedPosts, setDisplayedPosts] = useState([]);
 
+  const [publicationWithoutLikes, setPublicationWithoutLikes] = useState([])
+
   const [publications, setPublications] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current index
 
-  // const navigate = useNavigate();
 
   useEffect(() => {
     const fetchNickname = async () => {
       try {
         const response = await api.get("/api/publications/feed/");
-        setPublications(response.data);
-        setDisplayedPosts(response.data.slice(0, 2));
-
         const profileResponse = await api.get("/api/user/profile/");
-
-        // console.log("Publications: ", response.data);
-        console.log(publications.length);
-        // setNickname(response.data.username);
-        // setName(response.data.first_name);
+        
+        const publicationWithLikes = await Promise.all(response.data.map(async (pub) => {
+          const starResponse = await api.get(`/api/publications/stars/user/${profileResponse.data.id}/publication/${pub.id}/`);
+          
+          return {
+            ...pub,
+            isLiked: starResponse.data.isLiked 
+          };
+        }));
+        
+        setPublications(publicationWithLikes);
+        console.log("Publications is: ", publicationWithLikes)
+        setDisplayedPosts(publicationWithLikes.slice(0, 2)); 
         setProfilePhoto(profileResponse.data.profileImg);
-        setIsLoaded(true); // Mark data as loaded
+        setIsLoaded(true); 
+        setIsLoaded(true); 
       } catch (error) {
         console.error("Failed to fetch nickname", error);
-        setIsLoaded(true); // Even if there’s an error, consider data loaded to prevent infinite loading
+        setIsLoaded(true); 
       }
     };
 

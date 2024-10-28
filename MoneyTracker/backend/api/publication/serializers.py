@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Media, Comment, Publication
+from .models import Media, Comment, Publication, Star
 from django.conf import settings
 import os
 from api.profile_user.serializers import UserSerializer
@@ -94,3 +94,8 @@ class PublicationSerializer(serializers.ModelSerializer):
                     Media.objects.create(publication=instance, media_type=media_type, file=media_file)
                 
         return instance
+    
+class StarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Star
+        fields = ['id', 'user', 'comment', 'publication']
