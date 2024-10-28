@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { NavigationContext } from "../../components/FeedPost/NavigationContext";
 import FeedPost from "../../components/FeedPost/FeedPost";
-import "./FeedPost.css";
+import "./Feed.css";
 
 function Feed() {
   const [profileData, setProfileData] = useState(null);
