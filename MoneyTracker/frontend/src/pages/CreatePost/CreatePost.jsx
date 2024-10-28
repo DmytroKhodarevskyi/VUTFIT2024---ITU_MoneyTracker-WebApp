@@ -136,6 +136,11 @@ const CreatePost = () => {
     e.preventDefault();
     setIsLoaded(true);
 
+    if (!title.trim()) {
+      alert("Title cannot be empty.");
+      return; 
+    }
+
     const newPost = new FormData();
     newPost.append("title", title);
     newPost.append("content_text", text);
