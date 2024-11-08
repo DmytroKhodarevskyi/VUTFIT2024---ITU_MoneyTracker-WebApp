@@ -1,0 +1,51 @@
+.GroupsList-main-block-container {
+    margin-top: -45px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    padding: 0px 92px 0px 92px;
+}
+
+.GroupsList-main-left-container {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 32px;
+
+    gap: 20px;
+
+    border-radius: 17px;
+
+    height: 615px;
+    width: auto;
+
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+
+}
+
+.GroupsList-left-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.GroupsList-main-title {
+    font-size: 30px;
+    font-weight:500;
+    color: black;
+    margin: 0;
+}
+
+.GroupsList-description-title {
+    font-size: 16px;
+    font-weight:500;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.GroupsList-group-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 17px;
+}

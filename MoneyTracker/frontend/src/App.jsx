@@ -27,6 +27,8 @@ import UserEdit from "./pages/Admin/UserEdit";
 import TransactionsEdit from "./pages/Admin/TransactionsEdit";
 import CategoriesEdit from "./pages/Admin/CategoriesEdit";
 import TransactionsList from "./pages/TransactionsList/TransactionsList";
+import GroupsList from "./pages/GroupsList/GroupsList";
+import GroupCreate from "./pages/GroupCreate/GroupCreate";
 function Logout() {
   localStorage.clear();
   return <Navigate to="/login" />;
@@ -169,6 +171,24 @@ function App() {
           element={
             <ProtectedRoute>
               <Feed />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/groups"
+          element={
+            <ProtectedRoute>
+              <GroupsList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/create_group"
+          element={
+            <ProtectedRoute>
+              <GroupCreate />
             </ProtectedRoute>
           }
         />
