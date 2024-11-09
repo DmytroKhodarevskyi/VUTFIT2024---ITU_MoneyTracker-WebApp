@@ -37,10 +37,13 @@ function Feed() {
       try {
         const response = await api.get("/api/publications/feed/");
         const profileResponse = await api.get("/api/user/profile/");
+        console.log(profileResponse.data.id)
         
         const publicationWithLikes = await Promise.all(response.data.map(async (pub) => {
           const starResponse = await api.get(`/api/publications/stars/user/${profileResponse.data.id}/publication/${pub.id}/`);
           
+
+          console.log(starResponse.data)
           return {
             ...pub,
             isLiked: starResponse.data.isLiked 

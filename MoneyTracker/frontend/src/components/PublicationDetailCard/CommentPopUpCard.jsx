@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import api from "../../api"
+import "./CommentPopUpCard.css"
+import { useNavigate } from "react-router-dom";
 
 const CommentPopUpCard = ({ isOpen, onClose, publicationId, onCommentAdded }) => {
     const [commentText, setCommentText] = useState('');
@@ -18,6 +20,7 @@ const CommentPopUpCard = ({ isOpen, onClose, publicationId, onCommentAdded }) =>
             onCommentAdded(response.data);
            
             onClose(); 
+
         } catch (error) {
             console.error("Error creating comment:", error);
             
@@ -37,10 +40,11 @@ const CommentPopUpCard = ({ isOpen, onClose, publicationId, onCommentAdded }) =>
                         onChange={(e) => setCommentText(e.target.value)}
                         placeholder="Write your comment here..."
                         required
+                        className="modal-textarea"
                     />
                     <div className="modal-buttons">
-                        <button type="submit">Submit</button>
-                        <button type="button" onClick={onClose}>Cancel</button>
+                        <button type="submit" className="modal-submit-button">Submit</button>
+                        <button type="button" className="modal-cancel-button" onClick={onClose}>Cancel</button>
                     </div>
                 </form>
             </div>
