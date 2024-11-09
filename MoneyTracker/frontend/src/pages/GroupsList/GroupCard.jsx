@@ -1,9 +1,28 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import "./GroupCard.css";
 
-function GroupCard({ name, subscribers, image }) {
+function GroupCard({ id, name, subscribers, image }) {
+  const [IsCreator, setIsCreator] = useState(false);
+
+  // const groupId = key;
+  const nav = useNavigate();
+
+  useEffect(() => {
+    const fetchCreator = async () => {
+      try {
+        const response = await api.get(`/api/groups/${id}/checkcreator/`);
+        setIsCreator(response.data.is_creator);
+      } catch (error) {
+        console.error("Failed to fetch creator", error);
+      }
+    };
+
+    fetchCreator();
+  }, [id, name]);
+
   return (
     <>
       <div className="GroupCard-mainbox">
@@ -19,8 +38,15 @@ function GroupCard({ name, subscribers, image }) {
         </div>
 
         <div className="GroupCard-buttons-container">
-          <button>View</button>
-          <button>Subscribe</button>
+          <button
+            onClick={() => {
+              nav(`/groups/${id}`);
+            }}
+          >
+            View
+          </button>
+
+          {IsCreator ? <button>Edit</button> : <button>Subscribe</button>}
         </div>
       </div>
     </>

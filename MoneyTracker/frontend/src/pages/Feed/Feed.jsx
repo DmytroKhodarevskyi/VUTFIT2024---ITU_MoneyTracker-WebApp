@@ -54,7 +54,6 @@ function Feed() {
         setDisplayedPosts(publicationWithLikes.slice(0, 2)); 
         setProfilePhoto(profileResponse.data.profileImg);
         setIsLoaded(true); 
-        setIsLoaded(true); 
       } catch (error) {
         console.error("Failed to fetch nickname", error);
         setIsLoaded(true); 

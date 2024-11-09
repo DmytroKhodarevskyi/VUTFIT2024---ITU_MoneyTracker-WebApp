@@ -72,6 +72,7 @@ function Profile() {
                 gender={profileData.gender}
                 totalSpends={profileData.totalSpends}
                 totalIncome={profileData.totalIncome}
+                stars={profileData.starsCount}
             />
     </MainContainer>
     )

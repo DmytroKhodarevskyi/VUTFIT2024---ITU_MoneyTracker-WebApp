@@ -2,6 +2,8 @@ import React from 'react';
 import "./ProfileCard.css";
 import Arrow from '../../assets/ArrowRight.svg'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import Star from '../../assets/star.svg'
 
 
 function ProfileCard({
@@ -14,14 +16,30 @@ function ProfileCard({
     city,
     gender,
     totalSpends,
-    totalIncome
+    totalIncome,
+    stars
 
 }) {
     const baseUrl = import.meta.env.VITE_API_URL;
     const fullImageUrl = profileImg ? `${baseUrl}${profileImg}` : `${baseUrl}media/profile_images/default.png`;
 
-    
+    const [formattedStars, setFormattedStars] = useState('');
+
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const formatStars = (num) => {
+          if (num >= 1_000_000) {
+            return (num / 1_000_000).toFixed(1) + 'M';
+          } else if (num >= 1_000) {
+            return (num / 1_000).toFixed(1) + 'K';
+          } else {
+            return num.toString();
+          }
+        };
+    
+        setFormattedStars(formatStars(stars));
+      }, [stars]);
 
 
     const handleChangeProfile = () => {
@@ -38,6 +56,10 @@ function ProfileCard({
                 <div className="profile-header">
                     <div className='profile-image'>
                         <img src={fullImageUrl} alt={`${fullname}'s profile`} className="profile-image" draggable="false"/>
+                        <div className="ProfileCard-stars-container">
+                            <h2 className='ProfileCard-stars-amount'>{formattedStars}</h2>
+                            <img src={Star} className='ProfileCard-star-img' draggable="false"/>
+                        </div>
                     </div>
                     <div className="profile-header-info">
                         <div className="profile-details">
