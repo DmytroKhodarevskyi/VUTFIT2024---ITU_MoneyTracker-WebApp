@@ -1,5 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+.ProfileCard-stars-container {
+    display: flex;
+    gap: 5px;
+    background-color: white;
+    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    height: 15px;
+    width: max-content;
+    white-space: nowrap;
+    padding: 16px 12px;
+
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    left: 15px;
+    bottom: 65px;
+
+    max-width: 80px;
+}
+
+.ProfileCard-stars-amount {
+    font-size: 18px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-weight:500;
+    color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+
+    margin: 0;
+}
 
 .profile-container {
     display: flex;

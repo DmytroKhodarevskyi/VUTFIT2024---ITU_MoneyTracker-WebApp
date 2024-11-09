@@ -90,6 +90,7 @@ function GroupsList() {
                     // </div>
 
                     <GroupCard
+                        id={group.id}
                         key={group.id}
                         name={group.name}
                         subscribers={group.subscribers_count}

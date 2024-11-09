@@ -58,6 +58,7 @@ class UserProfileDetailView(APIView):
             "city": profile.city,
             "gender": profile.get_gender_display(),  
             "jobTitle": profile.job,
+            "starsCount": profile.stars_count,
             "profileImg": profile_img,  
             "totalSpends": total_spends,
             "totalIncome": total_income
