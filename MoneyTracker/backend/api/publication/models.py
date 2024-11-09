@@ -55,8 +55,8 @@ class Publication(models.Model):
             Star.objects.create(user=user, publication=self)
             self.stars += 1
             
-            user.profile.stars_count += 1
-            user.profile.save()
+            self.author.profile.stars_count += 1
+            self.author.profile.save()
             self.save()
             
     def unlike(self, user):
@@ -64,8 +64,8 @@ class Publication(models.Model):
             like = Star.objects.get(user=user, publication=self)
             like.delete()
             self.stars -= 1
-            user.profile.stars_count -= 1
-            user.profile.save()
+            self.author.profile.stars_count -= 1
+            self.author.profile.save()
             self.save()
         except Star.DoesNotExist:
             pass

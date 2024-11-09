@@ -23,6 +23,8 @@ function FeedPost({
   const [starsCount, setStars] = useState(stars);
   const [liked, setLiked] = useState(isLiked);
 
+  const [commentCount, setCommentCount] = useState(0);
+
 
   const [profileImg, setProfileImg] = useState(null);
 
@@ -125,6 +127,24 @@ function FeedPost({
 
     fetchAuthor();
   }, []);
+
+  useEffect(() => {
+    const fetchCommentCount = async () => {
+        try {
+          
+            const response = await api.get(`/api/publications/${publication.id}/comments/`);
+            setCommentCount(response.data.length);
+        } catch (error) {
+            console.error(error);
+        } finally {
+          setIsLoaded(false);
+        }
+    };
+
+    fetchCommentCount();
+}, []); 
+
+
 
   const Disabled = IsLeft || IsRight ? true : false;
 
@@ -308,7 +328,7 @@ function FeedPost({
           >
             <p>Comment</p>
             <div className="FeedPost-amounticon-container">
-              <span className="FeedPost-comment-count">3</span>
+              <span className="FeedPost-comment-count">{commentCount}</span>
               <img
                 src={comment_picture}
                 alt="Comment"

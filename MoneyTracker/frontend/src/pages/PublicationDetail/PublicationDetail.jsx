@@ -11,6 +11,7 @@ function PublicationDetail () {
     const { publicationId } = useParams();
     const [publication, setPublication] = useState(null);
     const [profileData, setProfileData] = useState(null);
+    const [publicationProfilePhoto, setPublicationProfilePhoto] = useState(null);
 
     const [isLiked, setIsLiked] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -27,6 +28,7 @@ function PublicationDetail () {
                     api.get("/api/user/profile_detail/"),
                     api.get("/api/user/profile/"),
                     api.get(`/api/publications/${publicationId}/`),
+                  
                 ]);
     
                 setProfileData(response.data);
@@ -36,7 +38,7 @@ function PublicationDetail () {
                 setIsLoaded(true);
                     
             } catch (error) {
-                window.alert("Failed to fetch profile data", error);
+                window.alert("Failed to feeeetch profile data", error);
                 setIsLoaded(false);
             }
         }
@@ -44,6 +46,19 @@ function PublicationDetail () {
     }, []);
 
 
+    useEffect(() =>  {
+        async function fetchProfilePublciationPhoto() {
+            try {
+                const response = await api.get(`/api/user/profile/${publication.author.id}/`);
+                setPublicationProfilePhoto(response.data.profileImg);
+                setIsLoaded(true);
+            } catch {
+                setIsLoaded(false);
+            }
+        }
+        fetchProfilePublciationPhoto();
+        
+    }, [publication])
 
     if (!isLoaded) {
         return (
@@ -53,17 +68,16 @@ function PublicationDetail () {
         )
       }
 
-   
       return (
         <MainContainer>
-        <TopPart nickname={profileData?.firstname} selectedItem={"profile"} profilePhoto={profilePhoto} />   
+        <TopPart nickname={profileData?.firstname} selectedItem={"feed"} profilePhoto={profilePhoto} />   
         <PublicationDetailCard
             publication={publication}
             profilePhoto={profilePhoto}
             fullname={profileData.fullname}
             mediaFiles={publication.media_files} 
             userId={userId}
-
+            publicationProfilePhoto={publicationProfilePhoto}
         />     
         </MainContainer>
     );

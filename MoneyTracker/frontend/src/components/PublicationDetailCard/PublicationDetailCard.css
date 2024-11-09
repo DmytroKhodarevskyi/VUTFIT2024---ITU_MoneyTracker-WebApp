@@ -201,4 +201,27 @@
 
 .publication-detail-like-button {
     margin-bottom: 16px;
+    margin-right: 16px;
+}
+
+.publication-detail-delete-button {
+    display: flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 500;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 7px;
+    padding: 9px 12px;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+
+}
+
+.publication-detail-button-section {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;    
 }

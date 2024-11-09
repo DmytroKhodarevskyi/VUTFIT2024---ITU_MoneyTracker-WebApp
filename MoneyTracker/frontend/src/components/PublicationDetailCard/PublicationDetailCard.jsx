@@ -6,6 +6,7 @@ import CommentPopUpCard from './CommentPopUpCard';
 import { useState, useEffect } from "react"
 import api from "../../api"
 
+
 function PublicationDetailCard({
     publication,
     profileImg,
@@ -13,8 +14,9 @@ function PublicationDetailCard({
     mediaFiles,
     isLiked,
     userId,
+    publicationProfilePhoto,
 }) {
-
+    console.log(userId)
     const [isModalOpen, setModalOpen] = useState(false);
     const [starsCount, setStars] = useState(publication.stars);
     const [commentaries, setCommentaries] = useState([])
@@ -22,13 +24,11 @@ function PublicationDetailCard({
     const [isLiking, setIsLiking] = useState(false);
     const [loading, setLoading] = useState(true); 
     const [loaded, setIsLoaded] = useState(false)
-
+   
     const [isLikingComment, setIsLikingComment] = useState(false);
 
 
-    const handleCommentAdded = (newComment) => {
-        setCommentaries((prev) => [...prev, newComment]); 
-    };
+ 
     
     useEffect(() => {
         async function fetchIsLiked() {
@@ -47,46 +47,50 @@ function PublicationDetailCard({
         fetchIsLiked();
     }, []);
 
-    useEffect(() => {
-        async function fetchCommentariesWithAuthors() {
-            setLoading(true);
-            try {
+    async function fetchCommentariesWithAuthors() {
+        setLoading(true);
+        try {
+            const commentaryResponse = await api.get(`/api/publications/${publication.id}/comments/`);
+            const comments = commentaryResponse.data;
 
-                const commentaryResponse = await api.get(`/api/publications/${publication.id}/comments/`);
-                const comments = commentaryResponse.data;
+            const commentsWithAuthorData = await Promise.all(
+                comments.map(async (comment) => {
+                    const authorProfileResponse = await api.get(`/api/user/profile/${comment.author}/`);
+                    const authorProfile = authorProfileResponse.data;
 
-                const commentsWithAuthorData = await Promise.all(
-                    comments.map(async (comment) => {
-                        const authorProfileResponse = await api.get(`/api/user/profile/${comment.author}/`);
-                        const authorProfile = authorProfileResponse.data;
+                    const likeResponse = await api.get(`/api/publications/stars/user/${userId}/comment/${comment.id}/`);
+                    const isLiked = likeResponse.data.isLiked;
 
-                       
-                        const likeResponse = await api.get(`/api/publications/stars/user/${userId}/comment/${comment.id}/`);
-                        const isLiked = likeResponse.data.isLiked
-    
-                        return {
-                            ...comment,
-                            author: {
-                                ...comment.author,
-                                full_name: `${authorProfile.first_name} ${authorProfile.last_name}`,
-                                profile_img: authorProfile.profileImg,
-                            },
-                            isLiked,
-                        };
-                    })
-                );
-    
-                setCommentaries(commentsWithAuthorData);
-            } catch (error) {
-                console.error("Failed to fetch commentaries or author data:", error);
-                setIsLoaded(false);
-            } finally {
-                setLoading(false);
-            }
+                    return {
+                        ...comment,
+                        author: {
+                            ...comment.author,
+                            full_name: `${authorProfile.first_name} ${authorProfile.last_name}`,
+                            profile_img: authorProfile.profileImg,
+                            id: authorProfile.id,
+                        },
+                        isLiked,
+                    };
+                })
+            );
+
+            setCommentaries(commentsWithAuthorData);
+        } catch (error) {
+            console.error("Failed to fetch commentaries or author data:", error);
+        } finally {
+            setLoading(false); 
         }
-    
-        fetchCommentariesWithAuthors();
+    }
+
+    useEffect(() => {
+        fetchCommentariesWithAuthors(); 
     }, [publication.id]);
+
+    const handleCommentAdded = (newComment) => {
+        setCommentaries((prev) => [...prev, newComment]);
+        fetchCommentariesWithAuthors(); 
+    };
+
 
     useEffect(() => {
         if (commentaries.length > 0) {
@@ -97,16 +101,12 @@ function PublicationDetailCard({
                 }))
             );
         }
-    }, [commentaries]); 
+    }, []); 
 
     useEffect(() => {
-        setStars(publication.stars); 
-      }, [publication]);
-    
-     
-      useEffect(() => {
+        setStars(publication.stars);
         setLiked(isLiked);
-      }, [isLiked]);
+    }, [publication, isLiked]);
     
     const handleLike = async () => {
         if (isLiking) return; 
@@ -156,17 +156,31 @@ function PublicationDetailCard({
         }
     };
 
+    const handleDeleteCommentary = async (comment) => {
+      
+        try {
+            await api.delete(`/api/publications/${publication.id}/comments/${comment}/delete/`);
+    
+            setCommentaries((prevCommentaries) => 
+                prevCommentaries.filter((c) => c.id !== comment)
+            );
+        } catch (error) {
+            console.error("Error while deleting commentary", error);
+        }
+    };
 
+    
+
+   
     const baseUrl = import.meta.env.VITE_API_URL;
-    const fullImageUrl = profileImg ? `${baseUrl}${profileImg}` : `${baseUrl}media/profile_images/default.png`;
 
     return (
       <div className="publication-detail-card-container">
             <div className="publication-detail-info">
                 <div className="publication-detail-header">
-                    <img src={fullImageUrl} alt={`${fullname}'s profile`} className="publication-detail-header-image" draggable="false" />
+                    <img src={publicationProfilePhoto || `${baseUrl}media/profile_images/default.png`} alt={`${publication.author.first_name + " " + publication.author.last_name}'s profile`} className="publication-detail-header-image" draggable="false" />
                 <div className="publication-detail-author">
-                    <p className="publication-detail-fullname">{fullname}</p>
+                    <p className="publication-detail-fullname">{publication.author.first_name + " " + publication.author.last_name}</p>
                 </div>
             </div>
             <div className="publication-detail-content">
@@ -247,7 +261,7 @@ function PublicationDetailCard({
                         <div key={index} className="publication-detail-commentary-item">
                             <div className="publication-detail-commentary-header">
                                 <img 
-                                    src={comment.author.profile_img || defaultProfileImage} 
+                                    src={comment.author.profile_img} 
                                     alt={`${comment.author.full_name}'s profile`} 
                                     className="publication-detail-header-image" 
                                     draggable="false" 
@@ -259,12 +273,18 @@ function PublicationDetailCard({
                             <div className="publication-detail-comment-text">
                                 <p>{comment.text}</p>
                             </div>
+                            <div className="publication-detail-button-section">
                             <button className="publication-detail-like-button"  onClick={() => handleLikeCommentary(comment)}>
                                 <p>{comment.isLiked ? "Agreed!" : "I Agree!"}</p>
                                 <span className="publication-detail-like-count">{comment.stars || 0}</span>
                                 <img src={star_picture} alt="Star" className="publication-detail-star-icon" />
                             </button>
-                            
+                            {(publication.author.id === userId || comment.author.id === userId) && (
+                            <button className="publication-detail-delete-button"    onClick={() => handleDeleteCommentary(comment.id)} >
+                                Delete
+                            </button>
+                        )}
+                            </div>
                         </div>
                     ))
                 )}
