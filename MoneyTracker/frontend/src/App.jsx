@@ -21,7 +21,7 @@ import Feed from "./pages/Feed/Feed";
 import CreatePost from "./pages/CreatePost/CreatePost";
 import CustomAdmin from "./pages/Admin/Admin";
 import AdminRoute from "./pages/Admin/AdminRoute";
-import PublicationDetail from "./pages/PublicationDetail/PublicationDetail"
+import PublicationDetail from "./pages/PublicationDetail/PublicationDetail";
 
 import UserEdit from "./pages/Admin/UserEdit";
 import TransactionsEdit from "./pages/Admin/TransactionsEdit";
@@ -29,6 +29,8 @@ import CategoriesEdit from "./pages/Admin/CategoriesEdit";
 import TransactionsList from "./pages/TransactionsList/TransactionsList";
 import GroupsList from "./pages/GroupsList/GroupsList";
 import GroupCreate from "./pages/GroupCreate/GroupCreate";
+import GroupView from "./pages/GroupView/GroupView";
+
 function Logout() {
   localStorage.clear();
   return <Navigate to="/login" />;
@@ -109,13 +111,13 @@ function App() {
           }
         />
 
-        <Route 
-        path="/transactions-list"
-        element={
-          <ProtectedRoute>
-            <TransactionsList />
-          </ProtectedRoute>
-        }
+        <Route
+          path="/transactions-list"
+          element={
+            <ProtectedRoute>
+              <TransactionsList />
+            </ProtectedRoute>
+          }
         />
 
         <Route
@@ -180,6 +182,15 @@ function App() {
           element={
             <ProtectedRoute>
               <GroupsList />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/groups/:groupId"
+          element={
+            <ProtectedRoute>
+              <GroupView />
             </ProtectedRoute>
           }
         />

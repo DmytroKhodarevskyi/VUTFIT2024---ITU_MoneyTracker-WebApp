@@ -10,11 +10,11 @@ import "./GroupsList.css";
 function GroupsList() {
   const nav = useNavigate();
   const [nickname, setNickname] = useState("");
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLoadedGroups, setIsLoadedGroups] = useState(false);
   const [GroupsList, setGroupsList] = useState([]);
-  const [profilePhoto, setProfilePhoto] = useState(null);
 
   useEffect(() => {
     const fetchNickname = async () => {
