@@ -166,3 +166,41 @@
     flex-direction: column;
     gap: 16px;
 }
+
+.GroupView-create-new-thread-container {
+    display: flex;
+    height: 60px;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+
+    background-color: white;
+    border-radius: 17px;
+    cursor: pointer;
+
+    transition: all 0.1s ease;
+}
+
+.GroupView-create-new-thread-container:hover {
+    background-color: #F8F9FB;
+    border-radius: 17px;
+    cursor: pointer;
+}
+
+.GroupView-create-new-thread-text {
+    font-size: 24px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.GroupView-create-new-thread-icon {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    top: 1px;
+}

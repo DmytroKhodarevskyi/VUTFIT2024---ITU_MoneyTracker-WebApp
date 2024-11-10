@@ -5,6 +5,7 @@ import api from "../../api";
 import TopPart from "../../components/TopPart/TopPart";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import Users from "../../assets/Users.svg";
+import Plus from "../../assets/PlusThreadIcon.svg";
 import "./GroupView.css";
 
 function GroupView() {
@@ -12,6 +13,7 @@ function GroupView() {
   const [nickname, setNickname] = useState("");
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [groupcreator, setGroupCreator] = useState(null);
+  const [ismoderator, setIsModerator] = useState(false);
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -54,7 +56,11 @@ function GroupView() {
         setBaseUrl(response.data.base_url);
 
         const creator = await api.get(`/api/groups/${GroupId}/getcreator/`);
+        const ismoderator = await api.get(
+          `/api/groups/${GroupId}/checkcreator/`
+        );
         setGroupCreator(creator.data);
+        setIsModerator(ismoderator.data);
         setIsLoaded(true);
       } catch (error) {
         console.error("Failed to fetch group data", error);
@@ -64,6 +70,18 @@ function GroupView() {
 
     fetchGroupData();
   }, [GroupId]);
+
+  const handleSubscribe = async () => {
+    // TODO: Implement subscription
+  };
+
+  const handleEdit = () => {
+    nav(`/groups/${GroupId}/edit`);
+  };
+
+  const handleCreateThread = () => {
+    nav(`/groups/${GroupId}/createthread`);
+  };
 
   //   console.log("Group ID: ", GroupId);
   if (!isLoaded) {
@@ -119,9 +137,19 @@ function GroupView() {
                 </div>
 
                 <div className="GroupView-buttonscontainer">
-                  <button className="GroupView-subscribe-button">
-                    Subscribe
-                  </button>
+                  {ismoderator.is_creator || ismoderator.is_moderator ? (
+                    <button 
+                    onClick={handleEdit}
+                    className="GroupView-subscribe-button">
+                      Edit
+                    </button>
+                  ) : (
+                    <button 
+                    onClick={handleSubscribe}
+                    className="GroupView-subscribe-button">
+                      Subscribe
+                    </button>
+                  )}
 
                   <div className="GroupView-subscribers-container">
                     <div className="GroupView-icon-subscribers-title-container">
@@ -144,8 +172,83 @@ function GroupView() {
 
             <div className="GroupView-rightpart-container">
               {/* Table of mods */}
+
+              {/* <table className="TransactionsList-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Amount</th>
+                  <th>Curr.</th>
+                  <th>Date</th>
+                  <th>Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((transaction) => (
+                  <tr key={transaction.id}>
+                    <td>
+                      <label style={{ display: "flex", alignItems: "center" }}>
+                        <input
+                          type="checkbox"
+                          name="transaction"
+                          value={transaction.name}
+                          checked={selectedTransactions.includes(
+                            transaction.id
+                          )}
+                          onChange={() => handleCheckboxChange(transaction)}
+                        />
+                        <span className="TransactionsList-checkbox"></span>
+                        {transaction.title}
+                      </label>
+                    </td>
+                    <td>
+                      <span
+                        style={{
+                          color: transaction.incomeOrSpend ? "green" : "red",
+                        }}
+                      >
+                        {transaction.incomeOrSpend ? "+" : "-"}{" "}
+                        {transaction.amount}
+                      </span>
+                    </td>
+                    <td>{getCurrencySymbol(transaction.currency)}</td>
+                    <td>{formatDate(transaction.transaction_datetime)}</td>
+                    <td>
+                      <span
+                        style={{
+                          backgroundColor: transaction.categoryColor,
+                          display: "inline-block",
+                          width: "25px",
+                          height: "25px",
+                          borderRadius: "25%",
+                        }}
+                      ></span>
+                      <span style={{ marginLeft: "8px" }}>
+                        {transaction.categoryName || "Unknown category"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table> */}
             </div>
           </div>
+
+          {ismoderator.is_creator || ismoderator.is_moderator ? (
+            <div
+              onClick={handleCreateThread}
+              className="GroupView-create-new-thread-container"
+            >
+              <h1 className="GroupView-create-new-thread-text">
+                Create new thread
+              </h1>
+              <img
+                className="GroupView-create-new-thread-icon"
+                src={Plus}
+                alt=""
+              />
+            </div>
+          ) : null}
         </div>
       </MainContainer>
     </>

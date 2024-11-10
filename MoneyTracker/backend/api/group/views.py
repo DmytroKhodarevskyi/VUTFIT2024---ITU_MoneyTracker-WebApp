@@ -75,10 +75,16 @@ class GroupCreatorCheckView(APIView):
             group = Group.objects.get(id=group_id)
             
             # Check if the creator of the group matches the logged-in user
+            moderators = UserGroup.objects.filter(group=group, role='moderator')
+            is_moderator = request.user in [moderator.user for moderator in moderators]
             is_creator = group.creator == request.user
             
             # Return response indicating if the logged-in user is the creator
-            return Response({"is_creator": is_creator}, status=status.HTTP_200_OK)
+            return Response({
+                "is_creator": is_creator,
+                "is_moderator": is_moderator
+            }
+            , status=status.HTTP_200_OK)
         
         except Group.DoesNotExist:
             # Return 404 if the group does not exist
