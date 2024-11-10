@@ -60,6 +60,7 @@ const CreatePost = () => {
       fetchNickname();
     }, []);
 
+
     useEffect(() => {
       const fetchPostData = async () => {
         if (id) {
@@ -70,7 +71,7 @@ const CreatePost = () => {
             setTitle(title);
             setText(content_text);
             setTags(tags);
-            console.log("Media ISSSSSS ${media_files}")
+           
             const mediaArray = media_files.map(file => ({
               id: file.id,
               file: {
@@ -79,7 +80,7 @@ const CreatePost = () => {
               },
               url: file.file,
             }));
-          console.log("Media Array to be set:", mediaArray);
+
           setMedia(mediaArray);
         } catch (error) {
           console.error("Failed to fetch post data:", error);

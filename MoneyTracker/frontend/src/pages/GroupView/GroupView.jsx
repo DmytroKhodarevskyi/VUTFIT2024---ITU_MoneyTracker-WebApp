@@ -267,6 +267,7 @@ function GroupView() {
           <NewThreadPopup
             newThreadPopup={newThreadPopup}
             setNewThreadPopup={setNewThreadPopup}
+            groupId={GroupId}
           />
         ) : null}
       </MainContainer>

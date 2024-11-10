@@ -66,7 +66,7 @@ function FormPost({
 
           <div className="form-post-selected-media">
           {media.map((mediaItem, index) => {
-            console.log(mediaItem);
+
 
             return (
                 <div 
