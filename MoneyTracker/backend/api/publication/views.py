@@ -209,7 +209,10 @@ class LikePublicationView(generics.CreateAPIView):
         try:
             publication = Publication.objects.get(id=publication_id)
             if publication.author == request.user:
-                return Response({"detail": "You cannot like your own publication."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"detail": "You cannot like your own publication.", "error_code": "self_like"},
+                    status=status.HTTP_403_FORBIDDEN
+                )
             
             publication.like(request.user)
             return Response({"detail": "Publication liked."}, status=status.HTTP_201_CREATED)
@@ -224,7 +227,10 @@ class UnlikePublicationView(generics.DestroyAPIView):
             publication = Publication.objects.get(id=publication_id)
             
             if publication.author == request.user:
-                return Response({"detail": "You cannot unlike your own publication."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"detail": "You cannot unlike your own publication.", "error_code": "self_like"},
+                    status=status.HTTP_403_FORBIDDEN
+                )
             
             publication.unlike(request.user)
             return Response({"detail": "Publication unliked."}, status=status.HTTP_204_NO_CONTENT)
@@ -238,7 +244,10 @@ class LikeCommentView(generics.CreateAPIView):
         try:
             comment = Comment.objects.get(id=comment_id)
             if comment.author == request.user:
-                return Response({"detail": "You cannot like your own comment."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"detail": "You cannot like your own comment.", "error_code": "self_like"},
+                    status=status.HTTP_403_FORBIDDEN
+                )
             
             comment.like(request.user)
             return Response({"detail": "Comment liked."}, status=status.HTTP_201_CREATED)
@@ -252,7 +261,10 @@ class UnlikeCommentView(generics.DestroyAPIView):
         try:
             comment = Comment.objects.get(id=comment_id)
             if comment.author == request.user:
-                return Response({"detail": "You cannot unlike your own comment."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"detail": "You cannot unlike your own comment.", "error_code": "self_like"},
+                    status=status.HTTP_403_FORBIDDEN
+                )
             
             comment.unlike(request.user)
             return Response({"detail": "Comment unliked."}, status=status.HTTP_204_NO_CONTENT)
