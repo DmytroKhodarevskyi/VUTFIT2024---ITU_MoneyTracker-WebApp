@@ -18,6 +18,7 @@ function GroupView() {
   const [ismoderator, setIsModerator] = useState(false);
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [refreshThreads, setRefreshThreads] = useState(false);
 
   const [GroupData, setGroupData] = useState(null);
   const [baseurl, setBaseUrl] = useState(null);
@@ -83,6 +84,8 @@ function GroupView() {
       return;
     }
 
+    console.log("Fetching threads for group: ", GroupId);
+
     const fetchThreads = async () => {
       try {
         const response = await api.get(`/api/groups/${GroupId}/threads/`);
@@ -95,7 +98,7 @@ function GroupView() {
 
     fetchThreads();
   
-  }, [isLoaded]);
+  }, [isLoaded, refreshThreads]);
 
   const handleSubscribe = async () => {
     // TODO: Implement subscription
@@ -299,9 +302,11 @@ function GroupView() {
 
         {newThreadPopup ? (
           <NewThreadPopup
-            newThreadPopup={newThreadPopup}
             setNewThreadPopup={setNewThreadPopup}
             groupId={GroupId}
+            setLoaded={setIsLoaded}
+
+            setRefreshThreads={() => setRefreshThreads((prev) => !prev)}
           />
         ) : null}
       </MainContainer>
