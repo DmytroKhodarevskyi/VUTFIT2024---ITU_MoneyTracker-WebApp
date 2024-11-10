@@ -88,14 +88,16 @@ class Comment(models.Model):
         if not Star.objects.filter(user=user, comment=self).exists():
             Star.objects.create(user=user, comment=self)
             self.stars += 1
-            self.save()
+            self.publication.author.profile.stars_count += 1
+            self.publication.author.profile.save()
             
     def unlike(self, user):
         try:
             like = Star.objects.get(user=user, comment=self)
             like.delete()
             self.stars -= 1
-            self.save()
+            self.publication.author.profile.stars_count -= 1
+            self.publication.author.profile.save()
         except Star.DoesNotExist:
             pass
     

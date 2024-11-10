@@ -123,7 +123,9 @@ function PublicationDetailCard({
                 setStars((prevCount) => prevCount + 1);
             }
         } catch (error) {
-            console.error("Error while liking/unliking the publication", error);
+            if (error.response?.data?.error_code === "self_like") {
+                alert("You cannot like your own publication.");
+            }
         } finally {
             setIsLiking(false); 
         }
@@ -150,7 +152,9 @@ function PublicationDetailCard({
                 prevCommentaries.map((c) => (c.id === comment.id ? comment : c))
             );
         } catch (error) {
-            console.error("Error while liking/unliking the comment", error);
+            if (error.response?.data?.error_code === "self_like") {
+                alert("You cannot like your own comment.");
+            }
         } finally {
             setIsLikingComment(false);
         }
