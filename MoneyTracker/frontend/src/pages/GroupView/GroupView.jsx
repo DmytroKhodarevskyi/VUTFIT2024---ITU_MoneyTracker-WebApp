@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import TopPart from "../../components/TopPart/TopPart";
 import MainContainer from "../../components/MainContainer/MainContainer";
+import NewThreadPopup from "./NewThreadPopup";
 import Users from "../../assets/Users.svg";
 import Plus from "../../assets/PlusThreadIcon.svg";
 import "./GroupView.css";
@@ -20,6 +21,8 @@ function GroupView() {
   const [GroupData, setGroupData] = useState(null);
   const [baseurl, setBaseUrl] = useState(null);
   const [GroupId, setGroupId] = useState(null);
+
+  const [newThreadPopup, setNewThreadPopup] = useState(false);
 
   useEffect(() => {
     const fetchNickname = async () => {
@@ -80,7 +83,12 @@ function GroupView() {
   };
 
   const handleCreateThread = () => {
-    nav(`/groups/${GroupId}/createthread`);
+    // nav(`/groups/${GroupId}/createthread`);
+    setNewThreadPopup(!newThreadPopup);
+  };
+
+  const handleNewThreadPopup = () => {
+    setNewThreadPopup(!newThreadPopup);
   };
 
   //   console.log("Group ID: ", GroupId);
@@ -138,15 +146,17 @@ function GroupView() {
 
                 <div className="GroupView-buttonscontainer">
                   {ismoderator.is_creator || ismoderator.is_moderator ? (
-                    <button 
-                    onClick={handleEdit}
-                    className="GroupView-subscribe-button">
+                    <button
+                      onClick={handleEdit}
+                      className="GroupView-subscribe-button"
+                    >
                       Edit
                     </button>
                   ) : (
-                    <button 
-                    onClick={handleSubscribe}
-                    className="GroupView-subscribe-button">
+                    <button
+                      onClick={handleSubscribe}
+                      className="GroupView-subscribe-button"
+                    >
                       Subscribe
                     </button>
                   )}
@@ -249,7 +259,16 @@ function GroupView() {
               />
             </div>
           ) : null}
+
+          <div className="GroupView-threads-container"></div>
         </div>
+
+        {newThreadPopup ? (
+          <NewThreadPopup
+            newThreadPopup={newThreadPopup}
+            setNewThreadPopup={setNewThreadPopup}
+          />
+        ) : null}
       </MainContainer>
     </>
   );
