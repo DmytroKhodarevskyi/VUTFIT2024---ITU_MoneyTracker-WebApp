@@ -3,6 +3,7 @@ from .views import (
     GroupCreatorCheckView, 
     GroupDataView,
     GroupCreatorGetView,
+    ThreadCommentCountView,
 
     GroupCreateView, 
     GroupListView, 
@@ -44,6 +45,7 @@ urlpatterns = [
     path('threads/<int:pk>/', ThreadDetailView.as_view(), name='thread_detail'),
     path('threads_comments/<int:thread_id>/create/', ThreadCommentCreateView.as_view(), name='thread_comment_create'),
     path('threads_comments/<int:thread_id>/comments/', ThreadCommentListView.as_view(), name='thread_comment_list'),
+    path('threads_comments/<int:thread_id>/commentscount/', ThreadCommentCountView.as_view(), name='thread_comment_list'),
     path('threads_comments/<int:pk>/delete/', ThreadCommentDeleteView.as_view(), name='thread-comment-delete'),
     path('threads_comments/<int:pk>/', ThreadCommentDetailView.as_view(), name='thread-comment-detail'),
 ]

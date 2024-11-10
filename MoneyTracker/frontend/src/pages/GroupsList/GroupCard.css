@@ -6,10 +6,12 @@
     align-items: center;
     width: auto;
     height: 74px;
+    min-height: 74px;
     border-radius: 10px;
     background-color: #F4F5F7;
     box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
 
+    min-width: 470px;
     padding: 8px 20px;
 }
 
@@ -55,6 +57,9 @@
     font-weight: 500;
     color: rgba(0, 0, 0, 0.7);
     margin: 0;
+
+    /* disable text wrapping */
+    white-space: nowrap;
 }
 
 .GroupCard-NameDescription-container {

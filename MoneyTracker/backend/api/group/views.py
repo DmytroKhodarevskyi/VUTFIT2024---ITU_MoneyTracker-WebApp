@@ -333,7 +333,22 @@ class ThreadCommentListView(generics.ListAPIView):
 
     def get_queryset(self):
         thread_id = self.kwargs.get('thread_id')  
-        return ThreadComment.objects.filter(thread_id=thread_id) 
+        return ThreadComment.objects.filter(thread_id=thread_id)
+
+class ThreadCommentCountView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, thread_id):
+        try:
+            thread = Thread.objects.get(id=thread_id)
+        except Thread.DoesNotExist:
+            raise NotFound("Thread not found.")
+
+        comments_count = thread.comments.count()
+
+        return Response({
+            "comments_count": comments_count
+        }, status=status.HTTP_200_OK) 
     
 class ThreadCommentDeleteView(generics.DestroyAPIView):
     serializer_class = ThreadCommentSerializer

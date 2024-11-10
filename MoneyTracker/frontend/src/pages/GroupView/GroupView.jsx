@@ -5,6 +5,7 @@ import api from "../../api";
 import TopPart from "../../components/TopPart/TopPart";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import NewThreadPopup from "./NewThreadPopup";
+import ThreadRoot from "./ThreadRoot";
 import Users from "../../assets/Users.svg";
 import Plus from "../../assets/PlusThreadIcon.svg";
 import "./GroupView.css";
@@ -23,6 +24,8 @@ function GroupView() {
   const [GroupId, setGroupId] = useState(null);
 
   const [newThreadPopup, setNewThreadPopup] = useState(false);
+
+  const [threads, setThreads] = useState([]);
 
   useEffect(() => {
     const fetchNickname = async () => {
@@ -73,6 +76,26 @@ function GroupView() {
 
     fetchGroupData();
   }, [GroupId]);
+
+  useEffect(() => {
+
+    if (!GroupId || !isLoaded) {
+      return;
+    }
+
+    const fetchThreads = async () => {
+      try {
+        const response = await api.get(`/api/groups/${GroupId}/threads/`);
+        console.log("Threads: ", response.data);
+        setThreads(response.data);
+      } catch (error) {
+        console.error("Failed to fetch threads", error);
+      }
+    }
+
+    fetchThreads();
+  
+  }, [isLoaded]);
 
   const handleSubscribe = async () => {
     // TODO: Implement subscription
@@ -260,7 +283,18 @@ function GroupView() {
             </div>
           ) : null}
 
-          <div className="GroupView-threads-container"></div>
+          <div className="GroupView-threads-container">
+            { threads.map((thread) => (
+              <ThreadRoot
+                key={thread.id}
+                thread={thread}
+                baseurl={baseurl}
+                id={thread.id}
+              />
+            
+            ))}
+
+          </div>
         </div>
 
         {newThreadPopup ? (

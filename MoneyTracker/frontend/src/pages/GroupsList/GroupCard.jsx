@@ -6,6 +6,7 @@ import "./GroupCard.css";
 
 function GroupCard({ id, name, subscribers, image }) {
   const [IsCreator, setIsCreator] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // const groupId = key;
   const nav = useNavigate();
@@ -15,6 +16,7 @@ function GroupCard({ id, name, subscribers, image }) {
       try {
         const response = await api.get(`/api/groups/${id}/checkcreator/`);
         setIsCreator(response.data.is_creator);
+        setIsLoaded(true);
       } catch (error) {
         console.error("Failed to fetch creator", error);
       }
@@ -22,6 +24,28 @@ function GroupCard({ id, name, subscribers, image }) {
 
     fetchCreator();
   }, [id, name]);
+
+  if (!isLoaded) {
+    return (
+      <>
+      <div className="GroupCard-mainbox">
+        <div className="GroupCard-image-text-container">
+          <div
+            className="GroupCard-image-container"
+            style={{ backgroundImage: `url(${image})` }}
+          />
+          <div className="GroupCard-NameDescription-container">
+            <h2 className="GroupCard-Name">{name}</h2>
+            <p className="GroupCard-Description">{subscribers} subscribers</p>
+          </div>
+        </div>
+
+        <div className="GroupCard-buttons-container">
+        </div>
+      </div>
+      </>
+    );
+  }
 
   return (
     <>

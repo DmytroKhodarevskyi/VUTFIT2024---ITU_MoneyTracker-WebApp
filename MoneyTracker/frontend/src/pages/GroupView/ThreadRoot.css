@@ -1,0 +1,131 @@
+.ThreadRoot-main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+
+  background-color: white;
+  box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+
+  border-radius: 17px;
+
+  padding: 40px 36px;
+  width: auto;
+}
+
+.ThreadRoot-title {
+    font-size: 30px;
+    font-weight: 500;
+    color: black;
+    margin: 0;
+}
+
+.ThreadRoot-description {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.ThreadRoot-title-description-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    overflow: scroll;
+    width: 100%;
+    max-width: 100%;
+}
+
+.ThreadRoot-bottom-part-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.ThreadRoot-messages-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    border-radius: 12px;
+    border: 2px solid #D9D9D9;
+
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px;
+}
+
+.ThreadRoot-messages-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.ThreadRoot-messages-count-icon-container {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.ThreadRoot-view-button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+
+    border-radius: 12px;
+    border: 2px solid #D9D9D9;
+
+    padding: 8px 12px;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.ThreadRoot-messages-icon {
+    width: 19px;
+    height: 19px;
+}
+
+.ThreadRoot-messages-icon-arrow {
+    height: 24px;
+    width: 24px;
+}
+
+.ThreadRoot-bottom-part-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.ThreadRoot-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    object-fit: cover;
+    width: 223px;
+    height: 143px;
+    overflow: hidden;
+    border-radius: 7px;
+}
+
+.ThreadRoot-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+}
+
+.ThreadRoot-messages-count {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.4);
+    margin: 0;
+}
