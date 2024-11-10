@@ -43,6 +43,7 @@ class ThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thread
         fields = '__all__'
+        read_only_fields = ['creator', 'created_at']
         
         def validate_title(self, value):
             if not value.strip():

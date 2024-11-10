@@ -239,11 +239,34 @@ class ThreadCreateView(generics.CreateAPIView):
             raise PermissionDenied("Group does not exist.")
 
         user_group = UserGroup.objects.filter(group=group, user=self.request.user).first()
+        
+        if (group.creator == self.request.user):
+            self._set_media(serializer)
+            serializer.save(creator=self.request.user, group=group)
+            return
+        
+        if (user_group and user_group.role == 'moderator'):
+            self._set_media(serializer)
+            serializer.save(creator=self.request.user, group=group)
+            return
+    
+        raise PermissionDenied("Only the creator or a moderator can create threads in this group.")
+    
+    def _set_media(self, serializer):
+        media_file = self.request.FILES.get('media')  
 
-        if not user_group or (user_group.role != 'moderator' and group.creator != self.request.user):
-            raise PermissionDenied("Only the creator or a moderator can create threads in this group.")
+        if media_file:
+ 
+            if media_file.content_type.startswith('image'):
+                serializer.validated_data['media_type'] = 'image'
+            elif media_file.content_type.startswith('video'):
+                serializer.validated_data['media_type'] = 'video'
+            elif media_file.content_type == 'image/gif':
+                serializer.validated_data['media_type'] = 'gif'
 
-        serializer.save(creator=self.request.user, group=group)
+            serializer.validated_data['media_file'] = media_file
+
+
         
 class ThreadListView(generics.ListAPIView):
     serializer_class = ThreadSerializer

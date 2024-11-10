@@ -37,6 +37,7 @@ urlpatterns = [
     path('<int:group_id>/assign_member/<int:user_id>/', AssignMemberView.as_view(), name='assign_member'),
     path('<int:group_id>/ban_user/<int:user_id>/', BanUserView.as_view(), name='ban_user'),
     path('<int:group_id>/unban_user/<int:user_id>/', UnbanUserView.as_view(), name='unban_user'),
+    
     path('threads/create/', ThreadCreateView.as_view(), name='thread_create'),
     path('<int:group_id>/threads/', ThreadListView.as_view(), name='thread_list'),
     path('threads/<int:pk>/', ThreadUpdateView.as_view(), name='thread_update'),
