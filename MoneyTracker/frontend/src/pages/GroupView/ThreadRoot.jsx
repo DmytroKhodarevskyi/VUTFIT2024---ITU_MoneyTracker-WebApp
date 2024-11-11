@@ -4,9 +4,12 @@ import { useState, useEffect } from "react";
 import "./ThreadRoot.css";
 import ThreadIcon from "../../assets/ThreadIcon.svg";
 import ArrowIcon from "../../assets/ArrowIcon.svg";
+import { useNavigate } from "react-router-dom"; 
+
 
 function ThreadRoot({ thread, baseurl, id }) {
   const [commentscount, setCommentscount] = useState(0);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     if (!thread) {
@@ -31,7 +34,9 @@ function ThreadRoot({ thread, baseurl, id }) {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
-//   console.log(thread.media_file);
+  const handleViewClick = () => {
+    navigate(`/thread/${id}`, { state: { thread } });
+  };
 
   return (
     <>
@@ -68,7 +73,8 @@ function ThreadRoot({ thread, baseurl, id }) {
             </div>
           </div>
 
-          <div className="ThreadRoot-view-button-container">
+          <div className="ThreadRoot-view-button-container"
+            onClick={handleViewClick}>
             <h2 className="ThreadRoot-messages-text">View</h2>
             <img
               draggable="false"
