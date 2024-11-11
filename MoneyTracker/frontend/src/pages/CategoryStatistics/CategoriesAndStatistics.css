@@ -14,7 +14,7 @@
 }
 
 .CategoriesAndStatistics-right-container {
-    width: 675px;
+    min-width: 675px;
     height: 615px;
     border-radius: 17px;
     padding: 28px 32px 28px 32px;
@@ -54,6 +54,9 @@
     border-radius: 7px;
     margin-top: 20px;
     overflow: hidden;
+    max-height: 490px;
+    min-width: 457px;
+    width: 100%;
 }
 
 .CategoriesAndStatistics-categories-table {
@@ -62,19 +65,61 @@
     border-collapse: collapse;
 }
 
+.CategoriesAndStatistics-categories-table thead,
+.CategoriesAndStatistics-categories-table tbody {
+    display: block;
+}
+
+.CategoriesAndStatistics-categories-table thead {
+    width: 100%;
+}
+
+.CategoriesAndStatistics-categories-table tbody {
+    overflow-y: auto;
+    max-height: 400px;
+    width: 100%;
+}
+
 .CategoriesAndStatistics-categories-table th,
 .CategoriesAndStatistics-categories-table td {
-    padding: 0px 12px;
+    padding: 8px 12px;
     text-align: left;
     border-bottom: 1px solid #BEC4CD;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 33%;
 }
 
 .CategoriesAndStatistics-categories-table th {
+    position: sticky;
+    top: 0;
     height: 43px;
     background-color: #233A6C0D;
     font-weight: 500;
     color: rgb(0, 0, 0);
     border-bottom: 1px solid #BEC4CD;
+    z-index: 1;
+}
+
+.CategoriesAndStatistics-categories-table th:nth-child(1),
+.CategoriesAndStatistics-categories-table td:nth-child(1) {
+    width: 40%;
+}
+
+.CategoriesAndStatistics-categories-table th:nth-child(2),
+.CategoriesAndStatistics-categories-table td:nth-child(2) {
+    width: 30%;
+}
+
+.CategoriesAndStatistics-categories-table th:nth-child(3),
+.CategoriesAndStatistics-categories-table td:nth-child(3) {
+    width: 10%;
+}
+
+.CategoriesAndStatistics-table-scroll {
+    max-height: 440px;
+    overflow-y: auto;
 }
 
 .CategoriesAndStatistics-categories-table td {
@@ -82,16 +127,6 @@
     background-color: #f9f9f9;
     border-bottom: 1px solid #BEC4CD;
     color: #000000B2;
-}
-
-.CategoriesAndStatistics-categories-table th:first-child,
-.categories-table td:first-child {
-    border-left: none;
-}
-
-.CategoriesAndStatistics-categories-table th:last-child,
-.CategoriesAndStatistics-categories-table td:last-child {
-    border-right: none;
 }
 
 .CategoriesAndStatistics-categories-table input[type="radio"] {
@@ -158,10 +193,10 @@
 
 .CategoriesAndStatistics-pie-chart {
     width: 100%;
-    height: 200px;
+    height: 400px;
     margin: auto;
     margin-top: 40px;
-    ;
+    overflow: hidden;
 }
 
 .CategoriesAndStatistics-pie-chart .recharts-responsive-container {

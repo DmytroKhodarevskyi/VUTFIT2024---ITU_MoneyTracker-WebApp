@@ -75,6 +75,8 @@ function NewTransactionCard() {
             console.log('Checkobj:', categoryData);
             
         }
+        
+        window.location.reload();
     }
 
     const navigate = useNavigate();
