@@ -59,6 +59,7 @@ class ThreadCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = ThreadComment
         fields = '__all__'
+        read_only_fields = ['author', 'created_at']
         
         def validate_text_content(self, value):
             if not value.strip():

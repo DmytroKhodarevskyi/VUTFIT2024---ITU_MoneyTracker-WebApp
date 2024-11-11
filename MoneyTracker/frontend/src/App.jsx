@@ -30,6 +30,8 @@ import TransactionsList from "./pages/TransactionsList/TransactionsList";
 import GroupsList from "./pages/GroupsList/GroupsList";
 import GroupCreate from "./pages/GroupCreate/GroupCreate";
 import GroupView from "./pages/GroupView/GroupView";
+import ThreadDetail from "./pages/GroupView/ThreadDetail";
+import ThreadRoot from "./pages/GroupView/ThreadRoot";
 
 function Logout() {
   localStorage.clear();
@@ -191,6 +193,15 @@ function App() {
           element={
             <ProtectedRoute>
               <GroupView />
+            </ProtectedRoute>
+          }
+        />
+
+      <Route
+          path="/thread/:threadId"
+          element={
+            <ProtectedRoute>
+              <ThreadDetail />
             </ProtectedRoute>
           }
         />

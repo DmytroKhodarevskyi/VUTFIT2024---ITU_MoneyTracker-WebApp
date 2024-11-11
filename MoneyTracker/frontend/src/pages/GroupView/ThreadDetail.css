@@ -1,0 +1,95 @@
+.ThreadDetail-main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+
+.ThreadDetail-head-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+
+    margin-top: -45px;
+  
+    border-radius: 17px;
+    margin-right: 32px;
+    margin-left: 32px;
+    padding: 40px 36px;
+    width: auto;
+  }
+
+.ThreadDetail-new-thread-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+
+    margin-top: -45px;
+  
+    border-radius: 17px;
+    margin-right: 32px;
+    margin-left: 32px;
+    margin-bottom: 32px;
+    padding: 40px 36px;
+    width: auto;
+}
+
+.ThreadDetail-input-content {
+    height: 300px;
+    resize: none;
+    overflow-y: auto; 
+    width: 100%; 
+  }
+  
+.ThreadDetail-title {
+    font-size: 30px;
+    font-weight: 500;
+    color: black;
+    margin: 0;
+}
+
+.ThreadDetail-description {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.ThreadDetail-title-description-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    overflow: scroll;
+    width: 100%;
+    max-width: 100%;
+}
+.ThreadDetail-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    object-fit: cover;
+    width: 223px;
+    height: 143px;
+    overflow: hidden;
+    border-radius: 7px;
+}
+
+.ThreadDetail-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+}
