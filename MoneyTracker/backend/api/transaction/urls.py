@@ -8,5 +8,5 @@ from .views import (
 urlpatterns = [
     path("", TransactionListCreate.as_view(), name="transaction-list"),
     path("api/transactions/<int:pk>/", RetrieveTransactionView.as_view(), name="transaction-detail"),
-    path("delete/<int:pk>/", TransactionDelete.as_view(), name="delete-transaction"),
+    path("<int:pk>/delete/", TransactionDelete.as_view(), name="delete-transaction"),
 ]

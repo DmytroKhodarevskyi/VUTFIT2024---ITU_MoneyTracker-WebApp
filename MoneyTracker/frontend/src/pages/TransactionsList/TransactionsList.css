@@ -127,7 +127,7 @@
 }
 
 .TransactionsList-table input[type="checkbox"]:checked+.TransactionsList-checkbox {
-    background-image: url('../pages/Check_ring.png');
+    background-image: url('../CategoryStatistics/Check_ring.png');
     background-size: 100% 100%;
     background-position: center;
 }
