@@ -119,6 +119,8 @@ function CategoriesAndStatistics() {
         console.error('There was an error deleting the categories:', error);
         alert('Failed to delete the selected categories. Please try again.');
       }
+
+      window.location.reload();
   };
 
   return (
