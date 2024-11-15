@@ -32,6 +32,7 @@ import GroupCreate from "./pages/GroupCreate/GroupCreate";
 import GroupView from "./pages/GroupView/GroupView";
 import ThreadDetail from "./pages/GroupView/ThreadDetail";
 import ThreadRoot from "./pages/GroupView/ThreadRoot";
+import GroupEdit from "./pages/GroupEdit/GroupEdit";
 
 function Logout() {
   localStorage.clear();
@@ -193,6 +194,15 @@ function App() {
           element={
             <ProtectedRoute>
               <GroupView />
+            </ProtectedRoute>
+          }
+        />
+
+      <Route
+          path="/groups/:groupId/edit"
+          element={
+            <ProtectedRoute>
+              <GroupEdit />
             </ProtectedRoute>
           }
         />

@@ -1,0 +1,150 @@
+.group-edit-main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #F8F8F8;
+    gap: 16px;
+    box-sizing: border-box;
+    margin-left: 92px;
+    margin-right: 92px;
+}
+
+.group-edit-left-container {
+    background-color: white;
+    border-radius: 17px;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: -45px;
+    box-sizing: border-box;
+    overflow: hidden; 
+    gap: 20px;
+    height: 100%;
+    overflow-y: auto;   
+    margin-bottom: 144px;
+    flex-grow: 1;
+}
+
+.group-edit-left-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.group-edit-name,
+.group-edit-description,
+.group-edit-image {
+  margin-bottom: 20px;
+}
+
+.group-edit-name label,
+.group-edit-description label,
+.group-edit-image label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.group-edit-name input,
+.group-edit-description textarea {
+  width: 100%; 
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.group-edit-description textarea {
+    height: 100px;
+    resize: none; 
+  }
+  
+  .group-edit-image input[type="file"] {
+    margin-top: 10px;
+  }
+  
+  .group-edit-image-preview {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .group-edit-image-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .group-edit-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+.group-edit-right-container {
+    flex: 0 0 40%; 
+    background-color: white;
+    border-radius: 17px;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: -45px;
+    box-sizing: border-box;
+    overflow: hidden; 
+    gap: 20px;
+    max-height: 100vh;  
+    height:100%;
+    overflow-y: auto;   
+    margin-bottom: 144px;
+}
+
+.group-edit-right-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.group-edit-save-button, .group-edit-discard-button {
+    padding: 16px 8px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    border-radius: 12px;
+    border: 0;
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    color: white;
+    width: 100%;
+    cursor: pointer; 
+   
+}
+.group-edit-save-button {
+background-color: #4CAF50;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.group-edit-discard-button {
+  background-color: #F44336;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.group-edit-discard-button:hover {
+  background-color: #ff0800;
+  transform: translateY(-1px);
+}
+
+.group-edit-save-button:hover {
+    background-color: #4ff858;
+    transform: translateY(-1px);
+}

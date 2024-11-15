@@ -400,3 +400,14 @@ class ThreadCommentDetailView(generics.RetrieveAPIView):
     queryset = ThreadComment.objects.all()
     serializer_class = ThreadCommentSerializer
     permission_classes = [IsAuthenticated] 
+    
+class GroupMembersView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, group_id):
+        try:
+            members = UserGroup.objects.filter(group_id=group_id).order_by('role')
+            serializer = UserGroupSerializer(members, many=True)
+            return Response(serializer.data, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
