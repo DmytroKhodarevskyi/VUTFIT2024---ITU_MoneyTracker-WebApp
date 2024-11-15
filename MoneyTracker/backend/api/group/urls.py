@@ -4,6 +4,9 @@ from .views import (
     GroupDataView,
     GroupCreatorGetView,
     ThreadCommentCountView,
+    GroupSubscribeUserView,
+    GroupUnsubscribeUserView,
+    GroupCheckSubscriptionView,
     
     GroupCreateView, 
     GroupListView, 
@@ -33,6 +36,10 @@ urlpatterns = [
     path('<int:group_id>/checkcreator/', GroupCreatorCheckView.as_view(), name='group_creator_check'),  
     path('<int:group_id>/getcreator/', GroupCreatorGetView.as_view(), name='group_creator_check'),  
     path('<int:group_id>/viewdata/', GroupDataView.as_view(), name='group_data'),  
+    path('<int:group_id>/subscribe/', GroupSubscribeUserView.as_view(), name='group_subscribe'),  
+    path('<int:group_id>/unsubscribe/', GroupUnsubscribeUserView.as_view(), name='group_unsubscribe'),
+    path('<int:group_id>/checksubscription/', GroupCheckSubscriptionView.as_view(), name='group_check_subscription'),
+
     path('<int:pk>/update/', GroupUpdateView.as_view(), name='group_update'),
     path('<int:pk>/delete/', GroupDeleteView.as_view(), name='group_delete'),  
     path('<int:group_id>/members/', GroupMembersView.as_view(), name='group-members'),

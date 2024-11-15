@@ -32,7 +32,7 @@ class UserGroup(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_groups')
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='user_groups')
-    role = models.CharField(max_length=10, choices=GROUP_ROLES)  
+    role = models.CharField(max_length=10, choices=GROUP_ROLES, default='member')  
     is_banned = models.BooleanField(default=False) 
 
     class Meta:

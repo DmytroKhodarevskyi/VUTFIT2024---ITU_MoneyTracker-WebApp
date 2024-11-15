@@ -28,6 +28,31 @@ function GroupView() {
 
   const [threads, setThreads] = useState([]);
 
+  const [IsSubscribed, setIsSubscribed] = useState(false);
+  const [subscribersCount, setSubscribersCount] = useState(0);
+
+  const handleSubscribe = async () => {
+    try {
+      await api.post(`/api/groups/${GroupId}/subscribe/`);
+      console.log("Subscribed successfully");
+      setSubscribersCount(subscribersCount + 1);
+      setIsSubscribed(true);
+    } catch (error) {
+      console.error("Failed to subscribe", error);
+    }
+  };
+
+  const handleUnsubscribe = async () => {
+    try {
+      await api.delete(`/api/groups/${GroupId}/unsubscribe/`);
+      console.log("Unsubscribed successfully");
+      setSubscribersCount(subscribersCount - 1);
+      setIsSubscribed(false);
+    } catch (error) {
+      console.error("Failed to unsubscribe", error);
+    }
+  };
+
   useEffect(() => {
     const fetchNickname = async () => {
       try {
@@ -54,12 +79,18 @@ function GroupView() {
     const fetchGroupData = async () => {
       try {
         const response = await api.get(`/api/groups/${GroupId}/viewdata/`);
+        const subscribed = await api.get(
+          `/api/groups/${GroupId}/checksubscription/`
+        );
+        console.log("Subscribed: ", subscribed.data.is_subscribed);
+        setIsSubscribed(subscribed.data.is_subscribed);
 
         console.log("Group Data: ", response.data.group);
         console.log("Base Url: ", response.data.base_url);
 
         // i want url like "http://localhost:8000/media/group_images/2022/07/01/1.jpg"
-        const imgurl = setGroupData(response.data.group);
+        setGroupData(response.data.group);
+        setSubscribersCount(response.data.group.subscribers_count);
         setBaseUrl(response.data.base_url);
 
         const creator = await api.get(`/api/groups/${GroupId}/getcreator/`);
@@ -79,7 +110,6 @@ function GroupView() {
   }, [GroupId]);
 
   useEffect(() => {
-
     if (!GroupId || !isLoaded) {
       return;
     }
@@ -94,14 +124,31 @@ function GroupView() {
       } catch (error) {
         console.error("Failed to fetch threads", error);
       }
-    }
+    };
 
     fetchThreads();
-  
   }, [isLoaded, refreshThreads]);
 
-  const handleSubscribe = async () => {
-    // TODO: Implement subscription
+  const SubscribeButton = () => {
+    if (IsSubscribed) {
+      return (
+        <button
+          onClick={handleUnsubscribe}
+          className="GroupView-subscribe-button"
+        >
+          Unsubscribe
+        </button>
+      );
+    } else {
+      return (
+        <button
+          onClick={handleSubscribe}
+          className="GroupView-subscribe-button"
+        >
+          Subscribe
+        </button>
+      );
+    }
   };
 
   const handleEdit = () => {
@@ -179,12 +226,14 @@ function GroupView() {
                       Edit
                     </button>
                   ) : (
-                    <button
-                      onClick={handleSubscribe}
-                      className="GroupView-subscribe-button"
-                    >
-                      Subscribe
-                    </button>
+                    // <button
+                    //   onClick={handleSubscribe}
+                    //   className="GroupView-subscribe-button"
+                    // >
+                    //   Subscribe
+                    // </button>
+
+                    <SubscribeButton />
                   )}
 
                   <div className="GroupView-subscribers-container">
@@ -199,7 +248,8 @@ function GroupView() {
                       </h1>
                     </div>
                     <p className="GroupView-subscribers-count">
-                      {GroupData.subscribers_count}
+                      {/* {GroupData.subscribers_count} */}
+                      {subscribersCount}
                     </p>
                   </div>
                 </div>
@@ -287,16 +337,14 @@ function GroupView() {
           ) : null}
 
           <div className="GroupView-threads-container">
-            { threads.map((thread) => (
+            {threads.map((thread) => (
               <ThreadRoot
                 key={thread.id}
                 thread={thread}
                 baseurl={baseurl}
                 id={thread.id}
               />
-            
             ))}
-
           </div>
         </div>
 
@@ -305,7 +353,6 @@ function GroupView() {
             setNewThreadPopup={setNewThreadPopup}
             groupId={GroupId}
             setLoaded={setIsLoaded}
-
             setRefreshThreads={() => setRefreshThreads((prev) => !prev)}
           />
         ) : null}
