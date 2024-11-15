@@ -4,7 +4,7 @@ from .views import (
     GroupDataView,
     GroupCreatorGetView,
     ThreadCommentCountView,
-
+    
     GroupCreateView, 
     GroupListView, 
     GroupMyListView,
@@ -23,6 +23,7 @@ from .views import (
     ThreadCommentListView,
     ThreadCommentDeleteView,
     ThreadCommentDetailView,
+    GroupMembersView,
 )
 
 urlpatterns = [
@@ -34,6 +35,7 @@ urlpatterns = [
     path('<int:group_id>/viewdata/', GroupDataView.as_view(), name='group_data'),  
     path('<int:pk>/update/', GroupUpdateView.as_view(), name='group_update'),
     path('<int:pk>/delete/', GroupDeleteView.as_view(), name='group_delete'),  
+    path('<int:group_id>/members/', GroupMembersView.as_view(), name='group-members'),
     path('<int:group_id>/assign_moderator/<int:user_id>/', AssignModeratorView.as_view(), name='assign_moderator'),
     path('<int:group_id>/assign_member/<int:user_id>/', AssignMemberView.as_view(), name='assign_member'),
     path('<int:group_id>/ban_user/<int:user_id>/', BanUserView.as_view(), name='ban_user'),

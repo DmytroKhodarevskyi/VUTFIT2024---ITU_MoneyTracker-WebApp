@@ -24,14 +24,33 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class GroupUpdateSerializer(serializers.ModelSerializer):
+    group_image = serializers.ImageField(required=False) 
     class Meta:
         model = Group
-        fields = ['name', 'description']  
+        fields = ['name', 'description', 'group_image'] 
+
+    def validate_name(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("The name field cannot be blank.")
+        return value
+
+    def validate_group_image(self, value):
+        if value:
+            if not value.name.lower().endswith(('jpg', 'jpeg', 'png', 'gif')): 
+                raise serializers.ValidationError("Only image files are allowed.")
+        return value
+
+    def update(self, instance, validated_data):
+
+        group_image = validated_data.get('group_image', None)
+        if group_image:
+            instance.group_image = group_image
+
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
         
-        def validate_name(self, value):
-            if not value.strip():  
-                raise serializers.ValidationError("The name field cannot be blank.")
-            return value
+        instance.save()
+        return instance
         
         
 class UserGroupSerializer(serializers.ModelSerializer):
