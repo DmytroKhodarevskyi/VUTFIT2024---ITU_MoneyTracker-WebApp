@@ -121,7 +121,78 @@ class GroupUpdateView(generics.UpdateAPIView):
             return
         
         raise PermissionDenied("You do not have permission to update this group.")
-    
+
+# class GroupSubscribeUserView(generics.UpdateAPIView):
+#     queryset = Group.objects.all()
+#     serializer_class = GroupSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def perform_update(self, group_id, serializer):
+#         group = Group.objects.get(id=group_id)
+#         user_group = UserGroup.objects.filter(group=group, user=self.request.user).first()
+#         user = self.request.user
+#         group.subscribe()
+#         serializer.save(
+#             subscribers_count=group.subscribers_count,
+
+#             )
+
+class GroupSubscribeUserView(generics.CreateAPIView):
+    queryset = UserGroup.objects.all()
+    serializer_class = UserGroupSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        group_id = self.kwargs.get('group_id')
+
+        user_group = UserGroup.objects.filter(group_id=group_id, user=self.request.user).first()
+        if user_group:
+            raise PermissionDenied("You are already subscribed to this group.")
+
+        try:
+            group = Group.objects.get(id=group_id)
+        except Group.DoesNotExist:
+            raise NotFound("Group not found.")
+        
+        group.subscribe()
+
+        serializer.save(
+            user=self.request.user,
+            group=group,
+            role='member',
+        )
+
+class GroupUnsubscribeUserView(generics.DestroyAPIView):
+    queryset = UserGroup.objects.all()
+    serializer_class = UserGroupSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        group_id = self.kwargs.get('group_id')
+        try:
+            return UserGroup.objects.get(group_id=group_id, user=self.request.user)
+        except UserGroup.DoesNotExist:
+            raise NotFound("You are not subscribed.")
+
+    def perform_destroy(self, instance):
+        group = Group.objects.get(id=instance.group_id)
+        group.unsubscribe()
+        instance.delete()
+        
+class GroupCheckSubscriptionView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, group_id):
+        try:
+            group = Group.objects.get(id=group_id)
+            is_subscribed = UserGroup.objects.filter(group=group, user=request.user).exists()
+            return Response({
+                "is_subscribed": is_subscribed
+            }, status=status.HTTP_200_OK)
+        except Group.DoesNotExist:
+            raise NotFound("Group not found.")
+
+
 class GroupDeleteView(generics.DestroyAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer

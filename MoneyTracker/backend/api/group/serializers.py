@@ -57,6 +57,7 @@ class UserGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserGroup
         fields = '__all__'
+        read_only_fields = ['user', 'group']
 
 class ThreadSerializer(serializers.ModelSerializer):
     class Meta:
