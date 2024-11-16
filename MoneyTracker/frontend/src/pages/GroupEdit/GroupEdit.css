@@ -148,3 +148,58 @@ transition: background-color 0.3s ease, color 0.3s ease;
     background-color: #4ff858;
     transform: translateY(-1px);
 }
+
+.group-edit-member-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.group-edit-member-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #ddd; 
+  border-bottom: 1px solid #ddd; 
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.group-edit-member-left-side {
+  display: flex;
+  align-items: center;
+}
+
+.group-edit-member-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px; 
+}
+
+.group-edit-member-details p {
+  margin: 0;
+}
+
+.group-edit-member-button {
+  padding: 5px 10px;
+  background-color: #00BCD4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.group-edit-member-button.moderator {
+  background-color: #00BCD4;
+}
+
+.group-edit-member-button:hover {
+  opacity: 0.8;
+}
+
+.group-edit-right-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
