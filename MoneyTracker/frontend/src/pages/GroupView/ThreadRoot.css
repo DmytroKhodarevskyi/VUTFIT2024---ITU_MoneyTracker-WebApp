@@ -129,3 +129,61 @@
     color: rgba(0, 0, 0, 0.4);
     margin: 0;
 }
+
+.ThreadRoot-more-button {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+
+    cursor: pointer;
+}
+
+.ThreadRoot-view-button-more-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+
+
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.ThreadRoot-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+
+    border-radius: 17px;
+
+    padding: 40px 36px;
+    width: auto;
+}
+
+.ThreadRoot-modal-button-delete {
+    background-color: #F44336;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    padding: 20px 15px;
+    border-radius: 12px;
+    border: 0;
+    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

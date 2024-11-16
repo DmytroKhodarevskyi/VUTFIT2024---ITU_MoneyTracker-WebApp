@@ -91,9 +91,25 @@ class GroupCreatorCheckView(APIView):
             return Response({"error": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
           
 class GroupListView(generics.ListAPIView):
-    queryset = Group.objects.all()
+    # queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [IsAuthenticatedOrReadOnly] 
+
+    def get_queryset(self):
+        queryset = Group.objects.all()
+        search = self.request.query_params.get('search', None)
+        subscribed_only = self.request.query_params.get('subscribed_only', None)
+        user = self.request.user
+
+        if search:
+            queryset = queryset.filter(name__icontains=search)
+
+        if subscribed_only:
+            user_groups = UserGroup.objects.filter(user=user)
+            group_ids = [user_group.group_id for user_group in user_groups]
+            queryset = queryset.filter(id__in=group_ids)
+
+        return queryset
 
 class GroupMyListView(generics.ListAPIView):
     serializer_class = GroupSerializer

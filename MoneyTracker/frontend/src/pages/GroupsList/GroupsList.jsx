@@ -16,6 +16,9 @@ function GroupsList() {
   const [isLoadedGroups, setIsLoadedGroups] = useState(false);
   const [GroupsList, setGroupsList] = useState([]);
 
+  const [SearchValue, setSearchValue] = useState("");
+  const [subscribedOnly, setSubscribedOnly] = useState(false);
+
   useEffect(() => {
     const fetchNickname = async () => {
       try {
@@ -35,7 +38,17 @@ function GroupsList() {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await api.get("/api/groups/");
+        const params = new URLSearchParams();
+
+        if (SearchValue) {
+          params.append("search", SearchValue);
+        }
+
+        if (subscribedOnly) {
+          params.append("subscribed_only", "true");
+        } 
+
+        const response = await api.get(`/api/groups/?${params.toString()}`);
         setGroupsList(response.data);
         setIsLoadedGroups(true);
       } catch (error) {
@@ -44,7 +57,7 @@ function GroupsList() {
       }
     };
     fetchGroups();
-  }, []);
+  }, [SearchValue, subscribedOnly]);
 
   if (!isLoaded) {
     return (
@@ -68,41 +81,42 @@ function GroupsList() {
         <div className="GroupsList-main-block-container">
           <div className="GroupsList-main-left-container">
             <div className="GroupsList-left-title-container">
-                <h1 className="GroupsList-main-title">Groups</h1>
-                <h2 className="GroupsList-description-title">Find something interesting</h2>
+              <h1 className="GroupsList-main-title">Groups</h1>
+              <h2 className="GroupsList-description-title">
+                Find something interesting
+              </h2>
             </div>
 
             <div className="GroupsList-group-list-container">
-                {isLoadedGroups ? ( // If groups are loaded
-
+              {isLoadedGroups ? ( // If groups are loaded
                 GroupsList.map((group) => (
-                    // <div
-                    //   key={group.id}
-                    //   className="GroupList-group-container"
-                    //   onClick={() => {
-                    //     nav(`/group/${group.id}`);
-                    //   }}
-                    // >
-                    //   <div className="GroupList-group-name">{group.name}</div>
-                    //   <div className="GroupList-group-description">
-                    //     {group.description}
-                    //   </div>
-                    // </div>
+                  // <div
+                  //   key={group.id}
+                  //   className="GroupList-group-container"
+                  //   onClick={() => {
+                  //     nav(`/group/${group.id}`);
+                  //   }}
+                  // >
+                  //   <div className="GroupList-group-name">{group.name}</div>
+                  //   <div className="GroupList-group-description">
+                  //     {group.description}
+                  //   </div>
+                  // </div>
 
-                    <GroupCard
-                        id={group.id}
-                        key={group.id}
-                        name={group.name}
-                        subscribers={group.subscribers_count}
-                        image={group.group_image}
-                        onClick={() => {
-                            nav(`/group/${group.id}`);
-                        }}
-                    />
+                  <GroupCard
+                    id={group.id}
+                    key={group.id}
+                    name={group.name}
+                    subscribers={group.subscribers_count}
+                    image={group.group_image}
+                    onClick={() => {
+                      nav(`/group/${group.id}`);
+                    }}
+                  />
                 ))
-                ) : (
+              ) : (
                 <div>LOADING GROUPS...</div>
-                )}
+              )}
             </div>
           </div>
           <div className="GroupList-main-right-container">
@@ -113,6 +127,27 @@ function GroupsList() {
             >
               Create Group
             </button>
+
+            <div className="GroupList-search-container">
+              <input
+                type="text"
+                placeholder="Search..."
+                value={SearchValue}
+                onChange={(e) => {
+                  setSearchValue(e.target.value);
+                }}
+              />
+
+              <input
+                type="checkbox"
+                id="subscribedOnly"
+                name="subscribedOnly"
+                value={subscribedOnly}
+                onChange={() => {
+                  setSubscribedOnly(!subscribedOnly);
+                }}
+              />
+            </div>
           </div>
         </div>
       </MainContainer>
