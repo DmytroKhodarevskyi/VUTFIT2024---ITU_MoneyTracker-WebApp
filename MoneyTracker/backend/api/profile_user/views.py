@@ -198,6 +198,7 @@ class SelectedUserProfileView(APIView):
             profile = user.profile
             return Response({
                 "id": user.id,
+                "username": user.username,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "profileImg": request.build_absolute_uri(profile.profile_image.url)

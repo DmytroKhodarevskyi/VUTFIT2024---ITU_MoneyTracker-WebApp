@@ -240,6 +240,26 @@ class AssignModeratorView(generics.UpdateAPIView):
 
         serializer.save(role='moderator')
         
+class UnassignModeratorView(generics.UpdateAPIView):
+    serializer_class = UserGroupSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        group_id = self.kwargs.get('group_id')
+        user_id = self.kwargs.get('user_id')
+        try:
+            return UserGroup.objects.get(group_id=group_id, user_id=user_id)
+        except UserGroup.DoesNotExist:
+            raise NotFound("UserGroup not found.")
+
+    def perform_update(self, serializer):
+        group = self.get_object().group
+
+        if group.creator != self.request.user:
+            raise PermissionDenied("Only the creator can remove moderators.")
+        
+        serializer.save(role='member')
+        
 class AssignMemberView(generics.UpdateAPIView):
     serializer_class = UserGroupSerializer
     permission_classes = [IsAuthenticated]
@@ -332,7 +352,7 @@ class ThreadCreateView(generics.CreateAPIView):
             serializer.save(creator=self.request.user, group=group)
             return
         
-        if (user_group and user_group.role == 'moderator'):
+        if (user_group.role == 'moderator'):
             self._set_media(serializer)
             serializer.save(creator=self.request.user, group=group)
             return
