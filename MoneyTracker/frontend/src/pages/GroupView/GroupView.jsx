@@ -339,10 +339,12 @@ function GroupView() {
           <div className="GroupView-threads-container">
             {threads.map((thread) => (
               <ThreadRoot
+                admin={ismoderator.is_creator || ismoderator.is_moderator}
                 key={thread.id}
                 thread={thread}
                 baseurl={baseurl}
                 id={thread.id}
+                setRefreshThreads={() => setRefreshThreads((prev) => !prev)}
               />
             ))}
           </div>
