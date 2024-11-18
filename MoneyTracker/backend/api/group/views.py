@@ -518,3 +518,36 @@ class GroupMembersView(APIView):
             return Response(serializer.data, status=200)
         except Exception as e:
             return Response({"error": str(e)}, status=400)
+        
+        
+class UserRoleCheckView(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        group_id = self.kwargs.get('group_id')
+        user_id = self.kwargs.get('user_id')
+
+        try:
+            user_group = UserGroup.objects.filter(group_id=group_id, user_id=user_id).first()
+            
+            if not user_group:
+                return Response(
+                    {"message": "User is not part of this group."},
+                    status=200
+                )
+
+            if user_group.role in ['creator', 'moderator']:
+                return Response(
+                    {"message": f"The user is a {user_group.role}."},
+                    status=200
+                )
+            else:
+                return Response(
+                    {"message": "This user is not a moderator or creator."},
+                    status=200
+                )
+        except Exception as e:
+            return Response(
+                {"message": f"An error occurred: {str(e)}"},
+                status=500
+            )
