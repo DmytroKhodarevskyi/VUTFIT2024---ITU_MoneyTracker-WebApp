@@ -18,7 +18,12 @@ class GroupCreateView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     
     def perform_create(self, serializer):
-          serializer.save(creator=self.request.user)
+        user_profile = self.request.user.profile  
+        
+        if user_profile.stars_count < 1:
+            raise PermissionDenied("You must have at least 1 star to create a group.")
+
+        serializer.save(creator=self.request.user)
 
 class GroupDataView(APIView):
     permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
