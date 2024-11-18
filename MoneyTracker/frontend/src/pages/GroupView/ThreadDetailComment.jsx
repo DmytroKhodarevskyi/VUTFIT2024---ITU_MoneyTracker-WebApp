@@ -3,12 +3,14 @@ import "./ThreadDetailComment.css";
 import { useState, useEffect } from "react"
 import api from "../../api";
 
-function ThreadDetailComment({ comment  }) {
+function ThreadDetailComment({ comment, onDelete, group, userID }) {
 
   const [profileCommentAuthorData, setProfileCommentAuthorData] = useState(null);
   const [profileCommentAuthorPhoto, setProfileCommentAuthorPhoto] = useState(null);
   const [authorFullname, setAuthorFullname] = useState("")
+  const [canDelete, setCanDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -28,6 +30,32 @@ function ThreadDetailComment({ comment  }) {
     fetchData();
   }, [comment.author]);
 
+  useEffect(() => {
+    async function setupCanDelete() {
+      try {
+
+        const canDeleteresponse = await api.get(`/api/groups/${group}/user/${userID}/check-role/`);
+
+        if (
+          canDeleteresponse.data.message === "The user is a moderator." || 
+          canDeleteresponse.data.message === "The user is a creator." ||
+          comment.author === userID
+        ) {
+          setCanDelete(true); 
+        } else {
+          setCanDelete(false); 
+        }
+      } catch (error) {
+        console.error("Failed to fetch setupCanDelete function", error);
+        setCanDelete(false); 
+      }
+    }
+
+    setupCanDelete();
+  }, [group, userID, comment]); 
+
+
+
   
   if (isLoading) {
     return (
@@ -37,8 +65,7 @@ function ThreadDetailComment({ comment  }) {
     );
   }
 
-
-
+  
   return (
     <div className="ThreadDetailComment-main-container">
 
@@ -66,6 +93,17 @@ function ThreadDetailComment({ comment  }) {
           />
         </div>
       )}
+
+        <div className="ThreadDetailComment-delete-container">
+          {canDelete && (
+            <button
+              onClick={onDelete} 
+              className="ThreadDetailComment-delete-button"
+            >
+              Delete
+            </button>
+          )}
+        </div>
     </div>
   );
 }

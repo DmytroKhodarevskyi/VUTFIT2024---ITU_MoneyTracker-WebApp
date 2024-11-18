@@ -83,6 +83,23 @@ const handleFileChange = (e) => {
     }
   };
 
+  const handleDelete = async (commentId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this comment?");
+    if (confirmed) {
+      try {
+        await api.delete(`/api/groups/threads_comments/${commentId}/delete/`);
+        alert("Comment deleted successfully.");
+
+        const updatedComments = comments.filter((comment) => comment.id !== commentId);
+        setComments(updatedComments);
+        setCommentsCount(updatedComments.length);
+      } catch (error) {
+        console.error("Error deleting comment:", error);
+        alert("Failed to delete the comment.");
+      }
+    }
+  };
+
   return (
     <MainContainer>
     <TopPart nickname={profileData?.firstname} selectedItem={"feed"} profilePhoto={profilePhoto} />
@@ -109,7 +126,13 @@ const handleFileChange = (e) => {
     <div className="ThreadDetail-thread-comments-container">
         {comments && comments.length > 0 ? (
           comments.map((comment) => (
-            <ThreadDetailComment key={comment.id} comment={comment} />
+            <ThreadDetailComment 
+              key={comment.id} 
+              comment={comment}  
+              onDelete={() => handleDelete(comment.id)}
+              group={thread.group}
+              userID={profileData.id}
+            />
           ))
         ) : (
           <p>No comments yet</p>
