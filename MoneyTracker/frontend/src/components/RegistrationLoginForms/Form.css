@@ -126,6 +126,15 @@
 
 }
 
+.hint-required {
+    padding: 0;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.2);
+    font-weight: 500;
+    text-decoration-color: rgba(255, 255, 255, 0.2);
+    font-style: italic;
+}
+
 .form-goback:visited {
     text-decoration-color: rgba(255, 255, 255, 0.2);
 }

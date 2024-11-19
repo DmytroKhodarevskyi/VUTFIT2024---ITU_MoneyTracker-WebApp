@@ -13,24 +13,24 @@ def get_unique_phone():
         phone_number = generate_unique_phone()
         if not Profile.objects.filter(phone=phone_number).exists():
             return phone_number
-
+        
+        
 @receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        profile = Profile.objects.create(user=instance)
-
-        instance.first_name = "Admin Name"
-        instance.last_name = "Admin Surname"
-        
+def create_superuser_profile(sender, instance, created, **kwargs):
+ 
+    if created and instance.is_superuser:
+      
+        instance.first_name = "Admin"
+        instance.last_name = "AdminSurname"
         instance.save()
-        
-        if instance.is_superuser:
-            profile.country = 'Admin Country'
-            profile.city = 'Admin City'
-            profile.gender = 'N'  
-            profile.phone = get_unique_phone() 
-            profile.job = 'Administrator'
-            profile.profile_image = 'profile_images/default_admin.png'
-            profile.stars_count = 10
 
-            profile.save()
+        Profile.objects.create(
+            user=instance,
+            country="Admin",
+            city="Admin",
+            gender="N",
+            phone=get_unique_phone(),
+            job="Administrator",
+            profile_image="profile_images/default_admin.png",
+            stars_count=10,
+        )
