@@ -5,12 +5,16 @@ from .serializers import (GroupSerializer,
                           GroupUpdateSerializer, 
                           UserGroupSerializer, 
                           ThreadSerializer, 
-                          ThreadCommentSerializer)
+                          ThreadCommentSerializer,
+                          UserSerializer)
 
 from rest_framework.exceptions import PermissionDenied, NotFound
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.shortcuts import get_object_or_404
+
+
 
 class GroupCreateView(generics.CreateAPIView):
     queryset = Group.objects.all()
@@ -556,3 +560,26 @@ class UserRoleCheckView(generics.GenericAPIView):
                 {"message": f"An error occurred: {str(e)}"},
                 status=500
             )
+            
+
+class GroupModeratorsView(generics.ListAPIView):
+    serializer_class = UserSerializer 
+    permission_classes = [IsAuthenticated]  
+
+    def get_queryset(self):
+        group_id = self.kwargs['group_id']
+        group = get_object_or_404(Group, id=group_id)
+
+        moderators = UserGroup.objects.filter(group=group, role='moderator', is_banned=False)
+
+        return [moderator.user for moderator in moderators]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+
+        serializer = self.get_serializer(queryset, many=True)
+        
+        return Response({
+            'group': self.kwargs['group_id'],
+            'moderators': serializer.data
+        }, status=status.HTTP_200_OK)

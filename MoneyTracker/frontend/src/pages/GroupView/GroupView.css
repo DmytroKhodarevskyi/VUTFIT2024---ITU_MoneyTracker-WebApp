@@ -225,3 +225,61 @@
     background-color: #F8F9FB;
 
 }
+.group-moderators-container {
+    width: 100%; /* Ensure the container takes full width */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    margin-top: 20px;
+  }
+  
+  .group-moderators-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Minimum width to ensure 3 columns fit */
+  }
+  
+  .group-moderators-table th,
+  .group-moderators-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .group-moderators-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .group-moderators-table td {
+    font-size: 14px;
+  }
+  
+  .group-moderators-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .moderator-profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .group-moderators-table td img {
+    max-width: 100%;
+  }
+  
+  .group-moderators-table td span {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .group-moderators-table td:first-child {
+    font-weight: bold;
+  }
+  
+  .group-moderators-table {
+    display: block;
+    max-height: 300px; /* Limit the table height */
+    overflow-y: auto; /* Add vertical scrolling */
+  }
+  
