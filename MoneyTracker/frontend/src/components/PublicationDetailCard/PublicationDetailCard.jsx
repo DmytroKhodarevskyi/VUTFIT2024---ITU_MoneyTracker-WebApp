@@ -136,21 +136,27 @@ function PublicationDetailCard({
     
         setIsLikingComment(true);
         try {
+            let updatedComment = { ...comment }; 
 
             if (comment.isLiked) {
 
                 await api.delete(`/api/publications/comments/${comment.id}/unlike/`);
-                comment.isLiked = false; 
-                comment.stars = (comment.stars || 0) - 1; 
+                updatedComment.isLiked = false;
+                updatedComment.stars_count -= 1; 
+           
+               
             } else {
  
                 await api.post(`/api/publications/comments/${comment.id}/like/`);
-                comment.isLiked = true; 
-                comment.stars = (comment.stars || 0) + 1; 
+                updatedComment.isLiked = true;
+                updatedComment.stars_count += 1;
+                
             }
             setCommentaries((prevCommentaries) =>
-                prevCommentaries.map((c) => (c.id === comment.id ? comment : c))
-            );
+                    prevCommentaries.map((c) =>
+                        c.id === comment.id ? updatedComment : c
+                    )
+                );
         } catch (error) {
             if (error.response?.data?.error_code === "self_like") {
                 alert("You cannot like your own comment.");
@@ -280,7 +286,7 @@ function PublicationDetailCard({
                             <div className="publication-detail-button-section">
                             <button className="publication-detail-like-button"  onClick={() => handleLikeCommentary(comment)}>
                                 <p>{comment.isLiked ? "Agreed!" : "I Agree!"}</p>
-                                <span className="publication-detail-like-count">{comment.stars || 0}</span>
+                                <span className="publication-detail-like-count">{comment.stars_count}</span>
                                 <img src={star_picture} alt="Star" className="publication-detail-star-icon" />
                             </button>
                             {(publication.author.id === userId || comment.author.id === userId) && (
