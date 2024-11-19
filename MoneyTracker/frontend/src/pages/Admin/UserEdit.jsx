@@ -81,6 +81,14 @@ const UserEdit = () => {
             <a> Publications</a>
           </button>
         </Link>
+        <Link
+          to={`/custom-admin/users/${pk}/groups`}
+          className="admin-useritem"
+        >
+          <button className="admin-user-button">
+            <a> Groups</a>
+          </button>
+        </Link>
       </div>
     </>
   );

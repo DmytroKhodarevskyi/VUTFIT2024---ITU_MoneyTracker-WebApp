@@ -5,6 +5,8 @@ from api.transaction.models import Transaction
 from api.category.models import Category
 from api.publication.models import Publication
 from api.group.models import Group
+from api.publication.models import Comment
+
 
 
 
@@ -32,6 +34,13 @@ class PublicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
         fields = '__all__' 
+        
+        
+class PublicationCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__' 
+  
         
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:

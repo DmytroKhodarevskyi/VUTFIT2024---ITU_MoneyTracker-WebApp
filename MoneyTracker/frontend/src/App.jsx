@@ -26,6 +26,9 @@ import PublicationDetail from "./pages/PublicationDetail/PublicationDetail";
 import UserEdit from "./pages/Admin/UserEdit";
 import TransactionsEdit from "./pages/Admin/TransactionsEdit";
 import CategoriesEdit from "./pages/Admin/CategoriesEdit";
+import AdminGroupsEdit from "./pages/Admin/GroupsEdit";
+import AdminPublicationsEdit from "./pages/Admin/PublicationEdit";
+import AdminPublicationEditComments from "./pages/Admin/PublicationEditComments";
 import TransactionsList from "./pages/TransactionsList/TransactionsList";
 import GroupsList from "./pages/GroupsList/GroupsList";
 import GroupCreate from "./pages/GroupCreate/GroupCreate";
@@ -139,7 +142,30 @@ function App() {
           element={
             <ProtectedRoute>
               <AdminRoute>
-                <UserEdit />
+                <AdminPublicationsEdit />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/custom-admin/publications/:pk/comments"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <AdminPublicationEditComments />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          path="/custom-admin/users/:pk/groups"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <AdminGroupsEdit />
               </AdminRoute>
             </ProtectedRoute>
           }
