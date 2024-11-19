@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import Group, UserGroup, Thread, ThreadComment
+from api.profile_user.models import User
+from api.profile_user.serializers import ProfileSerializer
 
 class GroupSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True)
@@ -85,3 +87,10 @@ class ThreadCommentSerializer(serializers.ModelSerializer):
             if not value.strip():
                 raise serializers.ValidationError("Text content cannot be blank.")
             return value
+        
+class UserSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer()
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'profile']

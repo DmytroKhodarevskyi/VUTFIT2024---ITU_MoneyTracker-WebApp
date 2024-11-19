@@ -29,6 +29,7 @@ from .views import (
     ThreadCommentDetailView,
     GroupMembersView,
     UserRoleCheckView,
+    GroupModeratorsView,
 )
 
 urlpatterns = [
@@ -51,6 +52,7 @@ urlpatterns = [
     path('<int:group_id>/ban_user/<int:user_id>/', BanUserView.as_view(), name='ban_user'),
     path('<int:group_id>/unban_user/<int:user_id>/', UnbanUserView.as_view(), name='unban_user'),
     path('<int:group_id>/user/<int:user_id>/check-role/', UserRoleCheckView.as_view(), name='user_role_check'),
+    path('<int:group_id>/moderators/', GroupModeratorsView.as_view(), name='group_moderators'),
     
     path('threads/create/', ThreadCreateView.as_view(), name='thread_create'),
     path('<int:group_id>/threads/', ThreadListView.as_view(), name='thread_list'),

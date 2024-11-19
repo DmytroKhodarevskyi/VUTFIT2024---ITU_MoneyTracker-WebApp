@@ -24,10 +24,20 @@ function Home() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const [profilePhoto, setProfilePhoto] = useState(null);
+    const [accountCreatedDate, setAccountCreatedDate] = useState("");
+    const [todayDate, setTodayDate] = useState("");
 
     const [Income, setIncome] = useState(0.0);
     const [Spending, setSpending] = useState(0.0);
     const [Balance, setBalance] = useState(0.0);
+
+
+
+    useEffect(() => {   
+        const today = new Date();
+        const todayFormatted = today.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+        setTodayDate(todayFormatted);
+      }, []);
 
     const FindBalance = async () => {
         try {
@@ -71,6 +81,17 @@ function Home() {
           try {
             const response = await api.get("/api/user/profile/");
             // setNickname(response.data.username);
+
+            const createdDate = new Date(response.data.createdDate); 
+        
+          
+            const formattedDate = createdDate.toLocaleDateString('en-GB', { 
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            });
+    
+            setAccountCreatedDate(formattedDate);
             setNickname(response.data.first_name);
             setProfilePhoto(response.data.profileImg);
             setIsLoaded(true); // Mark data as loaded
@@ -108,7 +129,7 @@ function Home() {
                 {/* <div className="SummaryCards-container"> */}
                     <SummaryCard 
                         title={"Total Balance"}
-                        date={"2 September - 1 July 2024"}
+                        date={`${accountCreatedDate} - ${todayDate}`} 
                         // amount={currency + "1.000.000,01"}
                         amount={currency + formatAmount(Balance.toFixed(2))}
                         trends={"+52% LastYear"}
@@ -117,7 +138,7 @@ function Home() {
                     />
                     <SummaryCard 
                         title={"Total Income"}
-                        date={"2 September - 1 July 2024"}
+                        date={`${accountCreatedDate} - ${todayDate}`} 
                         // amount={currency + "520.000,01"}
                         amount={"+" + currency + formatAmount(Income.toFixed(2))}
                         trends={"+12% Last Month"}
@@ -126,7 +147,7 @@ function Home() {
                     />
                     <SummaryCard 
                         title={"Total Spending"}
-                        date={"2 September - 1 July 2024"}
+                        date={`${accountCreatedDate} - ${todayDate}`} 
                         // amount={"-" + currency + "228.000,00"}
                         amount={"-" + currency + formatAmount(Spending.toFixed(2))}
                         trends={"+15% LastYear"}

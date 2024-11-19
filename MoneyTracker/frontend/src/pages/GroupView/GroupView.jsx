@@ -17,6 +17,9 @@ function GroupView() {
   const [groupcreator, setGroupCreator] = useState(null);
   const [ismoderator, setIsModerator] = useState(false);
 
+
+
+  const [moderators, setModerators] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [refreshThreads, setRefreshThreads] = useState(false);
 
@@ -99,6 +102,12 @@ function GroupView() {
         );
         setGroupCreator(creator.data);
         setIsModerator(ismoderator.data);
+
+
+        const moderatorsResponse = await api.get(`/api/groups/${GroupId}/moderators/`);
+        console.log("Moderators: ", moderatorsResponse.data.moderators);
+        setModerators(moderatorsResponse.data.moderators);  
+
         setIsLoaded(true);
       } catch (error) {
         console.error("Failed to fetch group data", error);
@@ -172,6 +181,9 @@ function GroupView() {
       </>
     );
   }
+
+
+
 
   return (
     <>
@@ -256,69 +268,40 @@ function GroupView() {
               </div>
             </div>
 
-            <div className="GroupView-rightpart-container">
-              {/* Table of mods */}
-
-              {/* <table className="TransactionsList-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Amount</th>
-                  <th>Curr.</th>
-                  <th>Date</th>
-                  <th>Category</th>
+            {isLoaded ? (
+          <table className="group-moderators-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Profile Image</th>
+              </tr>
+            </thead>
+            <tbody>
+              {moderators.map((moderator) => (
+                
+                <tr key={moderator.id}>
+                  <td>{`${moderator.first_name} ${moderator.last_name}`}</td>
+                  <td>{moderator.username}</td>
+                  <td>
+                    {moderator.profile.profile_image ? (
+                      <img
+                        src={moderator.profile.profile_image}
+                        alt={`${moderator.username}'s profile`}
+                        className="moderator-profile-img"
+                      />
+                    ) : (
+                      <span>No image</span>
+                    )}
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {transactions.map((transaction) => (
-                  <tr key={transaction.id}>
-                    <td>
-                      <label style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                          type="checkbox"
-                          name="transaction"
-                          value={transaction.name}
-                          checked={selectedTransactions.includes(
-                            transaction.id
-                          )}
-                          onChange={() => handleCheckboxChange(transaction)}
-                        />
-                        <span className="TransactionsList-checkbox"></span>
-                        {transaction.title}
-                      </label>
-                    </td>
-                    <td>
-                      <span
-                        style={{
-                          color: transaction.incomeOrSpend ? "green" : "red",
-                        }}
-                      >
-                        {transaction.incomeOrSpend ? "+" : "-"}{" "}
-                        {transaction.amount}
-                      </span>
-                    </td>
-                    <td>{getCurrencySymbol(transaction.currency)}</td>
-                    <td>{formatDate(transaction.transaction_datetime)}</td>
-                    <td>
-                      <span
-                        style={{
-                          backgroundColor: transaction.categoryColor,
-                          display: "inline-block",
-                          width: "25px",
-                          height: "25px",
-                          borderRadius: "25%",
-                        }}
-                      ></span>
-                      <span style={{ marginLeft: "8px" }}>
-                        {transaction.categoryName || "Unknown category"}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table> */}
-            </div>
-          </div>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>Loading moderators...</p>
+        )}
+      </div>
 
           {ismoderator.is_creator || ismoderator.is_moderator ? (
             <div
