@@ -40,7 +40,7 @@ function NewTransactionCard() {
 
     const handleSubmit = async () => {
         if (categoryName === '') {
-            alert('Category title is required');
+            alert('Category name is required');
             return;
         }
 
@@ -112,6 +112,7 @@ function NewTransactionCard() {
                                 min="0"
                                 value={categoryName}
                                 onChange={(e) => setCategoryName(e.target.value)}
+                                placeholder="Name*"
                             />
                     </div>
 

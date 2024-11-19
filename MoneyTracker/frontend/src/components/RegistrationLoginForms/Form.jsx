@@ -30,6 +30,13 @@ function Form({route, method}){
             return;
         }
 
+        const nameRegex = /^[A-Za-z]+$/;
+        const phoneRegex = /^[+]?[1-9][0-9]{7,14}$/; 
+
+        const trimmedFirstName = first_name.trim();
+        const trimmedLastName = last_name.trim();
+        const trimmedPhone = phone.trim();
+
         try {
             const payload = { 
                 username, 
@@ -44,6 +51,26 @@ function Form({route, method}){
             };
 
             if (method === "register") {
+                if (!nameRegex.test(trimmedFirstName)) {
+                    alert("First name can only contain letters.");
+                    setLoading(false);
+                    return;
+                }
+        
+                if (!nameRegex.test(trimmedLastName)) {
+                    alert("Last name can only contain letters.");
+                    setLoading(false);
+                    return;
+                }
+                
+                if (!phoneRegex.test(trimmedPhone)) {
+                    alert(
+                        "Phone number must start with + or a non-zero digit and must be 8 to 15 digits long."
+                    );
+                    setLoading(false);
+                    return;
+                }
+        
                 payload.email = email;
                 payload.phone = phone;
                 payload.first_name = first_name;
@@ -93,7 +120,7 @@ function Form({route, method}){
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username"
+                    placeholder="Username*"
                 />
 
                 {method === "register" && (
@@ -103,7 +130,7 @@ function Form({route, method}){
                         type="text"
                         value={first_name}
                         onChange={(e) => setFirstName(e.target.value)}
-                        placeholder="Name"
+                        placeholder="Name*"
                     />
                 )}
 
@@ -114,7 +141,7 @@ function Form({route, method}){
                         type="text"
                         value={last_name}
                         onChange={(e) => setLastName(e.target.value)}
-                        placeholder="Surname"
+                        placeholder="Surname*"
                     />
                 )}
 
@@ -125,7 +152,7 @@ function Form({route, method}){
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
+                        placeholder="Email*"
                     />
                 )}
 
@@ -136,7 +163,7 @@ function Form({route, method}){
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        placeholder="Phone Number"
+                        placeholder="Phone Number*"
                      
                     />
                 )}
@@ -147,7 +174,7 @@ function Form({route, method}){
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
+                    placeholder="Password*"
                 />
 
                 {method === "register" && (
@@ -157,7 +184,7 @@ function Form({route, method}){
                         type="password"
                         value={repeatPassword}
                         onChange={(e) => setRepeatPassword(e.target.value)}
-                        placeholder="Repeat Password"
+                        placeholder="Repeat Password*"
                     />
                 )}
                 </div>
@@ -176,12 +203,14 @@ function Form({route, method}){
                         </Link>
                     </div>
                 )}
+                
 
                 {method === "register" && (
                     <Link to="/login">
                         <a className="form-goback">Go Back</a>
                     </Link>
                 )}
+                <p className="hint-required">'*' in placeholder is required field</p>
         </form>
     );
 }

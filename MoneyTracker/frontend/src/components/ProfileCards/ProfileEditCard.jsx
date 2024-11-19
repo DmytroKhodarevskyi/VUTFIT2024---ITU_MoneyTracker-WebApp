@@ -68,7 +68,7 @@ function ProfileEditCard({
                             className="input-name" 
                             value={firstname} 
                             onChange={e => handleInputChange('firstname', e.target.value)} 
-                            placeholder="Name"
+                            placeholder="Name*"
                             maxLength="15"
                         />
                         </div>
@@ -79,7 +79,7 @@ function ProfileEditCard({
                                 className="input-name" 
                                 value={lastname} 
                                 onChange={e => handleInputChange('lastname', e.target.value)} 
-                                placeholder="Surname"
+                                placeholder="Surname*"
                                 maxLength="15"
                             />
                         </div>
@@ -90,7 +90,7 @@ function ProfileEditCard({
                             className="input-box" 
                             value={phone} 
                             onChange={e => handleInputChange('phone', e.target.value)} 
-                            placeholder="Phone" 
+                            placeholder="Phone*" 
                             maxLength="15"
                         />
                         </div>
@@ -106,9 +106,9 @@ function ProfileEditCard({
                                 className="input-box" 
                                 value={email} 
                                 onChange={e => handleInputChange('email', e.target.value)} 
-                                placeholder="Email"
+                                placeholder="Email*"
                                 maxLength="29"
-                                // TODO maybe email should be any, but needed to change profile card then 
+                              
                             />
                     </div>
                     <div className="info-item">

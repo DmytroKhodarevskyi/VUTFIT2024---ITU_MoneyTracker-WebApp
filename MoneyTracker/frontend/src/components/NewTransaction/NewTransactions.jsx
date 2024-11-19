@@ -63,7 +63,10 @@ function NewTransactionCard() {
             return;
         }
 
-        console.log(category)
+        if (!category || category.trim() === '') {
+            alert('Transaction category is required');
+            return;
+        }
 
         const transactionData = {
             title: name,  // Assuming title corresponds to name
@@ -75,11 +78,12 @@ function NewTransactionCard() {
             incomeOrSpend: IncomeOrSpend,  // This boolean field seems optional based on your structure
         };
 
-        console.log(transactionData);
+     
 
         try {
+            
             const response = await api.post("/api/transactions/", transactionData);
-            console.log('Transaction created:', response.data);
+            window.alert('Transaction created');
         } catch (error) {
             console.error('There was an error creating the transaction:', error);
         }
@@ -125,6 +129,7 @@ function NewTransactionCard() {
                             type="text" 
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            placeholder="Title*"
                     />
                     </div>
 
@@ -141,6 +146,7 @@ function NewTransactionCard() {
                                 min="0"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
+                                placeholder="Amount (Number)*"
 
                             />
                             {IncomeOrSpend == true && (

@@ -123,6 +123,7 @@ function ProfileEdit() {
 
             const jobTitleRegex = /^[A-Za-z][A-Za-z0-9\s]*$/;    
             const nameRegex = /^[A-Za-z]+$/; 
+            const countryCityRegex = /^[A-Za-z]+(?:\s[A-Za-z]+)*$/;
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const phoneRegex = /^[+]?[1-9][0-9]{7,14}$/; 
 
@@ -143,12 +144,12 @@ function ProfileEdit() {
             }
 
             if (!nameRegex.test(firstname.trim())) {
-                window.alert('First name can only contain letters and spaces.');
+                window.alert('First name can only contain letters and cannot be empty.');
                 return;
             }
 
             if (!nameRegex.test(lastname.trim())) {
-                window.alert('Last name can only contain letters and spaces.');
+                window.alert('Last name can only contain letters and cannot be empty.');
                 return;
             }
 
@@ -157,12 +158,12 @@ function ProfileEdit() {
                 return;
             }
 
-            if (!nameRegex.test(country.trim()) && country.length != 0) {
+            if (!countryCityRegex.test(country.trim()) && country.length != 0) {
                 window.alert('Country can only contain letters and spaces.');
                 return;
             }
 
-            if (!nameRegex.test(city.trim()) && city.length != 0) {
+            if (!countryCityRegex.test(city.trim()) && city.length != 0) {
                 window.alert('City can only contain letters and spaces.');
                 return;
             }
