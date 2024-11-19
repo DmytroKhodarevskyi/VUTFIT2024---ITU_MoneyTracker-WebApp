@@ -153,10 +153,14 @@ const handleFileChange = (e) => {
         </div>
 
         <div className="ThreadDetail-image-upload-container">
-          <input type="file" onChange={handleFileChange} />
-          {newCommentFile && (
-            <p className="ThreadDetail-uploaded-file-name">{newCommentFile.name}</p>
-          )}
+            <input 
+                type="file" 
+                accept="image/*, .gif" 
+                onChange={handleFileChange} 
+            />
+            {newCommentFile && (
+                <p className="ThreadDetail-uploaded-file-name">{newCommentFile.name}</p>
+            )}
         </div>
 
         <button
