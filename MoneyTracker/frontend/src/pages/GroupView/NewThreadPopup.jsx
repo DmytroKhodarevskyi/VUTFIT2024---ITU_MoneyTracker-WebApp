@@ -102,6 +102,11 @@ function NewThreadPopup({
       return;
     }
 
+    if(!text.trim()) {
+      alert("Thread description cannot be empty.");
+      return;
+    }
+
     const newThread = new FormData();
     newThread.append("title", title);
     newThread.append("text_content", text);
@@ -155,14 +160,14 @@ function NewThreadPopup({
             <input
               className="GroupView-new-thread-popup-input"
               type="text"
-              placeholder="Thread title"
+              placeholder="Thread title*"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
             />
             <textarea
               className="GroupView-new-thread-popup-textarea"
-              placeholder="Thread description"
+              placeholder="Thread description*"
               value={text}
               onChange={(e) => setText(e.target.value)}
               required

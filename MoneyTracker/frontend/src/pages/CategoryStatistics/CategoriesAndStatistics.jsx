@@ -106,6 +106,15 @@ function CategoriesAndStatistics() {
         return;
     }
 
+    const defaultCategory = categories.find(
+      (category) => selectedCategories.includes(category.id) && category.name === "Default"
+    );
+
+    if (defaultCategory) {
+        alert('You cannot delete the default category with the name "Default".');
+        return;
+    }
+
     try {
         await Promise.all(
             selectedCategories.map(async (categoryId) => {
@@ -116,6 +125,7 @@ function CategoriesAndStatistics() {
         setCategories(categories.filter((category) => !selectedCategories.includes(category.id)));
         setSelectedCategories([]);
     } catch (error) {
+        console.log(error)
         console.error('There was an error deleting the categories:', error);
         alert('Failed to delete the selected categories. Please try again.');
       }

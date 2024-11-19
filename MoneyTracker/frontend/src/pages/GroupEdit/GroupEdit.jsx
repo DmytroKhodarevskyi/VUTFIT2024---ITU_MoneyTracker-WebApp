@@ -116,6 +116,13 @@ function GroupEdit() {
       setIsLoading(true);
   
       const formData = new FormData();
+
+      if(group.name.length === 0) {
+        alert("Group name cannot be empty");
+        setIsLoading(false);
+        return;
+      }
+
       formData.append("name", group.name);
       formData.append("description", group.description);
       if (group.group_image) {
@@ -201,6 +208,7 @@ function GroupEdit() {
                             name="name"
                             value={group.name}
                             onChange={handleChange}
+                            placeholder="Name*"
                             required
                         />
                     </div>
@@ -211,6 +219,7 @@ function GroupEdit() {
                             name="description"
                             value={group.description}
                             onChange={handleChange}
+                            placeholder="Description"
                         />
                     </div>
                     <div className="group-edit-image">

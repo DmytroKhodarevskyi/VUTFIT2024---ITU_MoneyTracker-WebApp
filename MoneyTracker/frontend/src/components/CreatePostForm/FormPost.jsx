@@ -48,7 +48,7 @@ function FormPost({
               id="post-form-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Title"
+              placeholder="Title*"
               required
             />
           </div>

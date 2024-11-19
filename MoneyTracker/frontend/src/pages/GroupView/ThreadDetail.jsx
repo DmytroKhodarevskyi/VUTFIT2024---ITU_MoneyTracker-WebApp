@@ -55,6 +55,11 @@ const handleFileChange = (e) => {
       alert("You can only upload one file.");
       return; 
     }
+
+    if(!newCommentContent.trim()) {
+      alert("Comment text cannot be empty");
+      return;
+    }
   
     setIsSubmitting(true);
     const formData = new FormData();
@@ -102,7 +107,7 @@ const handleFileChange = (e) => {
 
   return (
     <MainContainer>
-    <TopPart nickname={profileData?.firstname} selectedItem={"feed"} profilePhoto={profilePhoto} />
+    <TopPart nickname={profileData?.firstname} selectedItem={"groups"} profilePhoto={profilePhoto} />
     
     <div className="ThreadDetail-main-container">
         <div className="ThreadDetail-head-thread">
@@ -124,19 +129,16 @@ const handleFileChange = (e) => {
     </div>
 
     <div className="ThreadDetail-thread-comments-container">
-        {comments && comments.length > 0 ? (
+    {comments &&
           comments.map((comment) => (
-            <ThreadDetailComment 
-              key={comment.id} 
-              comment={comment}  
+            <ThreadDetailComment
+              key={comment.id}
+              comment={comment}
               onDelete={() => handleDelete(comment.id)}
               group={thread.group}
               userID={profileData.id}
             />
-          ))
-        ) : (
-          <p>No comments yet</p>
-        )}
+        ))}
       </div>
 
     
@@ -144,7 +146,7 @@ const handleFileChange = (e) => {
         <div className="ThreadDetail-title-description-container">
           <textarea
             className="ThreadDetail-input-content"
-            placeholder="Enter your text"
+            placeholder="Enter your thread comment*"
             value={newCommentContent}
             onChange={(e) => setNewCommentContent(e.target.value)}
           />
@@ -161,7 +163,7 @@ const handleFileChange = (e) => {
           className="ThreadDetail-submit-button"
           onClick={handleSubmitComment}
           disabled={isSubmitting}
-        >
+        > 
           {isSubmitting ? "Submitting..." : "New Thread Comment"}
         </button>
       </div>
