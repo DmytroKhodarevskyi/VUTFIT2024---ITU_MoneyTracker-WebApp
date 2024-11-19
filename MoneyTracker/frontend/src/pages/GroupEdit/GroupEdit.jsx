@@ -40,8 +40,8 @@ function GroupEdit() {
             group_image: null, 
           });
           
-     
-          if(response.data.author == profileDataResponse.data.id) {
+          
+          if(response.data.group.creator == profileDataResponse.data.id) {
             setIsCreator(true);
           }
           
@@ -297,12 +297,14 @@ function GroupEdit() {
                           </div>
 
                         
-                          <button
-                            onClick={() => handleToggleModerator(member, member.role)}
-                            className={`group-edit-member-button ${member.role === 'moderator' ? 'moderator' : 'member'}`}
-                          >
-                            {member.role === 'moderator' ? 'Unmake Moderator' : 'Make Moderator'}
-                          </button>
+                          {isCreator && (
+                              <button
+                                onClick={() => handleToggleModerator(member, member.role)}
+                                className={`group-edit-member-button ${member.role === 'moderator' ? 'moderator' : 'member'}`}
+                              >
+                                {member.role === 'moderator' ? 'Unmake Moderator' : 'Make Moderator'}
+                              </button>
+                            )}
                         </li>
                       ))}
                     </ul>

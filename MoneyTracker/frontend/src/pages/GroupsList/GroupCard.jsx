@@ -35,6 +35,10 @@ function GroupCard({ id, name, subscribers, image }) {
     }
   }
 
+  const handleEdit = () => {
+    nav(`/groups/${id}/edit`);
+  };
+
   useEffect(() => {
     const fetchCreator = async () => {
       try {
@@ -106,7 +110,7 @@ function GroupCard({ id, name, subscribers, image }) {
             View
           </button>
 
-          {IsCreator ? <button>Edit</button> : <SubscribeButton />}
+          {IsCreator ? <button onClick={handleEdit}>Edit</button> : <SubscribeButton />}
           {/* <button */}
           {/* onClick={handleSubscribe} */}
           {/* >Subscribe</button>} */}

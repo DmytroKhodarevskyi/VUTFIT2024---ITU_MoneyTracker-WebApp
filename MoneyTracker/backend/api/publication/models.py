@@ -76,7 +76,6 @@ class Publication(models.Model):
 class Comment(models.Model):
     publication = models.ForeignKey(Publication, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    stars = models.PositiveIntegerField(default=0)
     text = models.TextField()
     
     stars_count = models.PositiveIntegerField(default=0)

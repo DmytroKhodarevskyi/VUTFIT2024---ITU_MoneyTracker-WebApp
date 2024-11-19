@@ -33,12 +33,14 @@ function ThreadDetailComment({ comment, onDelete, group, userID }) {
   useEffect(() => {
     async function setupCanDelete() {
       try {
-
-        const canDeleteresponse = await api.get(`/api/groups/${group}/user/${userID}/check-role/`);
+        
+        const response = await api.get(`/api/groups/${group}/checkcreator/`);
+        
+        const { is_creator, is_moderator } = response.data;
 
         if (
-          canDeleteresponse.data.message === "The user is a moderator." || 
-          canDeleteresponse.data.message === "The user is a creator." ||
+          is_creator || 
+          is_moderator ||
           comment.author === userID
         ) {
           setCanDelete(true); 
@@ -47,7 +49,7 @@ function ThreadDetailComment({ comment, onDelete, group, userID }) {
         }
       } catch (error) {
         console.error("Failed to fetch setupCanDelete function", error);
-        setCanDelete(false); 
+        setCanDelete(false);
       }
     }
 
@@ -55,8 +57,6 @@ function ThreadDetailComment({ comment, onDelete, group, userID }) {
   }, [group, userID, comment]); 
 
 
-
-  
   if (isLoading) {
     return (
       <div className="ThreadDetailComment-main-container">
