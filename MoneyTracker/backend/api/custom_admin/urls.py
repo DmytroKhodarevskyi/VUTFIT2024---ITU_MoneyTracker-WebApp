@@ -20,6 +20,7 @@ from .views import (
     UserPublicationsView,
     UsernameSearchView,
     UserGroupsView,
+    UserPublicationCommentsView,
     
     UpdateTransactionView,
     UpdateCategoryView,
@@ -38,6 +39,7 @@ urlpatterns = [
     path('users/<int:pk>/categories/', UserCategoriesView.as_view(), name='user-categories'),
     path('users/<int:pk>/publications/', UserPublicationsView.as_view(), name='user-publications'),
     path('users/<int:pk>/groups/', UserGroupsView.as_view(), name='user-groups'),
+    path('publications/<int:pk>/comments/', UserPublicationCommentsView.as_view(), name='publication-comments'),
     # path("", TransactionListCreate.as_view(), name="transaction-list"),
     # path("delete/<int:pk>/", TransactionDelete.as_view(), name="delete-transaction"),
 

@@ -10,6 +10,7 @@ from api.transaction.models import Transaction
 from api.category.models import Category
 from api.publication.models import Publication
 from api.group.models import Group
+from api.publication.models import Comment
 
 from .serializers import (
     UserSerializer, 
@@ -17,6 +18,7 @@ from .serializers import (
     CategorySerializer, 
     PublicationSerializer,
     GroupSerializer,
+    PublicationCommentSerializer,
 )
 
 from django.contrib.auth.models import User
@@ -227,3 +229,11 @@ class UpdatePublicationView(generics.UpdateAPIView):
         
         self.perform_update(serializer)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+class UserPublicationCommentsView(generics.ListAPIView):
+    serializer_class = PublicationCommentSerializer
+
+    def get_queryset(self):
+        publication_id = self.kwargs['pk']
+        return Comment.objects.filter(publication=publication_id)
