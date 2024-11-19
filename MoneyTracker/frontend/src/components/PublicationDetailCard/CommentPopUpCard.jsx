@@ -38,7 +38,7 @@ const CommentPopUpCard = ({ isOpen, onClose, publicationId, onCommentAdded }) =>
                     <textarea
                         value={commentText}
                         onChange={(e) => setCommentText(e.target.value)}
-                        placeholder="Write your comment here..."
+                        placeholder="Write your comment here...*"
                         required
                         className="modal-textarea"
                     />

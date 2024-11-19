@@ -20,6 +20,7 @@ function GroupCreate() {
   const [groupName, setGroupName] = useState("");
   const [groupDescription, setGroupDescription] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [userStars, setUserStars] = useState(0);
 
   const [profilePhoto, setProfilePhoto] = useState(null);
 
@@ -29,6 +30,11 @@ function GroupCreate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(userStars < 1) {
+      alert("U don't have enough stars to create group (required 1)");
+      return;
+    }
 
     if (!groupName) {
       alert("Please enter a group name");
@@ -42,14 +48,6 @@ function GroupCreate() {
 
     try {
       const res = await api.post("/api/groups/create/", formData);
-
-      // DOES NOT FIX IMAGES -- |
-      //                        V
-      //   const res = await api.post("/api/groups/create/", formData, {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   });
       console.log(res.data + "group created");
       nav("/groups");
     } catch (error) {
@@ -81,6 +79,7 @@ function GroupCreate() {
     const fetchNickname = async () => {
       try {
         const response = await api.get("/api/user/profile/");
+        setUserStars(response.data.stars)
         setNickname(response.data.username);
         setProfilePhoto(response.data.profileImg);
         setIsLoaded(true);
@@ -126,7 +125,7 @@ function GroupCreate() {
 
           <input
             type="text"
-            placeholder="Group name"
+            placeholder="Group name*"
             value={groupName}
             onChange={(e) => setGroupName(e.target.value)}
           />

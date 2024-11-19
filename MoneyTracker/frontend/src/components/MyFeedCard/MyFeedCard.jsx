@@ -92,7 +92,7 @@ function MyFeedCard ({
             <div className="post-footer">
               <div className="post-actions">
                 <button className="my-feed-like-button">
-                      <span className="my-feed-like-count">3</span> 
+                      <span className="my-feed-like-count">{publication.stars}</span> 
                       <img src={star_picture} alt="Star" className="my-feed-star-icon" />
                   </button>
               </div>
