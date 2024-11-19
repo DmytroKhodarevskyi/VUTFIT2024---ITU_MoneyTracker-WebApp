@@ -79,6 +79,7 @@ class Comment(models.Model):
     stars = models.PositiveIntegerField(default=0)
     text = models.TextField()
     
+    stars_count = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -87,17 +88,19 @@ class Comment(models.Model):
     def like(self, user):
         if not Star.objects.filter(user=user, comment=self).exists():
             Star.objects.create(user=user, comment=self)
-            self.stars += 1
-            self.publication.author.profile.stars_count += 1
-            self.publication.author.profile.save()
+            self.stars_count += 1
+            self.save()
+            self.author.profile.stars_count += 1
+            self.author.profile.save()
             
     def unlike(self, user):
         try:
             like = Star.objects.get(user=user, comment=self)
             like.delete()
-            self.stars -= 1
-            self.publication.author.profile.stars_count -= 1
-            self.publication.author.profile.save()
+            self.stars_count -= 1
+            self.save()
+            self.author.profile.stars_count -= 1
+            self.author.profile.save()
         except Star.DoesNotExist:
             pass
     

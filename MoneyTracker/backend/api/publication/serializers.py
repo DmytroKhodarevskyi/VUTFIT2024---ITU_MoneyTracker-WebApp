@@ -12,7 +12,7 @@ class MediaSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', 'publication', 'author', 'stars', 'text', 'created_at']
+        fields = ['id', 'publication', 'author', 'stars_count', 'text', 'created_at']
         read_only_fields  = ['id', 'author', 'publication', 'created_at']
         
         def validate_stars(self, value):
@@ -21,7 +21,6 @@ class CommentSerializer(serializers.ModelSerializer):
             return value
 
         def create(self, validated_data):
-            validated_data['stars'] = validated_data.get('stars', 0)
             return Comment.objects.create(**validated_data)
     
     
