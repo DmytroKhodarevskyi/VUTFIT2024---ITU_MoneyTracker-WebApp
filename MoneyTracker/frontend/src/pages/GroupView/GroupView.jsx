@@ -164,6 +164,23 @@ function GroupView() {
     nav(`/groups/${GroupId}/edit`);
   };
 
+
+const handleDeleteGroup = async (groupId) => {
+  const confirmed = window.confirm("Are you sure you want to delete this group?");
+  if (!confirmed) return;
+
+  try {
+    await api.delete(`/api/groups/${groupId}/delete/`);
+    alert("Group deleted successfully.");
+
+    
+    nav(`/groups/`);
+  } catch (error) {
+    console.error("Error deleting group:", error);
+    alert("Failed to delete the group. Please try again.");
+  }
+};
+
   const handleCreateThread = () => {
     // nav(`/groups/${GroupId}/createthread`);
     setNewThreadPopup(!newThreadPopup);
@@ -229,22 +246,25 @@ function GroupView() {
                   </h2>
                 </div>
 
-                <div className="GroupView-buttonscontainer">
+             <div className="GroupView-buttonscontainer">
                   {ismoderator.is_creator || ismoderator.is_moderator ? (
-                    <button
-                      onClick={handleEdit}
-                      className="GroupView-subscribe-button"
-                    >
-                      Edit
-                    </button>
+                    <>
+                      <button
+                        onClick={handleEdit}
+                        className="GroupView-subscribe-button"
+                      >
+                        Edit
+                      </button>
+                      {ismoderator.is_creator && (
+                        <button
+                          onClick={() => handleDeleteGroup(GroupId)} 
+                          className="GroupView-delete-button"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </>
                   ) : (
-                    // <button
-                    //   onClick={handleSubscribe}
-                    //   className="GroupView-subscribe-button"
-                    // >
-                    //   Subscribe
-                    // </button>
-
                     <SubscribeButton />
                   )}
 
