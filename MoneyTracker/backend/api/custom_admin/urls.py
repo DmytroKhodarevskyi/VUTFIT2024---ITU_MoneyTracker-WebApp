@@ -8,12 +8,14 @@ from .views import (
     check_superuser_status,
     UserDetailView,
     UserListView,
+    PublicationDetailView,
 
     DeleteUserView,
     BatchDeleteTransactionsView,
     BatchDeleteCategoriesView,
     BatchDeletePublicationView,
     BatchDeleteGroupView,
+    BatchDeletePublicationCommentsView,
 
     UserTransactionsView,
     UserCategoriesView,
@@ -26,6 +28,7 @@ from .views import (
     UpdateCategoryView,
     UpdatePublicationView,
     UpdateGroupView,
+    UpdatePublicationCommentView,
 )
 
 urlpatterns = [
@@ -48,9 +51,12 @@ urlpatterns = [
     path("categories/batch-delete/", BatchDeleteCategoriesView.as_view(), name="delete-categories"),
     path("publications/batch-delete/", BatchDeletePublicationView.as_view(), name="delete-publications"),
     path("groups/batch-delete/", BatchDeleteGroupView.as_view(), name="delete-groups"),
+    path("comments/batch-delete/", BatchDeletePublicationCommentsView.as_view(), name="delete-comments"),
     
     path('transactions/<int:pk>/', UpdateTransactionView.as_view(), name='user-transaction-update'),
     path('categories/<int:pk>/', UpdateCategoryView.as_view(), name='user-category-update'),
-    path('publications/<int:pk>/', UpdatePublicationView.as_view(), name='user-publication-update'),
+    path('publications/<int:pk>/update/', UpdatePublicationView.as_view(), name='user-publication-update'),
+    path('publications/<int:pk>/', PublicationDetailView.as_view(), name='publication'),
     path('groups/<int:pk>/', UpdateGroupView.as_view(), name='user-group-update'),
+    path('comments/<int:pk>/', UpdatePublicationCommentView.as_view(), name='comment-update'),
 ]

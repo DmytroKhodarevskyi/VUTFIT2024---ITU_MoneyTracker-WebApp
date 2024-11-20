@@ -237,3 +237,65 @@ class UserPublicationCommentsView(generics.ListAPIView):
     def get_queryset(self):
         publication_id = self.kwargs['pk']
         return Comment.objects.filter(publication=publication_id)
+    
+    
+class UpdatePublicationCommentView(generics.UpdateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = PublicationCommentSerializer
+    permission_classes = [IsAdminUser]
+
+    def update(self, request, *args, **kwargs):
+        
+        partial = kwargs.pop('partial', True)  
+        instance = self.get_object() 
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_update(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class BatchDeletePublicationCommentsView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def delete(self, request, *args, **kwargs):
+        comment_ids = request.data.get("comment_ids", [])
+        
+        # Ensure we have a list of IDs to delete
+        if not comment_ids:
+            return Response({"error": "No comments IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Delete transactions that match the provided IDs
+        deleted_count, _ = Comment.objects.filter(id__in=comment_ids).delete()
+        
+        return Response(
+            {"message": f"{deleted_count} comments deleted successfully"},
+            status=status.HTTP_200_OK
+        )
+        
+        
+class PublicationDetailView(generics.RetrieveAPIView):
+    queryset = Publication.objects.all()
+    serializer_class = PublicationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        publication = super().get_object()
+        return publication
+
+    def get(self, request, *args, **kwargs):
+        publication = self.get_object() 
+        serializer = self.get_serializer(publication)
+        return Response(serializer.data)
+# class PublicationNameByCommentView(APIView):
+#     permission_classes = [IsAdminUser]
+
+#     def get_queryset(self):
+#         # comment = Commnt.o...(ID=ID)
+#         # publication_id = comment.publication
+#         # publiction = Publication.object.filter(id=id)
+#         # pub_name = publication.title
+#         # return Response(pub_name)
+#         return super().get_queryset()
+    

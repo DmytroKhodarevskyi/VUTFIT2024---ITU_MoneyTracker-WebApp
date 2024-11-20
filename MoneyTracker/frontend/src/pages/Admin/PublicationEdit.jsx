@@ -52,7 +52,7 @@ const PublicationsEdit = () => {
       const payload = { [fieldBeingEdited]: updatedValue };
   
       // Оновлюємо значення на сервері
-      await api.put(`/api/custom_admin/publications/${publicationId}/`, payload);
+      await api.put(`/api/custom_admin/publications/${publicationId}/update/`, payload);
   
       // Оновлюємо значення в локальному стані
       setPublications((prevPublications) =>
