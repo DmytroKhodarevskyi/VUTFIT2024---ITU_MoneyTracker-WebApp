@@ -30,26 +30,27 @@ function ReminderList() {
 
         const remindersResponse = await api.get("/api/reminders/reminders/");
 
-        setRemindersList([
-          {
-            id: 1,
-            title: "Buy milk",
-            deadline: Date.now(),
-            amount: 100,
-          },
-          {
-            id: 2,
-            title: "Buy bread",
-            deadline: Date.now(),
-            amount: 300,
-          },
-          {
-            id: 3,
-            title: "Buy cheese",
-            deadline: Date.now(),
-            amount: 200,
-          },
-        ]);
+        setRemindersList(remindersResponse.data);
+        // setRemindersList([
+        //   {
+        //     id: 1,
+        //     title: "Buy milk",
+        //     deadline: Date.now(),
+        //     amount: 100,
+        //   },
+        //   {
+        //     id: 2,
+        //     title: "Buy bread",
+        //     deadline: Date.now(),
+        //     amount: 300,
+        //   },
+        //   {
+        //     id: 3,
+        //     title: "Buy cheese",
+        //     deadline: Date.now(),
+        //     amount: 200,
+        //   },
+        // ]);
       } catch (error) {
         console.error("Failed to fetch profile data", error);
       }
