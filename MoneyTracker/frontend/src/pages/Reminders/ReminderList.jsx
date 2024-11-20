@@ -3,6 +3,7 @@ import api from "../../api";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import TopPart from "../../components/TopPart/TopPart";
 import { useState, useEffect } from "react";
+import CreateReminderPopup from "./CreateReminderPopup";
 import "./ReminderList.css";
 
 function ReminderList() {
@@ -10,6 +11,7 @@ function ReminderList() {
   const [profilePhoto, setProfilePhoto] = useState(null);
 
   const [remindersList, setRemindersList] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -88,9 +90,15 @@ function ReminderList() {
             </div>
           </div>
           <div className="ReminderList-right-part">
-            <button>Create Reminder</button>
+            <button onClick={() => setShowPopup(true)}>Create Reminder</button>
           </div>
         </div>
+
+      <CreateReminderPopup
+        showPopup={showPopup}
+        setShowPopup={setShowPopup}
+        setRemindersList={setRemindersList}
+      />
       </MainContainer>
     </>
   );
