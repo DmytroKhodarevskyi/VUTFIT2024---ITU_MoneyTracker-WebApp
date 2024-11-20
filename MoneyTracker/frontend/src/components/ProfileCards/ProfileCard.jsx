@@ -126,7 +126,9 @@ function ProfileCard({
                     <div className="profile-sidebar-buttons">
                         <button className="change-profile-button" onClick={handleChangeProfile}> Change Profile</button>
                         <button className="setup-reminder-button" onClick={handleMyPublicationsButton}> My Publications</button>
-                        <button className="setup-reminder-button"> Setup Reminders</button>
+                        <button className="setup-reminder-button"
+                        onClick={() => {navigate('reminders/');}}
+                        > Setup Reminders</button>
                     </div>
 
                     <div className='profile-sidebar-bottom'>
