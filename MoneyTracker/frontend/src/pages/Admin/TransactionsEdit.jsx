@@ -156,7 +156,7 @@ const TransactionsEdit = () => {
     return (
       <>
         <div className="admin-main-buttons">
-          <h1 className="admin-header">{username}'s Categories</h1>
+          <h1 className="admin-header">{username}'s Transactions</h1>
           <h1 className="admin-header">No transactions were found</h1>
         </div>
       </>
