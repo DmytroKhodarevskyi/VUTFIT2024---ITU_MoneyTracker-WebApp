@@ -1,10 +1,158 @@
 .ReminderList-main-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    flex-direction: row;
+    gap: 16px;
+    padding: 0px 92px 32px 92px;
     margin-top: -45px;
 
-    
+    min-width: 900px;
 }
 
-.
+.ReminderList-left-part {
+    min-width: 321px;
+    width: auto;
+    height: 615px;
+    border-radius: 17px;
+    padding: 0px 92px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.ReminderList-right-part {
+    /* min-width: 521px; */
+    width: auto;
+    height: 615px;
+    border-radius: 17px;
+    padding: 28px 32px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+}
+
+.ReminderList-table-block {
+    border: 1px solid #BEC4CD;
+    border-radius: 7px;
+    margin-top: 20px;
+    overflow: hidden;
+    max-height: 490px;
+    min-width: 457px;
+    width: 100%;
+}
+
+.ReminderList-categories-table {
+    font-size: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ReminderList-categories-table thead,
+.ReminderList-categories-table tbody {
+    display: block;
+}
+
+.ReminderList-categories-table thead {
+    width: 100%;
+}
+
+.ReminderList-categories-table tbody {
+    overflow-y: auto;
+    max-height: 400px;
+    width: 100%;
+}
+
+.ReminderList-categories-table th,
+.ReminderList-categories-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #BEC4CD;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 33%;
+}
+
+.ReminderList-categories-table th {
+    position: sticky;
+    top: 0;
+    height: 43px;
+    background-color: #233A6C0D;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+    border-bottom: 1px solid #BEC4CD;
+    z-index: 1;
+}
+
+.ReminderList-categories-table th:nth-child(1),
+.ReminderList-categories-table td:nth-child(1) {
+    width: 40%;
+}
+
+.ReminderList-categories-table th:nth-child(2),
+.ReminderList-categories-table td:nth-child(2) {
+    width: 30%;
+}
+
+.ReminderList-categories-table th:nth-child(3),
+.ReminderList-categories-table td:nth-child(3) {
+    width: 10%;
+}
+
+.ReminderList-table-scroll {
+    max-height: 440px;
+    overflow-y: auto;
+}
+
+.ReminderList-categories-table td {
+    height: 63px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #BEC4CD;
+    color: #000000B2;
+}
+
+.ReminderList-categories-table input[type="radio"] {
+    margin-right: 8px;
+}
+
+.ReminderList-categories-table input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.ReminderList-custom-checkbox {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #BEC4CD;
+    border-radius: 50%;
+    position: relative;
+    background-color: white;
+    margin-right: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: none;
+}
+
+.ReminderList-categories-table input[type="checkbox"]:checked+.ReminderList-custom-checkbox {
+    background-image: url('./Check_ring.png');
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.ReminderList-categories-table input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}

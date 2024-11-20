@@ -26,6 +26,8 @@ function ReminderList() {
         setNickname(response.data.first_name);
         setProfilePhoto(response.data.profileImg);
 
+        const remindersResponse = await api.get("/api/reminders/reminders/");
+
         setRemindersList([
           {
             id: 1,
@@ -78,6 +80,23 @@ function ReminderList() {
                 <tbody>
                   {remindersList.map((reminder) => (
                     <tr key={reminder.id}>
+                      {/* <td>
+                        <label
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          <input
+                            type="checkbox"
+                            name="category"
+                            value={category.name}
+                            checked={selectedCategories.includes(category.id)}
+                            onChange={() => handleCheckboxChange(category)}
+                          />
+                          <span className="CategoriesAndStatistics-custom-checkbox"></span>
+                          <p className="CategoriesAndStatistics-categories-names">
+                            {category.name}
+                          </p>
+                        </label>
+                      </td> */}
                       <td>{reminder.title}</td>
                       <td>{formatDate(reminder.deadline)}</td>
                       <td>{reminder.amount}</td>
