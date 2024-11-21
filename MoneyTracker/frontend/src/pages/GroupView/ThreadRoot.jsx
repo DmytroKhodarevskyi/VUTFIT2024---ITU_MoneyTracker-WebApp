@@ -12,7 +12,7 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
   const navigate = useNavigate();
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
+  // const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
   const modalRef = useRef(null);
 
   const [modalState, setModalState] = useState(1);
@@ -41,7 +41,7 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const openModal = (event) => {
-    setModalPosition({ x: event.clientX, y: event.clientY });
+    // setModalPosition({ x: event.clientX, y: event.clientY });
     setModalVisible(true);
   };
 
@@ -79,11 +79,11 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
       <div
         ref={modalRef}
         className="ThreadRoot-modal"
-        style={{
-          position: "absolute",
-          top: modalPosition.y,
-          left: modalPosition.x,
-        }}
+        // style={{
+        //   position: "relative",
+        //   top: modalPosition.y,
+        //   left: modalPosition.x,
+        // }}
       >
         <button
           className="ThreadRoot-modal-button-delete"
@@ -103,12 +103,12 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
     return (
       <div
         ref={modalRef}
-        className="ThreadRoot-modal"
-        style={{
-          position: "absolute",
-          top: modalPosition.y,
-          left: modalPosition.x,
-        }}
+        className="ThreadRoot-modal-2"
+        // style={{
+        //   position: "absolute",
+        //   top: modalPosition.y,
+        //   left: modalPosition.x,
+        // }}
       >
         <h1>Are you sure?</h1>
 
@@ -189,32 +189,13 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
             </div>
           </div>
         </div>
+
+        {modalVisible && modalStateRender()}
       </div>
 
-      {modalVisible && (
-        // <div
-        //   ref={modalRef}
-        //   className="ThreadRoot-modal"
-        //   style={{
-        //     position: "absolute",
-        //     top: modalPosition.y,
-        //     left: modalPosition.x,
-        //   }}
-        // >
-        //   <button
-        //     className="ThreadRoot-modal-button-delete"
-        //     onClick={() => {
-        //       /* Add post deletion logic here */
-        //     }}
-        //   >
-        //     Delete Post
-        //   </button>
-
-        //   <button onClick={closeModal}>Close</button>
-        // </div>
-
+      {/* {modalVisible && (
         modalStateRender()
-      )}
+      )} */}
     </>
   );
 }

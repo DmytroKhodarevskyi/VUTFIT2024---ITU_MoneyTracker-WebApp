@@ -13,6 +13,37 @@ function ReminderList() {
   const [remindersList, setRemindersList] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
 
+  const [selectedReminders, setSelectedReminders] = useState([]);
+
+  const handleCheckboxChange = (reminder) => {
+    if (selectedReminders.includes(reminder.id)) {
+      setSelectedReminders(
+        selectedReminders.filter((id) => id !== reminder.id)
+      );
+    } else {
+      setSelectedReminders([...selectedReminders, reminder.id]);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await api.delete("/api/reminders/batchdelete/", {
+        data: {
+          reminders_ids: selectedReminders,
+        },
+      });
+
+      console.log(response.data);
+      setRemindersList(
+        remindersList.filter((reminder) => !selectedReminders.includes(reminder.id))
+      )
+      setSelectedReminders([]);
+
+    } catch (error) {
+      console.error("Failed to delete reminders", error);
+    }
+  };
+
   function formatDate(dateString) {
     const date = new Date(dateString);
     return `${date.toLocaleDateString("uk-UA")} ${date.toLocaleTimeString(
@@ -20,6 +51,33 @@ function ReminderList() {
       { hour: "2-digit", minute: "2-digit" }
     )}`;
   }
+
+  useEffect(() => {
+    async function clearOldReminders() {
+      try {
+        const oldReminders = await api.get("/api/reminders/reminders/old/");
+        if (oldReminders.data.length === 0) {
+          return;
+        }
+
+        setSelectedReminders(oldReminders.data);
+        console.log(selectedReminders);
+
+        const response = await api.delete("/api/reminders/batchdelete/", {
+          data: {
+            reminders_ids: selectedReminders,
+          },
+        });
+
+        setSelectedReminders([]);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Failed to clear old reminders", error);
+      }
+    }
+
+    clearOldReminders();
+  }, [remindersList]);
 
   useEffect(() => {
     async function fetchProfileData() {
@@ -68,11 +126,13 @@ function ReminderList() {
         />
         <div className="ReminderList-main-container">
           <div className="ReminderList-left-part">
-            <h1>Reminders</h1>
-            <h2>Set up your notifiers</h2>
+            <div className="RemindersList-title-container">
+              <h1 className="RemindersList-title">Reminders</h1>
+              <h2 className="RemindersList-subtitle">Set up your notifiers</h2>
+            </div>
 
-            <div className="ReminderList-reminders-table">
-              <table>
+            <div className="RemindersList-table-block">
+              <table className="ReminderList-reminders-table">
                 <thead>
                   <tr>
                     <th>Title</th>
@@ -83,24 +143,25 @@ function ReminderList() {
                 <tbody>
                   {remindersList.map((reminder) => (
                     <tr key={reminder.id}>
-                      {/* <td>
+                      <td>
                         <label
                           style={{ display: "flex", alignItems: "center" }}
                         >
                           <input
+                            className="ReminderList-custom-checkbox-input"
                             type="checkbox"
-                            name="category"
-                            value={category.name}
-                            checked={selectedCategories.includes(category.id)}
-                            onChange={() => handleCheckboxChange(category)}
+                            name="reminder"
+                            value={reminder.title}
+                            checked={selectedReminders.includes(reminder.id)}
+                            onChange={() => handleCheckboxChange(reminder)}
                           />
-                          <span className="CategoriesAndStatistics-custom-checkbox"></span>
-                          <p className="CategoriesAndStatistics-categories-names">
-                            {category.name}
+                          <span className="ReminderList-custom-checkbox"></span>
+                          <p className="RemindersList-reminders-names">
+                            {reminder.title}
                           </p>
                         </label>
-                      </td> */}
-                      <td>{reminder.title}</td>
+                      </td>
+                      {/* <td>{reminder.title}</td> */}
                       <td>{formatDate(reminder.deadline)}</td>
                       <td>{reminder.amount}</td>
                     </tr>
@@ -108,17 +169,32 @@ function ReminderList() {
                 </tbody>
               </table>
             </div>
+
+            <div className="CategoriesAndStatistics-bottom-part">
+              <p>
+                {selectedReminders.length} row(s) of {remindersList.length}{" "}
+                selected.
+              </p>
+              <div className="CategoriesAndStatistics-delete-text">
+                <button
+                  className="CategoriesAndStatistics-delete-text"
+                  onClick={handleDelete}
+                >
+                  Delete Selected
+                </button>
+              </div>
+            </div>
           </div>
           <div className="ReminderList-right-part">
             <button onClick={() => setShowPopup(true)}>Create Reminder</button>
           </div>
         </div>
 
-      <CreateReminderPopup
-        showPopup={showPopup}
-        setShowPopup={setShowPopup}
-        setRemindersList={setRemindersList}
-      />
+        <CreateReminderPopup
+          showPopup={showPopup}
+          setShowPopup={setShowPopup}
+          setRemindersList={setRemindersList}
+        />
       </MainContainer>
     </>
   );

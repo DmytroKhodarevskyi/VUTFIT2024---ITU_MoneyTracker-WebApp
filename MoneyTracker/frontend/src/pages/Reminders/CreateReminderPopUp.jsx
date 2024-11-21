@@ -18,17 +18,27 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (title.trim() === "") {
-        window.alert("Title cannot be empty.");
-        return;
-      }
     if (amount <= 0) {
-        window.alert("Amount must be greater than 0.");
-        return;
-      }
-  
-  
+      window.alert("Amount must be greater than 0.");
+      return;
+    }
+
+    if (!title || !deadline || !amount) {
+      alert("All fields are required.");
+      return;
+    }
+
+    const today = new Date();
+    const oneDayLater = new Date(today);
+    oneDayLater.setDate(today.getDate() + 1);
+
+    console.log(new Date(deadline) + "DEADLINE");
+    console.log(oneDayLater + "ONE DAY LATER");
+    if (new Date(deadline) < oneDayLater) {
+      alert("Deadline must be at least one day later than today.");
+      return;
+    }
+
     try {
       const response = await api.post("/api/reminders/reminders/create/", {
         title,
@@ -50,9 +60,11 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
     <div className="create-reminder-popup">
       <div className="popup-content">
         <h2>Create Reminder</h2>
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}> */}
+        <form>
           <label>
             Title:
+          </label>
             <input
               type="text"
               className="reminder-textinput-title"
@@ -60,9 +72,10 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
               onChange={(e) => setTitle(e.target.value)}
               required
             />
-          </label>
           <label>
             Deadline:
+          </label>
+
             <input
               type="datetime-local"
               className="reminder-textinput-deadline"
@@ -71,9 +84,10 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
               onChange={(e) => setDeadline(e.target.value)}
               required
             />
-          </label>
           <label>
             Amount:
+          </label>
+
             <input
               type="number"
               step="0.01"
@@ -82,7 +96,6 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
               onChange={(e) => setAmount(e.target.value)}
               required
             />
-          </label>
           <div className="popup-buttons">
             <button
               type="submit"
