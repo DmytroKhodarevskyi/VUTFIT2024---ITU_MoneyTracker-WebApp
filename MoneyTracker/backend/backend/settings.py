@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'api.category',
     'api.custom_admin',
     'api.group',
+    'api.reminder',
 ]
 
 MIDDLEWARE = [

@@ -39,6 +39,7 @@ import GroupEdit from "./pages/GroupEdit/GroupEdit";
 import GroupUsers from "./pages/Admin/GroupEditUsers";
 import GroupThreads from "./pages/Admin/GroupEditThreads";
 import GroupThreadCommentsEdit from "./pages/Admin/GroupThreadCommentsEdit";
+import ReminderList from "./pages/Reminders/ReminderList";
 
 function Logout() {
   localStorage.clear();
@@ -83,6 +84,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile/reminders"
+          element={
+            <ProtectedRoute>
+              <ReminderList />
             </ProtectedRoute>
           }
         />
@@ -162,6 +172,7 @@ function App() {
           }
         />
 
+
         <Route
           path="/custom-admin/groups/:pk/users"
           element={
@@ -194,7 +205,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
 
         <Route
           path="/custom-admin/users/:pk/groups"
@@ -260,7 +270,7 @@ function App() {
           }
         />
 
-      <Route
+        <Route
           path="/groups/:groupId/edit"
           element={
             <ProtectedRoute>
@@ -269,7 +279,7 @@ function App() {
           }
         />
 
-      <Route
+        <Route
           path="/thread/:threadId"
           element={
             <ProtectedRoute>
