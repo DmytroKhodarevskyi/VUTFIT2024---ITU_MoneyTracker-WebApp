@@ -60,6 +60,8 @@ function ReminderList() {
           return;
         }
 
+        console.log("Old reminders: ");
+        console.log(oldReminders.data);
         setSelectedReminders(oldReminders.data);
         console.log(selectedReminders);
 
@@ -76,7 +78,7 @@ function ReminderList() {
       }
     }
 
-    clearOldReminders();
+    // clearOldReminders();
   }, [remindersList]);
 
   useEffect(() => {
