@@ -78,7 +78,7 @@ function ReminderList() {
       }
     }
 
-    // clearOldReminders();
+    clearOldReminders();
   }, [remindersList]);
 
   useEffect(() => {
