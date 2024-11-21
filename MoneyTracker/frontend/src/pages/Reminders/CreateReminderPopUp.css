@@ -23,7 +23,7 @@
     justify-content: space-between;
   }
   
-  button {
+  .create-reminder-button {
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -31,15 +31,15 @@
     cursor: pointer;
   }
   
-  button:hover {
+  .create-reminder-button:hover {
     background-color: #45a049;
   }
   
-  button[type="button"] {
+  .create-reminder-button[type="button"] {
     background-color: #f44336;
   }
   
-  button[type="button"]:hover {
+  .create-reminder-button[type="button"]:hover {
     background-color: #e53935;
   }
   

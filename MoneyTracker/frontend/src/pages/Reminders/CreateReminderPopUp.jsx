@@ -8,7 +8,25 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
   const [amount, setAmount] = useState("");
 
   const handleSubmit = async (e) => {
+    console.log("SUBMITTTTTTTTTTTTTTTTTTT");
     e.preventDefault();
+
+    if (!title || !deadline || !amount) {
+      alert("All fields are required.");
+      return;
+    }
+
+    const today = new Date();
+    const oneDayLater = new Date(today);
+    oneDayLater.setDate(today.getDate() + 1);
+
+    console.log(new Date(deadline) + "DEADLINE");
+    console.log(oneDayLater + "ONE DAY LATER");
+    if (new Date(deadline) < oneDayLater) {
+      alert("Deadline must be at least one day later than today.");
+      return;
+    }
+
     try {
       const response = await api.post("/api/reminders/reminders/create/", {
         title,
@@ -30,27 +48,31 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
     <div className="create-reminder-popup">
       <div className="popup-content">
         <h2>Create Reminder</h2>
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}> */}
+        <form>
           <label>
             Title:
+          </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
             />
-          </label>
           <label>
             Deadline:
+          </label>
+
             <input
               type="datetime-local"
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
               required
             />
-          </label>
           <label>
             Amount:
+          </label>
+
             <input
               type="number"
               step="0.01"
@@ -58,10 +80,10 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
               onChange={(e) => setAmount(e.target.value)}
               required
             />
-          </label>
           <div className="popup-buttons">
-            <button type="submit">Create</button>
-            <button type="button" onClick={() => setShowPopup(false)}>
+            {/* <button className="create-reminder" type="submit">Create</button> */}
+            <button className="create-reminder" onClick={handleSubmit}>Create</button>
+            <button className="create-reminder" type="button" onClick={() => setShowPopup(false)}>
               Cancel
             </button>
           </div>
