@@ -6,6 +6,10 @@ from api.category.models import Category
 from api.publication.models import Publication
 from api.group.models import Group
 from api.publication.models import Comment
+from api.group.models import UserGroup
+from api.group.models import Thread
+from api.group.models import ThreadComment
+
 
 
 
@@ -45,4 +49,21 @@ class PublicationCommentSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
+        fields = '__all__' 
+        
+class UserGroupSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(source='user.id', read_only=True)  # Додайте поле user_id
+    username = serializers.CharField(source='user.username', read_only=True) 
+    class Meta:
+        model = UserGroup
+        fields = '__all__' 
+        
+class GroupThreadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Thread
+        fields = '__all__' 
+    
+class GroupThreadCommentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ThreadComment
         fields = '__all__' 

@@ -60,7 +60,13 @@ const UserList = () => {
               <h2 className="admin-user-value">{user.last_name}</h2>
             </Link>
 
-            <button onClick={() => handleDelete(user.id)}> DELETE</button>
+            <button onClick={() => handleDelete(user.id)}
+              style={{ marginRight: '10px' }}
+            >
+            DELETE
+            </button>
+            
+            <button onClick={() => handleDelete(user.id)}> EDIT</button>
           </li>
         ))}
       </ul>
