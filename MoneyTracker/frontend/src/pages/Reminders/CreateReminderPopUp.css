@@ -1,45 +1,84 @@
 .create-reminder-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  }
-  
-  .popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-  }
-  
-  .popup-buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  button {
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  button[type="button"] {
-    background-color: #f44336;
-  }
-  
-  button[type="button"]:hover {
-    background-color: #e53935;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.reminder-textinput-title {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.reminder-textinput-deadline {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.reminder-textinput-amount {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: center; 
+  gap: 10px; 
+  margin-top: 20px; 
+}
+
+.reminder-button-create,
+.reminder-button-cancel {
+  padding: 15px 25px;
+  border: none; 
+  border-radius: 17px; 
+  cursor: pointer;
+}
+
+.reminder-button-create {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.reminder-button-create:hover {
+  background-color: #2db234;
+}
+
+.reminder-button-cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.reminder-button-cancel:hover {
+  background-color: #e02825;
+}

@@ -150,7 +150,22 @@ function GroupEdit() {
       }
     };
   
-  
+    
+    const handleDeleteGroup = async (groupId) => {
+      const confirmed = window.confirm("Are you sure you want to delete this group?");
+      if (!confirmed) return;
+    
+      try {
+        await api.delete(`/api/groups/${groupId}/delete/`);
+        alert("Group deleted successfully.");
+    
+        
+        nav(`/groups/`);
+      } catch (error) {
+        console.error("Error deleting group:", error);
+        alert("Failed to delete the group. Please try again.");
+      }
+    };
 
     const handleToggleModerator = async (member, currentRole) => {
       const newRole = currentRole === "moderator" ? "member" : "moderator";
@@ -258,6 +273,16 @@ function GroupEdit() {
                     >
                         {isLoading ? "Saving..." : "Save Changes"}
                     </button>
+
+                    {isCreator && (
+                        <button 
+                          type="button" 
+                          onClick={() => handleDeleteGroup(groupId)} 
+                          className="group-edit-delete-button"
+                        >
+                          Delete Group  
+                        </button>
+                      )}
 
                     <button 
                         type="button" 

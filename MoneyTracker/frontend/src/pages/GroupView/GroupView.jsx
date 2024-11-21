@@ -165,21 +165,7 @@ function GroupView() {
   };
 
 
-const handleDeleteGroup = async (groupId) => {
-  const confirmed = window.confirm("Are you sure you want to delete this group?");
-  if (!confirmed) return;
 
-  try {
-    await api.delete(`/api/groups/${groupId}/delete/`);
-    alert("Group deleted successfully.");
-
-    
-    nav(`/groups/`);
-  } catch (error) {
-    console.error("Error deleting group:", error);
-    alert("Failed to delete the group. Please try again.");
-  }
-};
 
   const handleCreateThread = () => {
     // nav(`/groups/${GroupId}/createthread`);
@@ -255,14 +241,6 @@ const handleDeleteGroup = async (groupId) => {
                       >
                         Edit
                       </button>
-                      {ismoderator.is_creator && (
-                        <button
-                          onClick={() => handleDeleteGroup(GroupId)} 
-                          className="GroupView-delete-button"
-                        >
-                          Delete
-                        </button>
-                      )}
                     </>
                   ) : (
                     <SubscribeButton />

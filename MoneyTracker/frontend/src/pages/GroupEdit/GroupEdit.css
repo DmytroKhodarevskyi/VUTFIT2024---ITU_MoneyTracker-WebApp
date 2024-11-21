@@ -203,3 +203,24 @@ transition: background-color 0.3s ease, color 0.3s ease;
   font-size: 24px;
   margin-bottom: 20px;
 }
+
+.group-edit-delete-button {
+  padding: 16px 8px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    border-radius: 12px;
+    border: 0;
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    color: white;
+    width: 100%;
+    cursor: pointer; 
+}
+
+.group-edit-delete-button {
+  background-color: #f44336;
+}
+
+.group-edit-delete-button:hover {
+  background-color: #d32f2f; 
+}
