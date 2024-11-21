@@ -105,12 +105,12 @@ const BarChartComponent = () => {
                     </div>
                 </div>
                 
-                <button className="BarChart-button">
+                <div className="BarChart-button">
                     Last 6 month
-                    <span style={{ marginLeft: '5px' }} role="img" aria-label="calendar">
+                    <span style={{ marginLeft: '5px' }} role="img" aria-label="calendar" className="BarChart-graph-icon">
                         <img src={Desk_fill} alt="calendar icon" style={{ height: '24px', width: '24px' }} />
                     </span>
-                </button>
+                </div>
             </div>
 
 

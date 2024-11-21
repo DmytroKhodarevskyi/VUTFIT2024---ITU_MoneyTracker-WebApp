@@ -49,13 +49,19 @@
     border: 2px solid #D9D9D9;
     border-radius: 8px;
     width: 177px;
-    height: 40px;
+    height: 22px;
     font-size: 16px;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     line-height: 19.36px;
     letter-spacing: -2%;
     margin-top: 0;
+}
+
+.BarChart-graph-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .BarChart-legend {

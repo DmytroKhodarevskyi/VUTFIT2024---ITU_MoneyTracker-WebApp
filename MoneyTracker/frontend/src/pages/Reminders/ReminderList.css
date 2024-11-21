@@ -5,6 +5,7 @@
     gap: 16px;
     padding: 0px 92px 32px 92px;
     margin-top: -45px;
+    padding: 0px 92px;
 
     min-width: 900px;
 }
@@ -14,7 +15,7 @@
     width: auto;
     height: 615px;
     border-radius: 17px;
-    padding: 0px 92px;
+    padding: 28px 32px;
 
     display: flex;
     flex-direction: column;
@@ -40,39 +41,58 @@
     font-weight: 500;
 }
 
-.ReminderList-table-block {
+.ReminderList-title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.RemindersList-title {
+    font-size: 30px;
+    font-weight: 500;
+    color: black;
+    margin: 0;
+}
+
+.RemindersList-subtitle {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.RemindersList-table-block {
     border: 1px solid #BEC4CD;
     border-radius: 7px;
-    margin-top: 20px;
     overflow: hidden;
     max-height: 490px;
     min-width: 457px;
     width: 100%;
 }
 
-.ReminderList-categories-table {
+.ReminderList-reminders-table {
     font-size: 20px;
     width: 100%;
     border-collapse: collapse;
 }
 
-.ReminderList-categories-table thead,
-.ReminderList-categories-table tbody {
+.ReminderList-reminders-table thead,
+.ReminderList-reminders-table tbody {
     display: block;
 }
 
-.ReminderList-categories-table thead {
+.ReminderList-reminders-table thead {
     width: 100%;
 }
 
-.ReminderList-categories-table tbody {
+.ReminderList-reminders-table tbody {
     overflow-y: auto;
     max-height: 400px;
     width: 100%;
 }
 
-.ReminderList-categories-table th,
-.ReminderList-categories-table td {
+.ReminderList-reminders-table th,
+.ReminderList-reminders-table td {
     padding: 8px 12px;
     text-align: left;
     border-bottom: 1px solid #BEC4CD;
@@ -82,7 +102,7 @@
     width: 33%;
 }
 
-.ReminderList-categories-table th {
+.ReminderList-reminders-table th {
     position: sticky;
     top: 0;
     height: 43px;
@@ -93,18 +113,18 @@
     z-index: 1;
 }
 
-.ReminderList-categories-table th:nth-child(1),
-.ReminderList-categories-table td:nth-child(1) {
+.ReminderList-reminders-table th:nth-child(1),
+.ReminderList-reminders-table td:nth-child(1) {
     width: 40%;
 }
 
-.ReminderList-categories-table th:nth-child(2),
-.ReminderList-categories-table td:nth-child(2) {
+.ReminderList-reminders-table th:nth-child(2),
+.ReminderList-reminders-table td:nth-child(2) {
     width: 30%;
 }
 
-.ReminderList-categories-table th:nth-child(3),
-.ReminderList-categories-table td:nth-child(3) {
+.ReminderList-reminders-table th:nth-child(3),
+.ReminderList-reminders-table td:nth-child(3) {
     width: 10%;
 }
 
@@ -113,18 +133,18 @@
     overflow-y: auto;
 }
 
-.ReminderList-categories-table td {
+.ReminderList-reminders-table td {
     height: 63px;
     background-color: #f9f9f9;
     border-bottom: 1px solid #BEC4CD;
     color: #000000B2;
 }
 
-.ReminderList-categories-table input[type="radio"] {
+.ReminderList-reminders-table input[type="radio"] {
     margin-right: 8px;
 }
 
-.ReminderList-categories-table input[type="radio"] {
+.ReminderList-reminders-table input[type="radio"] {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -143,16 +163,29 @@
     background-position: center;
     background-repeat: no-repeat;
     background-image: none;
+
+    z-index: 0;
 }
 
-.ReminderList-categories-table input[type="checkbox"]:checked+.ReminderList-custom-checkbox {
+.ReminderList-custom-checkbox-input {
+    z-index: 2;
+}
+
+.ReminderList-reminders-table input[type="checkbox"]:checked+.ReminderList-custom-checkbox {
     background-image: url('./Check_ring.png');
     background-size: 100% 100%;
     background-position: center;
 }
 
-.ReminderList-categories-table input[type="checkbox"] {
+.ReminderList-reminders-table input[type="checkbox"] {
     position: absolute;
     opacity: 0;
     cursor: pointer;
+}
+
+.Reminders-reminders-names {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
