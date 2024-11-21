@@ -54,14 +54,59 @@ const GroupsEdit = () => {
       setError("Failed to delete transactions");
     }
   };
+
+  const handleGoToUsers = () => {
+    if (selectedGroups.length === 0) {
+      alert("Please select one group to view users.");
+      return;
+    }
+  
+    if (selectedGroups.length > 1) {
+      alert("Please select only one group to view groups.");
+      return;
+    }
+  
+    const groupId = selectedGroups[0]; 
+    
+  
+    if (!groupId) {
+      alert("Something went wrong. Please try again.");
+      return;
+    }
+  
+    navigate(`/custom-admin/groups/${groupId}/users/`);
+  };
+
+  const handleGoToThreads = () => {
+    if (selectedGroups.length === 0) {
+      alert("Please select one group thread.");
+      return;
+    }
+  
+    if (selectedGroups.length > 1) {
+      alert("Please select only one group thread.");
+      return;
+    }
+  
+    const groupId = selectedGroups[0]; 
+    
+  
+    if (!groupId) {
+      alert("Something went wrong. Please try again.");
+      return;
+    }
+  
+    navigate(`/custom-admin/groups/${groupId}/threads/`);
+  };
+
   const handleDoubleClick = (groupId, currentValue, field) => {
-    setEditingGroup(groupId); // Встановлюємо ID групи, яка редагується
-    setTempValue(currentValue); // Задаємо поточне значення для редагування
-    setFieldBeingEdited(field); // Задаємо поле, яке редагується
+    setEditingGroup(groupId); 
+    setTempValue(currentValue); 
+    setFieldBeingEdited(field); 
   };
   
   const handleInputChange = (e) => {
-    setTempValue(e.target.value); // Оновлюємо тимчасове значення при зміні
+    setTempValue(e.target.value); 
   };
   
   const handleSaveEdit = async (groupId) => {
@@ -86,11 +131,11 @@ const GroupsEdit = () => {
             )
         );
 
-        setEditingGroup(null); // Вихід із режиму редагування
-        setFieldBeingEdited(""); // Очищення поля, яке редагується
+        setEditingGroup(null); 
+        setFieldBeingEdited(""); 
     } catch (err) {
         console.error("Failed to update group", err);
-        setError("Failed to update group"); // Встановлюємо повідомлення про помилку
+        setError("Failed to update group"); 
     }
 };
 
@@ -152,6 +197,18 @@ const GroupsEdit = () => {
           disabled={selectedGroups.length === 0}
         >
           Delete Selected
+        </button>
+        <button
+          onClick={handleGoToUsers}
+          disabled={selectedGroups.length === 0}
+        >
+          Group Users
+        </button>
+        <button
+          onClick={handleGoToThreads}
+          disabled={selectedGroups.length === 0}
+        >
+          Group Threads
         </button>
         <ul className="admin-userlist">
           {groups.map((group) => (

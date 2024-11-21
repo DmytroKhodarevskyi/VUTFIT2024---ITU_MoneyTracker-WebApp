@@ -16,6 +16,9 @@ from .views import (
     BatchDeletePublicationView,
     BatchDeleteGroupView,
     BatchDeletePublicationCommentsView,
+    BatchDeleteGroupUsersView,
+    BatchDeleteGroupThreadsView,
+    BatchDeleteThreadCommentsView,
 
     UserTransactionsView,
     UserCategoriesView,
@@ -29,6 +32,13 @@ from .views import (
     UpdatePublicationView,
     UpdateGroupView,
     UpdatePublicationCommentView,
+    GroupUsersView,
+    UpdateGroupUsersView,
+    GroupThreadsView,
+    UpdateGroupThreadsView,
+    UpdateThreadCommentView,
+    GroupThreadCommentsView,
+    ThreadDetailView,
 )
 
 urlpatterns = [
@@ -59,4 +69,15 @@ urlpatterns = [
     path('publications/<int:pk>/', PublicationDetailView.as_view(), name='publication'),
     path('groups/<int:pk>/', UpdateGroupView.as_view(), name='user-group-update'),
     path('comments/<int:pk>/', UpdatePublicationCommentView.as_view(), name='comment-update'),
+    path('groups/<int:pk>/users/', GroupUsersView.as_view(), name='group-users'),
+    path("groups/users/<int:pk>/", UpdateGroupUsersView.as_view(),name="group-user-update"),
+    path("groups/users/batch-delete/",BatchDeleteGroupUsersView.as_view(),name="group-users-batch-delete"),
+    path("groups/<int:pk>/threads/",GroupThreadsView.as_view(),name="admin-group-threads"),
+    path("groups/threads/batch-delete",BatchDeleteGroupThreadsView.as_view(),name="admin-group-threads-batch-delete"),
+    path("groups/threads/<int:pk>/update/",UpdateGroupThreadsView.as_view(),name="admin-group-thread-update"),
+    path("thread/<int:pk>/comments/",GroupThreadCommentsView.as_view(),name="admin-group-thread-comment"),
+    path("thread/comments/batch-delete/",BatchDeleteThreadCommentsView.as_view(),name="admin-group-thread-comments-batch-delete"),
+    path("thread/comments/<int:pk>/update/",UpdateThreadCommentView.as_view(),name="admin-group-thread-comments-update"),
+    path("thread/<int:pk>/", ThreadDetailView.as_view(), name="thread-detail"),
+
 ]

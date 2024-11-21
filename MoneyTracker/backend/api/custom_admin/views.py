@@ -11,6 +11,9 @@ from api.category.models import Category
 from api.publication.models import Publication
 from api.group.models import Group
 from api.publication.models import Comment
+from api.group.models import UserGroup
+from api.group.models import Thread
+from api.group.models import ThreadComment
 
 from .serializers import (
     UserSerializer, 
@@ -19,6 +22,9 @@ from .serializers import (
     PublicationSerializer,
     GroupSerializer,
     PublicationCommentSerializer,
+    UserGroupSerializer,
+    GroupThreadSerializer,
+    GroupThreadCommentsSerializer,
 )
 
 from django.contrib.auth.models import User
@@ -298,4 +304,138 @@ class PublicationDetailView(generics.RetrieveAPIView):
 #         # pub_name = publication.title
 #         # return Response(pub_name)
 #         return super().get_queryset()
+
+class GroupUsersView(generics.ListAPIView):
+    serializer_class = UserGroupSerializer
+    permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        group_id = self.kwargs['pk']  
+        return UserGroup.objects.filter(group=group_id)
     
+class BatchDeleteGroupUsersView(APIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = UserGroupSerializer
+    def delete(self, request, *args, **kwargs):
+        user_ids = request.data.get("user_ids", [])
+        
+        
+        if not user_ids:
+            return Response({"error": "No users IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        deleted_count, _ = UserGroup.objects.filter(id__in=user_ids).delete()
+        
+        return Response(
+            {"message": f"{deleted_count} users deleted successfully"},
+            status=status.HTTP_200_OK
+        )
+        
+class UpdateGroupUsersView(generics.UpdateAPIView):
+    queryset = UserGroup.objects.all()
+    serializer_class = UserGroupSerializer
+    permission_classes = [IsAdminUser]
+
+    def update(self, request, *args, **kwargs):
+        
+        partial = kwargs.pop('partial', True)  
+        instance = self.get_object() 
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_update(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    
+class BatchDeleteGroupThreadsView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def delete(self, request, *args, **kwargs):
+        thread_ids = request.data.get("thread_ids", [])
+        
+        # Ensure we have a list of IDs to delete
+        if not thread_ids:
+            return Response({"error": "No comments IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Delete transactions that match the provided IDs
+        deleted_count, _ = Thread.objects.filter(id__in=thread_ids).delete()
+        
+        return Response(
+            {"message": f"{deleted_count} threads deleted successfully"},
+            status=status.HTTP_200_OK
+        )
+        
+class UpdateGroupThreadsView(generics.UpdateAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = GroupThreadSerializer
+    permission_classes = [IsAdminUser]
+
+    def update(self, request, *args, **kwargs):
+        
+        partial = kwargs.pop('partial', True)  
+        instance = self.get_object() 
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_update(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class GroupThreadsView(generics.ListAPIView):
+    serializer_class = GroupThreadSerializer
+    # permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        group_id = self.kwargs['pk']
+        return Thread.objects.filter(group_id=group_id)
+    
+class GroupThreadCommentsView(generics.ListAPIView):
+    serializer_class = GroupThreadCommentsSerializer
+
+    def get_queryset(self):
+        thread_id = self.kwargs['pk']
+        return ThreadComment.objects.filter(thread=thread_id)
+    
+class UpdateThreadCommentView(generics.UpdateAPIView):
+    queryset = ThreadComment.objects.all()
+    serializer_class = GroupThreadCommentsSerializer
+    permission_classes = [IsAdminUser]
+
+    def update(self, request, *args, **kwargs):
+        
+        partial = kwargs.pop('partial', True)  
+        instance = self.get_object() 
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_update(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK) 
+    
+class BatchDeleteThreadCommentsView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def delete(self, request, *args, **kwargs):
+        comment_ids = request.data.get("comment_ids", [])
+        
+        
+        if not comment_ids:
+            return Response({"error": "No comments IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Delete transactions that match the provided IDs
+        deleted_count, _ = ThreadComment.objects.filter(id__in=comment_ids).delete()
+        
+        return Response(
+            {"message": f"{deleted_count} comments deleted successfully"},
+            status=status.HTTP_200_OK
+        )
+        
+
+class ThreadDetailView(generics.RetrieveAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = GroupThreadSerializer
+   

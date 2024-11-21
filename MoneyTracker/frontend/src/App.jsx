@@ -36,6 +36,9 @@ import GroupView from "./pages/GroupView/GroupView";
 import ThreadDetail from "./pages/GroupView/ThreadDetail";
 import ThreadRoot from "./pages/GroupView/ThreadRoot";
 import GroupEdit from "./pages/GroupEdit/GroupEdit";
+import GroupUsers from "./pages/Admin/GroupEditUsers";
+import GroupThreads from "./pages/Admin/GroupEditThreads";
+import GroupThreadCommentsEdit from "./pages/Admin/GroupThreadCommentsEdit";
 
 function Logout() {
   localStorage.clear();
@@ -154,6 +157,39 @@ function App() {
             <ProtectedRoute>
               <AdminRoute>
                 <AdminPublicationEditComments />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/custom-admin/groups/:pk/users"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <GroupUsers />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/custom-admin/groups/:pk/threads"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <GroupThreads />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/custom-admin/thread/:pk/comments"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <GroupThreadCommentsEdit />
               </AdminRoute>
             </ProtectedRoute>
           }
