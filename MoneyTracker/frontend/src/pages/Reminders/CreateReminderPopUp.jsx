@@ -40,6 +40,7 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
     }
 
     try {
+      console.log(title, deadline, amount);
       const response = await api.post("/api/reminders/reminders/create/", {
         title,
         deadline,
@@ -60,8 +61,8 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
     <div className="create-reminder-popup">
       <div className="popup-content">
         <h2>Create Reminder</h2>
-        {/* <form onSubmit={handleSubmit}> */}
-        <form>
+        <form onSubmit={handleSubmit}>
+        {/* <form> */}
           <label>
             Title:
           </label>
@@ -98,6 +99,7 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
             />
           <div className="popup-buttons">
             <button
+              onClick={handleSubmit}
               type="submit"
               className="reminder-button-create"
             >
