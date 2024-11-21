@@ -4,11 +4,31 @@ import "./CreateReminderPopup.css";
 
 function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
   const [title, setTitle] = useState("");
-  const [deadline, setDeadline] = useState("");
+ 
   const [amount, setAmount] = useState("");
+
+
+  const getTomorrowDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1); 
+    return tomorrow.toISOString().slice(0, 16); 
+  };
+
+  const [deadline, setDeadline] = useState(getTomorrowDate);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (title.trim() === "") {
+        window.alert("Title cannot be empty.");
+        return;
+      }
+    if (amount <= 0) {
+        window.alert("Amount must be greater than 0.");
+        return;
+      }
+  
+  
     try {
       const response = await api.post("/api/reminders/reminders/create/", {
         title,
@@ -35,6 +55,7 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
             Title:
             <input
               type="text"
+              className="reminder-textinput-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -44,7 +65,9 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
             Deadline:
             <input
               type="datetime-local"
+              className="reminder-textinput-deadline"
               value={deadline}
+              min={getTomorrowDate()}
               onChange={(e) => setDeadline(e.target.value)}
               required
             />
@@ -54,14 +77,24 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
             <input
               type="number"
               step="0.01"
+              className="reminder-textinput-amount"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
             />
           </label>
           <div className="popup-buttons">
-            <button type="submit">Create</button>
-            <button type="button" onClick={() => setShowPopup(false)}>
+            <button
+              type="submit"
+              className="reminder-button-create"
+            >
+              Create
+            </button>
+            <button
+              type="button"
+              className="reminder-button-cancel"
+              onClick={() => setShowPopup(false)}
+            >
               Cancel
             </button>
           </div>
@@ -69,6 +102,7 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
       </div>
     </div>
   );
-}
-
-export default CreateReminderPopup;
+  }
+  
+  export default CreateReminderPopup;
+  
