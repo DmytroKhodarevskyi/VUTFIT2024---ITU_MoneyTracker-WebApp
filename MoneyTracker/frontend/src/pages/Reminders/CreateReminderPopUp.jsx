@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../../api"; 
+import { useEffect } from "react";
 import "./CreateReminderPopup.css";
 
 function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
@@ -8,13 +9,28 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
   const [amount, setAmount] = useState("");
 
 
-  const getTomorrowDate = () => {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1); 
-    return tomorrow.toISOString().slice(0, 16); 
+  const [deadline, setDeadline] = useState("");
+
+  const getNextValidDeadline = () => {
+    const currentDate = new Date();
+    currentDate.setHours(currentDate.getHours() + 24);
+    currentDate.setMilliseconds(0);  
+    return currentDate.toISOString().slice(0, 16);
   };
 
-  const [deadline, setDeadline] = useState(getTomorrowDate);
+  const getDeadlineWithExtraHour = () => {
+    const currentDate = new Date();
+    currentDate.setHours(currentDate.getHours() + 26);
+    currentDate.setMilliseconds(0);  
+    return currentDate.toISOString().slice(0, 16);
+  };
+
+  useEffect(() => {
+    if (showPopup) {
+      setDeadline(getDeadlineWithExtraHour());
+    }
+  }, [showPopup]); 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,24 +45,21 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
     }
 
     const today = new Date();
-    const oneDayLater = new Date(today);
-    oneDayLater.setDate(today.getDate() + 1);
+    const minimumDeadline = new Date(today);
+    minimumDeadline.setHours(today.getHours() + 24); 
 
-    console.log(new Date(deadline) + "DEADLINE");
-    console.log(oneDayLater + "ONE DAY LATER");
-    if (new Date(deadline) < oneDayLater) {
-      alert("Deadline must be at least one day later than today.");
+    if (new Date(deadline) < minimumDeadline) {
+      alert("Deadline must be at least 24 hours from the current time.");
       return;
     }
 
     try {
-      console.log(title, deadline, amount);
+      
       const response = await api.post("/api/reminders/reminders/create/", {
         title,
         deadline,
         amount,
       });
-
      
       setRemindersList((prevReminders) => [...prevReminders, response.data]);
       setShowPopup(false);
@@ -81,7 +94,7 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
               type="datetime-local"
               className="reminder-textinput-deadline"
               value={deadline}
-              min={getTomorrowDate()}
+              min={getNextValidDeadline()}
               onChange={(e) => setDeadline(e.target.value)}
               required
             />
