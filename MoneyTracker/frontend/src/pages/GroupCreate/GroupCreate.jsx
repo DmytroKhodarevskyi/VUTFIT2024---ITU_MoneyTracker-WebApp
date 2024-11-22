@@ -67,8 +67,10 @@ function GroupCreate() {
     const formData = new FormData();
     formData.append("name", groupName);
     formData.append("description", groupDescription);
-    formData.append("group_image", image);
 
+    if (image) {
+      formData.append("group_image", image);
+    }
     try {
       const res = await api.post("/api/groups/create/", formData);
       console.log(res.data + "group created");

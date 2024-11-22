@@ -233,22 +233,36 @@
 
 }
 .group-moderators-container {
-    width: 100%; /* Ensure the container takes full width */
-    overflow-x: auto; /* Enable horizontal scrolling */
-    margin-top: 20px;
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-end;
   }
   
+.group-moderators-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333; 
+}
+
   .group-moderators-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 600px; /* Minimum width to ensure 3 columns fit */
+    table-layout: fixed; 
+    border: 1px solid #ddd; 
+    display: block;
+    max-height: 300px; 
+    overflow-y: auto; 
   }
   
   .group-moderators-table th,
   .group-moderators-table td {
     padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    text-align: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    width: 33.33%;  
   }
   
   .group-moderators-table th {
@@ -284,9 +298,5 @@
     font-weight: bold;
   }
   
-  .group-moderators-table {
-    display: block;
-    max-height: 300px; /* Limit the table height */
-    overflow-y: auto; /* Add vertical scrolling */
-  }
+
   

@@ -41,6 +41,12 @@
   margin-bottom: 20px;
 }
 
+.group-edit-image {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+
 .group-edit-name label,
 .group-edit-description label,
 .group-edit-image label {
@@ -49,6 +55,33 @@
   font-weight: 600;
   margin-bottom: 8px;
 }
+
+.group-edit-image label {
+  display: inline-block;
+  background-color: #14213d; 
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer; 
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
+}
+
+.group-edit-image label:hover {
+  filter: brightness(1.2);  
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+  transform: scale(1.05); 
+}
+
+.group-edit-image label:active {
+  filter: brightness(0.9); 
+  transform: scale(0.95); 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
 
 .group-edit-name input,
 .group-edit-description textarea {
@@ -153,6 +186,11 @@ transition: background-color 0.3s ease, color 0.3s ease;
   list-style-type: none;
   padding: 0;
   margin: 0;
+  max-height: 250px; 
+  overflow-y: auto;
+  border: 1px solid #ddd; 
+  border-radius: 8px;
+  padding: 10px; 
 }
 
 .group-edit-member-item {
@@ -182,11 +220,11 @@ transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .group-edit-member-button {
-  padding: 5px 10px;
+  padding: 10px 20px;
   background-color: #00BCD4;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 17px;
   cursor: pointer;
   font-size: 14px;
 }
@@ -223,4 +261,23 @@ transition: background-color 0.3s ease, color 0.3s ease;
 
 .group-edit-delete-button:hover {
   background-color: #d32f2f; 
+}
+
+.group-edit-search-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.group-edit-search {
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  padding: 20px 15px;
+  border-radius: 16px;
+  width: 90%;
+  border: 2px solid #D9D9D9;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }

@@ -238,7 +238,7 @@ function GroupEdit() {
                         />
                     </div>
                     <div className="group-edit-image">
-                        <label htmlFor="group_image">Group Image</label>
+                        <label htmlFor="group_image">Choose a Group Image</label>
                         <input
                             type="file"
                             id="group_image"
@@ -274,6 +274,16 @@ function GroupEdit() {
                         {isLoading ? "Saving..." : "Save Changes"}
                     </button>
 
+                    <button 
+                        type="button" 
+                        onClick={handleDiscard} 
+                        disabled={isLoading} 
+                        className="group-edit-discard-button"
+                    >
+                        Discard
+                    </button>
+
+                    
                     {isCreator && (
                         <button 
                           type="button" 
@@ -284,19 +294,11 @@ function GroupEdit() {
                         </button>
                       )}
 
-                    <button 
-                        type="button" 
-                        onClick={handleDiscard} 
-                        disabled={isLoading} 
-                        className="group-edit-discard-button"
-                    >
-                        Discard
-                    </button>
-
                     <h3 className="group-edit-right-title">Group Members</h3>
-                    <div className="group-edit-search">
+                    <div className="group-edit-search-container">
                     <input
                       type="text"
+                      className="group-edit-search"
                       placeholder="Search by username"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
