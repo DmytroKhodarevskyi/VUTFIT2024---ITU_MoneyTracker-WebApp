@@ -1,0 +1,203 @@
+.GroupCreate-main-block-container {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 32px;
+
+    gap: 28px;
+
+    border-radius: 17px;
+
+    height:fit-content;
+    width: auto;
+
+    background-color: white;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+
+    margin-top: -45px;
+}
+
+.GroupCreate-main-block-container-first {
+    padding: 0px 92px 32px 92px;
+}
+
+.GroupCreate-title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.GroupCreate-label {
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.GroupCreate-title {
+    font-size: 30px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.GroupCreate-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: #808080;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.GroupCreate-label-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.GroupCreate-input {
+    border: 2px solid #d9d9d9;
+    border-radius: 8px;
+    
+    height: 40px;
+    
+    padding: 0 9px; /* Adjust padding for vertical alignment */
+  
+    width: 100%;
+    
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #444444;
+    font-size: 16px;
+    line-height: 1.5;
+  
+    box-sizing: border-box;
+    
+}
+
+
+.GroupCreate-input-textarea {
+    border: 2px solid #d9d9d9;
+    border-radius: 8px;
+    
+    height: 160px;
+    
+    padding: 8px 12px; /* Adjust padding for vertical alignment */
+  
+    width: 100%;
+
+    /* display: flex;
+    align-items: flex-start;
+    justify-content: flex-start; */
+    
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #444444;
+    font-size: 16px;
+    line-height: 1.5;
+  
+    box-sizing: border-box;
+    resize: none;
+}
+
+input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.GroupCreate-label-customfile {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.GroupCreate-preview-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; /* Makes the image round */
+    object-fit: cover; /* Ensures the image fills the circle without stretching */
+    display: block;
+    margin: 0 auto; /* Center the image horizontally (optional) */
+}
+
+.GroupCreate-selected-file-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+}
+
+.GroupCreate-labels-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.GroupCreate-bottom-container {
+    display: flex;
+    flex-direction: row;
+    gap: 64px;
+    justify-content: space-between;
+}
+
+.GroupCreate-images-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    width: 400px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.GroupCreate-delete-button {
+    background-color: #FF4D4F;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    padding: 10px 15px;
+    width: 100%;
+    border-radius: 7px;
+    border: 0;
+    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Group-Create-rightpart-withoutphoto {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.GroupCreate-button {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    padding: 12px 15px;
+    border-radius: 16px;
+    border: 0;
+    box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    background-color: #4CAF50;
+}
+
+.GroupCreate-button:hover {
+    background-color: #45A049; 
+    transform: translateY(-1px);
+} 

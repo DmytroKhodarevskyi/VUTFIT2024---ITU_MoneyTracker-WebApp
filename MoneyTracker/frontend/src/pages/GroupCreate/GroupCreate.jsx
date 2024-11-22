@@ -4,18 +4,45 @@ import TopPart from "../../components/TopPart/TopPart";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import api from "../../api";
 import { useNavigate } from "react-router-dom";
+import "./GroupCreate.css";
 
 function GroupCreate() {
   const nav = useNavigate();
   const [nickname, setNickname] = useState("");
-  const imageInputRef = useRef(null);
-  const [media, setMedia] = useState(null);
+  // const imageInputRef = useRef(null);
+  // const [media, setMedia] = useState(null);
 
   const [image, setImage] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
 
-  function handleImageChange(e) {
-    setImage(e.target.files[0]);
-  }
+  const fileInputRef = useRef(null); // Add a ref for the input element
+  // function handleImageChange(e) {
+  // setImage(e.target.files[0]);
+  // }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setFileName(file.name);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImagePreview(event.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDeletePhoto = () => {
+    setImage("");
+    setFileName("");
+    setImagePreview("");
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Reset the file input
+    }
+  };
 
   const [groupName, setGroupName] = useState("");
   const [groupDescription, setGroupDescription] = useState("");
@@ -24,14 +51,10 @@ function GroupCreate() {
 
   const [profilePhoto, setProfilePhoto] = useState(null);
 
-  //   const handleimageUpload = () => {
-  //     imageInputRef.current.click();
-  //   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(userStars < 1) {
+    if (userStars < 1) {
       alert("U don't have enough stars to create group (required 1)");
       return;
     }
@@ -55,31 +78,11 @@ function GroupCreate() {
     }
   };
 
-  //   const handleFileChange = (e) => {
-  //     const files = Array.from(e.target.files);
-  //     const newMedia = files.map((file) => ({
-  //       id: null,
-  //       file,
-  //       url: URL.createObjectURL(file),
-  //     }));
-
-  //     const uniqueMedia = newMedia.filter(
-  //       (newItem) =>
-  //         !media.some(
-  //           (existingItem) => existingItem.file.name === newItem.file.name
-  //         )
-  //     );
-
-  //     setMedia((prevMedia) => [...prevMedia, ...uniqueMedia]);
-
-  //     e.target.value = null;
-  //   };
-
   useEffect(() => {
     const fetchNickname = async () => {
       try {
         const response = await api.get("/api/user/profile/");
-        setUserStars(response.data.stars)
+        setUserStars(response.data.stars);
         setNickname(response.data.username);
         setProfilePhoto(response.data.profileImg);
         setIsLoaded(true);
@@ -111,32 +114,119 @@ function GroupCreate() {
           subtitletext={"Let’s see if there is something to discuss"}
         />
 
-        <div className="GroupCreate-main-block-container">
-          {/* <button onClick={handleimageUpload}>select image</button>
-          <input
-            type="file"
-            ref={imageInputRef}
-            style={{ display: "none" }}
-            onChange={handleFileChange}
-            accept="image/*"
-          /> */}
+        <div className="GroupCreate-main-block-container-first">
+          <div className="GroupCreate-main-block-container">
+            <div className="GroupCreate-title-block">
+              <h1 className="GroupCreate-title">Create a group</h1>
+              <h2 className="GroupCreate-subtitle">Carve your public space</h2>
+            </div>
+            <div className="GroupCreate-label-container">
+              <label
+                className="GroupCreate-label-customfile"
+                htmlFor="file-upload"
+              >
+                Choose a group image
+              </label>
 
-          <input type="file" onChange={handleImageChange} />
+              <input
+                id="file-upload"
+                className="GroupCreate-input"
+                type="file"
+                onChange={handleImageChange}
+                accept="image/*"
+                ref={fileInputRef}
+              />
+            </div>
 
-          <input
-            type="text"
-            placeholder="Group name*"
-            value={groupName}
-            onChange={(e) => setGroupName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Group description"
-            value={groupDescription}
-            onChange={(e) => setGroupDescription(e.target.value)}
-          />
+            <div className="GroupCreate-bottom-container">
+              <div className="GroupCreate-labels-container">
+                <div className="GroupCreate-label-container">
+                  <label className="GroupCreate-label" htmlFor="file">
+                    Group Name
+                  </label>
+                  <input
+                    className="GroupCreate-input"
+                    type="text"
+                    placeholder="Group name*"
+                    value={groupName}
+                    onChange={(e) => setGroupName(e.target.value)}
+                  />
+                </div>
 
-          <button onClick={handleSubmit}>Create Group</button>
+                <div className="GroupCreate-label-container">
+                  <label className="GroupCreate-label" htmlFor="file">
+                    Group Description
+                  </label>
+                  <textarea
+                    className="GroupCreate-input-textarea"
+                    type="text"
+                    placeholder="Group description"
+                    value={groupDescription}
+                    onChange={(e) => setGroupDescription(e.target.value)}
+                  />
+                </div>
+              </div>
+              {fileName && imagePreview && (
+                 <div className="GroupCreate-images-container">
+                 {fileName && (
+                   <>
+                     <div className="Group-Create-rightpart-withoutphoto">
+                       <button
+                       className="GroupCreate-delete-button"
+                       onClick={handleDeletePhoto}
+                       >Delete Photo</button>
+                       <div className="GroupCreate-selected-file-container">
+                         <p className="GroupCreate-label">Selected file:</p>
+                         <p>{fileName}</p>
+                       </div>
+                     </div>
+                   </>
+                 )}
+ 
+                 {imagePreview && (
+                   <img
+                     src={imagePreview}
+                     alt="Preview"
+                     className="GroupCreate-preview-image"
+                   />
+                 )}
+               </div>
+
+              )}
+              {/* <div className="GroupCreate-images-container">
+                {fileName && (
+                  <>
+                    <div className="Group-Create-rightpart-withoutphoto">
+                      <button
+                      className="GroupCreate-delete-button"
+                      onClick={() => {
+                        setFileName("");
+                        setImagePreview("");
+                        setImage("");
+                      }}
+                      >Delete Photo</button>
+                      <div className="GroupCreate-selected-file-container">
+                        <p className="GroupCreate-label">Selected file:</p>
+                        <p>{fileName}</p>
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {imagePreview && (
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="preview-image"
+                  />
+                )}
+              </div> */}
+            </div>
+
+            <button
+            className="GroupCreate-button"
+            onClick={handleSubmit}>Create Group</button>
+          </div>
         </div>
       </MainContainer>
     </>
