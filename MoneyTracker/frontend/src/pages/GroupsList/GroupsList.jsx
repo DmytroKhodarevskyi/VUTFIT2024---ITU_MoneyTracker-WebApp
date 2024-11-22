@@ -46,7 +46,7 @@ function GroupsList() {
 
         if (subscribedOnly) {
           params.append("subscribed_only", "true");
-        } 
+        }
 
         const response = await api.get(`/api/groups/?${params.toString()}`);
         setGroupsList(response.data);
@@ -121,6 +121,7 @@ function GroupsList() {
           </div>
           <div className="GroupList-main-right-container">
             <button
+              className="GroupList-button-create"
               onClick={() => {
                 nav("/create_group");
               }}
@@ -128,25 +129,32 @@ function GroupsList() {
               Create Group
             </button>
 
-            <div className="GroupList-search-container">
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchValue}
-                onChange={(e) => {
-                  setSearchValue(e.target.value);
-                }}
-              />
+            <input
+              className="GroupList-search-input"
+              type="text"
+              placeholder="Search..."
+              value={SearchValue}
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+              }}
+            />
 
-              <input
-                type="checkbox"
-                id="subscribedOnly"
-                name="subscribedOnly"
-                value={subscribedOnly}
-                onChange={() => {
-                  setSubscribedOnly(!subscribedOnly);
-                }}
-              />
+            <div className="GroupList-subscribed-container">
+              <label className="switch">
+                <input
+                  className="ReminderList-custom-checkbox"
+                  type="checkbox"
+                  id="subscribedOnly"
+                  name="subscribedOnly"
+                  value={subscribedOnly}
+                  onChange={() => {
+                    setSubscribedOnly(!subscribedOnly);
+                  }}
+                />
+                <span className="slider round"></span>
+              </label>
+
+              <label htmlFor="subscribedOnly" className="GroupList-subscribedonly">Subscribed only</label>
             </div>
           </div>
         </div>
