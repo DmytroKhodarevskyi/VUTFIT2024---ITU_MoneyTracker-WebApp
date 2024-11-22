@@ -93,3 +93,41 @@
     margin: 0;
     font-family: 'Inter', sans-serif;
 }
+
+.ThreadDetailComment-delete-button {
+    padding: 10px 20px;
+    background-color: rgb(217, 65, 65);  
+    color: white;  
+    font-size: 16px; 
+    border: none; 
+    border-radius: 10px;  
+    cursor: pointer; 
+    transition: background-color 0.3s ease, transform 0.3s ease;  
+    text-align: center;  
+  }
+  
+  .ThreadDetailComment-delete-button:hover {
+    background-color: rgb(180, 50, 50);  
+    transform: scale(1.05); 
+  }
+  
+  .ThreadDetailComment-delete-button:active {
+    background-color: rgb(150, 40, 40); 
+    transform: scale(0.95);  
+  }
+  
+  .ThreadDetailComment-delete-button:focus {
+    outline: none;  
+  }
+
+
+  .ThreadDetail-image-preview-container {
+    margin-top: 10px;
+  }
+  
+  .ThreadDetail-image-preview {
+    width: 250px; 
+    height: 150px;  
+    object-fit: cover;
+    border-radius: 8px;  
+  }

@@ -168,16 +168,20 @@ function PublicationDetailCard({
 
     const handleDeleteCommentary = async (comment) => {
       
+        const isConfirmed = window.confirm("Are you sure you want to delete this comment?");
+
+       if (isConfirmed) {
         try {
             await api.delete(`/api/publications/${publication.id}/comments/${comment}/delete/`);
-    
+            
             setCommentaries((prevCommentaries) => 
                 prevCommentaries.filter((c) => c.id !== comment)
             );
         } catch (error) {
             console.error("Error while deleting commentary", error);
         }
-    };
+    }
+};
 
     
 
@@ -284,9 +288,9 @@ function PublicationDetailCard({
                                 <p>{comment.text}</p>
                             </div>
                             <div className="publication-detail-button-section">
-                            <button className="publication-detail-like-button"  onClick={() => handleLikeCommentary(comment)}>
+                            <button className="publication-detail-comment-like-button"  onClick={() => handleLikeCommentary(comment)}>
                                 <p>{comment.isLiked ? "Agreed!" : "I Agree!"}</p>
-                                <span className="publication-detail-like-count">{comment.stars_count}</span>
+                                <span className="publication-detail-comment-like-count">{comment.stars_count}</span>
                                 <img src={star_picture} alt="Star" className="publication-detail-star-icon" />
                             </button>
                             {(publication.author.id === userId || comment.author.id === userId) && (

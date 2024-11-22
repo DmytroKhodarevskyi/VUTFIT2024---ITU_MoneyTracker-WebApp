@@ -19,6 +19,7 @@ function ThreadDetail() {
   const [newCommentContent, setNewCommentContent] = useState("");
   const [newCommentFile, setNewCommentFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null); 
 
   useEffect(() => {
     async function fetchData() {
@@ -46,8 +47,15 @@ function ThreadDetail() {
 
 
 const handleFileChange = (e) => {
-    setNewCommentFile(e.target.files[0]);
-  };
+  const file = e.target.files[0];
+  setNewCommentFile(file);
+  
+  
+  if (file) {
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreview(previewUrl);
+  }
+};
 
   const handleSubmitComment = async () => {
     
@@ -78,6 +86,7 @@ const handleFileChange = (e) => {
    
       setNewCommentContent("");
       setNewCommentFile(null);
+      setImagePreview(null); 
     
       const commentsResponse = await api.get(`/api/groups/threads_comments/${thread.id}/comments/`);
       setComments(commentsResponse.data); 
@@ -154,15 +163,27 @@ const handleFileChange = (e) => {
 
         <div className="ThreadDetail-image-upload-container">
             <input 
-                type="file" 
-                accept="image/*, .gif" 
-                onChange={handleFileChange} 
+              type="file" 
+              accept="image/*, .gif" 
+              id="file-input" 
+              onChange={handleFileChange} 
+              style={{ display: 'none' }}  
             />
-            {newCommentFile && (
-                <p className="ThreadDetail-uploaded-file-name">{newCommentFile.name}</p>
-            )}
-        </div>
+            <label htmlFor="file-input" className="ThreadDetail-file-label">
+              Upload Image
+            </label>
 
+            {imagePreview && (
+            <div className="ThreadDetail-image-preview-container">
+              <img 
+                src={imagePreview} 
+                alt="Image preview" 
+                className="ThreadDetail-image-preview" 
+              />
+            </div>
+          )}
+          </div>
+        <div className="ThreadDetail-submit-button-container">
         <button
           className="ThreadDetail-submit-button"
           onClick={handleSubmitComment}
@@ -170,6 +191,7 @@ const handleFileChange = (e) => {
         > 
           {isSubmitting ? "Submitting..." : "New Thread Comment"}
         </button>
+        </div>
       </div>
     </div>
     </MainContainer>

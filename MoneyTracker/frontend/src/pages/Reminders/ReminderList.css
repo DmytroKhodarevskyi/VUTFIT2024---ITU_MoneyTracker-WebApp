@@ -189,3 +189,27 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+.ReminderList-create-button {
+    background-color: #4CAF50; 
+    color: white; 
+    padding: 12px 24px;
+    font-size: 16px; 
+    font-weight: bold; 
+    border: none; 
+    border-radius: 15px; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+  }
+  
+  .ReminderList-create-button:hover {
+    background-color: #45a049; 
+  }
+  
+  .ReminderList-create-button:focus {
+    outline: none; 
+  }
+  
+  .ReminderList-create-button:active {
+    transform: scale(0.98);
+  }
