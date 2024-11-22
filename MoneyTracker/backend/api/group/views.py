@@ -12,6 +12,7 @@ from rest_framework.exceptions import PermissionDenied, NotFound
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 
@@ -115,8 +116,11 @@ class GroupListView(generics.ListAPIView):
 
         if subscribed_only:
             user_groups = UserGroup.objects.filter(user=user)
-            group_ids = [user_group.group_id for user_group in user_groups]
-            queryset = queryset.filter(id__in=group_ids)
+            subscribed_group_ids = [user_group.group_id for user_group in user_groups]
+
+            queryset = queryset.filter(
+                Q(id__in=subscribed_group_ids) | Q(creator=user)
+            )
 
         return queryset
 
