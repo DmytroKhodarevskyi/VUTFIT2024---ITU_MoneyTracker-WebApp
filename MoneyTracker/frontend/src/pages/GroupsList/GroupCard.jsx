@@ -59,9 +59,9 @@ function GroupCard({ id, name, subscribers, image }) {
 
   const SubscribeButton = () => {
     if (IsSubscribed) {
-      return <button onClick={handleUnsubscribe}>Unsubscribe</button>;
+      return <button className="GroupCard-subscribe-button" onClick={handleUnsubscribe}>Unsubscribe</button>;
     } else {
-      return <button onClick={handleSubscribe}>Subscribe</button>;
+      return <button className="GroupCard-subscribe-button" onClick={handleSubscribe}>Subscribe</button>;
     }
   };
 
@@ -103,6 +103,7 @@ function GroupCard({ id, name, subscribers, image }) {
 
         <div className="GroupCard-buttons-container">
           <button
+            className="GroupCard-view-button"
             onClick={() => {
               nav(`/groups/${id}`);
             }}
@@ -110,7 +111,16 @@ function GroupCard({ id, name, subscribers, image }) {
             View
           </button>
 
-          {IsCreator ? <button onClick={handleEdit}>Edit</button> : <SubscribeButton />}
+          {IsCreator ? (
+              <button
+                className="GroupCard-edit-button"
+                onClick={handleEdit}
+              >
+                Edit
+              </button>
+            ) : (
+              <SubscribeButton />
+            )}
           {/* <button */}
           {/* onClick={handleSubscribe} */}
           {/* >Subscribe</button>} */}

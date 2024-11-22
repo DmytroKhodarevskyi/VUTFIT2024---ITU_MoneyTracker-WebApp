@@ -68,3 +68,40 @@
     gap: 4px;
 }
 
+.GroupCard-buttons-container {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+.GroupCard-view-button,
+.GroupCard-edit-button,
+.GroupCard-subscribe-button {
+  background-color: #00BCD4;
+  color: white;
+  font-size: 14px; 
+  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  padding: 12px 20px; 
+  border-radius: 17px;
+  border: 0;
+  box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.GroupCard-view-button:hover,
+.GroupCard-edit-button:hover,
+.GroupCard-subscribe-button:hover {
+  background-color: #008C9E; 
+  transform: scale(1.05); 
+}
+
+.GroupCard-view-button:active,
+.GroupCard-edit-button:active,
+.GroupCard-subscribe-button:active {
+  background-color: #005F6B;
+  transform: scale(0.95); 
+}
