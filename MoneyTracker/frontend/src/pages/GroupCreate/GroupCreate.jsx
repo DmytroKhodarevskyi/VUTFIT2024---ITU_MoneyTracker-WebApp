@@ -151,6 +151,7 @@ function GroupCreate() {
                     type="text"
                     placeholder="Group name*"
                     value={groupName}
+                    maxLength="99"
                     onChange={(e) => setGroupName(e.target.value)}
                   />
                 </div>

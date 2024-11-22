@@ -22,7 +22,8 @@ function ProfileEditCard({
     handleDeletePhoto,
     handleDiscard,
     photoPreview,
-    deletePhoto
+    deletePhoto,
+    handleDeleteAccount
 }) {
 
     const baseUrl = import.meta.env.VITE_API_URL;
@@ -166,6 +167,7 @@ function ProfileEditCard({
                 <div className="action-buttons">
                     <button className="button-save-profile" onClick={handleSave}>Save</button>
                     <button className="button-discard-profile" onClick={handleDiscard}>Discard</button>
+                    <button className="button-delete-profile" onClick={handleDeleteAccount}>Delete Profile</button>
                 </div>
             </div>
         </div>

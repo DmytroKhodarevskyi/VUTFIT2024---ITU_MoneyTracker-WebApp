@@ -49,6 +49,7 @@ function FormPost({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Title*"
+              maxLength="127"
               required
             />
           </div>

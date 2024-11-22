@@ -110,6 +110,7 @@ function NewTransactionCard() {
                                 className='card-input-category' 
                                 type="text"
                                 min="0"
+                                maxLength="99" 
                                 value={categoryName}
                                 onChange={(e) => setCategoryName(e.target.value)}
                                 placeholder="Name*"
