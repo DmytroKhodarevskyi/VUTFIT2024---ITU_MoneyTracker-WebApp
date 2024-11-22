@@ -83,6 +83,7 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
               type="text"
               className="reminder-textinput-title"
               value={title}
+              maxLength="127"
               onChange={(e) => setTitle(e.target.value)}
               required
             />
