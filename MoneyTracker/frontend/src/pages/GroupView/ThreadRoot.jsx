@@ -94,7 +94,7 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
           Delete Post
         </button>
 
-        <button onClick={closeModal}>Close</button>
+        <button className="ThreadRoot-modal-button-close" onClick={closeModal}>Close</button>
       </div>
     );
   };

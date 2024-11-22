@@ -188,7 +188,7 @@ function ReminderList() {
             </div>
           </div>
           <div className="ReminderList-right-part">
-            <button onClick={() => setShowPopup(true)}>Create Reminder</button>
+            <button className="ReminderList-create-button "onClick={() => setShowPopup(true)}>Create Reminder</button>
           </div>
         </div>
 

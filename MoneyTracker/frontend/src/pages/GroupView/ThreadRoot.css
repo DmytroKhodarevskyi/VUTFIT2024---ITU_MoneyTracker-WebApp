@@ -221,3 +221,34 @@
     align-items: center;
     justify-content: center;
 }
+
+.ThreadRoot-modal-button-delete:hover {
+    background-color: #D32F2F; 
+    transform: scale(1.05); 
+}
+
+
+.ThreadRoot-modal-button-close {
+    background-color: #607D8B; 
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    padding: 20px 15px;
+    border-radius: 12px;
+    border: 0;
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.ThreadRoot-modal-button-close:hover {
+    background-color: #455A64; 
+    transform: scale(1.05); 
+}

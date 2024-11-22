@@ -266,6 +266,11 @@ function GroupView() {
               </div>
             </div>
 
+
+          <div className="group-moderators-container">
+            <div className="group-moderators-title">
+              Group Moderators
+            </div>
             {isLoaded ? (
           <table className="group-moderators-table">
             <thead>
@@ -299,6 +304,7 @@ function GroupView() {
         ) : (
           <p>Loading moderators...</p>
         )}
+        </div>
       </div>
 
           {ismoderator.is_creator || ismoderator.is_moderator ? (
