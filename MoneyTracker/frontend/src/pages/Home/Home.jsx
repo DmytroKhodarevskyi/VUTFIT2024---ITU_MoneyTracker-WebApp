@@ -130,9 +130,8 @@ function Home() {
                     <SummaryCard 
                         title={"Total Balance"}
                         date={`${accountCreatedDate} - ${todayDate}`} 
-                        // amount={currency + "1.000.000,01"}
                         amount={currency + formatAmount(Balance.toFixed(2))}
-                        trends={"+52% LastYear"}
+                        trends={"Total balance for period"}
                         style_trends={{color: '#00BCD4'}}
                         img_src={WalletIcon}
                     />
@@ -141,7 +140,7 @@ function Home() {
                         date={`${accountCreatedDate} - ${todayDate}`} 
                         // amount={currency + "520.000,01"}
                         amount={"+" + currency + formatAmount(Income.toFixed(2))}
-                        trends={"+12% Last Month"}
+                        trends={"Total income for period"}
                         style_trends={{color: '#4CAF50'}}
                         img_src={CardIcon}
                     />
@@ -150,7 +149,7 @@ function Home() {
                         date={`${accountCreatedDate} - ${todayDate}`} 
                         // amount={"-" + currency + "228.000,00"}
                         amount={"-" + currency + formatAmount(Spending.toFixed(2))}
-                        trends={"+15% LastYear"}
+                        trends={"Total spending for period"}
                         style_trends={{color: '#F44336'}}
                         img_src={BagIcon}
                     />
