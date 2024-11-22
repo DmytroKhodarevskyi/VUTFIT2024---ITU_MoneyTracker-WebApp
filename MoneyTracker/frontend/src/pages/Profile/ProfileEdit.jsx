@@ -5,6 +5,7 @@ import TopPart from "../../components/TopPart/TopPart";
 import ProfileEditCard from "../../components/ProfileCards/ProfileEditCard"
 import DiscardForm from "../../components/DiscardForm/DiscardForm"
 import { useNavigate } from 'react-router-dom';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
 
 function ProfileEdit() {
 
@@ -202,6 +203,69 @@ function ProfileEdit() {
         }
     };
 
+    const getNewAccessToken = async (refreshToken) => {
+        try {
+            const response = await api.post("/api/auth/refresh/", { refresh_token: refreshToken });
+            return response.data.access_token;
+        } catch (error) {
+            console.error("Error refreshing access token:", error);
+            return null;
+        }
+    };
+
+    const handleDeleteAccount = async (accessToken, refreshToken) => {
+        if (!accessToken) {
+            alert("You need to log in first.");
+            navigate("/login");
+            return;
+        }
+    
+        const confirmDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+        if (!confirmDelete) return;
+    
+        try {
+            await api.delete("/api/user/delete/", {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
+            localStorage.removeItem(ACCESS_TOKEN);
+            localStorage.removeItem(REFRESH_TOKEN);
+    
+            navigate("/login");
+            window.location.reload(); 
+    
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                
+                const newAccessToken = await getNewAccessToken(refreshToken);
+                if (newAccessToken) {
+                    await api.delete("/api/user/delete/", {
+                        headers: {
+                            Authorization: `Bearer ${newAccessToken}`,
+                        },
+                    });
+    
+                   
+                    localStorage.setItem(ACCESS_TOKEN, newAccessToken);
+                    localStorage.removeItem(REFRESH_TOKEN);
+    
+                    
+                    navigate("/login");
+                  
+                } else {
+                    
+                    navigate("/login");
+                }
+            } else {
+               
+                alert("There was an error deleting your account. Please try again later.");
+            }
+        }
+    };
+    
+
     if (error) {
         return (
             <div className="error-container">
@@ -247,6 +311,7 @@ function ProfileEdit() {
                 handleDiscard={handleDiscard}
                 photoPreview={photoPreview}
                 deletePhoto={deletePhoto}
+                handleDeleteAccount={handleDeleteAccount}
             />
         </div>
 

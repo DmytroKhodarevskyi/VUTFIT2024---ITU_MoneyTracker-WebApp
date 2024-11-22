@@ -3,6 +3,8 @@ from .serializers import UserSerializer, GenderChoicesSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import generics
+from rest_framework.exceptions import PermissionDenied
+from .models import Profile
 from rest_framework.views import APIView
 import os
 from django.conf import settings
@@ -208,3 +210,17 @@ class SelectedUserProfileView(APIView):
             }, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class UserDeleteView(generics.DestroyAPIView):
+    queryset = User.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def perform_destroy(self, instance):
+        if instance != self.request.user:
+            raise PermissionDenied("You do not have permission to delete this user account.")
+        
+        instance.delete()
+
+    def get_object(self):
+        return self.request.user

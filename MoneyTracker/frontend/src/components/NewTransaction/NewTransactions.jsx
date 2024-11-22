@@ -127,6 +127,7 @@ function NewTransactionCard() {
                         <input 
                             className='card-input-currency' 
                             type="text" 
+                            maxLength="99"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Title*"
@@ -174,8 +175,6 @@ function NewTransactionCard() {
                             value={currency}
                             onChange={e => {setCurrency(e.target.value)}}>
                             <option value="USD (United States Dollar)">USD (United States Dollar)</option>
-                            <option value="CZK (Czech Koruna)">CZK (Czech Koruna)</option>
-                            <option value="EUR (Euro)">EUR (Euro)</option>
                         </select>
                     </div>
 

@@ -162,6 +162,7 @@ function NewThreadPopup({
               type="text"
               placeholder="Thread title*"
               value={title}
+              maxLength="254"
               onChange={(e) => setTitle(e.target.value)}
               required
             />

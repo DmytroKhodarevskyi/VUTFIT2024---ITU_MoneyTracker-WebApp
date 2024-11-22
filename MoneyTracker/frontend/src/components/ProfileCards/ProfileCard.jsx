@@ -262,8 +262,6 @@ function ProfileCard({
             </label>
             <select id="currency" name="currency" className="currency-select">
               <option value="usd">USD - United States Dollar</option>
-              <option value="uah">UAH - Ukrainian Hryvnia</option>
-              <option value="czk">CZK - Czech Koruna</option>
             </select>
           </div>
 
