@@ -42,7 +42,10 @@
         <a href="mailto:xkhoda01@stud.fit.vutbr.cz"
           >xkhoda01@stud.fit.vutbr.cz</a
         >
-        - popis činnosti v týmu
+        - Přihlášení a registrace, logika pro upomínky, vytváření skupin,
+        přehled skupin a seznamů skupin, oddělení rolí ve skupinách, mazání
+        "vláken", přehled publikací, vytváření transakcí a kategorií. Začátek
+        stránky pro administraci. Stránka s hlavnim přehledem
       </dd>
       <dd>
         Druhé jméno
@@ -50,7 +53,10 @@
         <a href="mailto:xchern08@stud.fit.vutbr.cz"
           >xchern08@stud.fit.vutbr.cz</a
         >
-        - popis činnosti v týmu
+        - Prohlížení a úprava profilu, přidání registrace, přehled publikací,
+        úprava a vytváření publikací, přehled komentářů k publikacím. Vytváření
+        „vláken“, logika pro hvězdičky/lajky, editace skupiny, komentáře v
+        publikacích, mediální obsah, editace skupin, logika pro moderátory.
       </dd>
       <dd>
         Třetí jméno
@@ -58,7 +64,9 @@
         <a href="mailto:xkacha02@stud.fit.vutbr.cz"
           >xkacha02@stud.fit.vutbr.cz</a
         >
-        - popis činnosti v týmu
+        - Kontrola a mazání transakcí, kontrola a mazání kategorií, logika
+        prohlížení kategorií a grafů v "přehledu". 80 % logiky a operací na
+        stránce admin (úpravy, vytváření, mazání u téměř každého modelu).
       </dd>
       <dt>URL aplikace</dt>
       <dd>
@@ -97,14 +105,13 @@
         <td>Zákazník</td>
       </tr>
     </table>
-<!-- 
+    <!-- 
     <p>
       (Diagram případů užití není nutné vkládat, pokud IS implementuje role a
       případy užití definované zadáním.)
     </p> -->
 
-    <img src="./imgs/USE CASE IIS.svg" alt="use-case" class="use-case">
-    <img src="./imgs/ER IIS.svg" alt="ERD" class="use-case">
+    <img src="./imgs/USE CASE IIS.svg" alt="use-case" class="use-case" />
 
     <h3>Video</h3>
 
@@ -116,14 +123,145 @@
     </p>
 
     <h2>Implementace</h2>
+    <h3>Přihlášení a registrace</h3>
     <p>
-      Stručná dokumentace k implementaci, která popisuje, které části projektu
-      (např. PHP skripty) implementují jednotlivé případy použití.
+      Při registraci se pomocí modelu Profile vytvoří výchozí model Django. O
+      autorizaci a přihlášení se starají tokeny JWT (přístup a obnovení), které
+      jsou uloženy lokálně.
+    </p>
+
+    <h3>Navigace v horní čast</h3>
+    <p>
+      Navigace nasměruje uživatele na různé stránky prostřednictvím App.jsx a má
+      tlačítko pro odhlášení, které naviguje na route, která vymaže místní
+      úložiště, a poté přejde na přihlašovací stránku, čímž uživatele efektivně
+      odhlásí.
+    </p>
+
+    <h3>Přehledová stránka</h3>
+    <p>
+      Stránka přehledu načítá data prostřednictvím koncových bodů, jako jsou
+      transakce (zobrazuje pouze posledních 5), a získává součet všech
+      transakcí, příjmů a výdajů. Také zobrazuje načtená data prostřednictvím
+      grafu.
+    </p>
+
+    <h3>Stránka Aktualizace</h3>
+    <p>
+      Mají 2 dílčí formuláře: jeden pro vytváření transakcí, který účtuje
+      potřebná data k vytvoření nových transakcí pro aktuálního uživatele, a
+      stejný pro kategorii jako druhý komponent (kategorie)
+    </p>
+
+    <h4>Seznam transakcí</h4>
+    <p>
+      Data seznamu transakcí jsou načtena z databáze pro aktuálního uživatele.
+      Zde můžete vidět všechny transakce a smazat je.
+    </p>
+
+    <h4>Seznam kategorií</h4>
+    <p>
+      Kategorie se načítají z databáze a z těchto dat se vypočítávají
+      statistiky, jako je procento každé kategorie a hodnota celkových operací
+      (transakce modulo). Můžete zde také odstranit kategorie pomocí hromadného
+      mazání na koncovém bodu. Každá kategorie má svou vlastní barevnou hodnotu.
+    </p>
+
+    <h3>Stránka profilu</h3>
+    <p>
+      Stránka profilu načte všechna data z modelu profilu připojeného k
+      uživatelskému modelu Django a zobrazí je; upomínky se načítají na další
+      týden a lze je posouvat s cyklem na konci. Existují možnosti pro přechod
+      do zobrazení připomenutí, úpravy profilu a mých publikací.
+    </p>
+
+    <h4>Změna profilu</h4>
+    <p>
+      Zde můžete opravit data profilu prostřednictvím koncového bodu, uložit
+      nebo zahodit
+    </p>
+
+    <h4>Moje publikace</h4>
+    <p>
+      Zobrazením všech publikací vytvořených uživatelem s možností jejich
+      odstranění, úpravy nebo vytvoření nové jsou publikace načteny z koncového
+      bodu získání pro publikace. Počet hvězdiček je načten pro každou
+      publikaci, včetně všech nezbytných dat, jako je tvůrce s připojeným
+      dotazem.
+    </p>
+
+    <h4>Vytvořit/upravit publikaci</h4>
+    <p>
+      formulář pro vytvoření publikace, pokud edit - data z publikace budou
+      nastavena do formulářů s respektem, možnost načíst média jako řetězec a po
+      odeslání je uložit jako nový soubor.
+    </p>
+
+    <h4>Nastavení připomenutí</h4>
+    <p>
+      Pomocí hromadného mazání můžete vytvářet nová připomenutí a mazat vše, co
+      potřebujete. Připomenutí musí mít uzávěrku minimálně 24 hodin od ted`.
+      Také všechna zastaralá připomenutí jsou automaticky odstraněna při načtení
+      stránky, stejně jako v zobrazení profilu.
+    </p>
+
+    <h3>“Feed”</h3>
+    <p>
+      Zde se načítají publikace od všech uživatelů a zobrazují se od 0 do 3
+      balíčků. Uživatelé mohou klikat na strany, efektivně posouvat zdroj,
+      označovat, že se mi líbí nebo označují publikace přidáním hvězdičky k
+      tvůrci publikace, a také si prohlížet média a komentáře. Kliknutím na
+      komentáře se uživatel přesune do zobrazení publikace.
+    </p>
+
+    <h4>Zobrazení publikace</h4>
+    <p>
+      Stejné zobrazení publikace jako ve “feedu”, ale pro jednu publikaci se
+      seznamem komentářů a možností vytvořit nový komentář. Uživatelé mohou
+      komentář také označit hvězdičkou tak, že jej přidají tvůrci (stejně jako u
+      publikace). Uživatel však nemůže označit hvězdičkou své vlastní komentáře
+      a publikace, takže bez dalších uživatelů nemůže získat kredit. Komentáře
+      může smazat pouze tvůrce tohoto komentářu NEBO tvůrce publikace.
+    </p>
+
+    <h3>Skupiny (Groups)</h3>
+    <p>
+      Seznam všech skupin je uveden zde; můžete je filtrovat podle vyhledávání
+      nebo přepínače pouze pro přihlášení (který zobrazí skupiny, k jejichž
+      odběru jste přihlášeni nebo které vlastníte). Pokud jste běžný uživatel,
+      můžete sledovat nebo odhlásit sledovani, pokud jste moderátor, můžete
+      skupinu upravovat. Oba mohou zobrazit libovolnou skupinu. Tlačítko pro
+      vytvoření skupiny bude dostupné pouze pro uživatele, který má konkrétní
+      počet hvězdiček (pro testovací účely je to 1)
+    </p>
+
+    <h4>Vytvořit skupinu</h4>
+    <p>
+      Běžný formulář pro vytváření skupin s možností načtení skupinového obrázku
+    </p>
+
+    <h3>Zobrazení skupiny</h3>
+    <p>
+      Prohlížející skupina zobrazí všechna data související se skupinou, včetně
+      jejích moderátorů. Pokud je aktuální uživatel moderátor nebo admin,
+      tlačítko pro sledovani bude změněno na editaci a bude přidáno tlačítko pro
+      vytvoření nového vlákna (protože nová vlákna mohou vytvářet pouze
+      moderátoři nebo tvůrci skupin). Níže se zobrazí seznam skupinových vláken
+      s údaji a počtem komentářů k vláknu. Pokud je uživatel moderátor/tvůrce,
+      může vlákno také smazat kliknutím na ikonu 3 teček. Každý uživatel může
+      vlákno zobrazit kliknutím na tlačítko zobrazit.
+    </p>
+
+    <h4>Zobrazení vlákna</h4>
+    <p>
+      Uživatelé mohou zobrazit celou strukturu vlákna a přidávat nové komentáře. Komentáře může smazat pouze uživatel, který je vytvořil, nebo moderátor/tvůrce skupiny
     </p>
 
     <h3>Databáze</h3>
 
     Zde vložte grafické schéma relační databáze (tabulek v databázi).
+
+    <img src="./imgs/ER IIS.svg" alt="ERD" class="use-case" />
 
     <h2>Instalace</h2>
 
