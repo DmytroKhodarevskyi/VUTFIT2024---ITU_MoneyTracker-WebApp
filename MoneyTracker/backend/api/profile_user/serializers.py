@@ -79,3 +79,16 @@ class GenderChoicesSerializer(serializers.Serializer):
     @staticmethod
     def get_gender_choices():
         return [{'value': choice[0], 'label': choice[1]} for choice in Profile.GENDER_CHOICES]
+    
+    
+class ProfilePhoneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['phone']
+
+class UserUsernameSerializer(serializers.ModelSerializer):
+    profile = ProfilePhoneSerializer()  
+
+    class Meta:
+        model = User
+        fields = ['username', 'profile'] 
