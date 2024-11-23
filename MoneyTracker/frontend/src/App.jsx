@@ -47,6 +47,8 @@ import CreateNewCategory from "./pages/Admin/CreateNewCategory";
 import CreateNewTransaction from "./pages/Admin/CreateNewTransaction";
 import CreateNewPublication from "./pages/Admin/CreateNewPublication";
 import CreateNewGroup from "./pages/Admin/CreateNewGroup";
+import CreateNewThread from "./pages/Admin/CreateNewThread";
+import CreateNewReminder from "./pages/Admin/CreateNewReminder";
 
 function Logout() {
   localStorage.clear();
@@ -179,11 +181,31 @@ function App() {
           }
         />
         <Route
+          path="/custom-admin/user/:pk/create-reminder"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                < CreateNewReminder/>
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/custom-admin/user/:pk/create-group"
           element={
             <ProtectedRoute>
               <AdminRoute>
                 < CreateNewGroup/>
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/custom-admin/user/:pk/create-thread"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                < CreateNewThread/>
               </AdminRoute>
             </ProtectedRoute>
           }

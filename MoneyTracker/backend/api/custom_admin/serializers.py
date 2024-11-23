@@ -22,12 +22,11 @@ from api.profile_user.serializers import UserSerializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']  # Add other fields as needed
-
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']  
 class TransactionSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(
-        format="%d-%m-%Y %H:%M:%S",  # Формат для виводу
-        input_formats=["%d-%m-%Y %H:%M:%S", "%Y-%m-%dT%H:%M:%S.%fZ"]  # Формати для вводу
+        format="%d-%m-%Y %H:%M:%S",  
+        input_formats=["%d-%m-%Y %H:%M:%S", "%Y-%m-%dT%H:%M:%S.%fZ"] 
     )
 
     class Meta:
@@ -75,6 +74,11 @@ class GroupThreadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Thread
         fields = '__all__' 
+        read_only_fields = ['creator', 'created_at', 'updated_at']
+    def validate_group(self, value):
+        if not Group.objects.filter(id=value.id).exists():
+            raise serializers.ValidationError("Group does not exist.")
+        return value
     
 class GroupThreadCommentsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -84,7 +88,7 @@ class GroupThreadCommentsSerializer(serializers.ModelSerializer):
 class ReminderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reminder
-        fields = "__all__"
+        fields = ['id','title', 'deadline', 'amount']
 
     def validate_deadline(self, value):
         if value < timezone.now():

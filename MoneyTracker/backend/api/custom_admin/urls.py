@@ -51,6 +51,9 @@ from .views import (
     CreatePublicationView,
     AdminGroupCreateView,
     CheckGroupNameView,
+    AddUserToGroupView,
+    ThreadAdminCreateView,
+    ReminderCreateAdminView,
     
 )
 
@@ -103,4 +106,7 @@ urlpatterns = [
     path("user/<int:pk>/publications/", CreatePublicationView.as_view(), name="user-create-publication"),
     path("user/<int:pk>/groups/", AdminGroupCreateView.as_view(), name='admin-create-group'),
     path("groups/check-name/", CheckGroupNameView.as_view(), name="check-group-name"),
+    path('groups/<int:group_id>/add-user/', AddUserToGroupView.as_view(), name='add-user-to-group'),
+    path('groups/<int:pk>/threads/create/', ThreadAdminCreateView.as_view(), name='create-thread-admin'),
+    path('user/<int:pk>/reminders/', ReminderCreateAdminView.as_view(), name='create-reminder-admin'),
 ]
