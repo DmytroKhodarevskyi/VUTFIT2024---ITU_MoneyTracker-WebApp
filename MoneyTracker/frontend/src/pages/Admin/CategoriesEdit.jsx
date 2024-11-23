@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom"; // Import Link for navigation
 import api from "../../api";
 import "./Admin.css";
 import ColorPicker from "../../components/NewCategory/ColorPicker";
 
 const CategoriesEdit = () => {
-  const { pk } = useParams(); // Use pk to extract the ID from the URL
+  const { pk } = useParams(); 
 
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const [username, setUsername] = useState("");
 
-  const [editingCategory, setEditingCategory] = useState(null); // Track which category is being edited
-  const [tempValue, setTempValue] = useState(""); // Temporary value during editing
-  const [fieldBeingEdited, setFieldBeingEdited] = useState(""); // Track which field is being edited
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [tempValue, setTempValue] = useState(""); 
+  const [fieldBeingEdited, setFieldBeingEdited] = useState(""); 
   const [colorPickerOpen, setColorPickerOpen] = useState(null);
 
   const [loading, setLoading] = useState(true);
@@ -35,7 +35,7 @@ const CategoriesEdit = () => {
 
   const handleSaveEdit = async (categoryId) => {
     try {
-      // Create a payload with the updated field
+      
       let updatedValue = tempValue.trim();
       if (fieldBeingEdited === "name" && updatedValue === "") {
         updatedValue = "No category name";
@@ -44,10 +44,10 @@ const CategoriesEdit = () => {
       
       const payload = { [fieldBeingEdited]: updatedValue };
 
-      // Update on the server
+     
       await api.put(`/api/custom_admin/categories/${categoryId}/`, payload);
 
-      // Update in local state
+      
       setCategories((prevCategories) =>
         prevCategories.map((category) =>
           category.id === categoryId
@@ -56,8 +56,8 @@ const CategoriesEdit = () => {
         )
       );
 
-      setEditingCategory(null); // Exit editing mode
-      setFieldBeingEdited(""); // Clear field tracking
+      setEditingCategory(null); 
+      setFieldBeingEdited(""); 
       setColorPickerOpen(null);
     } catch (err) {
       console.error("Failed to update category", err);
@@ -84,7 +84,7 @@ const CategoriesEdit = () => {
       setCategories(
         categories.filter((category) => !selectedCategories.includes(category.id))
       );
-      setSelectedCategories([]); // Clear selection
+      setSelectedCategories([]); 
     } catch (err) {
       console.error(err);
 
@@ -124,7 +124,7 @@ const CategoriesEdit = () => {
     };
 
     fetchCategories();
-  }, [pk]); // Use pk as a dependency to fetch the correct user
+  }, [pk]); 
 
   if (loading) return <p>Loading categories...</p>;
   if (error) return <p>{error}</p>;
@@ -135,6 +135,9 @@ const CategoriesEdit = () => {
         <div className="admin-main-buttons">
           <h1 className="admin-header">{username}'s Categories</h1>
           <h1 className="admin-header">No categories were found</h1>
+          <Link to={`/custom-admin/user/${pk}/create-category/`}>
+          <button>Create Category</button> 
+          </Link>
         </div>
       </>
     );
@@ -142,20 +145,20 @@ const CategoriesEdit = () => {
 
   const handleColorChange = async (categoryId, newColor) => {
     try {
-      // Створюємо об'єкт payload для відправки на сервер
+      
       const payload = { color: newColor };
   
-      // Оновлення кольору на сервері
+      
       await api.put(`/api/custom_admin/categories/${categoryId}/`, payload);
   
-      // Оновлення локального стану
+      
       setCategories((prevCategories) =>
         prevCategories.map((category) =>
           category.id === categoryId ? { ...category, color: newColor } : category
         )
       );
   
-      setColorPickerOpen(null); // Закриваємо колорпікер
+      setColorPickerOpen(null);
     } catch (err) {
       console.error("Failed to update category color", err);
       setError("Failed to update category color");
@@ -167,12 +170,16 @@ const CategoriesEdit = () => {
     <>
       <div className="admin-main-buttons">
         <h1 className="admin-header">{username}'s Categories</h1>
+        <Link to={`/custom-admin/user/${pk}/create-category/`}>
+      <button>Create Category</button> 
+        </Link>
         <button
           onClick={handleDeleteSelected}
           disabled={selectedCategories.length === 0}
         >
           Delete Selected
         </button>
+        
         <ul className="admin-userlist">
           {categories.map((category) => (
             <li key={category.id} className="admin-useritem">
@@ -230,10 +237,10 @@ const CategoriesEdit = () => {
         <div
           style={{
             position: "absolute",
-            top: "30px", // Зміщення вниз, щоб розташувати під квадратом
+            top: "30px", 
             left: "0",
             zIndex: 100,
-            background: "#fff", // Фон для уникнення прозорості
+            background: "#fff", 
             borderRadius: "8px",
             boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
             padding: "10px",

@@ -40,6 +40,13 @@ import GroupUsers from "./pages/Admin/GroupEditUsers";
 import GroupThreads from "./pages/Admin/GroupEditThreads";
 import GroupThreadCommentsEdit from "./pages/Admin/GroupThreadCommentsEdit";
 import ReminderList from "./pages/Reminders/ReminderList";
+import AdminReminderEdit from "./pages/Admin/RemindersEdit"
+import CreateNewUser from "./pages/Admin/CreateNewUser";
+import UserEditProfile from "./pages/Admin/UserEditProfile"
+import CreateNewCategory from "./pages/Admin/CreateNewCategory";
+import CreateNewTransaction from "./pages/Admin/CreateNewTransaction";
+import CreateNewPublication from "./pages/Admin/CreateNewPublication";
+import CreateNewGroup from "./pages/Admin/CreateNewGroup";
 
 function Logout() {
   localStorage.clear();
@@ -109,6 +116,17 @@ function App() {
         />
 
         <Route
+          path="/custom-admin/user/:pk/data"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <UserEditProfile />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/custom-admin/users/:pk"
           element={
             <ProtectedRoute>
@@ -130,6 +148,46 @@ function App() {
           }
         />
 
+        <Route
+          path="/custom-admin/user/:pk/create-category"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                < CreateNewCategory/>
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/custom-admin/user/:pk/create-publication"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                < CreateNewPublication/>
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/custom-admin/user/:pk/create-transaction"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                < CreateNewTransaction/>
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/custom-admin/user/:pk/create-group"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                < CreateNewGroup/>
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/transactions-list"
           element={
@@ -162,6 +220,17 @@ function App() {
         />
 
         <Route
+          path="/custom-admin/users/:pk/reminders"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <AdminReminderEdit />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/custom-admin/publications/:pk/comments"
           element={
             <ProtectedRoute>
@@ -171,7 +240,16 @@ function App() {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/custom-admin/users/create"
+          element={
+            <ProtectedRoute>
+              <AdminRoute>
+                <CreateNewUser />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/custom-admin/groups/:pk/users"

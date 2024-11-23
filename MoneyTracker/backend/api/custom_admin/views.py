@@ -1,10 +1,12 @@
 # views.py
-from rest_framework import generics
+from django.shortcuts import get_object_or_404
+from rest_framework import generics , serializers
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
 from api.transaction.models import Transaction
 from api.category.models import Category
@@ -14,6 +16,8 @@ from api.publication.models import Comment
 from api.group.models import UserGroup
 from api.group.models import Thread
 from api.group.models import ThreadComment
+from api.reminder.models import Reminder
+ 
 
 from .serializers import (
     UserSerializer, 
@@ -25,6 +29,7 @@ from .serializers import (
     UserGroupSerializer,
     GroupThreadSerializer,
     GroupThreadCommentsSerializer,
+    ReminderSerializer,
 )
 
 from django.contrib.auth.models import User
@@ -84,19 +89,20 @@ class BatchDeleteCategoriesView(APIView):
     permission_classes = [IsAdminUser]
 
     def delete(self, request, *args, **kwargs):
-        categories_ids = request.data.get("categories_ids", [])
+        category_ids = request.data.get("category_ids", [])  
         
-        # Ensure we have a list of IDs to delete
-        if not categories_ids:
-            return Response({"error": "No transaction IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Delete transactions that match the provided IDs
-        deleted_count, _ = Category.objects.filter(id__in=categories_ids).delete()
+        if not category_ids:
+            return Response({"error": "No category IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        deleted_count, _ = Category.objects.filter(id__in=category_ids).delete()
         
         return Response(
             {"message": f"{deleted_count} categories deleted successfully"},
             status=status.HTTP_200_OK
         )
+
 
 class BatchDeletePublicationView(APIView):
     permission_classes = [IsAdminUser]
@@ -438,4 +444,228 @@ class BatchDeleteThreadCommentsView(APIView):
 class ThreadDetailView(generics.RetrieveAPIView):
     queryset = Thread.objects.all()
     serializer_class = GroupThreadSerializer
-   
+ 
+class UserRemindersView(generics.ListAPIView):
+    serializer_class = ReminderSerializer
+    
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+        return Reminder.objects.filter(user=user_id)
+    
+class BatchDeleteReminderView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def delete(self, request, *args, **kwargs):
+        reminder_ids = request.data.get("reminder_ids", [])
+        
+        
+        if not reminder_ids:
+            return Response({"error": "No reminder IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+        deleted_count, _ = Reminder.objects.filter(id__in=reminder_ids).delete()
+        
+        return Response(
+            {"message": f"{deleted_count} reminder deleted successfully"},
+            status=status.HTTP_200_OK
+        )
+        
+class UpdateReminderView(generics.UpdateAPIView):
+    queryset = Reminder.objects.all()  
+    serializer_class = ReminderSerializer
+    permission_classes = [IsAdminUser]  
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        instance = self.get_object()  
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        self.perform_update(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK) 
+    
+    
+class UserProfileDetailView(APIView):
+    permission_classes = [IsAuthenticated]  
+
+    def get(self, request, pk):
+        
+        user = get_object_or_404(User, pk=pk)
+        profile = user.profile
+        
+        transactions = user.transactions.all()
+        total_spends = sum(t.amount for t in transactions if not t.incomeOrSpend)
+        total_income = sum(t.amount for t in transactions if t.incomeOrSpend)
+        
+        profile_img = profile.profile_image.url if profile.profile_image else '/media/profile_images/default.png'
+        
+        data = {
+            "id": user.id,
+            "firstname": user.first_name,
+            "lastname": user.last_name,
+            "fullname": f"{user.first_name} {user.last_name}",
+            "username": user.username,
+            "email": user.email,
+            "phone": profile.phone,
+            "country": profile.country,
+            "city": profile.city,
+            "gender": profile.get_gender_display(),
+            "jobTitle": profile.job,
+            "starsCount": profile.stars_count,
+            "profileImg": profile_img,
+            "totalSpends": total_spends,
+            "totalIncome": total_income
+        }
+        return Response(data)
+
+    def patch(self, request, pk):
+        
+        user = get_object_or_404(User, pk=pk)
+        profile = user.profile
+
+        firstname = request.data.get('firstname')
+        lastname = request.data.get('lastname')
+        email = request.data.get('email')
+        phone = request.data.get('phone')
+        country = request.data.get('country')
+        city = request.data.get('city')
+        gender = request.data.get('gender')
+        job_title = request.data.get('jobTitle')
+        stars_count = request.data.get('starsCount')  
+
+        if firstname is not None:
+            user.first_name = firstname
+        if lastname is not None:
+            user.last_name = lastname
+        if email is not None:
+            user.email = email
+        user.save()
+
+        if phone is not None:
+            profile.phone = phone
+        if country is not None:
+            profile.country = country
+        if city is not None:
+            profile.city = city
+        if gender is not None:
+            profile.gender = gender
+        if job_title is not None:
+            profile.job = job_title
+        if stars_count is not None:  # Оновлення stars_count
+            profile.stars_count = stars_count
+        
+        profile.save()
+        return Response({"detail": "Profile updated successfully."}, status=status.HTTP_200_OK)
+
+    
+class UserProfileDataView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        profile = user.profile
+        data = {
+            "id": user.id,
+            "firstname": user.first_name,
+            "lastname": user.last_name,
+            "email": user.email,
+            "phone": profile.phone,
+            "country": profile.country,
+            "city": profile.city,
+            "gender": profile.gender,
+            "jobTitle": profile.job,
+            "starsCount": profile.stars_count,
+        }
+        return Response(data)
+    
+class CategoryCreateView(generics.CreateAPIView):
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        
+        user_id = self.kwargs['pk']
+        return Category.objects.filter(author_id=user_id)
+
+    def perform_create(self, serializer):
+        user_id = self.kwargs['pk']
+        
+        name = serializer.validated_data.get("name").strip().lower()
+        if Category.objects.filter(name__iexact=name, author_id=user_id).exists():
+            raise serializers.ValidationError({"name": "Category with this name already exists for the user."})
+        
+        
+        serializer.save(author_id=user_id)
+        
+        
+class AdminTransactionCreateView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def post(self, request, pk, *args, **kwargs):
+        
+        user = get_object_or_404(User, pk=pk)
+        serializer = TransactionSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(author=user)  
+            return Response({"message": "Transaction created successfully"}, status=status.HTTP_201_CREATED)
+        else:
+            print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class CreatePublicationView(generics.CreateAPIView):
+    queryset = Publication.objects.all()
+    serializer_class = PublicationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, pk, *args, **kwargs):
+        user = get_object_or_404(User, pk=pk)  
+        publication_serializer = self.get_serializer(data=request.data)
+        
+        if publication_serializer.is_valid():
+            
+            publication = publication_serializer.save(author=user)  
+            return Response(publication_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(publication_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AdminGroupCreateView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def post(self, request, pk, *args, **kwargs):
+        
+        print("Incoming data:", request.data)
+
+        
+        user = get_object_or_404(User, pk=pk)
+
+        
+        serializer = GroupSerializer(data=request.data)
+        if serializer.is_valid():
+            
+            group = serializer.save(creator=user)
+            return Response(
+                {"message": "Group created successfully!", "group": GroupSerializer(group).data},
+                status=HTTP_201_CREATED
+            )
+
+        
+        print("Validation errors:", serializer.errors)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+    
+class CheckGroupNameView(APIView):
+    def get(self, request, *args, **kwargs):
+        group_name = request.query_params.get("name", "").strip()
+
+        if not group_name:
+            return Response({"detail": "Group name is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        exists = Group.objects.filter(name=group_name).exists()
+
+        if exists:
+            return Response({"exists": True, "detail": "Group with this name already exists."}, status=status.HTTP_200_OK)
+        
+        return Response({"exists": False}, status=status.HTTP_200_OK)

@@ -45,7 +45,11 @@ const UserList = () => {
 
   return (
     <div>
+      
       <h1 className="admin-header">User List</h1>
+      <Link to={`/custom-admin/users/create`}>
+      <button>Create User</button> 
+      </Link>
       <ul className="admin-userlist">
         {users.map((user) => (
           <li key={user.id}>
@@ -65,8 +69,9 @@ const UserList = () => {
             >
             DELETE
             </button>
-            
-            <button onClick={() => handleDelete(user.id)}> EDIT</button>
+            <Link to={`/custom-admin/user/${user.id}/data`}>
+            <button> EDIT</button>
+            </Link>
           </li>
         ))}
       </ul>

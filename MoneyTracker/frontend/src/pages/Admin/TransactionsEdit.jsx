@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
+import { Link } from "react-router-dom";
 
 const TransactionsEdit = () => {
   const { pk } = useParams();
@@ -81,10 +82,7 @@ const TransactionsEdit = () => {
         updatedValue = "No transaction name";
       }
 
-      if (fieldBeingEdited === "created_at") {
-        updatedValue = new Date(tempValue).toISOString();
-      }
-
+      
       const payload = { [fieldBeingEdited]: updatedValue };
 
       await api.put(`/api/custom_admin/transactions/${transactionId}/`, payload);
@@ -158,6 +156,9 @@ const TransactionsEdit = () => {
         <div className="admin-main-buttons">
           <h1 className="admin-header">{username}'s Transactions</h1>
           <h1 className="admin-header">No transactions were found</h1>
+          <Link to={`/custom-admin/user/${pk}/create-transaction/`}>
+          <button>Create Transaction</button> 
+          </Link>
         </div>
       </>
     );
@@ -167,6 +168,9 @@ const TransactionsEdit = () => {
     <>
       <div className="admin-main-buttons">
         <h1 className="admin-header">{username}'s Transactions</h1>
+        <Link to={`/custom-admin/user/${pk}/create-transaction/`}>
+      <button>Create Transaction</button> 
+        </Link>
         <button
           onClick={handleDeleteSelected}
           disabled={selectedTransactions.length === 0}
