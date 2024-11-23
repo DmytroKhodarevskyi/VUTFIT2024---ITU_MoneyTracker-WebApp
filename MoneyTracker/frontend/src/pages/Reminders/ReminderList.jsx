@@ -3,7 +3,7 @@ import api from "../../api";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import TopPart from "../../components/TopPart/TopPart";
 import { useState, useEffect } from "react";
-import CreateReminderPopup from "./CreateReminderPopup";
+import CreateReminderPopup from "./CreateReminderPopUp";
 import "./ReminderList.css";
 
 function ReminderList() {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import api from "../../api"; 
 import { useEffect } from "react";
-import "./CreateReminderPopup.css";
+import "./CreateReminderPopUp.css";
 
 function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
   const [title, setTitle] = useState("");
