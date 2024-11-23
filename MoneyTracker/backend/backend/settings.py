@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+import dj_database_url
 import os
 
 load_dotenv()
@@ -116,17 +117,38 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         # 'NAME': 'money_tracker_db',
+#         'NAME': 'railway',
+#         # 'USER': 'money_tracker_user',
+#         'USER': 'postgres',
+#         # 'PASSWORD': '1233den1233',
+#         'PASSWORD': 'sEKuFnfvqpBoXIkFtkqBiVJHtbbfeSan',
+#         # 'HOST': 'localhost',
+#         # 'HOST': 'moneytracker-db-1',
+#         # 'HOST': 'postgres.railway.internal',
+#         'HOST': 'autorack.proxy.rlwy.net',
+#         # 'PORT': '5432',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'money_tracker_db',
-        'USER': 'money_tracker_user',
-        'PASSWORD': '1233den1233',
-        'HOST': 'localhost',
-        # 'HOST': 'moneytracker-db-1',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,  # Keep the connection alive for 10 minutes
+        ssl_require=True   # Enforce SSL for secure connections
+    )
 }
+
+DATABASES['default']['OPTIONS'] = {
+    'connect_timeout': 20  # Set to 20 seconds
+}
+
+# DATABASES['default']['ENGINE'] = 'django_db_geventpool.backends.postgresql_psycopg2'
+DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 
 # Password validation
