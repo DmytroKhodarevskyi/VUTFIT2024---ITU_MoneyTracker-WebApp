@@ -7,29 +7,38 @@ services:
       dockerfile: Dockerfile-backend
     ports:
       - "8000:8000"
-    env_file:
-      - backend/.env
+    # env_file:
+      # - backend/.env
     volumes:
       - ./backend:/app
     depends_on:
       - db
+    environment:
+      - DATABASE_URL=postgres://money_tracker_user:1233den1233@moneytracker-db-1:5432/money_tracker_db
+
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile-frontend
     ports:
-      - "3000:3000"
+      - "4173:4173"
     env_file:
       - frontend/.env
     volumes:
       - ./frontend:/app
 
+
+
   db:
-    image: postgres:16.0
+    image: postgres:14
     environment:
       POSTGRES_USER: money_tracker_user
       POSTGRES_PASSWORD: 1233den1233
       POSTGRES_DB: money_tracker_db
     ports:
       - "5432:5432"
+
+networks:
+  default:
+    external: false

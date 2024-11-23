@@ -10,7 +10,7 @@ import {
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 import Login from "./pages/Login/Login";
-import Register from "./pages/Register/register";
+import Register from "./pages/Register/Register";
 import Profile from "./pages/Profile/Profile";
 import Update from "./pages/Update/Update";
 import ProtectedRoute from "./components/ProtectedRoute";
