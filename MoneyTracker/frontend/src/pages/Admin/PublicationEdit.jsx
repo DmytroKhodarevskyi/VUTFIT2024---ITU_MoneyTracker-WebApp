@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
 
@@ -12,9 +12,9 @@ const PublicationsEdit = () => {
 
   const [username, setUsername] = useState("");
 
-  const [editingPublication, setEditingPublication] = useState(null); // Track which publication is being edited
-  const [tempValue, setTempValue] = useState(""); // Temporary value during editing
-  const [fieldBeingEdited, setFieldBeingEdited] = useState(""); // Track which field is being edited
+  const [editingPublication, setEditingPublication] = useState(null); 
+  const [tempValue, setTempValue] = useState("");
+  const [fieldBeingEdited, setFieldBeingEdited] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,7 +23,7 @@ const PublicationsEdit = () => {
 
   const handleDoubleClick = (publicationId, currentValue, field) => {
     setEditingPublication(publicationId);
-    setTempValue(currentValue || ""); // Default to empty string if currentValue is null or undefined
+    setTempValue(currentValue || ""); 
     setFieldBeingEdited(field);
   };
 
@@ -33,28 +33,28 @@ const PublicationsEdit = () => {
 
   const handleSaveEdit = async (publicationId) => {
     try {
-      // Перевіряємо та обробляємо значення для "title" і "stars"
+      
       let updatedValue;
   
       if (fieldBeingEdited === "title") {
-        // Якщо поле "title" порожнє, записуємо "No title"
+        
         updatedValue = tempValue.trim() === "" ? "No title" : tempValue.trim();
       } else if (fieldBeingEdited === "stars") {
-        // Якщо поле "stars" порожнє, записуємо 0, але дозволяємо мінусові значення
+        
         updatedValue =
           tempValue.trim() === "" || isNaN(tempValue) ? 0 : Number(tempValue);
       } else {
-        // Для інших полів просто записуємо значення
+        
         updatedValue = tempValue.trim();
       }
   
-      // Створюємо payload із новим значенням
+      
       const payload = { [fieldBeingEdited]: updatedValue };
   
-      // Оновлюємо значення на сервері
+     
       await api.put(`/api/custom_admin/publications/${publicationId}/update/`, payload);
   
-      // Оновлюємо значення в локальному стані
+      
       setPublications((prevPublications) =>
         prevPublications.map((publication) =>
           publication.id === publicationId
@@ -63,8 +63,8 @@ const PublicationsEdit = () => {
         )
       );
   
-      setEditingPublication(null); // Вихід із режиму редагування
-      setFieldBeingEdited(""); // Очищення поля
+      setEditingPublication(null); 
+      setFieldBeingEdited("");
     } catch (err) {
       console.error("Failed to update publication", err);
       setError("Failed to update publication");
@@ -115,8 +115,8 @@ const PublicationsEdit = () => {
       return;
     }
   
-    const publicationId = selectedPublications[0]; // Вибираємо перший ID
-    console.log("Selected Publication ID:", publicationId); // Лог для перевірки
+    const publicationId = selectedPublications[0]; 
+    console.log("Selected Publication ID:", publicationId); 
   
     if (!publicationId) {
       alert("Something went wrong. Please try again.");
@@ -170,6 +170,9 @@ const PublicationsEdit = () => {
         <div className="admin-main-buttons">
           <h1 className="admin-header">{username}'s Publications</h1>
           <h1 className="admin-header">No publications were found</h1>
+          <Link to={`/custom-admin/user/${pk}/create-publication/`}>
+      <button>Create Publication</button> 
+        </Link>
         </div>
       </>
     );
@@ -179,6 +182,9 @@ const PublicationsEdit = () => {
     <>
       <div className="admin-main-buttons">
         <h1 className="admin-header">{username}'s Publications</h1>
+        <Link to={`/custom-admin/user/${pk}/create-publication/`}>
+      <button>Create Publication</button> 
+        </Link>
         <button
           onClick={handleDeleteSelected}
           disabled={selectedPublications.length === 0}

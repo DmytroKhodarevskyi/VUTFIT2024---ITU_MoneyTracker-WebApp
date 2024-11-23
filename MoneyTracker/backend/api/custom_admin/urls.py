@@ -3,6 +3,8 @@ from django.urls import path
 #     TransactionListCreate,
 #     TransactionDelete,
 # )
+from api.profile_user.views import CreateUserView
+
 from .views import (
     # CustomAdmin,
     check_superuser_status,
@@ -39,6 +41,17 @@ from .views import (
     UpdateThreadCommentView,
     GroupThreadCommentsView,
     ThreadDetailView,
+    UserRemindersView,
+    BatchDeleteReminderView,
+    UpdateReminderView,
+    UserProfileDetailView,
+    UserProfileDataView,
+    CategoryCreateView,
+    AdminTransactionCreateView,
+    CreatePublicationView,
+    AdminGroupCreateView,
+    CheckGroupNameView,
+    
 )
 
 urlpatterns = [
@@ -47,11 +60,15 @@ urlpatterns = [
     path("users/", UserListView.as_view(), name="user-list"),
     path("users/<int:pk>/username/", UsernameSearchView.as_view(), name="user-username"),
     path('users/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
-
+    path('users/create/', CreateUserView.as_view(), name='user-create'),
+    path('user/<int:pk>/data/', UserProfileDataView.as_view(), name='user-data'),
+    path('user/<int:pk>/edit/', UserProfileDetailView.as_view(), name='user-update'),
     path('users/<int:pk>/transactions/', UserTransactionsView.as_view(), name='user-transactions'),
     path('users/<int:pk>/categories/', UserCategoriesView.as_view(), name='user-categories'),
     path('users/<int:pk>/publications/', UserPublicationsView.as_view(), name='user-publications'),
     path('users/<int:pk>/groups/', UserGroupsView.as_view(), name='user-groups'),
+    path('users/<int:pk>/reminders/', UserRemindersView.as_view(), name='user-reminders'),
+    
     path('publications/<int:pk>/comments/', UserPublicationCommentsView.as_view(), name='publication-comments'),
     # path("", TransactionListCreate.as_view(), name="transaction-list"),
     # path("delete/<int:pk>/", TransactionDelete.as_view(), name="delete-transaction"),
@@ -79,5 +96,11 @@ urlpatterns = [
     path("thread/comments/batch-delete/",BatchDeleteThreadCommentsView.as_view(),name="admin-group-thread-comments-batch-delete"),
     path("thread/comments/<int:pk>/update/",UpdateThreadCommentView.as_view(),name="admin-group-thread-comments-update"),
     path("thread/<int:pk>/", ThreadDetailView.as_view(), name="thread-detail"),
-
+    path("reminders/batch-delete/", BatchDeleteReminderView.as_view(), name="delete-reminders"),
+    path('reminders/<int:pk>/update/', UpdateReminderView.as_view(), name='user-reminder-update'),
+    path("user/<int:pk>/categories/", CategoryCreateView.as_view(), name="user-create-category"),
+    path("user/<int:pk>/transactions/", AdminTransactionCreateView.as_view(), name="user-create-transaction"),
+    path("user/<int:pk>/publications/", CreatePublicationView.as_view(), name="user-create-publication"),
+    path("user/<int:pk>/groups/", AdminGroupCreateView.as_view(), name='admin-create-group'),
+    path("groups/check-name/", CheckGroupNameView.as_view(), name="check-group-name"),
 ]

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
 
 const GroupsEdit = () => {
-  const { pk } = useParams(); // Use pk to extract the ID from the URL
+  const { pk } = useParams(); 
 
   const [groups, setGroups] = useState([]);
   const [selectedGroups, setSelectedGroups] = useState([]);
 
   const [username, setUsername] = useState("");
 
-  const [editingGroup, setEditingGroup] = useState(null); // Track which transaction is being edited
-  const [tempValue, setTempValue] = useState(""); // Temporary value during editing
-  const [fieldBeingEdited, setFieldBeingEdited] = useState(""); // Track which field is being edited
+  const [editingGroup, setEditingGroup] = useState(null); 
+  const [tempValue, setTempValue] = useState(""); 
+  const [fieldBeingEdited, setFieldBeingEdited] = useState(""); 
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,38 +22,39 @@ const GroupsEdit = () => {
   const navigate = useNavigate();
 
   
-  // Handle deletion of selected groups
+  
   const handleDeleteSelected = async () => {
     if (selectedGroups.length === 0) {
       alert("Please select groups to delete.");
       return;
     }
-
+  
     const isConfirmed = window.confirm(
       "Are you sure you want to delete the selected groups?"
     );
     if (!isConfirmed) return;
-
+  
     try {
       await api.delete(`/api/custom_admin/groups/batch-delete/`, {
         data: { group_ids: selectedGroups },
       });
-
-      setTransactions(
-        groups.filter(
-          (group) => !selectedGroups.includes(group.id)
-        )
+  
+      
+      setGroups(
+        groups.filter((group) => !selectedGroups.includes(group.id))
       );
-      setSelectedGroups([]); // Clear selection
+  
+      setSelectedGroups([]); 
     } catch (err) {
       console.error(err);
-
+  
       if (err.response.status === 403) {
         navigate("/login");
       }
-      setError("Failed to delete transactions");
+      setError("Failed to delete groups");
     }
   };
+  
 
   const handleGoToUsers = () => {
     if (selectedGroups.length === 0) {
@@ -111,22 +112,22 @@ const GroupsEdit = () => {
   
   const handleSaveEdit = async (groupId) => {
     try {
-        // Створюємо payload із оновленим значенням
+        
         let updatedValue = tempValue.trim();
         if (fieldBeingEdited === "name" && updatedValue === "") {
-            updatedValue = "No group name"; // Установлюємо значення за замовчуванням
+            updatedValue = "No group name"; 
         }
 
         const payload = { [fieldBeingEdited]: updatedValue };
 
-        // Оновлюємо на сервері
+        
         await api.put(`/api/custom_admin/groups/${groupId}/`, payload);
 
-        // Оновлюємо в локальному стані
+        
         setGroups((prevGroups) =>
             prevGroups.map((group) =>
                 group.id === groupId
-                    ? { ...group, [fieldBeingEdited]: updatedValue } // Використовуємо updatedValue
+                    ? { ...group, [fieldBeingEdited]: updatedValue } 
                     : group
             )
         );
@@ -140,7 +141,7 @@ const GroupsEdit = () => {
 };
 
   
-  // Toggle selection of a group
+ 
   const toggleGroupSelection = (id) => {
     setSelectedGroups((prevSelected) =>
       prevSelected.includes(id)
@@ -172,7 +173,7 @@ const GroupsEdit = () => {
     };
 
     fetchGroups();
-  }, [pk]); // Use pk as a dependency to fetch the correct user
+  }, [pk]); 
 
   if (loading) return <p>Loading groups...</p>;
   if (error) return <p>{error}</p>;
@@ -183,6 +184,9 @@ const GroupsEdit = () => {
         <div className="admin-main-buttons">
           <h1 className="admin-header">{username}'s Groups</h1>
           <h1 className="admin-header">No groups were found</h1>
+          <Link to={`/custom-admin/user/${pk}/create-group/`}>
+          <button>Create Group</button> 
+          </Link>
         </div>
       </>
     );
@@ -192,6 +196,9 @@ const GroupsEdit = () => {
     <>
       <div className="admin-main-buttons">
         <h1 className="admin-header">{username}'s Groups</h1>
+        <Link to={`/custom-admin/user/${pk}/create-group/`}>
+      <button>Create Group</button> 
+        </Link>
         <button
           onClick={handleDeleteSelected}
           disabled={selectedGroups.length === 0}
