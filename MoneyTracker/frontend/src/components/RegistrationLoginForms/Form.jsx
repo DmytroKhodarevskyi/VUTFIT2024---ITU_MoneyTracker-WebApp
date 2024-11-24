@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../../api"
 import { Link, useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
@@ -19,6 +19,21 @@ function Form({route, method}){
     const head = method === "login" ? "Who Is It?" : "Introduce Yourself."
     const button = method === "login" ? "Login" : "Register"
 
+    const [existingUsers, setExistingUsers] = useState([]);
+
+    useEffect(() => {
+        const fetchExistingUsers = async () => {
+          try {
+            const res = await api.get("/api/user/usernames-and-phones/"); 
+            setExistingUsers(res.data);
+            console.log(res.data);
+          } catch (error) {
+            console.error("Error fetching existing users:", error);
+          }
+        };
+    
+        fetchExistingUsers();
+      }, []);
 
     const handleSubmit = async (e) => {
         setLoading(true);
@@ -36,6 +51,25 @@ function Form({route, method}){
         const trimmedFirstName = first_name.trim();
         const trimmedLastName = last_name.trim();
         const trimmedPhone = phone.trim();
+
+        if (method === "register") {
+            const usernameExists = existingUsers.some(user => user.username === username);
+            const phoneExists = existingUsers.some(user => user.profile.phone === phone);
+    
+            if (usernameExists) {
+                alert("Username already exists!");
+                setLoading(false);
+                return;
+            }
+    
+            if (phoneExists) {
+                alert("Phone number already exists!");
+                setLoading(false);
+                return;
+            }
+        }
+    
+
 
         try {
             const payload = { 

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+import dj_database_url
 import os
 
 load_dotenv()
@@ -26,6 +27,7 @@ SECRET_KEY = 'django-insecure-!(3u)m@wq_^+i3zed^^7dqch==+4hs2+cy9%0$2y0uy5@)dj5+
 
 
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -112,18 +114,33 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'money_tracker_db',
         'USER': 'money_tracker_user',
         'PASSWORD': '1233den1233',
-        'HOST': 'localhost',
-        # 'HOST': 'moneytracker-db-1',
+        # 'HOST': 'localhost',
+        'HOST': 'moneytracker-db-1',
         'PORT': '5432',
     }
 }
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv('DATABASE_URL'),
+#         conn_max_age=600,  # Keep the connection alive for 10 minutes
+#         ssl_require=True   # Enforce SSL for secure connections
+#     )
+# }
+
+# DATABASES['default']['OPTIONS'] = {
+#     'connect_timeout': 20  # Set to 20 seconds
+# }
+
+# # DATABASES['default']['ENGINE'] = 'django_db_geventpool.backends.postgresql_psycopg2'
+# DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 
 
