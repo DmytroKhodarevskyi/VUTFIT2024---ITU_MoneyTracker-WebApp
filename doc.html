@@ -31,7 +31,7 @@
     <!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
      podle použitého editoru -->
 
-    <h1>Název zadání (editujte)</h1>
+    <h1>MoneyTracker</h1>
     <!-- Nahradte názvem svého zadání -->
 
     <dl>
@@ -70,8 +70,8 @@
       </dd>
       <dt>URL aplikace</dt>
       <dd>
-        <a href="http://www.stud.fit.vutbr.cz/~xautor01/IIS"
-          >http://www.stud.fit.vutbr.cz/~xautor01/IIS</a
+        <a href="https://65392440-35ca-4954-9821-7cb3e5446424.e1-eu-north-azure.choreoapps.dev"
+          >https://65392440-35ca-4954-9821-7cb3e5446424.e1-eu-north-azure.choreoapps.dev</a
         >
       </dd>
       <!-- <dd>
@@ -91,7 +91,7 @@
       </tr>
       <tr>
         <td>admin</td>
-        <td>admin</td>
+        <td>denysrostikdimon</td>
         <td>Administrátor</td>
       </tr>
       <tr>
@@ -123,6 +123,15 @@
     </p>
 
     <h2>Implementace</h2>
+
+    <h2>ADMIN</h2>
+    <p>Chcete-li používat stránku správce, musíte vytvořit superuživatele prostřednictvím backendového terminálu.
+      (python manage.py createsuperuser)
+      (viz django superuser).
+      Poté se přihlaste pomocí dříve zadaného přihlašovacího jména a hesla a zadejte cestu k odkazu „custom-admin“.
+      
+      Odtud by měla být přístupná stránka správce.</p>
+
     <h3>Přihlášení a registrace</h3>
     <p>
       Při registraci se pomocí modelu Profile vytvoří výchozí model Django. O
@@ -258,8 +267,6 @@
     </p>
 
     <h3>Databáze</h3>
-
-    Zde vložte grafické schéma relační databáze (tabulek v databázi).
 
     <img src="./imgs/ER IIS.svg" alt="ERD" class="use-case" />
 
