@@ -13,3 +13,5 @@ drf-spectacular-sidecar
 Pillow
 dj-database-url
 django-db-geventpool
+django-storages
+boto3
