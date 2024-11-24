@@ -6,7 +6,6 @@
     padding: 0px 92px 32px 92px;
     margin-top: -45px;
     padding: 0px 92px;
-
     min-width: 900px;
 }
 
@@ -16,7 +15,6 @@
     height: 615px;
     border-radius: 17px;
     padding: 28px 32px;
-
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -27,7 +25,6 @@
 }
 
 .ReminderList-right-part {
-    /* min-width: 521px; */
     width: auto;
     height: 615px;
     border-radius: 17px;
@@ -163,7 +160,6 @@
     background-position: center;
     background-repeat: no-repeat;
     background-image: none;
-
     z-index: 0;
 }
 
@@ -191,25 +187,25 @@
 }
 
 .ReminderList-create-button {
-    background-color: #4CAF50; 
-    color: white; 
+    background-color: #4CAF50;
+    color: white;
     padding: 12px 24px;
-    font-size: 16px; 
-    font-weight: bold; 
-    border: none; 
-    border-radius: 15px; 
-    cursor: pointer; 
-    transition: all 0.3s ease; 
-  }
-  
-  .ReminderList-create-button:hover {
-    background-color: #45a049; 
-  }
-  
-  .ReminderList-create-button:focus {
-    outline: none; 
-  }
-  
-  .ReminderList-create-button:active {
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ReminderList-create-button:hover {
+    background-color: #45a049;
+}
+
+.ReminderList-create-button:focus {
+    outline: none;
+}
+
+.ReminderList-create-button:active {
     transform: scale(0.98);
-  }
+}

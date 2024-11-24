@@ -37,16 +37,14 @@ const BarChartComponent = () => {
             let income = 0;
             let spending = 0;
 
-            // console.log(response.data);
+            
 
             response.data.forEach(transaction => {
 
-                // console.log(Month + " IT IS MONTH" + " " + getMonthName(transaction.transaction_datetime.month) + " IT IS MONTH");
-                // console.log(getMonthName(transaction.transaction_datetime) + " IT IS MONTH");
-                // if (transaction.transaction_type === "INCOME" && transaction.date.includes(Month)) {
+                
                 if (transaction.transaction_type === "INCOME" && getMonthName(transaction.transaction_datetime) === Month) {
                     
-                    // console.log(transaction.amount + " INCOME");
+                    
                     income += parseFloat(transaction.amount);
                 } else if (getMonthName(transaction.transaction_datetime) === Month) {
                     spending += parseFloat(transaction.amount);
@@ -64,13 +62,13 @@ const BarChartComponent = () => {
         const months = [];
         const date = new Date();
         for (let i = 0; i < 6; i++) {
-            // const year = date.getFullYear();
+            
             const monthName = getMonthName(date);
-            // months.push(`${year}-${monthName}`);
+            
             months.push(`${monthName}`);
             date.setMonth(date.getMonth() - 1);
         }
-        return months.reverse(); // Reverse to get the oldest month first
+        return months.reverse(); 
     };
 
     useEffect(() => {
@@ -78,7 +76,7 @@ const BarChartComponent = () => {
             const months = getLastSixMonths();
             const updatedData = await Promise.all(months.map(async (month) => {
                 
-                // console.log(month + " SENDING TO STATS HANDLER");
+                
                 const [income, expense] = await StatsHandler(month);
                 return { name: month, income, expense };
             }));
@@ -117,11 +115,11 @@ const BarChartComponent = () => {
 
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={incomeExpenses} margin={{ top: 20, right: 0, left: 20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" /> {/* Змінено колір сітки */}
-                    <XAxis dataKey="name" stroke="#333" /> {/* Колір осі */}
-                    <YAxis stroke="#333" /> {/* Колір осі */}
-                    <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0, 0, 0, 0.1)' }} /> {/* Легкий фон тултипу */}
-                    <Bar dataKey="income" fill="#4CAF50" radius={[10, 10, 0, 0]} />{/* Зроблено округлені кути */}
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+                    <XAxis dataKey="name" stroke="#333" /> 
+                    <YAxis stroke="#333" /> 
+                    <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0, 0, 0, 0.1)' }} />
+                    <Bar dataKey="income" fill="#4CAF50" radius={[10, 10, 0, 0]} />
                     <Bar dataKey="expense" fill="#F44336" radius={[10, 10, 0, 0]} />
                 </BarChart>
             </ResponsiveContainer>

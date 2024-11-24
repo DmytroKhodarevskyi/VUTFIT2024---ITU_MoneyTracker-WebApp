@@ -172,7 +172,7 @@ function ProfileCard({
               <h2 className="profile-name">{fullname}</h2>
               <p className="profile-job-title">{jobTitle}</p>
             </div>
-            {/* <div className="profile-contact-info"> */}
+            
             <div className="profile-form">
               <p className="label-contacts">Email</p>
               <div className="profile-box">
@@ -186,7 +186,7 @@ function ProfileCard({
                 <p>{phone}</p>
               </div>
             </div>
-            {/* </div> */}
+            
           </div>
         </div>
 
@@ -273,30 +273,6 @@ function ProfileCard({
                 There are no upcoming reminders, you are all set!
               </p>
             )}
-
-            {/* <div className='reminder-info'>
-                                <p className="label-reminder">Reminder</p>
-
-                                    <div className="reminder-text-deadline-amount">
-                                        <p className="text-reminder">
-                                            There will be <span className="text-teal">*Some Taxes*</span> soon, don`t forget to pay for it!
-                                        </p>
-
-                                        <div className="reminder-row">
-                                            <div className="reminder-item">
-                                                <p className="label-deadline">Deadline:</p>
-                                                <p className='deadline-reminder'> *Some Deadline*</p>
-                                            </div>
-
-                                            <div className="reminder-item">
-                                                    <p className="label-amount">Amount:</p>
-                                                    <p className='amount-reminder'> {selectedReminder.amount}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-
-                            <img src={Arrow} className='arrow-btn' draggable="false"/> */}
           </div>
         </div>
       </div>

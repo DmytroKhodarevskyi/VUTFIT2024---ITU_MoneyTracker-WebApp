@@ -46,11 +46,11 @@ class BatchDeleteRemindersView(APIView):
     def delete(self, request, *args, **kwargs):
         reminders_ids = request.data.get("reminders_ids", [])
         
-        # Ensure we have a list of IDs to delete
+        
         if not reminders_ids:
             return Response({"error": "No transaction IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Delete transactions that match the provided IDs
+      
         deleted_count, _ = Reminder.objects.filter(id__in=reminders_ids).delete()
         
         return Response(

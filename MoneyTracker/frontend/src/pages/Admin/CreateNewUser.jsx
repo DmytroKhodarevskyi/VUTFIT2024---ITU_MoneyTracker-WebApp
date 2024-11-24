@@ -36,7 +36,11 @@ const CreateNewUser = () => {
       setLoading(false);
       return;
     }
-
+    if (formData.phone == "") {
+      alert("Phone cant be empty");
+      setLoading(false);
+      return;
+    }
     
     const nameRegex = /^[A-Za-z]+$/;
     if (!nameRegex.test(formData.first_name.trim())) {

@@ -1,8 +1,8 @@
-// src/components/UserList.js
+
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
-import api from "../../api"; // Ensure you have an axios instance
+import { Link } from "react-router-dom";
+import api from "../../api"; 
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -27,7 +27,7 @@ const UserList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get("/api/custom_admin/users/"); // Ensure the path matches your Django API endpoint
+        const response = await api.get("/api/custom_admin/users/"); 
         setUsers(response.data);
       } catch (err) {
         console.error(err);

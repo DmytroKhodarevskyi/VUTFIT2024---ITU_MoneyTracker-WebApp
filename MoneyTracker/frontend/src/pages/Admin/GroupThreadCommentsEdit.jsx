@@ -4,7 +4,7 @@ import api from "../../api";
 import "./Admin.css";
 
 const ThreadComments = () => {
-  const { pk } = useParams(); // ID of the thread
+  const { pk } = useParams(); 
   const [comments, setComments] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
   const [editingComment, setEditingComment] = useState(null);
@@ -14,7 +14,7 @@ const ThreadComments = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch thread comments
+  
   const fetchComments = async () => {
     try {
       const response = await api.get(`/api/custom_admin/thread/${pk}/comments/`);
@@ -33,7 +33,7 @@ const ThreadComments = () => {
     }
   };
 
-  // Fetch thread title
+ 
   const fetchThreadTitle = async () => {
     try {
       const response = await api.get(`/api/custom_admin/thread/${pk}/`);

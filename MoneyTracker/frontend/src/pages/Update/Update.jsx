@@ -8,7 +8,7 @@ import NewCategory from "../../components/NewCategory/NewCategory"
 
 import Transactions from "../../components/Transactions/Transactions"
 
-// import ClipLoader from "react-spinners/ClipLoader";
+
 
 function Update() {
 
@@ -26,13 +26,13 @@ function Update() {
           try {
             
             const response = await api.get("/api/user/profile/");
-            // setNickname(response.data.username);
+            
             setNickname(response.data.first_name);
             setProfilePhoto(response.data.profileImg);
-            setIsLoaded(true); // Mark data as loaded
+            setIsLoaded(true); 
           } catch (error) {
             console.error("Failed to fetch nickname", error);
-            setIsLoaded(true); // Even if there’s an error, consider data loaded to prevent infinite loading
+            setIsLoaded(true); 
           }
         };
     
@@ -41,11 +41,9 @@ function Update() {
 
 
     if (!isLoaded) {
-        // Optionally, you can return a loading spinner or some placeholder content here
+        
         return (
-            // <div className="loading-spinner">
-            //     <ClipLoader color={"#123abc"} loading={!isLoaded} size={150} />
-            // </div>
+            
             <MainContainer>
                 <div className="loading-container">
                     <h1 className="loading-text">Hold up, loading data...</h1>

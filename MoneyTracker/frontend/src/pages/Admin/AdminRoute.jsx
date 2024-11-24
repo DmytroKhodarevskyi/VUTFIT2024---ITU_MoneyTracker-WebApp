@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import api from '../../api'; // Ensure you have an axios instance
+import api from '../../api'; 
 
 const AdminRoute = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(null);
@@ -31,7 +31,7 @@ const AdminRoute = ({ children }) => {
   }
 
   if (!isAdmin) {
-    return <Navigate to="/login" />; // Redirect to login or an error page if not a superuser
+    return <Navigate to="/login" />;
   }
 
   return children;

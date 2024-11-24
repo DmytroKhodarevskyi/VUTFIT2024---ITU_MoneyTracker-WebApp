@@ -1,8 +1,5 @@
 from django.urls import path
-# from .views import (
-#     TransactionListCreate,
-#     TransactionDelete,
-# )
+
 from api.profile_user.views import CreateUserView
 
 from .views import (
@@ -51,11 +48,14 @@ from .views import (
     CreatePublicationView,
     AdminGroupCreateView,
     CheckGroupNameView,
+    AddUserToGroupView,
+    ThreadAdminCreateView,
+    ReminderCreateAdminView,
     
 )
 
 urlpatterns = [
-    # path("", CustomAdmin, name="custom_admin"),
+    
     path('check_superuser/', check_superuser_status, name='check_superuser_status'),
     path("users/", UserListView.as_view(), name="user-list"),
     path("users/<int:pk>/username/", UsernameSearchView.as_view(), name="user-username"),
@@ -70,8 +70,7 @@ urlpatterns = [
     path('users/<int:pk>/reminders/', UserRemindersView.as_view(), name='user-reminders'),
     
     path('publications/<int:pk>/comments/', UserPublicationCommentsView.as_view(), name='publication-comments'),
-    # path("", TransactionListCreate.as_view(), name="transaction-list"),
-    # path("delete/<int:pk>/", TransactionDelete.as_view(), name="delete-transaction"),
+    
 
     path("users/delete/<int:pk>/", DeleteUserView.as_view(), name="delete-user"),
     path("transactions/batch-delete/", BatchDeleteTransactionsView.as_view(), name="delete-transactions"),
@@ -103,4 +102,7 @@ urlpatterns = [
     path("user/<int:pk>/publications/", CreatePublicationView.as_view(), name="user-create-publication"),
     path("user/<int:pk>/groups/", AdminGroupCreateView.as_view(), name='admin-create-group'),
     path("groups/check-name/", CheckGroupNameView.as_view(), name="check-group-name"),
+    path('groups/<int:group_id>/add-user/', AddUserToGroupView.as_view(), name='add-user-to-group'),
+    path('groups/<int:pk>/threads/create/', ThreadAdminCreateView.as_view(), name='create-thread-admin'),
+    path('user/<int:pk>/reminders/', ReminderCreateAdminView.as_view(), name='create-reminder-admin'),
 ]

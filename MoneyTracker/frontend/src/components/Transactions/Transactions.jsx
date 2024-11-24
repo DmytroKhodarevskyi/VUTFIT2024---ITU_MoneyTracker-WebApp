@@ -13,11 +13,11 @@ function Transactions({}) {
 
 
     useEffect(() => {
-    // Replace this URL with your actual API endpoint
+    
         const fetchTransactions = async () => {
             try {
                 const response = await api.get('/api/transactions/');
-                // console.log(response);
+                
 
                 if (response.status !== 200) {
                     console.error("Error fetching transactions");
@@ -76,7 +76,7 @@ function Transactions({}) {
     <div className='transactions-container'>
         <h1 className='transactions-header'>Transactions</h1>
 
-        {/* Transactions list here, maximum 5 */}
+        
 
         <ul>
         {transactions.slice(0, 5).map((transaction) => (
@@ -88,7 +88,7 @@ function Transactions({}) {
                     <div className='transaction-title-container'>
                     <h2 className='transaction-title'>
                         {truncateTitle(transaction.title, 12)}
-                        {/* {transaction.title} */}
+                        
                     </h2>
                     <h2 className='transaction-category'>{transaction.categoryName}</h2>
                     </div>
@@ -97,18 +97,14 @@ function Transactions({}) {
                 </div>
 
                 {
-                    // transaction.incomeOrSpend ? (
-                    //     <h2 className='transaction-income'>+{currency}{transaction.amount}</h2>  
-                    // ) : (
-                    //     <h2 className='transaction-spend'>-{currency}{transaction.amount}</h2>  
-                    // )
+                    
 
                     transaction.transaction_type === 'INCOME' ? (
                         <h2 className='transaction-income'>+{currency}{transaction.amount}</h2>  
-                        // <h2 className='transaction-income'>+{currency}{truncateTitle(transaction.amount, 5)}</h2>  
+                          
                     ) : (
                         <h2 className='transaction-spend'>-{currency}{transaction.amount}</h2>
-                        // <h2 className='transaction-spend'>-{currency}{truncateTitle(transaction.amount, 5)}</h2>  
+                         
                     )
                 }
 
