@@ -1,6 +1,4 @@
 .admin-main {
-    /* display: flex; */
-    /* flex-direction: column; */
     gap: 16px;
     width: auto;
     height: 5000px;
@@ -35,20 +33,7 @@
     text-decoration: none;
     padding: 16px;
     border-radius: 8px;
-    /* background-color: #4d4d4d; */
 }
-
-
-/* 
-p {
-    font-size: 20px;
-    font-weight: 400;
-    color: white;
-    overflow: scroll;
-    height: 100%;
-    max-height: 100%;
-    padding: 0;
-} */
 
 .admin-header {
     padding: 10px 16px;
@@ -86,7 +71,6 @@ p {
     flex-direction: row;
     gap: 16px;
     width: auto;
-    /* padding: 16px; */
     align-items: flex-end;
 }
 
@@ -99,15 +83,9 @@ p {
 .admin-input-container input,
 .admin-input-container select {
     width: 400px;
-    /* Поля займають всю ширину */
     padding: 15px;
-    /* Внутрішній відступ для полів */
     border: 1px solid #cccccc;
-    /* Сіра рамка */
     border-radius: 4px;
-    /* Згладжені краї */
     font-size: 16px;
-    /* Розмір тексту */
     color: #333333;
-    /* Темно-сірий текст */
 }

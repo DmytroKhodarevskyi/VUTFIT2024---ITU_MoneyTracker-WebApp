@@ -89,9 +89,9 @@ function Form({route, method}){
             }
         }  catch (error) {
             if (error.response) {
-                // Log the full error response
+                
                 console.error("Error response:", error.response);
-                // Extract and display the error message
+                
                 const errorMessage = error.response.data.detail || JSON.stringify(error.response.data);
                 alert(`Error: ${errorMessage}`);
             } else if (error.request) {

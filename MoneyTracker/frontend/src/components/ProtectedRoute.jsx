@@ -5,10 +5,7 @@ import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants"
 import { useState, useEffect } from "react"
 
 
-/*
-** This route is protecting all the following children from 
-** redirection without Logging in with jwt token
-*/
+
 function ProtectedRoute ({children}) {
     const [isAuthorized, setIsAuthorized] = useState(null)
 

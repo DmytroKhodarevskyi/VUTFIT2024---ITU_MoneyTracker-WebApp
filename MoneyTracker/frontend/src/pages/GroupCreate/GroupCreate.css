@@ -2,17 +2,12 @@
     display: flex;
     flex-direction: column;
     padding: 28px 32px;
-
     gap: 28px;
-
     border-radius: 17px;
-
-    height:fit-content;
+    height: fit-content;
     width: auto;
-
     background-color: white;
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
     margin-top: -45px;
 }
 
@@ -57,44 +52,28 @@
 .GroupCreate-input {
     border: 2px solid #d9d9d9;
     border-radius: 8px;
-    
     height: 40px;
-    
-    padding: 0 9px; /* Adjust padding for vertical alignment */
-  
+    padding: 0 9px;
     width: 100%;
-    
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     color: #444444;
     font-size: 16px;
     line-height: 1.5;
-  
     box-sizing: border-box;
-    
 }
-
 
 .GroupCreate-input-textarea {
     border: 2px solid #d9d9d9;
     border-radius: 8px;
-    
     height: 160px;
-    
-    padding: 8px 12px; /* Adjust padding for vertical alignment */
-  
+    padding: 8px 12px;
     width: 100%;
-
-    /* display: flex;
-    align-items: flex-start;
-    justify-content: flex-start; */
-    
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     color: #444444;
     font-size: 16px;
     line-height: 1.5;
-  
     box-sizing: border-box;
     resize: none;
 }
@@ -121,10 +100,10 @@ input[type="file"] {
 .GroupCreate-preview-image {
     width: 200px;
     height: 200px;
-    border-radius: 50%; /* Makes the image round */
-    object-fit: cover; /* Ensures the image fills the circle without stretching */
+    border-radius: 50%;
+    object-fit: cover;
     display: block;
-    margin: 0 auto; /* Center the image horizontally (optional) */
+    margin: 0 auto;
 }
 
 .GroupCreate-selected-file-container {
@@ -152,7 +131,6 @@ input[type="file"] {
     display: flex;
     flex-direction: column;
     gap: 16px;
-
     width: 400px;
     align-items: center;
     justify-content: space-between;
@@ -168,9 +146,8 @@ input[type="file"] {
     width: 100%;
     border-radius: 7px;
     border: 0;
-    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
     cursor: pointer;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -198,6 +175,6 @@ input[type="file"] {
 }
 
 .GroupCreate-button:hover {
-    background-color: #45A049; 
+    background-color: #45A049;
     transform: translateY(-1px);
-} 
+}

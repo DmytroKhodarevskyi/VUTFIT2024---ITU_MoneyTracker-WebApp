@@ -301,16 +301,7 @@ class PublicationDetailView(generics.RetrieveAPIView):
         publication = self.get_object() 
         serializer = self.get_serializer(publication)
         return Response(serializer.data)
-# class PublicationNameByCommentView(APIView):
-#     permission_classes = [IsAdminUser]
 
-#     def get_queryset(self):
-#         # comment = Commnt.o...(ID=ID)
-#         # publication_id = comment.publication
-#         # publiction = Publication.object.filter(id=id)
-#         # pub_name = publication.title
-#         # return Response(pub_name)
-#         return super().get_queryset()
 
 class GroupUsersView(generics.ListAPIView):
     serializer_class = UserGroupSerializer

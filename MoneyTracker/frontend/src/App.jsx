@@ -61,7 +61,7 @@ function RegisterAndLogout() {
 }
 
 function App() {
-  // const [count, setCount] = useState(0)
+  
 
   return (
     <BrowserRouter>
@@ -424,8 +424,7 @@ function App() {
           }
         />
 
-        {/* <Route path="/custom=admin" component={Login} /> */}
-        {/* Other routes */}
+        
 
         <Route path="*" element={<NotFound />} />
       </Routes>

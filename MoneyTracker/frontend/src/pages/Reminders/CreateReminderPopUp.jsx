@@ -75,7 +75,7 @@ function CreateReminderPopup({ showPopup, setShowPopup, setRemindersList }) {
       <div className="popup-content">
         <h2>Create Reminder</h2>
         <form onSubmit={handleSubmit}>
-        {/* <form> */}
+        
           <label>
             Title:
           </label>

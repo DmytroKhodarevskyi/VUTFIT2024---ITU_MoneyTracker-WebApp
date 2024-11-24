@@ -120,7 +120,7 @@ function NewTransactionCard() {
                     <div className='picker-text-icon-container'>
                         <h2 className='card-title-hint'>Pick color</h2>
                         <div className='picker-container'>
-                            {/* <div className='color-square'></div> */}
+                            
                             <ColorPicker onChange={handleColorChange} />
                             <img src={Picker} alt="Picker" />
                         </div>

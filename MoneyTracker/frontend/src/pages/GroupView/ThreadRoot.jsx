@@ -12,7 +12,7 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
   const navigate = useNavigate();
 
   const [modalVisible, setModalVisible] = useState(false);
-  // const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
+  
   const modalRef = useRef(null);
 
   const [modalState, setModalState] = useState(1);
@@ -24,7 +24,7 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
 
     const fetchThread = async () => {
       try {
-        // console.log(thread.id);
+        
         const response = await api.get(
           `/api/groups/threads_comments/${thread.id}/commentscount/`
         );
@@ -41,7 +41,7 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const openModal = (event) => {
-    // setModalPosition({ x: event.clientX, y: event.clientY });
+    
     setModalVisible(true);
   };
 
@@ -79,11 +79,7 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
       <div
         ref={modalRef}
         className="ThreadRoot-modal"
-        // style={{
-        //   position: "relative",
-        //   top: modalPosition.y,
-        //   left: modalPosition.x,
-        // }}
+        
       >
         <button
           className="ThreadRoot-modal-button-delete"
@@ -104,11 +100,7 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
       <div
         ref={modalRef}
         className="ThreadRoot-modal-2"
-        // style={{
-        //   position: "absolute",
-        //   top: modalPosition.y,
-        //   left: modalPosition.x,
-        // }}
+        
       >
         <h1>Are you sure?</h1>
 
@@ -193,9 +185,7 @@ function ThreadRoot({ thread, admin, baseurl, id, setRefreshThreads }) {
         {modalVisible && modalStateRender()}
       </div>
 
-      {/* {modalVisible && (
-        modalStateRender()
-      )} */}
+      
     </>
   );
 }

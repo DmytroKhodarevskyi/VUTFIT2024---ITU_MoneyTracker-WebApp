@@ -1,8 +1,5 @@
 from django.urls import path
-# from .views import (
-#     TransactionListCreate,
-#     TransactionDelete,
-# )
+
 from api.profile_user.views import CreateUserView
 
 from .views import (
@@ -58,7 +55,7 @@ from .views import (
 )
 
 urlpatterns = [
-    # path("", CustomAdmin, name="custom_admin"),
+    
     path('check_superuser/', check_superuser_status, name='check_superuser_status'),
     path("users/", UserListView.as_view(), name="user-list"),
     path("users/<int:pk>/username/", UsernameSearchView.as_view(), name="user-username"),
@@ -73,8 +70,7 @@ urlpatterns = [
     path('users/<int:pk>/reminders/', UserRemindersView.as_view(), name='user-reminders'),
     
     path('publications/<int:pk>/comments/', UserPublicationCommentsView.as_view(), name='publication-comments'),
-    # path("", TransactionListCreate.as_view(), name="transaction-list"),
-    # path("delete/<int:pk>/", TransactionDelete.as_view(), name="delete-transaction"),
+    
 
     path("users/delete/<int:pk>/", DeleteUserView.as_view(), name="delete-user"),
     path("transactions/batch-delete/", BatchDeleteTransactionsView.as_view(), name="delete-transactions"),

@@ -13,7 +13,7 @@ import Transactions from "../../components/Transactions/Transactions"
 import BarChart from "../../components/BarChart/BarChart"
 
 
-// import ClipLoader from "react-spinners/ClipLoader";
+
 
 function Home() {
 
@@ -52,9 +52,7 @@ function Home() {
                 }
             });
 
-            // console.log(income);
-            // console.log(spending);
-            // console.log(income - spending);
+            
 
             setBalance(income - spending);
             setIncome(income);
@@ -80,7 +78,7 @@ function Home() {
         const fetchNickname = async () => {
           try {
             const response = await api.get("/api/user/profile/");
-            // setNickname(response.data.username);
+            
 
             const createdDate = new Date(response.data.createdDate); 
         
@@ -94,10 +92,10 @@ function Home() {
             setAccountCreatedDate(formattedDate);
             setNickname(response.data.first_name);
             setProfilePhoto(response.data.profileImg);
-            setIsLoaded(true); // Mark data as loaded
+            setIsLoaded(true); 
           } catch (error) {
             console.error("Failed to fetch nickname", error);
-            setIsLoaded(true); // Even if there’s an error, consider data loaded to prevent infinite loading
+            setIsLoaded(true); 
           }
         };
     
@@ -106,11 +104,9 @@ function Home() {
 
 
     if (!isLoaded) {
-        // Optionally, you can return a loading spinner or some placeholder content here
+        
         return (
-            // <div className="loading-spinner">
-            //     <ClipLoader color={"#123abc"} loading={!isLoaded} size={150} />
-            // </div>
+           
             <MainContainer>
                 <div className="loading-container">
                     <h1 className="loading-text">Hold up, loading data...</h1>
@@ -126,7 +122,7 @@ function Home() {
                 
                 <div className="grid-container">
 
-                {/* <div className="SummaryCards-container"> */}
+                
                     <SummaryCard 
                         title={"Total Balance"}
                         date={`${accountCreatedDate} - ${todayDate}`} 
@@ -138,7 +134,7 @@ function Home() {
                     <SummaryCard 
                         title={"Total Income"}
                         date={`${accountCreatedDate} - ${todayDate}`} 
-                        // amount={currency + "520.000,01"}
+                        
                         amount={"+" + currency + formatAmount(Income.toFixed(2))}
                         trends={"Total income for period"}
                         style_trends={{color: '#4CAF50'}}
@@ -147,17 +143,16 @@ function Home() {
                     <SummaryCard 
                         title={"Total Spending"}
                         date={`${accountCreatedDate} - ${todayDate}`} 
-                        // amount={"-" + currency + "228.000,00"}
+                        
                         amount={"-" + currency + formatAmount(Spending.toFixed(2))}
                         trends={"Total spending for period"}
                         style_trends={{color: '#F44336'}}
                         img_src={BagIcon}
                     />
-                {/* </div> */}
-                {/* <div className="trans-graph-container"> */}
+                
                     <Transactions />
                     <BarChart />
-                {/* </div> */}
+                
                 </div>
 
             </MainContainer>

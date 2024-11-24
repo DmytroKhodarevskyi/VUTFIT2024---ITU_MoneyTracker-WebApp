@@ -9,17 +9,14 @@ import "./GroupCreate.css";
 function GroupCreate() {
   const nav = useNavigate();
   const [nickname, setNickname] = useState("");
-  // const imageInputRef = useRef(null);
-  // const [media, setMedia] = useState(null);
+  
 
   const [image, setImage] = useState("");
   const [fileName, setFileName] = useState("");
   const [imagePreview, setImagePreview] = useState("");
 
-  const fileInputRef = useRef(null); // Add a ref for the input element
-  // function handleImageChange(e) {
-  // setImage(e.target.files[0]);
-  // }
+  const fileInputRef = useRef(null); 
+  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -40,7 +37,7 @@ function GroupCreate() {
     setImagePreview("");
 
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Reset the file input
+      fileInputRef.current.value = ""; 
     }
   };
 
@@ -196,34 +193,7 @@ function GroupCreate() {
                </div>
 
               )}
-              {/* <div className="GroupCreate-images-container">
-                {fileName && (
-                  <>
-                    <div className="Group-Create-rightpart-withoutphoto">
-                      <button
-                      className="GroupCreate-delete-button"
-                      onClick={() => {
-                        setFileName("");
-                        setImagePreview("");
-                        setImage("");
-                      }}
-                      >Delete Photo</button>
-                      <div className="GroupCreate-selected-file-container">
-                        <p className="GroupCreate-label">Selected file:</p>
-                        <p>{fileName}</p>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-                {imagePreview && (
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="preview-image"
-                  />
-                )}
-              </div> */}
+              
             </div>
 
             <button

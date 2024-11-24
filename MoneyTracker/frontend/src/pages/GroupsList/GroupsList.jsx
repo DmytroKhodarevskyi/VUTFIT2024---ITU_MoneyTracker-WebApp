@@ -88,20 +88,9 @@ function GroupsList() {
             </div>
 
             <div className="GroupsList-group-list-container">
-              {isLoadedGroups ? ( // If groups are loaded
+              {isLoadedGroups ? ( 
                 GroupsList.map((group) => (
-                  // <div
-                  //   key={group.id}
-                  //   className="GroupList-group-container"
-                  //   onClick={() => {
-                  //     nav(`/group/${group.id}`);
-                  //   }}
-                  // >
-                  //   <div className="GroupList-group-name">{group.name}</div>
-                  //   <div className="GroupList-group-description">
-                  //     {group.description}
-                  //   </div>
-                  // </div>
+                 
 
                   <GroupCard
                     id={group.id}
