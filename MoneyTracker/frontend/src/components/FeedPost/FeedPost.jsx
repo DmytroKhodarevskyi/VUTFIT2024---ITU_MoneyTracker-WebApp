@@ -204,16 +204,10 @@ function FeedPost({
   }, [IsCenter, IsLeft, IsRight]);
 
   const baseUrl = import.meta.env.VITE_API_URL;
-  // const fullImageUrl = profileImg ? `${baseUrl}${profileImg}` : `${baseUrl}media/profile_images/default.png`;
 
-  // const fullContentMediaUrl =
-  //   content_media && content_media.startsWith("http")
-  //     ? content_media
-  //     : `${baseUrl}${content_media}`;
 
   return (
-    // <div className="FeedPost-card-main-container"
-    //     style={ContainerStyle}>
+    
 
     <div
       className="FeedPost-card-container"
@@ -248,13 +242,7 @@ function FeedPost({
               {content_text || "No content available."}
             </p>
           </div>
-          {/* {content_media && (
-            <img
-              src={fullContentMediaUrl}
-              alt="Publication media"
-              className="FeedPost-card-media"
-            />
-          )} */}
+        
 
           {media_files && media_files.length > 0 && (
             <div className="FeedPost-media-container">
@@ -345,9 +333,9 @@ function FeedPost({
         <div className="FeedPost-modal-overlay" onClick={closeModal}>
           <div className="FeedPost-modal-content"
           style={{
-            WebkitUserSelect: 'none', // Safari
-            msUserSelect: 'none', // IE 10 and IE 11
-            userSelect: 'none', // Standard syntax
+            WebkitUserSelect: 'none', 
+            msUserSelect: 'none', 
+            userSelect: 'none', 
           }}
           onClick={(e) => e.stopPropagation()}>
             <img src={selectedImage} alt="Full-size publication" className="FeedPost-fullsize-image" />

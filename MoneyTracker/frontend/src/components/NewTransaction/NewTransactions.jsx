@@ -17,7 +17,7 @@ function NewTransactionCard() {
 
     const [IncOrSpndHint, setIncOrSpndHint] = useState('This will count as Income');
 
-    const [isAnimating, setIsAnimating] = useState(false); // Track animation state
+    const [isAnimating, setIsAnimating] = useState(false); 
 
     useEffect(() => {
         const currentDate = new Date();
@@ -31,7 +31,7 @@ function NewTransactionCard() {
           try {
             
             const response = await api.get("/api/categories/");
-            // setNickname(response.data.username);
+            
             
             setCategoriesList(response.data);
             
@@ -69,13 +69,13 @@ function NewTransactionCard() {
         }
 
         const transactionData = {
-            title: name,  // Assuming title corresponds to name
+            title: name,  
             category: category,
-            transaction_datetime: date,  // Map date to transaction_datetime
-            currency: currency.split(" ")[0].toLowerCase(),  // Extract the currency code like "USD"
-            transaction_type: IncomeOrSpend ? 'INCOME' : 'EXPENSE',  // Map the boolean to the transaction type
-            amount: parseFloat(amount).toFixed(2),  // Convert amount to decimal format with 2 decimal places
-            incomeOrSpend: IncomeOrSpend,  // This boolean field seems optional based on your structure
+            transaction_datetime: date,  
+            currency: currency.split(" ")[0].toLowerCase(), 
+            transaction_type: IncomeOrSpend ? 'INCOME' : 'EXPENSE', 
+            amount: parseFloat(amount).toFixed(2), 
+            incomeOrSpend: IncomeOrSpend,  
         };
 
      
@@ -95,7 +95,7 @@ function NewTransactionCard() {
     };
 
     const handleIncomeOrSpend = (e) => {
-        setIsAnimating(true); // Start animation
+        setIsAnimating(true); 
         setTimeout(() => {
             setIncomeOrSpend(!IncomeOrSpend);
 
@@ -105,8 +105,8 @@ function NewTransactionCard() {
                 setIncOrSpndHint('This will count as Income');
             }
 
-            setIsAnimating(false); // Reset after animation
-        }, 100); // Match timeout with animation duration (0.5s)
+            setIsAnimating(false);
+        }, 100); 
     }
 
  console.log(categoriesList)
@@ -167,8 +167,7 @@ function NewTransactionCard() {
                 <div className="card-currency-date-container">
                     <div className='card-amount-input-title-container'>
                         <h1 className='card-input-title'>Payment Currency</h1>
-                        {//TODO: add custom picker or fix the arrow position
-                        }
+                        
                         <select 
                             id="picker-currency" 
                             className="card-input-currency" 
@@ -180,8 +179,7 @@ function NewTransactionCard() {
 
                     <div className='card-amount-input-title-container'>
                         <h1 className='card-input-title'>Payment Date</h1>
-                        {//TODO: add custom date picker 
-                        }
+                        
                         <input 
                             type="datetime-local" 
                             className='card-input-date' 
@@ -196,8 +194,7 @@ function NewTransactionCard() {
                             <h1 className='card-input-title'>Category</h1>
                             <h2 className='card-input-hint'>Select category, or create a new one</h2>
                         </div>
-                        {//TODO: add custom picker or fix the arrow position
-                        }
+                        
                         <select 
                             id="picker-category" 
                             className="card-input-currency" 

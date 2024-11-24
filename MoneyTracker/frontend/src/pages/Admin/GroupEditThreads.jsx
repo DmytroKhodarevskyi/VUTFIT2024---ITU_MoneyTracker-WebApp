@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
+import { Link } from "react-router-dom";
 
 const ThreadsEdit = () => {
   const { pk } = useParams(); 
@@ -131,6 +132,9 @@ const ThreadsEdit = () => {
     return (
       <div className="admin-main-buttons">
         <h1 className="admin-header">No threads were found</h1>
+        <Link to={`/custom-admin/user/${pk}/create-thread/`}>
+      <button>Create Thread</button> 
+        </Link>
       </div>
     );
   }
@@ -138,6 +142,9 @@ const ThreadsEdit = () => {
   return (
     <div className="admin-main-buttons">
       <h1 className="admin-header">Threads in Group</h1>
+      <Link to={`/custom-admin/user/${pk}/create-thread/`}>
+      <button>Create Thread</button> 
+        </Link>
       <button
         onClick={handleDeleteSelected}
         disabled={selectedThreads.length === 0}

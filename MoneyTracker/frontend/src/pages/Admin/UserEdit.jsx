@@ -1,14 +1,14 @@
-// src/components/UserEdit.js
+
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link } from "react-router-dom"; 
 
 import api from "../../api";
 import "./Admin.css";
 
 const UserEdit = () => {
-  const { pk } = useParams(); // Use pk to extract the ID from the URL
+  const { pk } = useParams(); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [username, setUsername] = useState("");
@@ -32,23 +32,7 @@ const UserEdit = () => {
     };
 
     fetchUser();
-  }, [pk]); // Use pk as a dependency to fetch the correct user
-
-  // const handleChange = (e) => {
-  //     const { name, value } = e.target;
-  //     setFormData({ ...formData, [name]: value });
-  // };
-
-  // const handleSubmit = async (e) => {
-  //     e.preventDefault();
-  //     try {
-  //         await api.put(`/api/users/${pk}/`, formData);
-  //         navigate('/admin/users');
-  //     } catch (err) {
-  //         console.error(err);
-  //         setError('Failed to update user');
-  //     }
-  // };
+  }, [pk]); 
 
   if (loading) return <p>Loading user...</p>;
   if (error) return <p>{error}</p>;

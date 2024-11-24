@@ -272,7 +272,7 @@ function CategoriesAndStatistics() {
             <ResponsiveContainer width="100%" height={400}> 
               <PieChart>
                 <Pie
-                  data={topCategories} // Використовуємо topCategories як дані для графіка
+                  data={topCategories} 
                   cx="50%"
                   cy="50%"
                   startAngle={180}

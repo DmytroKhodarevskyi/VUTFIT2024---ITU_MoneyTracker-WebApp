@@ -31,65 +31,64 @@ class GroupCreateView(generics.CreateAPIView):
         serializer.save(creator=self.request.user)
 
 class GroupDataView(APIView):
-    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
+    permission_classes = [IsAuthenticated]  
     serializer_class = GroupSerializer
 
     def get(self, request, group_id):
         try:
-            # Retrieve the group by the specified group_id
+           
             group = Group.objects.get(id=group_id)
             base_url = request.build_absolute_uri('/')[:-1]
-            # Return the group data
+            
             serializer = self.serializer_class(group)
-            # return Group.objects.get(id=group_id)
+           
             return Response({
                 "group": serializer.data,
                 "base_url": base_url
             }, status=status.HTTP_200_OK)
         
         except Group.DoesNotExist:
-            # Return 404 if the group does not exist
+            
             return Response({"error": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
 
 class GroupCreatorGetView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]  # Ensure the user is authenticated
+    permission_classes = [IsAuthenticatedOrReadOnly]  
 
     def get(self, request, group_id):
         try:
-            # Retrieve the group by the specified group_id
+            
             group = Group.objects.get(id=group_id)
             
-            # Return the creator of the group
+           
             creator = group.creator
 
             profile_picture = creator.profile.profile_image.url
             name_surname = creator.first_name + " " + creator.last_name
 
-            # Return the creator's username
-            # return Group.objects.get(id=group_id).creator.username
+            
             return Response({
                 "creator": name_surname,
                 "profile_picture": profile_picture
             }, status=status.HTTP_200_OK)
         
         except Group.DoesNotExist:
-            # Return 404 if the group does not exist
+           
             return Response({"error": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
 
 class GroupCreatorCheckView(APIView):
-    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, group_id):
         try:
-            # Retrieve the group by the specified group_id
+            
             group = Group.objects.get(id=group_id)
             
-            # Check if the creator of the group matches the logged-in user
+            
             moderators = UserGroup.objects.filter(group=group, role='moderator')
             is_moderator = request.user in [moderator.user for moderator in moderators]
             is_creator = group.creator == request.user
             
-            # Return response indicating if the logged-in user is the creator
+            
             return Response({
                 "is_creator": is_creator,
                 "is_moderator": is_moderator
@@ -97,11 +96,11 @@ class GroupCreatorCheckView(APIView):
             , status=status.HTTP_200_OK)
         
         except Group.DoesNotExist:
-            # Return 404 if the group does not exist
+            
             return Response({"error": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
           
 class GroupListView(generics.ListAPIView):
-    # queryset = Group.objects.all()
+    
     serializer_class = GroupSerializer
     permission_classes = [IsAuthenticatedOrReadOnly] 
 
@@ -151,20 +150,7 @@ class GroupUpdateView(generics.UpdateAPIView):
         
         raise PermissionDenied("You do not have permission to update this group.")
 
-# class GroupSubscribeUserView(generics.UpdateAPIView):
-#     queryset = Group.objects.all()
-#     serializer_class = GroupSerializer
-#     permission_classes = [IsAuthenticated]
 
-#     def perform_update(self, group_id, serializer):
-#         group = Group.objects.get(id=group_id)
-#         user_group = UserGroup.objects.filter(group=group, user=self.request.user).first()
-#         user = self.request.user
-#         group.subscribe()
-#         serializer.save(
-#             subscribers_count=group.subscribers_count,
-
-#             )
 
 class GroupSubscribeUserView(generics.CreateAPIView):
     queryset = UserGroup.objects.all()

@@ -18,17 +18,15 @@ import os
 
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-!(3u)m@wq_^+i3zed^^7dqch==+4hs2+cy9%0$2y0uy5@)dj5+'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
+# DEBUG = True
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
@@ -59,7 +57,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
-# Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -114,23 +112,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+
 
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         # 'NAME': 'money_tracker_db',
-#         'NAME': 'railway',
-#         # 'USER': 'money_tracker_user',
-#         'USER': 'postgres',
-#         # 'PASSWORD': '1233den1233',
-#         'PASSWORD': 'sEKuFnfvqpBoXIkFtkqBiVJHtbbfeSan',
+#         'NAME': 'money_tracker_db',
+#         'USER': 'money_tracker_user',
+#         'PASSWORD': '1233den1233',
 #         # 'HOST': 'localhost',
-#         # 'HOST': 'moneytracker-db-1',
-#         # 'HOST': 'postgres.railway.internal',
-#         'HOST': 'autorack.proxy.rlwy.net',
-#         # 'PORT': '5432',
+#         'HOST': 'moneytracker-db-1',
 #         'PORT': '5432',
 #     }
 # }
@@ -151,8 +143,6 @@ DATABASES['default']['OPTIONS'] = {
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -170,8 +160,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
+
 
 LANGUAGE_CODE = 'en-us'
 
@@ -182,16 +171,14 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
+
 
 STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

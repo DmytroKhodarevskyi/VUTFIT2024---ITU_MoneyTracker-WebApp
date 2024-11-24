@@ -4,9 +4,7 @@
     gap: 16px;
     padding: 0px 92px 32px 92px;
     margin-top: -45px;
-
     min-width: 900px;
-
 }
 
 .GroupView-header-container {
@@ -15,11 +13,9 @@
     align-items: center;
     gap: 36px;
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
     background-color: white;
     padding: 24px 36px;
     border-radius: 17px;
-
     min-width: 240px;
 }
 
@@ -30,12 +26,10 @@
 .GroupView-img-container {
     box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.15);
     object-fit: cover;
-    /* overflow: hidden; */
     width: 242px;
     min-width: 242px;
     height: 242px;
     border-radius: 1000px;
-    /* z-index: -1; */
     background-size: cover;
 }
 
@@ -57,11 +51,8 @@
     font-weight: 500;
     color: rgba(0, 0, 0, 0.7);
     margin: 0;
-
     max-height: 70px;
     overflow: scroll;
-
-    
 }
 
 .GroupView-description-container {
@@ -84,10 +75,9 @@
     background-color: #F4F5F7;
     padding: 8px 12px;
     border-radius: 12px;
-    box-shadow:inset 0px 0px 0px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 0px 0px 2px rgba(0, 0, 0, 0.15);
     gap: 12px;
     width: auto;
-
     text-wrap: nowrap;
 }
 
@@ -158,10 +148,9 @@
     padding: 20px 15px;
     border-radius: 12px;
     border: 0;
-    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    
     width: 100%;
     display: flex;
     align-items: center;
@@ -180,15 +169,12 @@
     flex-direction: row;
     gap: 16px;
     align-items: center;
-
     align-items: center;
     justify-content: center;
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
     background-color: white;
     border-radius: 17px;
     cursor: pointer;
-
     transition: all 0.1s ease;
 }
 
@@ -213,90 +199,85 @@
 }
 
 .GroupView-new-thread-popup {
-
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-  
     transition: background-color 0.3s ease-in-out;
 }
 
 .GroupView-new-thread-popup-content {
     background-color: #F8F9FB;
-
 }
+
 .group-moderators-container {
     width: 100%;
     overflow-x: auto;
     justify-content: flex-end;
-  }
-  
+}
+
 .group-moderators-title {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 15px;
-    color: #333; 
+    color: #333;
 }
 
-  .group-moderators-table {
+.group-moderators-table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed; 
-    border: 1px solid #ddd; 
+    table-layout: fixed;
+    border: 1px solid #ddd;
     display: block;
-    max-height: 300px; 
-    overflow-y: auto; 
-  }
-  
-  .group-moderators-table th,
-  .group-moderators-table td {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.group-moderators-table th,
+.group-moderators-table td {
     padding: 12px;
     text-align: center;
     justify-content: center;
     border: 1px solid #ddd;
-    width: 33.33%;  
-  }
-  
-  .group-moderators-table th {
+    width: 33.33%;
+}
+
+.group-moderators-table th {
     background-color: #f2f2f2;
     font-weight: bold;
-  }
-  
-  .group-moderators-table td {
+}
+
+.group-moderators-table td {
     font-size: 14px;
-  }
-  
-  .group-moderators-table tr:hover {
+}
+
+.group-moderators-table tr:hover {
     background-color: #f9f9f9;
-  }
-  
-  .moderator-profile-img {
+}
+
+.moderator-profile-img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-  }
-  
-  .group-moderators-table td img {
+}
+
+.group-moderators-table td img {
     max-width: 100%;
-  }
-  
-  .group-moderators-table td span {
+}
+
+.group-moderators-table td span {
     font-size: 14px;
     color: #888;
-  }
-  
-  .group-moderators-table td:first-child {
-    font-weight: bold;
-  }
-  
+}
 
-  
+.group-moderators-table td:first-child {
+    font-weight: bold;
+}

@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.exceptions import ValidationError
 
 from api.transaction.models import Transaction
 from api.category.models import Category
@@ -35,7 +36,7 @@ from .serializers import (
 from django.contrib.auth.models import User
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])  # Ensure the user is authenticated
+@permission_classes([IsAuthenticated])  
 def check_superuser_status(request):
     is_superuser = request.user.is_superuser
     return Response({'is_superuser': is_superuser}, status=status.HTTP_200_OK)
@@ -73,11 +74,11 @@ class BatchDeleteTransactionsView(APIView):
     def delete(self, request, *args, **kwargs):
         transaction_ids = request.data.get("transaction_ids", [])
         
-        # Ensure we have a list of IDs to delete
+        
         if not transaction_ids:
             return Response({"error": "No transaction IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Delete transactions that match the provided IDs
+        
         deleted_count, _ = Transaction.objects.filter(id__in=transaction_ids).delete()
         
         return Response(
@@ -110,11 +111,11 @@ class BatchDeletePublicationView(APIView):
     def delete(self, request, *args, **kwargs):
         publication_ids = request.data.get("publication_ids", [])
         
-        # Ensure we have a list of IDs to delete
+        
         if not publication_ids:
             return Response({"error": "No publication IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Delete transactions that match the provided IDs
+        
         deleted_count, _ = Publication.objects.filter(id__in=publication_ids).delete()
         
         return Response(
@@ -128,11 +129,11 @@ class BatchDeleteGroupView(APIView):
     def delete(self, request, *args, **kwargs):
         group_ids = request.data.get("group_ids", [])
         
-        # Ensure we have a list of IDs to delete
+        
         if not group_ids:
             return Response({"error": "No group IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Delete transactions that match the provided IDs
+        
         deleted_count, _ = Group.objects.filter(id__in=group_ids).delete()
         
         return Response(
@@ -142,7 +143,7 @@ class BatchDeleteGroupView(APIView):
 
 class UserTransactionsView(generics.ListAPIView):
     serializer_class = TransactionSerializer
-    # permission_classes = [IsAdminUser]
+    
     permission_classes = [AllowAny]
 
     def get_queryset(self):
@@ -153,7 +154,7 @@ class UserTransactionsView(generics.ListAPIView):
 
 class UserCategoriesView(generics.ListAPIView):
     serializer_class = CategorySerializer
-    # permission_classes = [IsAdminUser]
+    
 
     def get_queryset(self):
         user_id = self.kwargs['pk']
@@ -162,7 +163,7 @@ class UserCategoriesView(generics.ListAPIView):
 
 class UserPublicationsView(generics.ListAPIView):
     serializer_class = PublicationSerializer
-    # permission_classes = [IsAdminUser]
+    
 
     def get_queryset(self):
         user_id = self.kwargs['pk']
@@ -170,7 +171,7 @@ class UserPublicationsView(generics.ListAPIView):
     
 class UserGroupsView(generics.ListAPIView):
     serializer_class = GroupSerializer
-    # permission_classes = [IsAdminUser]
+    
 
     def get_queryset(self):
         user_id = self.kwargs['pk']
@@ -274,11 +275,11 @@ class BatchDeletePublicationCommentsView(APIView):
     def delete(self, request, *args, **kwargs):
         comment_ids = request.data.get("comment_ids", [])
         
-        # Ensure we have a list of IDs to delete
+        
         if not comment_ids:
             return Response({"error": "No comments IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Delete transactions that match the provided IDs
+        
         deleted_count, _ = Comment.objects.filter(id__in=comment_ids).delete()
         
         return Response(
@@ -300,16 +301,7 @@ class PublicationDetailView(generics.RetrieveAPIView):
         publication = self.get_object() 
         serializer = self.get_serializer(publication)
         return Response(serializer.data)
-# class PublicationNameByCommentView(APIView):
-#     permission_classes = [IsAdminUser]
 
-#     def get_queryset(self):
-#         # comment = Commnt.o...(ID=ID)
-#         # publication_id = comment.publication
-#         # publiction = Publication.object.filter(id=id)
-#         # pub_name = publication.title
-#         # return Response(pub_name)
-#         return super().get_queryset()
 
 class GroupUsersView(generics.ListAPIView):
     serializer_class = UserGroupSerializer
@@ -361,11 +353,11 @@ class BatchDeleteGroupThreadsView(APIView):
     def delete(self, request, *args, **kwargs):
         thread_ids = request.data.get("thread_ids", [])
         
-        # Ensure we have a list of IDs to delete
+        
         if not thread_ids:
             return Response({"error": "No comments IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Delete transactions that match the provided IDs
+        
         deleted_count, _ = Thread.objects.filter(id__in=thread_ids).delete()
         
         return Response(
@@ -392,7 +384,7 @@ class UpdateGroupThreadsView(generics.UpdateAPIView):
     
 class GroupThreadsView(generics.ListAPIView):
     serializer_class = GroupThreadSerializer
-    # permission_classes = [IsAdminUser]
+    
 
     def get_queryset(self):
         group_id = self.kwargs['pk']
@@ -432,7 +424,7 @@ class BatchDeleteThreadCommentsView(APIView):
         if not comment_ids:
             return Response({"error": "No comments IDs provided"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Delete transactions that match the provided IDs
+        
         deleted_count, _ = ThreadComment.objects.filter(id__in=comment_ids).delete()
         
         return Response(
@@ -554,7 +546,7 @@ class UserProfileDetailView(APIView):
             profile.gender = gender
         if job_title is not None:
             profile.job = job_title
-        if stars_count is not None:  # Оновлення stars_count
+        if stars_count is not None:  
             profile.stars_count = stars_count
         
         profile.save()
@@ -669,3 +661,57 @@ class CheckGroupNameView(APIView):
             return Response({"exists": True, "detail": "Group with this name already exists."}, status=status.HTTP_200_OK)
         
         return Response({"exists": False}, status=status.HTTP_200_OK)
+    
+class AddUserToGroupView(APIView):
+    def post(self, request, group_id):
+        username = request.data.get('username')
+        if not username:
+            return Response({"error": "Username is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = get_object_or_404(User, username=username)
+        group = get_object_or_404(Group, id=group_id)
+
+        
+        if UserGroup.objects.filter(user=user, group=group).exists():
+            return Response({"error": "User is already a member of this group"}, status=status.HTTP_400_BAD_REQUEST)
+
+        
+        UserGroup.objects.create(user=user, group=group, role='member')
+
+        return Response({"message": f"User {username} successfully added to the group {group.name}"}, status=status.HTTP_201_CREATED)
+    
+class ThreadAdminCreateView(generics.CreateAPIView):
+    serializer_class = GroupThreadSerializer
+    permission_classes = [IsAdminUser]
+
+    def perform_create(self, serializer):
+        
+        group_id = self.request.data.get('group')
+
+        if not group_id:
+            raise serializers.ValidationError({"group": "This field is required."})
+
+        try:
+           
+            group = Group.objects.get(id=group_id)
+        except Group.DoesNotExist:
+            raise serializers.ValidationError({"group": "Group does not exist."})
+
+        
+        serializer.save(creator=self.request.user, group=group)
+        
+class ReminderCreateAdminView(generics.CreateAPIView):
+    queryset = Reminder.objects.all()
+    serializer_class = ReminderSerializer
+    permission_classes = [IsAdminUser]
+
+    def perform_create(self, serializer):
+        user_id = self.kwargs.get('pk') 
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            raise ValidationError({"user": "User with the provided ID does not exist."})
+
+        
+        serializer.save(user=user)
+

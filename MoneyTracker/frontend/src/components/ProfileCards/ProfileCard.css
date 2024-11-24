@@ -1,23 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 .ProfileCard-stars-container {
     display: flex;
     gap: 5px;
     background-color: white;
-    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
     height: 15px;
     width: max-content;
     white-space: nowrap;
     padding: 16px 12px;
-
     justify-content: center;
     align-items: center;
-
     position: relative;
     left: 15px;
     bottom: 65px;
-
     max-width: 80px;
 }
 
@@ -25,10 +21,9 @@
     font-size: 18px;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-weight:500;
+    font-weight: 500;
     color: rgba(0, 0, 0, 0.6);
     width: 100%;
-
     margin: 0;
 }
 
@@ -38,38 +33,33 @@
     justify-content: space-between;
     align-items: stretch;
     gap: 16px;
-    width: 100%; 
-    padding: 0px 92px; 
+    width: 100%;
+    padding: 0px 92px;
     margin-top: -45px;
-    box-sizing: border-box; 
-
+    box-sizing: border-box;
     padding-bottom: 32px;
 }
 
 .profile-card {
     background-color: white;
     border-radius: 17px;
-    /* box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); */
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
     padding: 24px 28px;
     flex: 1 1 60%;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    overflow: hidden; 
-
+    overflow: hidden;
     height: fit-content;
     min-width: 780px;
-    /* width: fit-content; */
     gap: 20px;
 }
 
 .profile-sidebar {
     gap: 16px;
     display: flex;
-    flex-direction: column; 
-    flex: 1 1 40%;  
+    flex-direction: column;
+    flex: 1 1 40%;
     box-sizing: border-box;
 }
 
@@ -77,12 +67,10 @@
     display: flex;
     align-items: center;
     gap: 24px;
-    /* background-color: rgb(199, 199, 199); */
     background-color: #F1F1F1;
     border-radius: 20px;
     border: 1px rgba(0, 0, 0, 0.1) solid;
     padding: 24px 20px;
-    /* padding-left: 24px; */
 }
 
 .profile-header-info {
@@ -90,7 +78,6 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    /* padding-left: 10px; */
     flex-grow: 1;
     gap: 20px;
 }
@@ -106,8 +93,6 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    /* margin-top: 15px; */
-    /* margin-bottom: 40px; */
 }
 
 .profile-name {
@@ -118,14 +103,11 @@
 
 .profile-job-title {
     font-weight: 500;
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
     font-size: 20px;
 }
 
-
 .profile-box {
-    /* background-color: #f0f0f0; */
-    /* min-width: 145px; */
     display: flex;
     height: 34px;
     align-items: center;
@@ -135,13 +117,13 @@
     font-size: 18px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     width: auto;
-    min-width: fit-content; 
+    min-width: fit-content;
 }
 
 .profile-contact-info {
     display: flex;
     flex-direction: column;
-    width: 100%; 
+    width: 100%;
 }
 
 .profile-contact-info .profile-box {
@@ -164,19 +146,16 @@
     font-size: 20px;
     color: rgba(0, 0, 0, 0.7);
     font-weight: 500;
-    /* margin-bottom: 5px;  */
 }
 
 .personal-info-header {
     margin: 0;
     font-size: 24px;
-    /* margin-bottom: 15px; */
-
 }
 
 .profile-personal-info {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     gap: 16px;
 }
 
@@ -184,7 +163,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 8px; 
+    gap: 8px;
 }
 
 .label-personal-info {
@@ -202,16 +181,15 @@
 
 .profile-financial-info {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     gap: 16px;
-    /* margin-bottom: 20px; */
 }
 
 .profile-item-financial {
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 8px; 
+    gap: 8px;
 }
 
 .label-financial {
@@ -224,25 +202,19 @@
 .profile-sidebar-buttons {
     background-color: white;
     border-radius: 17px;
-    /* box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); */
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
     padding: 24px 32px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    /* margin-bottom: 20px; */
     gap: 16px;
-    flex: 0 0 auto; 
+    flex: 0 0 auto;
 }
-
 
 .profile-sidebar-bottom {
     background-color: white;
     border-radius: 17px;
-    /* box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); */
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
     padding: 24px 32px;
     display: flex;
     gap: 20px;
@@ -252,34 +224,31 @@
     overflow: auto;
 }
 
-
-.change-profile-button, .setup-reminder-button {
+.change-profile-button,
+.setup-reminder-button {
     background-color: #00BCD4;
     color: white;
     font-size: 18px;
     font-weight: bold;
     font-family: 'Inter', sans-serif;
     padding: 20px 15px;
-    /* margin-bottom: 15px; */
     border-radius: 16px;
     border: 0;
-    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.change-profile-button:hover, .setup-reminder-button:hover {
+.change-profile-button:hover,
+.setup-reminder-button:hover {
     background-color: #4DD0E1;
     transform: translateY(-1px);
-    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
-    /* box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.35); */
-
 }
 
 .label-currency {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    font-size: 20px; 
+    font-size: 20px;
     color: rgba(0, 0, 0, 0.7);
 }
 
@@ -309,7 +278,7 @@
 .profile-reminder {
     padding: 20px;
     background-color: rgba(0, 188, 212, 0.1);
-    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     align-items: center;
     justify-content: space-between;
@@ -333,13 +302,11 @@
 .reminder-item {
     display: flex;
     align-items: center;
-    gap: 5px; 
+    gap: 5px;
 }
-
 
 .label-reminder {
     display: flex;
-
     font-size: 1.3em;
     font-weight: 500;
 }
@@ -352,7 +319,8 @@
     font-weight: 400;
 }
 
-.deadline-reminder, .amount-reminder {
+.deadline-reminder,
+.amount-reminder {
     color: rgba(244, 67, 54, 0.5);
 }
 
@@ -362,7 +330,8 @@
     gap: 8px;
 }
 
-.label-deadline, .label-amount {
+.label-deadline,
+.label-amount {
     color: rgba(0, 0, 0, 0.5);
     font-weight: 400;
 }

@@ -62,12 +62,12 @@ function GroupView() {
         const response = await api.get("/api/user/profile/");
         setNickname(response.data.username);
         setProfilePhoto(response.data.profileImg);
-        // setIsLoaded(true);
+        
 
         setGroupId(window.location.pathname.split("/")[2]);
       } catch (error) {
         console.error("Failed to fetch nickname", error);
-        // setIsLoaded(true);
+        
       }
     };
 
@@ -91,7 +91,7 @@ function GroupView() {
         console.log("Group Data: ", response.data.group);
         console.log("Base Url: ", response.data.base_url);
 
-        // i want url like "http://localhost:8000/media/group_images/2022/07/01/1.jpg"
+        
         setGroupData(response.data.group);
         setSubscribersCount(response.data.group.subscribers_count);
         setBaseUrl(response.data.base_url);
@@ -168,7 +168,7 @@ function GroupView() {
 
 
   const handleCreateThread = () => {
-    // nav(`/groups/${GroupId}/createthread`);
+    
     setNewThreadPopup(!newThreadPopup);
   };
 
@@ -176,7 +176,7 @@ function GroupView() {
     setNewThreadPopup(!newThreadPopup);
   };
 
-  //   console.log("Group ID: ", GroupId);
+ 
   if (!isLoaded) {
     return (
       <>
@@ -258,7 +258,7 @@ function GroupView() {
                       </h1>
                     </div>
                     <p className="GroupView-subscribers-count">
-                      {/* {GroupData.subscribers_count} */}
+                     
                       {subscribersCount}
                     </p>
                   </div>

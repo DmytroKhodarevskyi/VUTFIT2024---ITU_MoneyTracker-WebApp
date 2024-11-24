@@ -4,7 +4,7 @@ import api from "../../api";
 import "./Admin.css";
 
 const PublicationComments = () => {
-  const { pk } = useParams(); // Отримуємо ID публікації з URL
+  const { pk } = useParams(); 
   const [comments, setComments] = useState([]);
   const [selectedComments, setSelectedComments] = useState([]);
   const [editingComment, setEditingComment] = useState(null);
@@ -14,7 +14,7 @@ const PublicationComments = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Завантаження коментарів і авторів
+  
   const fetchComments = async () => {
     try {
       const response = await api.get(`/api/custom_admin/publications/${pk}/comments/`);
@@ -33,7 +33,7 @@ const PublicationComments = () => {
     }
   };
 
-  // Завантаження заголовка публікації
+  
   const fetchPublicationTitle = async () => {
     try {
       const response = await api.get(`/api/custom_admin/publications/${pk}/`);

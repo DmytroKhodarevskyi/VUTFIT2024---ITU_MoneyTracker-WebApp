@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
 import ColorPicker from "../../components/NewCategory/ColorPicker";
@@ -210,7 +210,7 @@ const CategoriesEdit = () => {
                   {category.name}
                 </h2>
               )}
-               {/* COLOR */}
+               
     <h1 className="admin-user-label">COLOR:</h1>
     <h2 className="admin-user-value">{category.color}</h2>
     <div

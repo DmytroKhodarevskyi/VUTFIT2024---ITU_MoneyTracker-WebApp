@@ -64,23 +64,23 @@ function Feed() {
   }, []);
 
   const handleNext = () => {
-    // console.log("Current Index: ", currentIndex);
+    
 
     if (currentIndex === 0) {
-      // When starting from the first 3 posts
+      
       setDisplayedPosts(publications.slice(currentIndex, currentIndex + 3));
       setCurrentIndex(currentIndex + 1);
       return;
     }
 
-    const maxIndex = publications.length - 3; // The last valid slice start index
+    const maxIndex = publications.length - 3; 
     console.log("Max Index: ", maxIndex);
 
     if (currentIndex <= maxIndex) {
       setCurrentIndex(currentIndex + 1);
       setDisplayedPosts(publications.slice(currentIndex, currentIndex + 3));
     } else {
-      // When reaching the last 3 posts
+      
       setCurrentIndex(currentIndex + 1);
       setDisplayedPosts(publications.slice(currentIndex, currentIndex + 2));
     }
@@ -137,7 +137,7 @@ function Feed() {
 
     if (displayedPosts.length === 2 && currentIndex === 0) {
       console.log("Current Index on render: ", currentIndex);
-      // console.log("LEFTMOST TRIGGERED, displayedPosts: ", displayedPosts);
+      
 
       return (
         <>
@@ -164,14 +164,12 @@ function Feed() {
     }
 
     if (displayedPosts.length === 2 && currentIndex + 3 > publications.length) {
-      // console.log("RIGHTMOST TRIGGERED displayedPosts: ", displayedPosts);
+      
       console.log("Current Index on render: ", currentIndex);
 
       return (
         <>
-          {/* <div className="FeedPost-postwrap"
-              onClick={handlePrevious}
-            > */}
+          
           <FeedPost
             key={displayedPosts[0].id}
             publication={displayedPosts[0]}
@@ -181,9 +179,9 @@ function Feed() {
             shouldDisplay={true}
             handleComment={handleComment}
 
-            // onClick={handlePrevious()}
+            
           />
-          {/* </div> */}
+          
           <FeedPost
             key={displayedPosts[1].id}
             publication={displayedPosts[1]}
@@ -198,7 +196,7 @@ function Feed() {
     } else {
       console.log("Current Index on render: ", currentIndex);
 
-      // console.log("Displayed Posts: ", displayedPosts);
+      
 
       return (
         <>
@@ -246,21 +244,11 @@ function Feed() {
         />
 
         <div className="feed-wrapper">
-          {/* <button 
-              onClick={handlePrevious} 
-              disabled={currentIndex === -1}
-              >
-              Previous
-              </button> */}
+          
 
           {RenderPosts()}
 
-          {/* <button 
-              onClick={handleNext}
-              disabled={currentIndex + 3 > publications.length}
-              >
-                Next
-              </button> */}
+          
         </div>
       </MainContainer>
     </NavigationContext.Provider>

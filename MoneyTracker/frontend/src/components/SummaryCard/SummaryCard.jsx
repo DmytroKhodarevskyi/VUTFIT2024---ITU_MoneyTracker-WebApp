@@ -3,13 +3,7 @@ import "./SummaryCard.css"
 
 function SummaryCard({title, date, amount, trends, style_trends, img_src}) {
 
-  // const formatAmount = (amount) => {
-  //   return new Intl.NumberFormat('de-DE', {
-  //       style: 'decimal',
-  //       minimumFractionDigits: 2,
-  //       maximumFractionDigits: 2
-  //   }).format(amount);
-  // };
+ 
 
   return (
     <>

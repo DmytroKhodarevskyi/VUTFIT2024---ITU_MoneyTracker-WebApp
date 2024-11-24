@@ -1,16 +1,12 @@
 .card-trans {
     background-color: white;
     border-radius: 17px;
-
     min-width: 590px;
-
     padding: 32px 24px;
-
     display: flex;
     flex-direction: column;
     gap: 20px;
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
 }
 
 .card-transaction-top-container {
@@ -22,35 +18,26 @@
 .card-category {
     background-color: white;
     border-radius: 17px;
-
     min-width: 400px;
     height: max-content;
-
     padding: 32px 24px;
-
     display: flex;
     flex-direction: column;
     gap: 20px;
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
 }
 
 .card-buttons {
     background-color: white;
     border-radius: 17px;
-
     min-width: 400px;
     height: 100%;
-
     padding: 32px 24px;
-
     display: flex;
     flex-direction: row;
     gap: 32px;
     box-shadow: rgba(20, 33, 61, 0.1) 0px 4px 10px;
-
     justify-content: space-between;
-
 }
 
 .right-container {
@@ -73,16 +60,13 @@
     font-weight: bold;
     font-family: 'Inter', sans-serif;
     padding: 20px 15px;
-    /* margin-bottom: 15px; */
     border-radius: 7px;
     border: 0;
-    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
     cursor: pointer;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     transition: all 0.3s ease;
 }
 
@@ -151,27 +135,19 @@
 .card-input {
     border: 2px solid #d9d9d9;
     border-radius: 8px;
-
     padding: 12px 9px;
     height: 12px;
-
     width: 100%;
-
     color: #444444;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
-
     -webkit-appearance: none;
     appearance: textfield;
-
-    /* For Chrome, Safari, Edge, Opera */
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
-
-    /* For Firefox */
     &::-moz-appearance {
         appearance: none;
     }
@@ -180,72 +156,44 @@
 .card-input-date {
     border: 2px solid #d9d9d9;
     border-radius: 8px;
-
     padding: 12px 9px;
     height: 12px;
-
     width: auto;
-
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     color: #444444;
-
 }
 
 .card-input-currency {
-    /* border: 2px solid #d9d9d9;
-    border-radius: 8px;
-
-    padding: 12px 9px;
-    height: 12px;
-
-    width: 100%; */
-
     border: 2px solid #d9d9d9;
     border-radius: 8px;
-    
-    /* Set fixed height to 40px */
     height: 40px;
-    
-    /* Ensure padding fits within the box height */
-    padding: 0 9px; /* Adjust padding for vertical alignment */
-  
-    /* Full width */
+    padding: 0 9px;
     width: 100%;
-    
-    /* Use Inter font */
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     color: #444444;
-    /* Font size and line height */
     font-size: 16px;
     line-height: 1.5;
-  
-    /* Ensure the padding and borders are included in the element's height */
     box-sizing: border-box;
-    
-    /* Optional: cursor style for better user experience */
     cursor: pointer;
 }
 
 .card-button {
     height: 40px;
     width: 40px;
-
     cursor: pointer;
-
-    transition: opacity 0.1s ease-in-out; /* Smooth transition for fading */
-    /* transition: fadeout 0.3s ease, fadein 0.3s ease; */
+    transition: opacity 0.1s ease-in-out;
 }
 
 .card-button.fade-in {
-    opacity: 1; /* Visible */
-    animation: fadeIn 0.1s forwards; /* Fade-in animation */
+    opacity: 1;
+    animation: fadeIn 0.1s forwards;
 }
 
 .card-button.fade-out {
-    opacity: 0; /* Hidden */
-    animation: fadeOut 0.1s forwards; /* Fade-out animation */
+    opacity: 0;
+    animation: fadeOut 0.1s forwards;
 }
 
 @keyframes fadeIn {
@@ -271,7 +219,6 @@
     flex-direction: column;
     gap: 8px;
     width: 100%;
-
     min-width: 180px;
 }
 
@@ -289,12 +236,9 @@
 .card-input-category {
     border: 2px solid #d9d9d9;
     border-radius: 8px;
-
     padding: 12px 9px;
     height: 12px;
-
     width: 237px;
-
     color: #444444;
     font-weight: 500;
 }
@@ -303,7 +247,6 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-
     min-width: 180px;
 }
 
@@ -315,18 +258,14 @@
     font-weight: bold;
     font-family: 'Inter', sans-serif;
     padding: 20px 15px;
-    /* margin-bottom: 15px; */
     border-radius: 7px;
     border: 0;
-    box-shadow:inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
     cursor: pointer;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     transition: all 0.3s ease;
-
     width: 259px;
 }
 
@@ -335,7 +274,6 @@
 }
 
 .color-square {
-    /* background-color: #14213d; */
     width: 40px;
     height: 40px;
     border-radius: 7px;
@@ -373,7 +311,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* height: 50px; */
 }
 
 .blue-buttons:hover {
@@ -381,25 +318,23 @@
 }
 
 .hitbox {
-    -webkit-appearance: none; /* Remove default WebKit styling */
-  -moz-appearance: none; /* Remove default Mozilla styling */
-  appearance: none; /* Remove default appearance */
-  width: 45px;
-  height: 45px;
-  border-radius: 7px;
-  padding: 0;
-  cursor: pointer;
-  background-color: transparent; /* Start with no background */
-  outline: none; /* Remove default focus outline */
-  border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 7px;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+    border: none;
 }
 
-/* Add border and fill color when user selects a color */
 .hitbox::-webkit-color-swatch {
     border-radius: 7px;
-  }
-  
-  .hitbox::-moz-color-swatch {
-    border-radius: 7px;
-  }
+}
 
+.hitbox::-moz-color-swatch {
+    border-radius: 7px;
+}

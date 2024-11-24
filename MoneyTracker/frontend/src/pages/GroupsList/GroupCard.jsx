@@ -76,7 +76,7 @@ function GroupCard({ id, name, subscribers, image }) {
             />
             <div className="GroupCard-NameDescription-container">
               <h2 className="GroupCard-Name">{name}</h2>
-              {/* <p className="GroupCard-Description">{subscribersCount} subscribers</p> */}
+              
               <p className="GroupCard-Description">{subscribersCount} subscribers</p>
             </div>
           </div>
@@ -121,9 +121,7 @@ function GroupCard({ id, name, subscribers, image }) {
             ) : (
               <SubscribeButton />
             )}
-          {/* <button */}
-          {/* onClick={handleSubscribe} */}
-          {/* >Subscribe</button>} */}
+          
         </div>
       </div>
     </>

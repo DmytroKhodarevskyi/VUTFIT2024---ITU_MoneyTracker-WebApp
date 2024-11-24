@@ -6,7 +6,8 @@ from .views import (
     UserProfileDetailView,
     UserProfilePhotoView,
     GenderChoiceView,
-    UserDeleteView
+    UserDeleteView,
+    UserListView
 )
 
 urlpatterns = [
@@ -17,4 +18,5 @@ urlpatterns = [
     path("profile-photo/", UserProfilePhotoView.as_view(), name="user_profile_photo"),
     path("gender-choices/", GenderChoiceView.as_view(), name="gender_choices"),
     path('delete/', UserDeleteView.as_view(), name='delete_user'),
+    path('usernames-and-phones/', UserListView.as_view(), name='usernames_and_phones'),
 ]

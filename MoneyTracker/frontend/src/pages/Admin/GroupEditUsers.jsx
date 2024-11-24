@@ -13,7 +13,9 @@ const GroupUsers = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  
+  const [newUser, setNewUser] = useState(""); 
+  const [addUserError, setAddUserError] = useState(null); 
+
   const fetchUsers = async () => {
     try {
       const response = await api.get(`/api/custom_admin/groups/${pk}/users/`);
@@ -38,7 +40,6 @@ const GroupUsers = () => {
     try {
       let updatedValue = tempValue;
 
-      
       if (typeof updatedValue === "string") {
         updatedValue = updatedValue.trim();
       }
@@ -99,12 +100,42 @@ const GroupUsers = () => {
     setFieldBeingEdited(field);
   };
 
+  const handleAddUser = async () => {
+    if (!newUser.trim()) {
+      setAddUserError("Username is required");
+      return;
+    }
+
+    try {
+      const response = await api.post(`/api/custom_admin/groups/${pk}/add-user/`, {
+        username: newUser.trim(),
+      });
+      alert(response.data.message);
+      setNewUser("");
+      setAddUserError(null);
+      fetchUsers(); 
+    } catch (err) {
+      console.error("Failed to add user to group:", err);
+      setAddUserError(err.response?.data?.error || "This user doesnt exist.");
+    }
+  };
+
   if (loading) return <p>Loading users...</p>;
   if (error) return <p>{error}</p>;
   if (users.length === 0) {
     return (
       <div className="admin-main-buttons">
         <h1 className="admin-header">No users were found</h1>
+        <div className="admin-user-label">
+          <input
+            type="text"
+            value={newUser}
+            onChange={(e) => setNewUser(e.target.value)}
+            placeholder="Enter username to add"
+          />
+          <button onClick={handleAddUser}>Add User</button>
+          {addUserError && <p className="error-text">{addUserError}</p>}
+        </div>
       </div>
     );
   }
@@ -112,6 +143,16 @@ const GroupUsers = () => {
   return (
     <div className="admin-main-buttons">
       <h1 className="admin-header">Users in Group</h1>
+      <div className="admin-user-value">
+        <input
+          type="text"
+          value={newUser}
+          onChange={(e) => setNewUser(e.target.value)}
+          placeholder="Enter username to add"
+        />
+        <button onClick={handleAddUser}>Add User</button>
+        {addUserError && <p className="error-text">{addUserError}</p>}
+      </div>
       <button
         onClick={handleDeleteSelected}
         disabled={selectedUsers.length === 0}
@@ -126,7 +167,7 @@ const GroupUsers = () => {
               checked={selectedUsers.includes(user.id)}
               onChange={() => toggleUserSelection(user.id)}
             />
-            
+
             <h1 className="admin-user-label">Username:</h1>
             <h2 className="admin-user-value">{user.username || "Unknown Username"}</h2>
             <h1 className="admin-user-label">Role:</h1>

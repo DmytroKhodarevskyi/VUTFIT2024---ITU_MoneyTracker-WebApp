@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .serializers import UserSerializer, GenderChoicesSerializer
+from .serializers import UserSerializer, GenderChoicesSerializer, UserUsernameSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import generics
@@ -224,3 +224,9 @@ class UserDeleteView(generics.DestroyAPIView):
 
     def get_object(self):
         return self.request.user
+    
+
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()  
+    serializer_class = UserUsernameSerializer 
+    permission_classes=[AllowAny]
