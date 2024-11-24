@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
+import dj_database_url
 import os
 
 load_dotenv()
@@ -116,6 +117,24 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         # 'NAME': 'money_tracker_db',
+#         'NAME': 'railway',
+#         # 'USER': 'money_tracker_user',
+#         'USER': 'postgres',
+#         # 'PASSWORD': '1233den1233',
+#         'PASSWORD': 'sEKuFnfvqpBoXIkFtkqBiVJHtbbfeSan',
+#         # 'HOST': 'localhost',
+#         # 'HOST': 'moneytracker-db-1',
+#         # 'HOST': 'postgres.railway.internal',
+#         'HOST': 'autorack.proxy.rlwy.net',
+#         # 'PORT': '5432',
+#         'PORT': '5432',
+#     }
+# }
 
 DATABASES = {
     'default': {

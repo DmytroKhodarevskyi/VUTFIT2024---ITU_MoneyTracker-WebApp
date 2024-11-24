@@ -11,3 +11,5 @@ python-dotenv
 drf-spectacular
 drf-spectacular-sidecar
 Pillow
+dj-database-url
+django-db-geventpool
