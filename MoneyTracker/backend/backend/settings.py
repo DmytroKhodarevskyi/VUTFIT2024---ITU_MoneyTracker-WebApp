@@ -29,6 +29,7 @@ SECRET_KEY = 'django-insecure-!(3u)m@wq_^+i3zed^^7dqch==+4hs2+cy9%0$2y0uy5@)dj5+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -128,6 +129,20 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv('DATABASE_URL'),
+#         conn_max_age=600,  # Keep the connection alive for 10 minutes
+#         ssl_require=True   # Enforce SSL for secure connections
+#     )
+# }
+
+# DATABASES['default']['OPTIONS'] = {
+#     'connect_timeout': 20  # Set to 20 seconds
+# }
+
+# # DATABASES['default']['ENGINE'] = 'django_db_geventpool.backends.postgresql_psycopg2'
+# DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
