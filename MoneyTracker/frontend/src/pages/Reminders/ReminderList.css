@@ -63,14 +63,15 @@
     border-radius: 7px;
     overflow: hidden;
     max-height: 490px;
-    min-width: 457px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .ReminderList-reminders-table {
     font-size: 20px;
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .ReminderList-reminders-table thead,
@@ -112,17 +113,17 @@
 
 .ReminderList-reminders-table th:nth-child(1),
 .ReminderList-reminders-table td:nth-child(1) {
-    width: 40%;
+    width: 25%;
 }
 
 .ReminderList-reminders-table th:nth-child(2),
 .ReminderList-reminders-table td:nth-child(2) {
-    width: 30%;
+    width: 25%;
 }
 
 .ReminderList-reminders-table th:nth-child(3),
 .ReminderList-reminders-table td:nth-child(3) {
-    width: 10%;
+    width: 5%;
 }
 
 .ReminderList-table-scroll {

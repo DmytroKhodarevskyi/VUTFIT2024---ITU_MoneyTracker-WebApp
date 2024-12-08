@@ -121,8 +121,8 @@ DATABASES = {
         'NAME': 'money_tracker_db',
         'USER': 'money_tracker_user',
         'PASSWORD': '1233den1233',
-        # 'HOST': 'localhost',
-        'HOST': 'moneytracker-db-1',
+        'HOST': 'localhost',
+        #'HOST': 'moneytracker-db-1',
         'PORT': '5432',
     }
 }

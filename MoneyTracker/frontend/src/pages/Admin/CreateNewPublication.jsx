@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";
+import Notification from "../../components/Notifications/Notifications";
 
 const CreateNewPublication = () => {
   const { pk } = useParams(); 
@@ -12,19 +13,26 @@ const CreateNewPublication = () => {
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const [notification, setNotification] = useState(null);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     
     if (!formData.title.trim()) {
-      alert("Publication title is required.");
+      
+      setNotification({
+        message: "Publication title is required.",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
@@ -36,7 +44,11 @@ const CreateNewPublication = () => {
     const invalidTags = tagArray.filter((tag) => !validTagRegex.test(tag));
 
     if (invalidTags.length > 0) {
-      alert("Tags can only contain letters, numbers, hyphens (-), and periods (.)");
+      
+      setNotification({
+        message: "Tags can only contain letters, numbers, hyphens (-), and periods (.)",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
@@ -51,15 +63,19 @@ const CreateNewPublication = () => {
 
     try {
       await api.post(`/api/custom_admin/user/${pk}/publications/`, payload);
-      alert("Publication created successfully!");
-      navigate(`/custom-admin/users/${pk}/publications`);
+      setNotification({
+        message: "Publication created successfully!",
+        type: "success",
+      });
+      setTimeout(() => {
+      navigate(`/custom-admin/users/${pk}/publications`);},2000);
     } catch (error) {
       console.error("Error creating publication:", error.response || error.message);
-      alert(
-        `Error: ${
-          error.response?.data?.detail || "An error occurred while creating the publication."
-        }`
-      );
+      const errorMessage = error.response?.data?.detail || "An error occurred while creating the publication.";
+      setNotification({
+        message: errorMessage,
+        type: "error",
+      });
     } finally {
       setLoading(false);
     }
@@ -67,6 +83,14 @@ const CreateNewPublication = () => {
 
   return (
     <form onSubmit={handleSubmit} className="admin-main">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+
       <h1 className="admin-header">Create New Publication</h1>
 
       <div className="admin-input-container">

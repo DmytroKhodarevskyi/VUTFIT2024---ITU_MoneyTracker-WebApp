@@ -54,8 +54,12 @@ function Form({route, method}){
 
         if (method === "register") {
             const usernameExists = existingUsers.some(user => user.username === username);
+            
+        console.log("My tut");
+        console.log(phone);
+        console.log(user.profile.phone);
             const phoneExists = existingUsers.some(user => user.profile.phone === phone);
-    
+            
             if (usernameExists) {
                 alert("Username already exists!");
                 setLoading(false);
@@ -69,8 +73,8 @@ function Form({route, method}){
             }
         }
     
-
-
+        console.log("My tut");
+        console.log(phone);
         try {
             const payload = { 
                 username, 
@@ -83,7 +87,8 @@ function Form({route, method}){
                     job: "Unemployed"  
                 }
             };
-
+            console.log("My tut");
+            console.log(payload);
             if (method === "register") {
                 if (!nameRegex.test(trimmedFirstName)) {
                     alert("First name can only contain letters.");

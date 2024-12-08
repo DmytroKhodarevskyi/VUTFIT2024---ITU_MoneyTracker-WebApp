@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
 import ColorPicker from "../../components/NewCategory/ColorPicker";
+import Notification from "../../components/Notifications/Notifications";
 
 const CategoriesEdit = () => {
   const { pk } = useParams(); 
@@ -20,13 +21,17 @@ const CategoriesEdit = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [notification, setNotification] = useState(null);
   const navigate = useNavigate();
 
   const handleDoubleClick = (categoryId, currentValue, field) => {
     setEditingCategory(categoryId);
     setTempValue(currentValue);
     setFieldBeingEdited(field);
+  };
+
+  const closeNotification = () => {
+    setNotification(null);
   };
 
   const handleInputChange = (e) => {
@@ -67,7 +72,11 @@ const CategoriesEdit = () => {
 
   const handleDeleteSelected = async () => {
     if (selectedCategories.length === 0) {
-      alert("Please select categories to delete.");
+      
+      setNotification({
+        message: "Please select categories to delete.",
+        type: "error",
+      });
       return;
     }
 
@@ -169,6 +178,13 @@ const CategoriesEdit = () => {
   return (
     <>
       <div className="admin-main-buttons">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
         <h1 className="admin-header">{username}'s Categories</h1>
         <Link to={`/custom-admin/user/${pk}/create-category/`}>
       <button>Create Category</button> 

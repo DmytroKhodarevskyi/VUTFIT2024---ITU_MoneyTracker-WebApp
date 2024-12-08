@@ -6,6 +6,7 @@ import ProfileEditCard from "../../components/ProfileCards/ProfileEditCard"
 import DiscardForm from "../../components/DiscardForm/DiscardForm"
 import { useNavigate } from 'react-router-dom';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
+import Notification from "../../components/Notifications/Notifications";
 
 function ProfileEdit() {
 
@@ -26,6 +27,7 @@ function ProfileEdit() {
     const [photoPreview, setPhotoPreview] = useState(null);
 
     const [showDiscardModal, setShowDiscardModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const fileInputRef = useRef(null);
 
@@ -118,6 +120,9 @@ function ProfileEdit() {
         setPhotoPreview(null);
         setDeletePhoto(true);
     }
+    const closeNotification = () => {
+        setErrorMessage(null);
+      };
 
     const handleSave = async () => {
         try {
@@ -145,37 +150,44 @@ function ProfileEdit() {
             }
 
             if (!nameRegex.test(firstname.trim())) {
-                window.alert('First name can only contain letters and cannot be empty.');
+               
+                setErrorMessage('First name can only contain letters and cannot be empty.');
                 return;
             }
 
             if (!nameRegex.test(lastname.trim())) {
-                window.alert('Last name can only contain letters and cannot be empty.');
+                
+                setErrorMessage('Last name can only contain letters and cannot be empty.');
                 return;
             }
 
             if (!jobTitleRegex.test(jobTitle.trim())) {
-                window.alert('Job can only contain letters and spaces. And numbers (But not as a first char)');
+                
+                setErrorMessage('Job can only contain letters and spaces. And numbers (But not as a first char)');
                 return;
             }
 
             if (!countryCityRegex.test(country.trim()) && country.length != 0) {
-                window.alert('Country can only contain letters and spaces.');
+                
+                setErrorMessage('Country can only contain letters and spaces.');
                 return;
             }
 
             if (!countryCityRegex.test(city.trim()) && city.length != 0) {
-                window.alert('City can only contain letters and spaces.');
+                
+                setErrorMessage('City can only contain letters and spaces.');
                 return;
             }
             
             if (!emailRegex.test(email.trim())) {
-                window.alert('Email can only contain letters and spaces.');
+                
+                setErrorMessage('Email can only contain letters and spaces.');
                 return;
             }
 
             if (!phoneRegex.test(phone.trim())) {
-                window.alert('Phone can only contain letters and spaces and start with either + or any number except 0');
+               
+                setErrorMessage('Phone can only contain letters and spaces and start with either + or any number except 0');
                 return;
             }
             
@@ -198,8 +210,10 @@ function ProfileEdit() {
 
             const response = await api.patch("/api/user/profile_detail/", profileData);
             navigate('/profile');
+            
         } catch (error) {
-            window.alert(error);
+            
+            setErrorMessage(error);
         }
     };
 
@@ -215,7 +229,8 @@ function ProfileEdit() {
 
     const handleDeleteAccount = async (accessToken, refreshToken) => {
         if (!accessToken) {
-            alert("You need to log in first.");
+            
+            setErrorMessage("You need to log in first.");
             navigate("/login");
             return;
         }
@@ -260,7 +275,8 @@ function ProfileEdit() {
                 }
             } else {
                
-                alert("There was an error deleting your account. Please try again later.");
+                
+                setErrorMessage("There was an error deleting your account. Please try again later.");
             }
         }
     };
@@ -286,7 +302,15 @@ function ProfileEdit() {
       }
     
     return (
+        
         <MainContainer>
+            {errorMessage && (
+            <Notification
+              message={errorMessage}
+              type="error" 
+              onClose={closeNotification}
+            />
+          )}
         <TopPart nickname={profileData.username} selectedItem={"profile"} profilePhoto={profilePhoto}/>
         <div className="profile-container">
             <ProfileEditCard 
