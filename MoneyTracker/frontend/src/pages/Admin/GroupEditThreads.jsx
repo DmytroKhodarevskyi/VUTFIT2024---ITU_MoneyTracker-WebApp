@@ -3,9 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
 import { Link } from "react-router-dom";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
+import Notification from "../../components/Notifications/Notifications";
 
 const ThreadsEdit = () => {
-  const { pk } = useParams(); 
+  const { pk } = useParams();
   const [threads, setThreads] = useState([]);
   const [selectedThreads, setSelectedThreads] = useState([]);
   const [editingThread, setEditingThread] = useState(null);
@@ -13,8 +15,13 @@ const ThreadsEdit = () => {
   const [fieldBeingEdited, setFieldBeingEdited] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState(null); 
   const navigate = useNavigate();
 
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const fetchThreads = async () => {
     try {
       const response = await api.get(`/api/custom_admin/groups/${pk}/threads/`);
@@ -41,8 +48,7 @@ const ThreadsEdit = () => {
       if (fieldBeingEdited === "title") {
         updatedValue = tempValue.trim() === "" ? "No title" : tempValue.trim();
       } else if (fieldBeingEdited === "text_content") {
-        updatedValue =
-          tempValue.trim() === "" ? "No content" : tempValue.trim();
+        updatedValue = tempValue.trim() === "" ? "No content" : tempValue.trim();
       } else {
         updatedValue = tempValue.trim();
       }
@@ -68,13 +74,18 @@ const ThreadsEdit = () => {
 
   const handleDeleteSelected = async () => {
     if (selectedThreads.length === 0) {
-      alert("Please select threads to delete.");
+      
+      setNotification({
+        message: "Please select threads to delete.",
+        type: "error",
+      });
       return;
     }
+    setShowModal(true); 
+  };
 
-    const isConfirmed = window.confirm("Are you sure you want to delete the selected threads?");
-    if (!isConfirmed) return;
-
+  const confirmDelete = async () => {
+    setShowModal(false); 
     try {
       await api.delete(`/api/custom_admin/groups/threads/batch-delete`, {
         data: { thread_ids: selectedThreads },
@@ -90,25 +101,40 @@ const ThreadsEdit = () => {
     }
   };
 
+  const cancelDelete = () => {
+    setShowModal(false); 
+  };
+
   const handleGoToComments = () => {
     if (selectedThreads.length === 0) {
-      alert("Please select one  thread.");
+      
+      setNotification({
+        message: "Please select one thread.",
+        type: "error",
+      });
       return;
     }
-  
+
     if (selectedThreads.length > 1) {
-      alert("Please select only one  thread.");
+      
+      setNotification({
+        message: "Please select only one thread.",
+        type: "error",
+      });
       return;
     }
-  
-    const threadId = selectedThreads[0]; 
-    
-  
+
+    const threadId = selectedThreads[0];
+
     if (!threadId) {
-      alert("Something went wrong. Please try again.");
+      
+      setNotification({
+        message: "Something went wrong. Please try again.",
+        type: "error",
+      });
       return;
     }
-  
+
     navigate(`/custom-admin/thread/${threadId}/comments/`);
   };
 
@@ -133,7 +159,7 @@ const ThreadsEdit = () => {
       <div className="admin-main-buttons">
         <h1 className="admin-header">No threads were found</h1>
         <Link to={`/custom-admin/user/${pk}/create-thread/`}>
-      <button>Create Thread</button> 
+          <button>Create Thread</button>
         </Link>
       </div>
     );
@@ -143,8 +169,8 @@ const ThreadsEdit = () => {
     <div className="admin-main-buttons">
       <h1 className="admin-header">Threads in Group</h1>
       <Link to={`/custom-admin/user/${pk}/create-thread/`}>
-      <button>Create Thread</button> 
-        </Link>
+        <button>Create Thread</button>
+      </Link>
       <button
         onClick={handleDeleteSelected}
         disabled={selectedThreads.length === 0}
@@ -157,6 +183,20 @@ const ThreadsEdit = () => {
       >
         Thread Comments
       </button>
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete the selected threads?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
       <ul className="admin-userlist">
         {threads.map((thread) => (
           <li key={thread.id} className="admin-useritem">

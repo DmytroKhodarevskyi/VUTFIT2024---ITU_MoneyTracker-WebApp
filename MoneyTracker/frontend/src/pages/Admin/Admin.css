@@ -1,91 +1,91 @@
-.admin-main {
-    gap: 16px;
-    width: auto;
-    height: 5000px;
-    padding: 16px;
-    background-color: black;
-}
-
-.admin-main-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: auto;
-    height: 5000px;
-    padding: 16px;
-    background-color: black;
-}
-
-.admin-user-button {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    width: auto;
-    padding: 16px;
-    align-items: center;
-    justify-content: center;
-}
-
-.admin-user-button a {
-    font-size: 20px;
-    font-weight: 600;
-    color: black;
-    text-decoration: none;
-    padding: 16px;
-    border-radius: 8px;
-}
-
-.admin-header {
-    padding: 10px 16px;
-    color: white;
-    font-size: 40px;
-    margin: 0;
-}
-
-.admin-user-label {
-    font-size: 20px;
-    font-weight: 600;
-    color: white;
-    width: fit-content;
-    margin: 0;
-}
-
-.admin-user-value {
-    font-size: 20px;
-    font-weight: 400;
-    color: antiquewhite;
-    width: fit-content;
-    margin: 0;
-}
-
-.admin-userlist {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: auto;
-    padding: 16px;
-}
-
-.admin-useritem {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    width: auto;
-    align-items: flex-end;
-}
-
-.admin-input-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.admin-input-container input,
-.admin-input-container select {
-    width: 400px;
-    padding: 15px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #333333;
-}
+    .admin-main {
+        gap: 16px;
+        width: auto;
+        height: 5000px;
+        padding: 16px;
+        background-color: #14213D;
+    }
+    
+    .admin-main-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: auto;
+        height: 5000px;
+        padding: 16px;
+        background-color: #14213D;
+    }
+    
+    .admin-user-button {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        width: auto;
+        padding: 16px;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .admin-user-button a {
+        font-size: 20px;
+        font-weight: 600;
+        color: black;
+        text-decoration: none;
+        padding: 16px;
+        border-radius: 8px;
+    }
+    
+    .admin-header {
+        padding: 10px 16px;
+        color: white;
+        font-size: 40px;
+        margin: 0;
+    }
+    
+    .admin-user-label {
+        font-size: 20px;
+        font-weight: 600;
+        color: white;
+        width: fit-content;
+        margin: 0;
+    }
+    
+    .admin-user-value {
+        font-size: 20px;
+        font-weight: 400;
+        color: antiquewhite;
+        width: fit-content;
+        margin: 0;
+    }
+    
+    .admin-userlist {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: auto;
+        padding: 16px;
+    }
+    
+    .admin-useritem {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        width: auto;
+        align-items: flex-end;
+    }
+    
+    .admin-input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .admin-input-container input,
+    .admin-input-container select {
+        width: 400px;
+        padding: 15px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        font-size: 16px;
+        color: #333333;
+    }

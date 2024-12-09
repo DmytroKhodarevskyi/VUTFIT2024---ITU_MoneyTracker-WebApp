@@ -5,6 +5,7 @@ import api from "../../api";
 import "./Admin.css";
 import ColorPicker from "../../components/NewCategory/ColorPicker";
 import Notification from "../../components/Notifications/Notifications";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
 
 const CategoriesEdit = () => {
   const { pk } = useParams(); 
@@ -13,7 +14,7 @@ const CategoriesEdit = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const [username, setUsername] = useState("");
-
+  const [showModal, setShowModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
   const [tempValue, setTempValue] = useState(""); 
   const [fieldBeingEdited, setFieldBeingEdited] = useState(""); 
@@ -69,7 +70,9 @@ const CategoriesEdit = () => {
       setError("Failed to update category");
     }
   };
-
+  const cancelDelete = () => {
+    setShowModal(false); 
+  };
   const handleDeleteSelected = async () => {
     if (selectedCategories.length === 0) {
       
@@ -79,12 +82,11 @@ const CategoriesEdit = () => {
       });
       return;
     }
-
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete the selected categories?"
-    );
-    if (!isConfirmed) return;
-
+    setShowModal(true); 
+  }
+    
+  const confirmDelete = async () => {
+      setShowModal(false); 
     try {
       await api.delete(`/api/custom_admin/categories/batch-delete/`, {
         data: { category_ids: selectedCategories },
@@ -183,6 +185,13 @@ const CategoriesEdit = () => {
           message={notification.message}
           type={notification.type}
           onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete the selected categories?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
         />
       )}
         <h1 className="admin-header">{username}'s Categories</h1>

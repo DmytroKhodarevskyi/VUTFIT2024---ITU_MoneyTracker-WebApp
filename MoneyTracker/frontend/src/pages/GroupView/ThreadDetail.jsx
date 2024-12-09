@@ -6,6 +6,8 @@ import MainContainer from "../../components/MainContainer/MainContainer"
 import TopPart from "../../components/TopPart/TopPart";
 import ThreadDetailComment from "./ThreadDetailComment.jsx";
 import "./ThreadDetail.css";
+import Notification from "../../components/Notifications/Notifications.jsx";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal.jsx";
 
 function ThreadDetail() {
   const location = useLocation();
@@ -20,7 +22,17 @@ function ThreadDetail() {
   const [newCommentFile, setNewCommentFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState(null); 
+  const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState(null);
+  const [commentToDelete, setCommentToDelete] = useState(null); 
 
+  const closeNotification = () => {
+    setNotification(null); 
+  };
+  const handleOpenConfirmModal = (commentId) => {
+    setCommentToDelete(commentId);
+    setShowModal(true);
+  };
   useEffect(() => {
     async function fetchData() {
         try {
@@ -60,12 +72,20 @@ const handleFileChange = (e) => {
   const handleSubmitComment = async () => {
     
     if (newCommentFile && newCommentFile.length > 1) {
-      alert("You can only upload one file.");
+      
+      setNotification({
+        message: "You can only upload one file.",
+        type: "error",
+      });
       return; 
     }
 
     if(!newCommentContent.trim()) {
-      alert("Comment text cannot be empty");
+     
+      setNotification({
+        message: "Comment text cannot be empty",
+        type: "error",
+      });
       return;
     }
   
@@ -97,25 +117,52 @@ const handleFileChange = (e) => {
     }
   };
 
-  const handleDelete = async (commentId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this comment?");
-    if (confirmed) {
+  const confirmDelete = async () => {
+    if (commentToDelete) {
       try {
-        await api.delete(`/api/groups/threads_comments/${commentId}/delete/`);
-        alert("Comment deleted successfully.");
-
-        const updatedComments = comments.filter((comment) => comment.id !== commentId);
+        await api.delete(`/api/groups/threads_comments/${commentToDelete}/delete/`);
+  
+        setNotification({
+          message: "Comment deleted successfully.",
+          type: "success",
+        });
+  
+        const updatedComments = comments.filter((comment) => comment.id !== commentToDelete);
         setComments(updatedComments);
         setCommentsCount(updatedComments.length);
       } catch (error) {
         console.error("Error deleting comment:", error);
-        alert("Failed to delete the comment.");
+  
+        setNotification({
+          message: "Failed to delete the comment.",
+          type: "error",
+        });
+      } finally {
+        setShowModal(false);
+        setCommentToDelete(null); 
       }
     }
   };
-
+  const cancelDelete = () => {
+    setShowModal(false);
+    setCommentToDelete(null); 
+  };
   return (
     <MainContainer>
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete this comment?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
     <TopPart nickname={profileData?.firstname} selectedItem={"groups"} profilePhoto={profilePhoto} />
     
     <div className="ThreadDetail-main-container">
@@ -143,7 +190,7 @@ const handleFileChange = (e) => {
             <ThreadDetailComment
               key={comment.id}
               comment={comment}
-              onDelete={() => handleDelete(comment.id)}
+              onDelete={() => handleOpenConfirmModal(comment.id)}
               group={thread.group}
               userID={profileData.id}
             />

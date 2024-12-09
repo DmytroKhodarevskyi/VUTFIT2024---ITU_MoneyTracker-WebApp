@@ -27,6 +27,17 @@ const CreateNewCategory = () => {
     e.preventDefault();
     setLoading(true);
 
+    const trimmedName = formData.name.trim();
+
+    if (!trimmedName) {
+      
+      setNotification({
+        message: "Category name is required.",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
     try {
       const payload = {
         name: formData.name.trim(),
@@ -83,7 +94,7 @@ const CreateNewCategory = () => {
             placeholder="Category Name*"
             value={formData.name}
             onChange={handleInputChange}
-            required
+            
           />
         </div>
 

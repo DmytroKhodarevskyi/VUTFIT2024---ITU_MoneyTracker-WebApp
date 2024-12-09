@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";
 import { Link } from "react-router-dom";
 import "./Admin.css";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
+import Notification from "../../components/Notifications/Notifications";
 
 const RemindersEdit = () => {
   const { pk } = useParams();
@@ -14,9 +16,17 @@ const RemindersEdit = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [username, setUsername] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState(null); 
 
   const navigate = useNavigate();
 
+  const closeNotification = () => {
+    setNotification(null); 
+  };
+  const cancelDelete = () => {
+    setShowModal(false); 
+  };
   const fetchReminders = async () => {
     try {
       const remindersResponse = await api.get(
@@ -64,7 +74,11 @@ const RemindersEdit = () => {
       if (fieldBeingEdited === "amount") {
         const parsedAmount = parseFloat(updatedValue);
         if (isNaN(parsedAmount) || parsedAmount <= 0) {
-          alert("Amount must be a positive number.");
+          
+          setNotification({
+            message: "Amount must be a positive number.",
+            type: "error",
+          });
           return;
         }
         updatedValue = parsedAmount.toFixed(2);
@@ -73,7 +87,11 @@ const RemindersEdit = () => {
       if (fieldBeingEdited === "deadline") {
         const deadlineDate = new Date(updatedValue);
         if (isNaN(deadlineDate) || deadlineDate <= new Date()) {
-          alert("Deadline must be a valid date in the future.");
+          
+          setNotification({
+            message: "Deadline must be a valid date in the future.",
+            type: "error",
+          });
           return;
         }
       }
@@ -100,10 +118,17 @@ const RemindersEdit = () => {
 
   const handleDeleteSelected = async () => {
     if (selectedReminders.length === 0) {
-      alert("Please select reminders to delete.");
+      
+      setNotification({
+        message: "Please select reminders to delete.",
+        type: "error",
+      });
       return;
     }
-
+    setShowModal(true); 
+  };
+    const confirmDelete = async () => {
+      setShowModal(false); 
     try {
       await api.delete(`/api/custom_admin/reminders/batch-delete/`, {
         data: { reminder_ids: selectedReminders },
@@ -138,6 +163,20 @@ const RemindersEdit = () => {
 
   return (
     <div className="admin-main-buttons">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete the selected reminders?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
       <h1 className="admin-header">{username}'s Reminders</h1>
       <Link to={`/custom-admin/user/${pk}/create-reminder/`}>
         <button>Create Reminder</button>

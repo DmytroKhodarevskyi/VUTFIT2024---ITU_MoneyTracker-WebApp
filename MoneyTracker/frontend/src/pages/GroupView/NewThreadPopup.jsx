@@ -7,6 +7,7 @@ import api from "../../api";
 import img_icon from "../../assets/img_icon.svg";
 import video_icon from "../../assets/video_icon.svg";
 import { ACCESS_TOKEN } from "../../constants";
+import Notification from "../../components/Notifications/Notifications";
 
 function NewThreadPopup({
   setNewThreadPopup,
@@ -14,7 +15,10 @@ function NewThreadPopup({
   setRefreshThreads,
 }) {
   const navigate = useNavigate();
-
+  const [notification, setNotification] = useState(null); 
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleDiscard = () => {
     setNewThreadPopup(false);
   };
@@ -71,7 +75,11 @@ function NewThreadPopup({
 
   const handleFileChange = (e) => {
     if (media.length >= 1) {
-      alert("Only one file can be added to this thread.");
+      
+      setNotification({
+        message: "Only one file can be added to this thread.",
+        type: "error",
+      });
       return;
     }
 
@@ -98,12 +106,20 @@ function NewThreadPopup({
     e.preventDefault();
 
     if (!title.trim()) {
-      alert("Title cannot be empty.");
+     
+      setNotification({
+        message: "Title cannot be empty.",
+        type: "error",
+      });
       return;
     }
 
     if(!text.trim()) {
-      alert("Thread description cannot be empty.");
+      
+      setNotification({
+        message: "Thread description cannot be empty.",
+        type: "error",
+      });
       return;
     }
 
@@ -116,7 +132,11 @@ function NewThreadPopup({
     }
 
     if (!groupId) {
-      alert("Group ID is required to create a thread.");
+      
+      setNotification({
+        message: "Group ID is required to create a thread.",
+        type: "error",
+      });
       return;
     }
     newThread.append("group", groupId);
@@ -152,6 +172,13 @@ function NewThreadPopup({
     <>
       {}
       <div className="GroupView-new-thread-popup">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
         <div className="GroupView-new-thread-popup-body">
           <div className="GroupView-new-thread-popup-content">
             <h1 className="GroupView-new-thread-popup-title">
@@ -164,14 +191,14 @@ function NewThreadPopup({
               value={title}
               maxLength="254"
               onChange={(e) => setTitle(e.target.value)}
-              required
+             
             />
             <textarea
               className="GroupView-new-thread-popup-textarea"
               placeholder="Thread description*"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              required
+              
             />
 
             <div className="form-post-selected-media">

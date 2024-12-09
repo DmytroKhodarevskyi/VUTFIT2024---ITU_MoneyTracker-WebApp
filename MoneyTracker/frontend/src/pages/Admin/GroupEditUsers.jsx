@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
+import Notification from "../../components/Notifications/Notifications";
 
 const GroupUsers = () => {
   const { pk } = useParams();
@@ -12,7 +14,8 @@ const GroupUsers = () => {
   const [fieldBeingEdited, setFieldBeingEdited] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState(null);
   const [newUser, setNewUser] = useState(""); 
   const [addUserError, setAddUserError] = useState(null); 
 
@@ -27,7 +30,9 @@ const GroupUsers = () => {
       setLoading(false);
     }
   };
-
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   useEffect(() => {
     fetchUsers();
   }, [pk]);
@@ -61,15 +66,22 @@ const GroupUsers = () => {
       setError("Failed to update user");
     }
   };
-
+  const cancelDelete = () => {
+    setShowModal(false); 
+  };
   const handleDeleteSelected = async () => {
     if (selectedUsers.length === 0) {
-      alert("Please select users to delete.");
+      
+      setNotification({
+        message: "Please select users to delete.",
+        type: "error",
+      });
       return;
     }
-
-    const isConfirmed = window.confirm("Are you sure you want to delete the selected users?");
-    if (!isConfirmed) return;
+    setShowModal(true);
+  };
+    const confirmDelete = async () => {
+      setShowModal(false); 
 
     try {
       await api.delete(`/api/custom_admin/groups/users/batch-delete/`, {
@@ -110,7 +122,11 @@ const GroupUsers = () => {
       const response = await api.post(`/api/custom_admin/groups/${pk}/add-user/`, {
         username: newUser.trim(),
       });
-      alert(response.data.message);
+      
+      setNotification({
+        message: response.data.message,
+        type: "success",
+      });
       setNewUser("");
       setAddUserError(null);
       fetchUsers(); 
@@ -142,6 +158,20 @@ const GroupUsers = () => {
 
   return (
     <div className="admin-main-buttons">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete the selected users?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
       <h1 className="admin-header">Users in Group</h1>
       <div className="admin-user-value">
         <input

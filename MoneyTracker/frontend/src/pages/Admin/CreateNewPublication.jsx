@@ -101,7 +101,7 @@ const CreateNewPublication = () => {
           placeholder="Publication Title*"
           value={formData.title}
           onChange={handleInputChange}
-          required
+          
         />
 
         

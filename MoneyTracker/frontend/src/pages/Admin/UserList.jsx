@@ -1,54 +1,69 @@
-
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api"; 
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false); 
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
-  const handleDelete = async (id) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete this user?");
-    if (!isConfirmed) {
-      return;
-    }
-  
+  const fetchUsers = async () => {
     try {
-      await api.delete(`/api/custom_admin/users/delete/${id}/`);
-      setUsers(users.filter((user) => user.id !== id));
+      const response = await api.get("/api/custom_admin/users/"); 
+      setUsers(response.data);
     } catch (err) {
       console.error(err);
-      setError("Failed to delete user");
+      setError("Failed to load users");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await api.get("/api/custom_admin/users/"); 
-        setUsers(response.data);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to load users");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUsers();
   }, []);
+
+  const handleDeleteRequest = (id) => {
+    setSelectedUserId(id); 
+    setShowModal(true); 
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await api.delete(`/api/custom_admin/users/delete/${selectedUserId}/`);
+      setUsers(users.filter((user) => user.id !== selectedUserId));
+    } catch (err) {
+      console.error(err);
+      setError("Failed to delete user");
+    } finally {
+      setShowModal(false); 
+      setSelectedUserId(null); 
+    }
+  };
+
+  const cancelDelete = () => {
+    setShowModal(false); 
+    setSelectedUserId(null); 
+  };
 
   if (loading) return <p>Loading users...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div>
-      
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete this user?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
       <h1 className="admin-header">User List</h1>
       <Link to={`/custom-admin/users/create`}>
-      <button>Create User</button> 
+        <button>Create User</button> 
       </Link>
       <ul className="admin-userlist">
         {users.map((user) => (
@@ -63,14 +78,14 @@ const UserList = () => {
               <h1 className="admin-user-label">LASTNAME:</h1>
               <h2 className="admin-user-value">{user.last_name}</h2>
             </Link>
-
-            <button onClick={() => handleDelete(user.id)}
+            <button
+              onClick={() => handleDeleteRequest(user.id)} 
               style={{ marginRight: '10px' }}
             >
-            DELETE
+              DELETE
             </button>
             <Link to={`/custom-admin/user/${user.id}/data`}>
-            <button> EDIT</button>
+              <button>EDIT</button>
             </Link>
           </li>
         ))}

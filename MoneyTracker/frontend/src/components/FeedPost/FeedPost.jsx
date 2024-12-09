@@ -5,6 +5,7 @@ import "./FeedPost.css";
 import star_picture from "../../assets/star.svg";
 import comment_picture from "../../assets/comment.svg";
 import api from "../../api";
+import Notification from "../Notifications/Notifications";
 
 function FeedPost({
   publication,
@@ -22,7 +23,7 @@ function FeedPost({
 
   const [starsCount, setStars] = useState(stars);
   const [liked, setLiked] = useState(isLiked);
-
+  const [notification, setNotification] = useState(null);
   const [commentCount, setCommentCount] = useState(0);
 
 
@@ -49,7 +50,9 @@ function FeedPost({
   useEffect(() => {
     setLiked(isLiked);
   }, [isLiked]);
-
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleLike = async () => {
     if (isLiking) return; 
 
@@ -66,7 +69,11 @@ function FeedPost({
         }
     } catch (error) {
       if (error.response?.data?.error_code === "self_like") {
-        alert("You cannot like your own publication.");
+       
+        setNotification({
+          message: "You cannot like your own publication.",
+          type: "error",
+        });
     }
    } finally {
         setIsLiking(false); 
@@ -216,6 +223,13 @@ function FeedPost({
         IsLeft ? handlePrevious : IsRight ? handleNext : IsCenter ? null : null
       }
     >
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
       <div className="FeedPost-card-top">
         <div className="FeedPost-card-header">
           <div className="FeedPost-card-profile-image">

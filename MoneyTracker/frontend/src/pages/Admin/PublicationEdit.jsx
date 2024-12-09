@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
+import Notification from "../../components/Notifications/Notifications";
 
 const PublicationsEdit = () => {
   const { pk } = useParams();
@@ -20,13 +22,21 @@ const PublicationsEdit = () => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
-
+  const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState(null); 
+  
   const handleDoubleClick = (publicationId, currentValue, field) => {
     setEditingPublication(publicationId);
     setTempValue(currentValue || ""); 
     setFieldBeingEdited(field);
   };
 
+  const closeNotification = () => {
+    setNotification(null); 
+  };
+  const cancelDelete = () => {
+    setShowModal(false); 
+  };
   const handleInputChange = (e) => {
     setTempValue(e.target.value);
   };
@@ -74,15 +84,17 @@ const PublicationsEdit = () => {
 
   const handleDeleteSelected = async () => {
     if (selectedPublications.length === 0) {
-      alert("Please select publications to delete.");
+      
+      setNotification({
+        message: "Please select publications to delete.",
+        type: "error",
+      });
       return;
     }
-
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete the selected publications?"
-    );
-    if (!isConfirmed) return;
-
+    setShowModal(true); 
+  };
+    const confirmDelete = async () => {
+      setShowModal(false); 
     try {
       await api.delete(`/api/custom_admin/publications/batch-delete/`, {
         data: { publication_ids: selectedPublications },
@@ -106,12 +118,20 @@ const PublicationsEdit = () => {
 
   const handleGoToComments = () => {
     if (selectedPublications.length === 0) {
-      alert("Please select one publication to view comments.");
+      
+      setNotification({
+        message: "Please select one publication to view comments.",
+        type: "error",
+      });
       return;
     }
   
     if (selectedPublications.length > 1) {
-      alert("Please select only one publication to view comments.");
+      
+      setNotification({
+        message: "Please select only one publication to view comments.",
+        type: "error",
+      });
       return;
     }
   
@@ -119,7 +139,11 @@ const PublicationsEdit = () => {
     console.log("Selected Publication ID:", publicationId); 
   
     if (!publicationId) {
-      alert("Something went wrong. Please try again.");
+      
+      setNotification({
+        message: "Something went wrong. Please try again.",
+        type: "error",
+      });
       return;
     }
   
@@ -181,6 +205,20 @@ const PublicationsEdit = () => {
   return (
     <>
       <div className="admin-main-buttons">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete the selected publications?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
         <h1 className="admin-header">{username}'s Publications</h1>
         <Link to={`/custom-admin/user/${pk}/create-publication/`}>
       <button>Create Publication</button> 

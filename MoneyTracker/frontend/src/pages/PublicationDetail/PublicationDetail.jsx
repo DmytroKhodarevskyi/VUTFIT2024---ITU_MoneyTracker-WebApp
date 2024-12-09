@@ -4,6 +4,7 @@ import MainContainer from "../../components/MainContainer/MainContainer"
 import TopPart from "../../components/TopPart/TopPart";
 import PublicationDetailCard from "../../components/PublicationDetailCard/PublicationDetailCard"
 import { useParams } from 'react-router-dom';
+import Notification from "../../components/Notifications/Notifications";
 
 
 function PublicationDetail () {
@@ -18,7 +19,7 @@ function PublicationDetail () {
     const [profilePhoto, setProfilePhoto] = useState(null);
     const [userId, setUserId] = useState(null);
     const [error, setError] = useState(null);
-
+    const [notification, setNotification] = useState(null);
     
     useEffect(() => {
         async function fetchData() {
@@ -38,14 +39,20 @@ function PublicationDetail () {
                 setIsLoaded(true);
                     
             } catch (error) {
-                window.alert("Failed to feeeetch profile data", error);
+                
+                setNotification({
+                    message: "Failed to feeeetch profile data",
+                    type: "success",
+                  });
                 setIsLoaded(false);
             }
         }
         fetchData();
     }, []);
 
-
+    const closeNotification = () => {
+        setNotification(null); 
+      };
     useEffect(() =>  {
         async function fetchProfilePublciationPhoto() {
             try {
@@ -70,6 +77,13 @@ function PublicationDetail () {
 
       return (
         <MainContainer>
+            {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
         <TopPart nickname={profileData?.firstname} selectedItem={"feed"} profilePhoto={profilePhoto} />   
         <PublicationDetailCard
             publication={publication}

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
+import Notification from "../../components/Notifications/Notifications";
 
 const ThreadComments = () => {
   const { pk } = useParams(); 
@@ -13,8 +15,16 @@ const ThreadComments = () => {
   const [fieldBeingEdited, setFieldBeingEdited] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState(null); 
   
+
+  const closeNotification = () => {
+    setNotification(null); 
+  };
+  const cancelDelete = () => {
+    setShowModal(false); 
+  };
   const fetchComments = async () => {
     try {
       const response = await api.get(`/api/custom_admin/thread/${pk}/comments/`);
@@ -83,13 +93,17 @@ const ThreadComments = () => {
   const handleDeleteSelected = async () => {
     console.log("Selected Comment IDs to delete:", selectedComments);
     if (selectedComments.length === 0) {
-      alert("Please select comments to delete.");
+      
+      setNotification({
+        message: "Please select comments to delete.",
+        type: "error",
+      });
       return;
     }
-
-    const isConfirmed = window.confirm("Are you sure you want to delete the selected comments?");
-    if (!isConfirmed) return;
-
+    setShowModal(true);
+  };    
+  const confirmDelete = async () => {
+      setShowModal(false); 
     try {
       const response = await api.delete(`/api/custom_admin/thread/comments/batch-delete/`, {
         data: { comment_ids: selectedComments },
@@ -138,6 +152,20 @@ const ThreadComments = () => {
 
   return (
     <div className="admin-main-buttons">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete the selected comments?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
       <h1 className="admin-header">Comments for Thread "{threadTitle}"</h1>
       <button
         onClick={handleDeleteSelected}

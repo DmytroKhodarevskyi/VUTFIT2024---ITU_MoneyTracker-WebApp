@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";
-
+import Notification from "../../components/Notifications/Notifications";
 const CreateTransactionAdmin = () => {
   const { pk } = useParams(); 
   const [formData, setFormData] = useState({
@@ -15,6 +15,7 @@ const CreateTransactionAdmin = () => {
 
   const [categoriesList, setCategoriesList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,13 +26,19 @@ const CreateTransactionAdmin = () => {
         setCategoriesList(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error.response || error.message);
-        alert("Failed to load categories.");
+        setNotification({
+          message: "Failed to load categories.",
+          type: "error",
+        });
       }
     };
 
     fetchCategories();
   }, [pk]);
 
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -42,24 +49,40 @@ const CreateTransactionAdmin = () => {
     setLoading(true);
 
     if (!formData.title.trim()) {
-        alert("Transaction title is required.");
+        
+        setNotification({
+          message: "Transaction title is required.",
+          type: "error",
+        });
         setLoading(false);
         return;
     }
 
     if (formData.amount <= 0) {
-        alert("Amount must be greater than 0.");
+        
+        setNotification({
+          message: "Amount must be greater than 0.",
+          type: "error",
+        });
         setLoading(false);
         return;
     }
 
     if (!formData.category) {
-        alert("Category is required.");
+        
+        setNotification({
+          message: "Category is required.",
+          type: "error",
+        });
         setLoading(false);
         return;
     }
     if (formData.amount > 999999999) {
-        alert("Transaction amount is too large");
+        
+        setNotification({
+          message: "Transaction amount is too large",
+          type: "error",
+        });
         setLoading(false);
         return;
       }
@@ -79,15 +102,20 @@ const CreateTransactionAdmin = () => {
 
     try {
         await api.post(`/api/custom_admin/user/${pk}/transactions/`, payload);
-        alert("Transaction created successfully!");
-        navigate(`/custom-admin/users/${pk}/transactions`);
+        
+        setNotification({
+          message: "Transaction created successfully!",
+          type: "success",
+        });
+        setTimeout(() => {
+        navigate(`/custom-admin/users/${pk}/transactions`);},2000);
     } catch (error) {
         console.error("Error creating transaction:", error.response || error.message);
-        alert(
-            `Error: ${
-                error.response?.data?.detail || "An error occurred while creating the transaction."
-            }`
-        );
+        const errorMessage =error.response?.data?.detail || "An error occurred while creating the transaction.";
+        setNotification({
+          message: errorMessage,
+          type: "error",
+        });
     } finally {
         setLoading(false);
     }
@@ -96,6 +124,13 @@ const CreateTransactionAdmin = () => {
 
   return (
     <form onSubmit={handleSubmit} className="admin-main">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
       <h1 className="admin-header">Create New Transaction</h1>
 
       <div className="admin-input-container">
@@ -105,7 +140,7 @@ const CreateTransactionAdmin = () => {
           placeholder="Transaction Title*"
           value={formData.title}
           onChange={handleInputChange}
-          required
+          
           
         />
 
@@ -115,7 +150,7 @@ const CreateTransactionAdmin = () => {
           placeholder="Amount*"
           value={formData.amount}
           onChange={handleInputChange}
-          required
+          
           
         />
 
@@ -123,7 +158,7 @@ const CreateTransactionAdmin = () => {
           name="category"
           value={formData.category}
           onChange={handleInputChange}
-          required
+          
           
         >
           <option value="" disabled>
@@ -140,7 +175,7 @@ const CreateTransactionAdmin = () => {
           name="currency"
           value={formData.currency}
           onChange={handleInputChange}
-          required
+          
           
         >
           <option value="USD">USD (United States Dollar)</option>
@@ -152,7 +187,7 @@ const CreateTransactionAdmin = () => {
           name="transaction_type"
           value={formData.transaction_type}
           onChange={handleInputChange}
-          required
+          
           
         >
           <option value="INCOME">Income</option>
@@ -164,7 +199,7 @@ const CreateTransactionAdmin = () => {
           name="transaction_datetime"
           value={formData.transaction_datetime}
           onChange={handleInputChange}
-          required
+          
           
         />
       </div>

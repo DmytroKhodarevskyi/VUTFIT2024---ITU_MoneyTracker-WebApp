@@ -109,7 +109,7 @@ const CreateGroupAdmin = () => {
           placeholder="Group Name*"
           value={formData.name}
           onChange={handleInputChange}
-          required
+         
         />
 
         <textarea
