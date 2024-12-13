@@ -7,6 +7,7 @@ import { ACCESS_TOKEN } from "../../constants";
 import api from "../../api";
 import DiscardForm from "../../components/DiscardForm/DiscardForm"; 
 import { useNavigate, useParams  } from 'react-router-dom';
+import Notification from "../../components/Notifications/Notifications";
 
 const CreatePost = () => {
 
@@ -31,7 +32,7 @@ const CreatePost = () => {
     const [media, setMedia] = useState([]); 
     const [tags, setTags] = useState("");
 
-
+    const [notification, setNotification] = useState(null); 
     const imageInputRef = useRef(null);
     const gifInputRef = useRef(null);
     const videoInputRef = useRef(null);
@@ -41,7 +42,9 @@ const CreatePost = () => {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
-
+    const closeNotification = () => {
+      setNotification(null); 
+    };
     useEffect(() => {
       const fetchNickname = async () => {
         try {
@@ -52,7 +55,11 @@ const CreatePost = () => {
           setProfilePhoto(response.data.profileImg);
           setIsLoaded(true); 
         } catch (error) {
-          window.alert("Failed to fetch profile data", error);
+          
+          setNotification({
+            message: "Failed to fetch profile data",
+            type: "error",
+          });
           setIsLoaded(true); 
         }
       };
@@ -138,7 +145,11 @@ const CreatePost = () => {
     setIsLoaded(true);
 
     if (!title.trim()) {
-      alert("Title cannot be empty.");
+      
+      setNotification({
+        message: "Title cannot be empty.",
+        type: "error",
+      });
       return; 
     }
 
@@ -152,7 +163,11 @@ const CreatePost = () => {
     const validInput = /^[A-Za-z0-9\-.]*$/;
     const invalidTags = tagArray.filter(tag => !validInput.test(tag));
     if (invalidTags.length > 0) {
-      alert("Tags can only contain letters, numbers, hyphens (-), and periods (.)");
+      
+      setNotification({
+        message: "Tags can only contain letters, numbers, hyphens (-), and periods (.)",
+        type: "error",
+      });
       return;
   }
     newPost.append("tags", uniqueTags.join(' '));
@@ -242,7 +257,11 @@ const CreatePost = () => {
 
 
     if (hasInvalidTags) {
-      alert("Tags can only contain letters, numbers, hyphens (-), and periods (.)");
+      
+      setNotification({
+        message: "Tags can only contain letters, numbers, hyphens (-), and periods (.)",
+        type: "error",
+      });
     }
 
 
@@ -268,6 +287,13 @@ const CreatePost = () => {
 
   return (
     <MainContainer>
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
       <TopPart nickname={nickname} selectedItem={"profile"} profilePhoto={profilePhoto}/>
       <FormPost 
       fullname={fullname}

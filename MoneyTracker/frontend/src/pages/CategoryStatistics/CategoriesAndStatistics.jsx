@@ -4,6 +4,7 @@ import MainContainer from "../../components/MainContainer/MainContainer";
 import TopPart from "../../components/TopPart/TopPart";
 import "./CategoriesAndStatistics.css";
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import Notification from "../../components/Notifications/Notifications";
 
 function CategoriesAndStatistics() {
   const [categories, setCategories] = useState([]); 
@@ -14,6 +15,7 @@ function CategoriesAndStatistics() {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const [notification, setNotification] = useState(null); 
 
   useEffect(() => {
     async function fetchData() {
@@ -35,14 +37,20 @@ function CategoriesAndStatistics() {
         setIsLoaded(true);
         
       } catch (error) {
-        window.alert("Failed to fetch profile", error);
+        
+        setNotification({
+          message: "Failed to fetch profile",
+          type: "error",
+        });
         setError(error);
         setIsLoaded(false);
       }
     }
     fetchData();
   }, []);
-
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const getTopCategories = (categories, transactions) => {
     const categorySpending = {};
 
@@ -102,7 +110,11 @@ function CategoriesAndStatistics() {
 
   const handleDelete = async () => {
     if (selectedCategories.length === 0) {
-        alert('Please select at least one category to delete.');
+        
+        setNotification({
+          message: "Please select at least one category to delete.",
+          type: "error",
+        });
         return;
     }
 
@@ -111,7 +123,11 @@ function CategoriesAndStatistics() {
     );
 
     if (defaultCategory) {
-        alert('You cannot delete the default category with the name "Default".');
+        
+        setNotification({
+          message: 'You cannot delete the default category with the name "Default".',
+          type: "error",
+        });
         return;
     }
 
@@ -127,7 +143,11 @@ function CategoriesAndStatistics() {
     } catch (error) {
         console.log(error)
         console.error('There was an error deleting the categories:', error);
-        alert('Failed to delete the selected categories. Please try again.');
+        
+        setNotification({
+          message: 'Failed to delete the selected categories. Please try again.',
+          type: "error",
+        });
       }
 
       window.location.reload();
@@ -135,6 +155,13 @@ function CategoriesAndStatistics() {
 
   return (
     <MainContainer>
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
       <TopPart
         nickname={profileData.first_name}
         selectedItem={"update"}

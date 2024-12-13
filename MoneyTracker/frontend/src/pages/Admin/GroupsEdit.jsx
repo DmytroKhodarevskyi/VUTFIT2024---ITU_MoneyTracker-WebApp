@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
+import Notification from "../../components/Notifications/Notifications";
 
 const GroupsEdit = () => {
   const { pk } = useParams(); 
@@ -11,7 +13,8 @@ const GroupsEdit = () => {
   const [selectedGroups, setSelectedGroups] = useState([]);
 
   const [username, setUsername] = useState("");
-
+  const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState(null); 
   const [editingGroup, setEditingGroup] = useState(null); 
   const [tempValue, setTempValue] = useState(""); 
   const [fieldBeingEdited, setFieldBeingEdited] = useState(""); 
@@ -22,18 +25,27 @@ const GroupsEdit = () => {
   const navigate = useNavigate();
 
   
-  
+  const closeNotification = () => {
+    setNotification(null); 
+  };
+  const cancelDelete = () => {
+    setShowModal(false); 
+  };
+
   const handleDeleteSelected = async () => {
     if (selectedGroups.length === 0) {
-      alert("Please select groups to delete.");
+      
+      setNotification({
+        message: "Please select groups to delete.",
+        type: "error",
+      });
       return;
     }
-  
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete the selected groups?"
-    );
-    if (!isConfirmed) return;
-  
+    setShowModal(true);
+  };
+    
+    const confirmDelete = async () => {
+      setShowModal(false);   
     try {
       await api.delete(`/api/custom_admin/groups/batch-delete/`, {
         data: { group_ids: selectedGroups },
@@ -58,12 +70,20 @@ const GroupsEdit = () => {
 
   const handleGoToUsers = () => {
     if (selectedGroups.length === 0) {
-      alert("Please select one group to view users.");
+      
+      setNotification({
+        message: "Please select one group to view users.",
+        type: "error",
+      });
       return;
     }
   
     if (selectedGroups.length > 1) {
-      alert("Please select only one group to view groups.");
+      
+      setNotification({
+        message: "Please select only one group to view users.",
+        type: "error",
+      });
       return;
     }
   
@@ -71,7 +91,10 @@ const GroupsEdit = () => {
     
   
     if (!groupId) {
-      alert("Something went wrong. Please try again.");
+      setNotification({
+        message: "Something went wrong. Please try again.",
+        type: "error",
+      });
       return;
     }
   
@@ -80,12 +103,20 @@ const GroupsEdit = () => {
 
   const handleGoToThreads = () => {
     if (selectedGroups.length === 0) {
-      alert("Please select one group thread.");
+      
+      setNotification({
+        message: "Please select one group thread.",
+        type: "error",
+      });
       return;
     }
   
     if (selectedGroups.length > 1) {
-      alert("Please select only one group thread.");
+      
+      setNotification({
+        message: "Please select only one group thread.",
+        type: "error",
+      });
       return;
     }
   
@@ -93,7 +124,11 @@ const GroupsEdit = () => {
     
   
     if (!groupId) {
-      alert("Something went wrong. Please try again.");
+      
+      setNotification({
+        message: "Something went wrong. Please try again.",
+        type: "error",
+      });
       return;
     }
   
@@ -195,6 +230,20 @@ const GroupsEdit = () => {
   return (
     <>
       <div className="admin-main-buttons">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete the selected groups?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
         <h1 className="admin-header">{username}'s Groups</h1>
         <Link to={`/custom-admin/user/${pk}/create-group/`}>
       <button>Create Group</button> 

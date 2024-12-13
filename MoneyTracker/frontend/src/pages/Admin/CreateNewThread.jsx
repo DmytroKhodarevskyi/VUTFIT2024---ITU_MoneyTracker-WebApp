@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";
+import Notification from "../../components/Notifications/Notifications";
 
 const CreateThreadAdmin = () => {
   const { pk } = useParams();
@@ -11,24 +12,35 @@ const CreateThreadAdmin = () => {
   
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const [notification, setNotification] = useState(null); 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
   
     if (!formData.title.trim()) {
-      alert("Thread title is required.");
+      
+      setNotification({
+        message: "Thread title is required.",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
   
     if (!formData.text_content.trim()) {
-      alert("Thread content is required.");
+      
+      setNotification({
+        message: "Thread content is required.",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
@@ -43,15 +55,20 @@ const CreateThreadAdmin = () => {
   
     try {
       await api.post(`/api/custom_admin/groups/${pk}/threads/create/`, payload);
-      alert("Thread created successfully!");
-      navigate(`/custom-admin/groups/${pk}/threads`);
+      
+      setNotification({
+        message: "Thread created successfully!",
+        type: "success",
+      });
+      setTimeout(() => {
+      navigate(`/custom-admin/groups/${pk}/threads`);},2000);
     } catch (error) {
       console.error("Error creating thread:", error.response || error.message);
-      alert(
-        `Error: ${
-          error.response?.data?.detail || "An error occurred while creating the thread."
-        }`
-      );
+      const errorMessage =error.response?.data?.detail || "An error occurred while creating the thread.";
+      setNotification({
+        message: errorMessage,
+        type: "error",
+      });
     } finally {
       setLoading(false);
     }
@@ -60,6 +77,13 @@ const CreateThreadAdmin = () => {
 
   return (
     <form onSubmit={handleSubmit} className="admin-main">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
       <h1 className="admin-header">Create New Thread</h1>
 
       <div className="admin-input-container">
@@ -70,7 +94,7 @@ const CreateThreadAdmin = () => {
           placeholder="Thread Title*"
           value={formData.title}
           onChange={handleInputChange}
-          required
+          
         />
 
         
@@ -80,7 +104,7 @@ const CreateThreadAdmin = () => {
           value={formData.text_content}
           onChange={handleInputChange}
           rows="6"
-          required
+          
         />
       </div>
 

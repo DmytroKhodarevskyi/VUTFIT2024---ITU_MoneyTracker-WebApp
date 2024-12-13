@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api";
 import { useNavigate } from "react-router-dom";
+import Notification from "../../components/Notifications/Notifications";
 
 const CreateReminderAdmin = () => {
   const { pk } = useParams();
@@ -14,12 +15,15 @@ const CreateReminderAdmin = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const [notification, setNotification] = useState(null); 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -27,21 +31,33 @@ const CreateReminderAdmin = () => {
     const { title, deadline, amount } = formData;
 
     if (!title || !deadline || !amount) {
-      alert("All fields are required.");
+      
+      setNotification({
+        message: "All fields are required.",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
 
     const deadlineDate = new Date(deadline);
     if (isNaN(deadlineDate) || deadlineDate <= new Date()) {
-      alert("Deadline must be a valid date in the future.");
+      
+      setNotification({
+        message: "Deadline must be a valid date in the future.",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
 
     const parsedAmount = parseFloat(amount);
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
-      alert("Amount must be a valid number greater than 0.");
+      
+      setNotification({
+        message: "Amount must be a valid number greater than 0.",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
@@ -56,17 +72,22 @@ const CreateReminderAdmin = () => {
         };
         console.log("Payload:", payload);
         const response = await api.post(`/api/custom_admin/user/${pk}/reminders/`, payload);
-        alert("Reminder created successfully!");
+        
+        setNotification({
+          message: "Reminder created successfully!",
+          type: "success",
+        });
         setError(null);
-        navigate(`/custom-admin/users/${pk}/reminders`); 
+        setTimeout(() => {
+        navigate(`/custom-admin/users/${pk}/reminders`);},2000); 
       } catch (error) {
         console.error("Error creating reminder:", error.response?.data || error.message);
         console.error("Error response:", error.response?.data);
-        alert(
-          `Error: ${
-            error.response?.data?.detail || "An error occurred while creating the reminder."
-          }`
-        );
+        const errorMessage = error.response?.data?.detail || "An error occurred while creating the reminder."
+        setNotification({
+          message: errorMessage,
+          type: "error",
+        });
       } finally {
         setLoading(false);
       }
@@ -75,6 +96,13 @@ const CreateReminderAdmin = () => {
 
   return (
     <form onSubmit={handleSubmit} className="admin-main">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
       <h1 className="admin-header">Create Reminder for User</h1>
       {error && <p className="error-message">{error}</p>}
 
@@ -85,7 +113,7 @@ const CreateReminderAdmin = () => {
           placeholder="Reminder Title*"
           value={formData.title}
           onChange={handleInputChange}
-          required
+          
           className="input-field"
         />
         <input
@@ -94,7 +122,7 @@ const CreateReminderAdmin = () => {
           placeholder="Deadline*"
           value={formData.deadline}
           onChange={handleInputChange}
-          required
+          
           className="input-field"
         />
         <input
@@ -104,7 +132,7 @@ const CreateReminderAdmin = () => {
           placeholder="Amount*"
           value={formData.amount}
           onChange={handleInputChange}
-          required
+          
           className="input-field"
         />
       </div>

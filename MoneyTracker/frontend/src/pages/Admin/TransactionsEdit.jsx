@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
 import { Link } from "react-router-dom";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
+import Notification from "../../components/Notifications/Notifications";
 
 const TransactionsEdit = () => {
   const { pk } = useParams();
@@ -16,10 +18,17 @@ const TransactionsEdit = () => {
   const [fieldBeingEdited, setFieldBeingEdited] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState(null); 
 
   const navigate = useNavigate();
 
-  
+  const closeNotification = () => {
+    setNotification(null); 
+  };
+  const cancelDelete = () => {
+    setShowModal(false); 
+  };
   const handleDoubleClick = (transactionId, currentValue, field) => {
     setEditingTransaction(transactionId);
     setTempValue(currentValue);
@@ -32,10 +41,17 @@ const TransactionsEdit = () => {
 
   const handleDeleteSelected = async () => {
     if (selectedTransactions.length === 0) {
-      alert("Please select transactions to delete.");
+      
+      setNotification({
+        message: "Please select transactions to delete.",
+        type: "error",
+      });
       return;
     }
-
+    setShowModal(true); 
+  };
+    const confirmDelete = async () => {
+      setShowModal(false); 
     try {
       await api.delete(`/api/custom_admin/transactions/batch-delete/`, {
         data: { transaction_ids: selectedTransactions },
@@ -148,6 +164,20 @@ const TransactionsEdit = () => {
   return (
     <>
       <div className="admin-main-buttons">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete the selected transactions?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
         <h1 className="admin-header">{username}'s Transactions</h1>
         <Link to={`/custom-admin/user/${pk}/create-transaction/`}>
       <button>Create Transaction</button> 

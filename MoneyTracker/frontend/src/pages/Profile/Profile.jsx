@@ -4,6 +4,7 @@ import MainContainer from "../../components/MainContainer/MainContainer"
 import TopPart from "../../components/TopPart/TopPart";
 import "./Profile.css"
 import ProfileCard from '../../components/ProfileCards/ProfileCard'
+import Notification from "../../components/Notifications/Notifications";
 
 
 
@@ -18,6 +19,7 @@ function Profile() {
 
     const [error, setError] = useState(null);
 
+    const [notification, setNotification] = useState(null);
     useEffect( () => {
         async function fetchProfileData() {
             try {
@@ -30,14 +32,20 @@ function Profile() {
                 setProfilePhoto(photoResponse.data.profileImg)
                 setIsLoaded(true);
             } catch (error) {
-                window.alert("Failed to fetch profile data", error);
+                
+                setNotification({
+                    message: "Failed to fetch profile data",
+                    type: "success",
+                  });
                 setIsLoaded(false);
             }
         }
         fetchProfileData();
     }, []);
 
-    
+    const closeNotification = () => {
+        setNotification(null); 
+      };
     if (error) {
         return (
             <div className="error-container">
@@ -60,6 +68,13 @@ function Profile() {
 
     return (
     <MainContainer>
+        {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
         <TopPart nickname={profileData.firstname} selectedItem={"profile"} profilePhoto={profilePhoto}/>
             <ProfileCard 
                 profileImg={profileData.profileImg}

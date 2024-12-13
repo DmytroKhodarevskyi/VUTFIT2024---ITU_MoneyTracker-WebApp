@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";
-
+import Notification from "../../components/Notifications/Notifications";
 
 const CreateNewUser = () => {
   const [formData, setFormData] = useState({
@@ -20,36 +20,98 @@ const CreateNewUser = () => {
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const [notification, setNotification] = useState(null); 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    
+    if (formData.username === "") {
+      
+      setNotification({
+        message: "Username cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.first_name === "") {
+      
+      setNotification({
+        message: "First Name cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.last_name === "") {
+      
+      setNotification({
+        message: "Last Name cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.password === "") {
+      
+      setNotification({
+        message: "Passwords cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.email === "") {
+      
+      setNotification({
+        message: "Email cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
     if (formData.password !== formData.repeatPassword) {
-      alert("Passwords do not match");
+      
+      setNotification({
+        message: "Passwords do not match",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
     if (formData.phone == "") {
-      alert("Phone cant be empty");
+      
+      setNotification({
+        message: "Phone cant be empty",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
     
     const nameRegex = /^[A-Za-z]+$/;
     if (!nameRegex.test(formData.first_name.trim())) {
-      alert("First name can only contain letters.");
+      
+      setNotification({
+        message: "First name can only contain letters.",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
     if (!nameRegex.test(formData.last_name.trim())) {
-      alert("Last name can only contain letters.");
+      
+      setNotification({
+        message: "Last name can only contain letters.",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
@@ -57,9 +119,11 @@ const CreateNewUser = () => {
     
     const phoneRegex = /^[+]?[1-9][0-9]{7,14}$/;
     if (formData.phone.trim() && !phoneRegex.test(formData.phone.trim())) {
-      alert(
-        "Phone number must start with + or a non-zero digit and must be 8 to 15 digits long."
-      );
+      
+      setNotification({
+        message: "Phone number must start with + or a non-zero digit and must be 8 to 15 digits long.",
+        type: "error",
+      });
       setLoading(false);
       return;
     }
@@ -83,15 +147,20 @@ const CreateNewUser = () => {
     try {
       
       const res = await api.post("/api/user/register/", payload);
-      alert("User created successfully!");
-      navigate("/custom-admin");
+      
+      setNotification({
+        message: "User created successfully!",
+        type: "success",
+      });
+      setTimeout(() => {
+      navigate("/custom-admin");},2000);
     } catch (error) {
       console.error("Error creating user:", error.response || error.message);
-      alert(
-        `Error: ${
-          error.response?.data?.detail || "An error occurred while creating the user."
-        }`
-      );
+      const errorMessage =error.response?.data?.detail || "An error occurred while creating the user.";
+      setNotification({
+        message: errorMessage,
+        type: "error",
+      });
     } finally {
       setLoading(false);
     }
@@ -99,6 +168,13 @@ const CreateNewUser = () => {
 
   return (
     <form onSubmit={handleSubmit} className = "admin-main">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
       <h1 className="admin-header">Create New User</h1>
 
       <div className="admin-input-container">
@@ -108,7 +184,7 @@ const CreateNewUser = () => {
     placeholder="Username*"
     value={formData.username}
     onChange={handleInputChange}
-    required
+    
   />
   <input
     type="text"
@@ -116,7 +192,7 @@ const CreateNewUser = () => {
     placeholder="First Name*"
     value={formData.first_name}
     onChange={handleInputChange}
-    required
+    
   />
   <input
     type="text"
@@ -124,7 +200,7 @@ const CreateNewUser = () => {
     placeholder="Last Name*"
     value={formData.last_name}
     onChange={handleInputChange}
-    required
+    
   />
   <input
     type="email"
@@ -132,7 +208,7 @@ const CreateNewUser = () => {
     placeholder="Email*"
     value={formData.email}
     onChange={handleInputChange}
-    required
+    
   />
   <input
     type="tel"
@@ -181,7 +257,7 @@ const CreateNewUser = () => {
     placeholder="Password*"
     value={formData.password}
     onChange={handleInputChange}
-    required
+    
   />
   <input
     type="password"
@@ -189,7 +265,7 @@ const CreateNewUser = () => {
     placeholder="Repeat Password*"
     value={formData.repeatPassword}
     onChange={handleInputChange}
-    required
+    
   />
 </div>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";
 import "./Admin.css";
+import Notification from "../../components/Notifications/Notifications";
 
 const EditUser = () => {
   const { pk } = useParams();
@@ -20,6 +21,7 @@ const EditUser = () => {
   const [loading, setLoading] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
+  const [notification, setNotification] = useState(null); 
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -46,7 +48,11 @@ const EditUser = () => {
         setIsLoaded(true);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
-        alert("Failed to load user data. Please try again.");
+        
+        setNotification({
+          message: "Failed to load user data. Please try again.",
+          type: "error",
+        });
       }
     };
 
@@ -57,7 +63,9 @@ const EditUser = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleSave = async (e) => {
     e.preventDefault();
 
@@ -68,32 +76,123 @@ const EditUser = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[+]?[1-9][0-9]{7,14}$/;
 
+    if (formData.username === "") {
+      
+      setNotification({
+        message: "Username cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.first_name === "") {
+      
+      setNotification({
+        message: "First Name cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.last_name === "") {
+      
+      setNotification({
+        message: "Last Name cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.password === "") {
+      
+      setNotification({
+        message: "Passwords cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.email === "") {
+      
+      setNotification({
+        message: "Email cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.password !== formData.repeatPassword) {
+      
+      setNotification({
+        message: "Passwords do not match",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
+    if (formData.phone == "") {
+      
+      setNotification({
+        message: "Phone cant be empty",
+        type: "error",
+      });
+      setLoading(false);
+      return;
+    }
     if (!nameRegex.test(formData.first_name.trim())) {
-        alert("First name can only contain letters.");
+        
+        setNotification({
+          message: "First name can only contain letters.",
+          type: "error",
+        });
         return;
     }
     if (!nameRegex.test(formData.last_name.trim())) {
-        alert("Last name can only contain letters.");
+        
+        setNotification({
+          message: "Last name can only contain letters.",
+          type: "error",
+        });
         return;
     }
     if (!jobTitleRegex.test(formData.job.trim())) {
-        alert("Job can only contain letters, spaces, and numbers (but not starting with a number).");
+        
+        setNotification({
+          message: "Job can only contain letters, spaces, and numbers (but not starting with a number).",
+          type: "error",
+        });
         return;
     }
     if (!countryCityRegex.test(formData.country.trim()) && formData.country) {
-        alert("Country can only contain letters and spaces.");
+        
+        setNotification({
+          message: "Country can only contain letters and spaces.",
+          type: "error",
+        });
         return;
     }
     if (!countryCityRegex.test(formData.city.trim()) && formData.city) {
-        alert("City can only contain letters and spaces.");
+        
+        setNotification({
+          message: "City can only contain letters and spaces.",
+          type: "error",
+        });
         return;
     }
     if (!emailRegex.test(formData.email.trim())) {
-        alert("Invalid email format.");
+        
+        setNotification({
+          message: "Invalid email format.",
+          type: "error",
+        });
         return;
     }
     if (!phoneRegex.test(formData.phone.trim()) && formData.phone) {
-        alert("Phone must start with + or a non-zero digit and be 8 to 15 digits long.");
+        
+        setNotification({
+          message: "Phone must start with + or a non-zero digit and be 8 to 15 digits long.",
+          type: "error",
+        });
         return;
     }
 
@@ -114,15 +213,20 @@ const EditUser = () => {
 
     try {
         await api.patch(`/api/custom_admin/user/${pk}/edit/`, payload);
-        alert("User updated successfully!");
-        navigate("/custom-admin");
+        
+        setNotification({
+          message: "User updated successfully!",
+          type: "success",
+        });
+        setTimeout(() => {
+        navigate("/custom-admin");},2000);
     } catch (error) {
         console.error("Error updating user:", error.response || error.message);
-        alert(
-            `Error: ${
-                error.response?.data?.detail || "An error occurred while updating the user."
-            }`
-        );
+        const errorMessage =error.response?.data?.detail || "An error occurred while updating the user.";
+        setNotification({
+          message: errorMessage,
+          type: "error",
+        });
     } finally {
         setLoading(false);
     }
@@ -135,6 +239,13 @@ const EditUser = () => {
 
   return (
     <form onSubmit={handleSave} className="admin-main">
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
       <h1 className="admin-header">Edit User {username}</h1>
 
       <div className="admin-input-container">
@@ -145,7 +256,7 @@ const EditUser = () => {
           value={formData.first_name}
           onChange={handleInputChange}
           
-          required
+         
         />
         <input
           type="text"
@@ -154,7 +265,7 @@ const EditUser = () => {
           value={formData.last_name}
           onChange={handleInputChange}
           
-          required
+          
         />
         <input
           type="email"
@@ -163,7 +274,7 @@ const EditUser = () => {
           value={formData.email}
           onChange={handleInputChange}
           
-          required
+          
         />
         <input
           type="tel"

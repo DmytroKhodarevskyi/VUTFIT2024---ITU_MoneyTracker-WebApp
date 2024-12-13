@@ -3,6 +3,7 @@ import api from "../../api";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import TopPart from "../../components/TopPart/TopPart";
 import "./TransactionsList.css"
+import Notification from "../../components/Notifications/Notifications";
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -20,6 +21,7 @@ function TransactionsList() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const [categoryNames, setCategoryNames] = useState([]);
+  const [notification, setNotification] = useState(null);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -51,7 +53,11 @@ function TransactionsList() {
         setCategoryNames(categories);
         setIsLoaded(true);
       } catch (error) {
-        window.alert("Failed to fetch profile", error);
+        
+        setNotification({
+          message: "Failed to fetch profile",
+          type: "error",
+        });
         setError(error);
         setIsLoaded(false);
       }
@@ -86,10 +92,16 @@ function TransactionsList() {
       setSelectedTransactions([...selectedTransactions, transaction.id]);
     }
   };
-
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleDelete = async () => {
     if (selectedTransactions.length === 0) {
-      alert("Please select at least one transaction to delete.");
+      
+      setNotification({
+        message: "Please select at least one transaction to delete.",
+        type: "error",
+      });
       return;
     }
 
@@ -110,7 +122,11 @@ function TransactionsList() {
       setSelectedTransactions([]);
     } catch (error) {
       console.error("There was an error deleting the transactions:", error);
-      alert("Failed to delete the selected transactions. Please try again.");
+      
+      setNotification({
+        message: "Failed to delete the selected transactions. Please try again.",
+        type: "error",
+      });
     }
   };
 
@@ -129,6 +145,13 @@ function TransactionsList() {
 
   return (
     <MainContainer>
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
       <TopPart
         nickname={profileData.first_name}
         selectedItem={"update"}

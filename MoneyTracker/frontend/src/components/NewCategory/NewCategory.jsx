@@ -4,6 +4,7 @@ import "./NewTransactionCard.css"
 import Picker from "../../assets/ColorPickIcon.svg"
 import ColorPicker from './ColorPicker';
 import api from "../../api";
+import Notification from '../Notifications/Notifications';
 
 function NewTransactionCard() {
 
@@ -14,6 +15,7 @@ function NewTransactionCard() {
     const [categoryName, setCategoryName] = useState('');
     const [categoryList, setCategoryList] = useState([]);
     const [categoryColor, setCategoryColor] = useState("#000000");
+    const [notification, setNotification] = useState(null);
 
     useEffect(() => {
         const currentDate = new Date();
@@ -37,10 +39,17 @@ function NewTransactionCard() {
         
         
     };
-
+    const closeNotification = () => {
+        setNotification(null); 
+      };
     const handleSubmit = async () => {
         if (categoryName === '') {
-            alert('Category name is required');
+            
+            
+        setNotification({
+        message: "Category name is required",
+        type: "error",
+        });
             return;
         }
 
@@ -59,7 +68,11 @@ function NewTransactionCard() {
             );
     
             if (duplicateCategory) {
-                alert('Category with this name already exists');
+                
+                setNotification({
+                    message: "Category with this name already exists",
+                    type: "error",
+                    });
                 return; 
             }
 
@@ -93,6 +106,13 @@ function NewTransactionCard() {
   return (
     <>
         <div className='right-container'>
+        {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
 
             <div className='card-category'>
                 <div className='card-title-container'>

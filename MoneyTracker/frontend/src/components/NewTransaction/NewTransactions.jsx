@@ -3,7 +3,7 @@ import "./NewTransactionCard.css"
 import Plus from "../../assets/PlusIcon.svg"
 import Minus from "../../assets/MinusIcon.svg"
 import api from "../../api"
-
+import Notification from '../Notifications/Notifications'
 function NewTransactionCard() {
 
     const [date, setDate] = useState('');
@@ -18,6 +18,7 @@ function NewTransactionCard() {
     const [IncOrSpndHint, setIncOrSpndHint] = useState('This will count as Income');
 
     const [isAnimating, setIsAnimating] = useState(false); 
+    const [notification, setNotification] = useState(null);
 
     useEffect(() => {
         const currentDate = new Date();
@@ -45,26 +46,45 @@ function NewTransactionCard() {
         fetchCategories();
       }, []);
 
-
+      const closeNotification = () => {
+        setNotification(null); 
+      };
     const handleSubmit = async () => {
 
         if (name === '') {
-            alert('Transaction title is required');
+            
+            setNotification({
+                message: "Transaction title is required",
+                type: "error",
+              });
             return;
         }
 
         if (amount <= 0) {
-            alert('Transaction amount must be greater than 0');
+            
+            setNotification({
+                message: "Transaction amount must be greater than 0",
+                type: "error",
+              });
             return;
+            
         }
 
         if (amount > 999999999) {
-            alert('Transaction amount is too large');
+            
+            setNotification({
+                message: "Transaction amount is too large",
+                type: "error",
+              });
             return;
         }
 
         if (!category || category.trim() === '') {
-            alert('Transaction category is required');
+            
+            setNotification({
+                message: 'Transaction category is required',
+                type: "error",
+              });
             return;
         }
 
@@ -83,7 +103,11 @@ function NewTransactionCard() {
         try {
             
             const response = await api.post("/api/transactions/", transactionData);
-            window.alert('Transaction created');
+            
+            setNotification({
+                message: 'Transaction created',
+                type: "success",
+              });
         } catch (error) {
             console.error('There was an error creating the transaction:', error);
         }
@@ -113,6 +137,13 @@ function NewTransactionCard() {
   return (
     <>
           <div className='card-trans'>
+          {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
             <div className='card-title-container'>
                 <h1 className='card-title'>Add New Transaction</h1>
                 <h2 className='card-title-hint'>Update your payment statistics</h2>

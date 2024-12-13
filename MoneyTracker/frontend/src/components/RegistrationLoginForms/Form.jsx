@@ -3,6 +3,7 @@ import api from "../../api"
 import { Link, useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
 import "./Form.css"
+import Notification from "../Notifications/Notifications";
 
 function Form({route, method}){
     const [username, setUsername] = useState("")
@@ -18,6 +19,7 @@ function Form({route, method}){
     const navigate = useNavigate()
     const head = method === "login" ? "Who Is It?" : "Introduce Yourself."
     const button = method === "login" ? "Login" : "Register"
+    const [notification, setNotification] = useState(null);
 
     const [existingUsers, setExistingUsers] = useState([]);
 
@@ -34,13 +36,19 @@ function Form({route, method}){
     
         fetchExistingUsers();
       }, []);
-
+      const closeNotification = () => {
+        setNotification(null); 
+      };
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault()
 
         if (method === "register" && password !== repeatPassword) {
-            alert("Passwords do not match")
+            
+            setNotification({
+                message: "Passwords do not match",
+                type: "error",
+              });
             setLoading(false)
             return;
         }
@@ -57,13 +65,21 @@ function Form({route, method}){
             const phoneExists = existingUsers.some(user => user.profile.phone === phone);
     
             if (usernameExists) {
-                alert("Username already exists!");
+                
+                setNotification({
+                    message: "Username already exists!",
+                    type: "error",
+                  });
                 setLoading(false);
                 return;
             }
     
             if (phoneExists) {
-                alert("Phone number already exists!");
+                
+                setNotification({
+                    message: "Phone number already exists!",
+                    type: "error",
+                  });
                 setLoading(false);
                 return;
             }
@@ -83,24 +99,74 @@ function Form({route, method}){
                     job: "Unemployed"  
                 }
             };
-
+            if(username === ""){
+                setNotification({
+                    message: "Username cant be empty.",
+                    type: "error",
+                  });
+                setLoading(false);
+                return;   
+            }
+            if(password === ""){
+                setNotification({
+                    message: "Password cant be empty.",
+                    type: "error",
+                  });
+                setLoading(false);
+                return;   
+            }
             if (method === "register") {
+                if(trimmedFirstName === ""){
+                    setNotification({
+                        message: "First name cant be empty.",
+                        type: "error",
+                      });
+                    setLoading(false);
+                    return;   
+                }
+                if(trimmedFirstName === ""){
+                    setNotification({
+                        message: "First name cant be empty.",
+                        type: "error",
+                      });
+                    setLoading(false);
+                    return;   
+                }
+                if(trimmedLastName === ""){
+                    setNotification({
+                        message: "Last name cant be empty.",
+                        type: "error",
+                      });
+                    setLoading(false);
+                    return;   
+                }
+                
                 if (!nameRegex.test(trimmedFirstName)) {
-                    alert("First name can only contain letters.");
+                    
+                    setNotification({
+                        message: "First name can only contain letters.",
+                        type: "error",
+                      });
                     setLoading(false);
                     return;
                 }
         
                 if (!nameRegex.test(trimmedLastName)) {
-                    alert("Last name can only contain letters.");
+                    
+                    setNotification({
+                        message: "Last name can only contain letters.",
+                        type: "error",
+                      });
                     setLoading(false);
                     return;
                 }
                 
                 if (!phoneRegex.test(trimmedPhone)) {
-                    alert(
-                        "Phone number must start with + or a non-zero digit and must be 8 to 15 digits long."
-                    );
+                   
+                    setNotification({
+                        message: "Phone number must start with + or a non-zero digit and must be 8 to 15 digits long.",
+                        type: "error",
+                      });
                     setLoading(false);
                     return;
                 }
@@ -127,13 +193,25 @@ function Form({route, method}){
                 console.error("Error response:", error.response);
                 
                 const errorMessage = error.response.data.detail || JSON.stringify(error.response.data);
-                alert(`Error: ${errorMessage}`);
+                
+                setNotification({
+                    message: errorMessage,
+                    type: "error",
+                  });
             } else if (error.request) {
                 console.error("Error request:", error.request);
-                alert("Network error. Please try again.");
+                
+                setNotification({
+                    message: "Network error. Please try again.",
+                    type: "error",
+                  });
             } else {
                 console.error("Error message:", error.message);
-                alert(`Error: ${error.message}`);
+                setNotification({
+                    message: error.message,
+                    type: "error",
+                  });
+                
             }
         } finally {
             setLoading(false);
@@ -143,6 +221,13 @@ function Form({route, method}){
 
     return (
         <form onSubmit={handleSubmit} className="form-container">
+            {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
             <h1 className="form-headertext">{head}</h1>
 
             <div className="inputbtn-container">

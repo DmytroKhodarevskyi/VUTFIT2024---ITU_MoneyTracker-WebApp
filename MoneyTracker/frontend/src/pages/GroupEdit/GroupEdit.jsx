@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import TopPart from "../../components/TopPart/TopPart";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import "./GroupEdit.css";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
+import Notification from "../../components/Notifications/Notifications";
 
 function GroupEdit() {
     const { groupId } = useParams();
@@ -20,6 +22,9 @@ function GroupEdit() {
     const [modifiedMembers, setModifiedMembers] = useState([]);
     const [isCreator, setIsCreator] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [notification, setNotification] = useState(null);
+    const [confirmAction, setConfirmAction] = useState(null); 
   
     useEffect(() => {
       async function fetchData() {
@@ -76,7 +81,9 @@ function GroupEdit() {
   
       fetchData();
     }, [groupId]);
-  
+    const closeNotification = () => {
+      setNotification(null); 
+    };
     const handleChange = (e) => {
       const { name, value } = e.target;
       setGroup((prevState) => ({
@@ -84,7 +91,7 @@ function GroupEdit() {
         [name]: value,
       }));
     };
-  
+   
     const handleImageChange = (e) => {
       const file = e.target.files[0];
       if (file) {
@@ -118,7 +125,11 @@ function GroupEdit() {
       const formData = new FormData();
 
       if(group.name.length === 0) {
-        alert("Group name cannot be empty");
+       
+        setNotification({
+          message: "Group name cannot be empty",
+          type: "error",
+        });
         setIsLoading(false);
         return;
       }
@@ -151,19 +162,40 @@ function GroupEdit() {
     };
   
     
-    const handleDeleteGroup = async (groupId) => {
-      const confirmed = window.confirm("Are you sure you want to delete this group?");
-      if (!confirmed) return;
+    const handleOpenConfirmModal = (action) => {
+      setConfirmAction(() => action); 
+      setShowModal(true); 
+    };
     
+    const confirmDelete = async () => {
+      if (confirmAction) {
+        await confirmAction(); 
+      }
+      setShowModal(false); 
+    };
+    
+    const cancelDelete = () => {
+      setShowModal(false); 
+    };
+    
+    
+    const handleDeleteGroup = async () => {
       try {
         await api.delete(`/api/groups/${groupId}/delete/`);
-        alert("Group deleted successfully.");
+        setNotification({
+          message: "Group deleted successfully.",
+          type: "success",
+        });
     
-        
-        nav(`/groups/`);
+        setTimeout(() => {
+          nav(`/groups/`);
+        }, 2000);
       } catch (error) {
         console.error("Error deleting group:", error);
-        alert("Failed to delete the group. Please try again.");
+        setNotification({
+          message: "Failed to delete the group. Please try again.",
+          type: "error",
+        });
       }
     };
 
@@ -199,12 +231,26 @@ function GroupEdit() {
     if (!group) {
       return <p>Failed to load group data.</p>; 
     }
-
+    
        
    
 
     return (
         <MainContainer>
+          {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
+      {showModal && (
+        <ConfirmModal
+          message="Are you sure you want to delete this group?"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
             <TopPart
                 nickname={profileData?.firstname}
                 selectedItem={"groups"}
@@ -224,7 +270,7 @@ function GroupEdit() {
                             value={group.name}
                             onChange={handleChange}
                             placeholder="Name*"
-                            required
+                            
                         />
                     </div>
                     <div className="group-edit-description">
@@ -287,7 +333,7 @@ function GroupEdit() {
                     {isCreator && (
                         <button 
                           type="button" 
-                          onClick={() => handleDeleteGroup(groupId)} 
+                          onClick={() => handleOpenConfirmModal(handleDeleteGroup)} 
                           className="group-edit-delete-button"
                         >
                           Delete Group  

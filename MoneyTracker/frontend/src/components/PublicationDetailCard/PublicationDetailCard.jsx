@@ -5,7 +5,8 @@ import comment_picture from "../../assets/comment.svg";
 import CommentPopUpCard from './CommentPopUpCard'; 
 import { useState, useEffect } from "react"
 import api from "../../api"
-
+import Notification from '../Notifications/Notifications';
+import ConfirmModal from '../ConfirmModel/ConfirmModal';
 
 function PublicationDetailCard({
     publication,
@@ -23,12 +24,17 @@ function PublicationDetailCard({
     const [liked, setLiked] = useState(false);
     const [isLiking, setIsLiking] = useState(false);
     const [loading, setLoading] = useState(true); 
-    const [loaded, setIsLoaded] = useState(false)
+    const [loaded, setIsLoaded] = useState(false);
+    const [notification, setNotification] = useState(null);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [commentToDelete, setCommentToDelete] = useState(null);
    
     const [isLikingComment, setIsLikingComment] = useState(false);
 
 
- 
+    const closeNotification = () => {
+        setNotification(null);
+    };
     
     useEffect(() => {
         async function fetchIsLiked() {
@@ -124,7 +130,11 @@ function PublicationDetailCard({
             }
         } catch (error) {
             if (error.response?.data?.error_code === "self_like") {
-                alert("You cannot like your own publication.");
+                
+                setNotification({
+                    message: "You cannot like your own publication.",
+                    type: "error",
+                  });
             }
         } finally {
             setIsLiking(false); 
@@ -159,30 +169,45 @@ function PublicationDetailCard({
                 );
         } catch (error) {
             if (error.response?.data?.error_code === "self_like") {
-                alert("You cannot like your own comment.");
+                
+                setNotification({
+                    message: "You cannot like your own comment.",
+                    type: "error",
+                  });
             }
         } finally {
             setIsLikingComment(false);
         }
     };
 
-    const handleDeleteCommentary = async (comment) => {
-      
-        const isConfirmed = window.confirm("Are you sure you want to delete this comment?");
+    const handleDeleteCommentary = (commentId) => {
+        setCommentToDelete(commentId);
+        setShowConfirmModal(true);
+    };
 
-       if (isConfirmed) {
+    const confirmDeleteCommentary = async () => {
         try {
-            await api.delete(`/api/publications/${publication.id}/comments/${comment}/delete/`);
-            
-            setCommentaries((prevCommentaries) => 
-                prevCommentaries.filter((c) => c.id !== comment)
+            await api.delete(`/api/publications/${publication.id}/comments/${commentToDelete}/delete/`);
+            setCommentaries((prevCommentaries) =>
+                prevCommentaries.filter((comment) => comment.id !== commentToDelete)
             );
+            setNotification({
+                message: "Comment deleted successfully.",
+                type: "success",
+            });
         } catch (error) {
-            console.error("Error while deleting commentary", error);
+            setNotification({
+                message: "Failed to delete the comment.",
+                type: "error",
+            });
+        } finally {
+            setShowConfirmModal(false);
         }
-    }
-};
+    };
 
+    const cancelDeleteCommentary = () => {
+        setShowConfirmModal(false);
+    };
     
 
    
@@ -190,6 +215,20 @@ function PublicationDetailCard({
 
     return (
       <div className="publication-detail-card-container">
+        {notification && (
+                <Notification
+                    message={notification.message}
+                    type={notification.type}
+                    onClose={closeNotification}
+                />
+            )}
+            {showConfirmModal && (
+                <ConfirmModal
+                    message="Are you sure you want to delete this comment?"
+                    onConfirm={confirmDeleteCommentary}
+                    onCancel={cancelDeleteCommentary}
+                />
+            )}
             <div className="publication-detail-info">
                 <div className="publication-detail-header">
                     <img src={publicationProfilePhoto || `${baseUrl}media/profile_images/default.png`} alt={`${publication.author.first_name + " " + publication.author.last_name}'s profile`} className="publication-detail-header-image" draggable="false" />

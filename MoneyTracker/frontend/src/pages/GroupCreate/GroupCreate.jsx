@@ -5,6 +5,7 @@ import MainContainer from "../../components/MainContainer/MainContainer";
 import api from "../../api";
 import { useNavigate } from "react-router-dom";
 import "./GroupCreate.css";
+import Notification from "../../components/Notifications/Notifications";
 
 function GroupCreate() {
   const nav = useNavigate();
@@ -16,7 +17,7 @@ function GroupCreate() {
   const [imagePreview, setImagePreview] = useState("");
 
   const fileInputRef = useRef(null); 
-  
+  const [notification, setNotification] = useState(null);  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -30,7 +31,9 @@ function GroupCreate() {
       reader.readAsDataURL(file);
     }
   };
-
+  const closeNotification = () => {
+    setNotification(null); 
+  };
   const handleDeletePhoto = () => {
     setImage("");
     setFileName("");
@@ -52,12 +55,20 @@ function GroupCreate() {
     e.preventDefault();
 
     if (userStars < 1) {
-      alert("U don't have enough stars to create group (required 1)");
+      
+      setNotification({
+        message: "U don't have enough stars to create group (required 1)",
+        type: "error",
+      });
       return;
     }
 
     if (!groupName) {
-      alert("Please enter a group name");
+      
+      setNotification({
+        message: "Please enter a group name",
+        type: "error",
+      });
       return;
     }
 
@@ -105,6 +116,13 @@ function GroupCreate() {
   return (
     <>
       <MainContainer>
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
         <TopPart
           nickname={nickname}
           profilePhoto={profilePhoto}

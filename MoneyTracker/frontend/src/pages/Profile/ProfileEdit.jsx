@@ -6,6 +6,8 @@ import ProfileEditCard from "../../components/ProfileCards/ProfileEditCard"
 import DiscardForm from "../../components/DiscardForm/DiscardForm"
 import { useNavigate } from 'react-router-dom';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
+import Notification from "../../components/Notifications/Notifications";
+import ConfirmModal from "../../components/ConfirmModel/ConfirmModal";
 
 function ProfileEdit() {
 
@@ -26,6 +28,10 @@ function ProfileEdit() {
     const [photoPreview, setPhotoPreview] = useState(null);
 
     const [showDiscardModal, setShowDiscardModal] = useState(false);
+    const [notification, setNotification] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [confirmAction, setConfirmAction] = useState(null);
+    
 
     const fileInputRef = useRef(null);
 
@@ -70,7 +76,7 @@ function ProfileEdit() {
     const handleDiscard = () => {
         setShowDiscardModal(true);
     };
-
+    
     const confirmDiscard = () => {
         navigate('/profile');
     };
@@ -118,6 +124,9 @@ function ProfileEdit() {
         setPhotoPreview(null);
         setDeletePhoto(true);
     }
+    const closeNotification = () => {
+        setNotification(null);
+      };
 
     const handleSave = async () => {
         try {
@@ -145,37 +154,72 @@ function ProfileEdit() {
             }
 
             if (!nameRegex.test(firstname.trim())) {
-                window.alert('First name can only contain letters and cannot be empty.');
+               
+                
+                setNotification({
+                    message: "First name can only contain letters and cannot be empty.",
+                    type: "error",
+                  });
                 return;
             }
 
             if (!nameRegex.test(lastname.trim())) {
-                window.alert('Last name can only contain letters and cannot be empty.');
+                
+                
+                setNotification({
+                    message: "Last name can only contain letters and cannot be empty.",
+                    type: "error",
+                  });
                 return;
             }
 
             if (!jobTitleRegex.test(jobTitle.trim())) {
-                window.alert('Job can only contain letters and spaces. And numbers (But not as a first char)');
+                
+                
+                setNotification({
+                    message: "Job can only contain letters and spaces. And numbers (But not as a first char)",
+                    type: "error",
+                  });
                 return;
             }
 
             if (!countryCityRegex.test(country.trim()) && country.length != 0) {
-                window.alert('Country can only contain letters and spaces.');
+                
+                
+                setNotification({
+                    message: "Country can only contain letters and spaces.",
+                    type: "error",
+                  });
                 return;
             }
 
             if (!countryCityRegex.test(city.trim()) && city.length != 0) {
-                window.alert('City can only contain letters and spaces.');
+                
+                
+                setNotification({
+                    message: "City can only contain letters and spaces.",
+                    type: "error",
+                  });
                 return;
             }
             
             if (!emailRegex.test(email.trim())) {
-                window.alert('Email can only contain letters and spaces.');
+                
+                
+                setNotification({
+                    message: "Email can only contain letters and spaces.",
+                    type: "error",
+                  });
                 return;
             }
 
             if (!phoneRegex.test(phone.trim())) {
-                window.alert('Phone can only contain letters and spaces and start with either + or any number except 0');
+               
+                
+                setNotification({
+                    message: "Phone can only contain letters and spaces and start with either + or any number except 0",
+                    type: "error",
+                  });
                 return;
             }
             
@@ -198,8 +242,14 @@ function ProfileEdit() {
 
             const response = await api.patch("/api/user/profile_detail/", profileData);
             navigate('/profile');
+            
         } catch (error) {
-            window.alert(error);
+            
+            
+            setNotification({
+                message: error,
+                type: "error",
+              });
         }
     };
 
@@ -214,55 +264,62 @@ function ProfileEdit() {
     };
 
     const handleDeleteAccount = async (accessToken, refreshToken) => {
-        if (!accessToken) {
-            alert("You need to log in first.");
-            navigate("/login");
-            return;
-        }
-    
-        const confirmDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
-        if (!confirmDelete) return;
-    
-        try {
-            await api.delete("/api/user/delete/", {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-
-            localStorage.removeItem(ACCESS_TOKEN);
-            localStorage.removeItem(REFRESH_TOKEN);
-    
-            navigate("/login");
-            window.location.reload(); 
-    
-        } catch (error) {
-            if (error.response && error.response.status === 401) {
-                
-                const newAccessToken = await getNewAccessToken(refreshToken);
-                if (newAccessToken) {
-                    await api.delete("/api/user/delete/", {
-                        headers: {
-                            Authorization: `Bearer ${newAccessToken}`,
-                        },
-                    });
-    
-                   
-                    localStorage.setItem(ACCESS_TOKEN, newAccessToken);
-                    localStorage.removeItem(REFRESH_TOKEN);
-    
-                    
+        handleOpenDeleteModal(async () => {
+            if (!accessToken) {
+                setNotification({
+                    message: "You need to log in first.",
+                    type: "error",
+                });
+                setTimeout(() => {
                     navigate("/login");
-                  
-                } else {
-                    
-                    navigate("/login");
-                }
-            } else {
-               
-                alert("There was an error deleting your account. Please try again later.");
+                }, 2000);
+                return;
             }
-        }
+
+            try {
+                await api.delete("/api/user/delete/", {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
+                localStorage.removeItem(ACCESS_TOKEN);
+                localStorage.removeItem(REFRESH_TOKEN);
+
+                setNotification({
+                    message: "Your account has been successfully deleted.",
+                    type: "success",
+                });
+
+                setTimeout(() => {
+                    navigate("/login");
+                    window.location.reload();
+                }, 2000);
+            } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    const newAccessToken = await getNewAccessToken(refreshToken);
+                    if (newAccessToken) {
+                        await api.delete("/api/user/delete/", {
+                            headers: {
+                                Authorization: `Bearer ${newAccessToken}`,
+                            },
+                        });
+
+                        localStorage.setItem(ACCESS_TOKEN, newAccessToken);
+                        localStorage.removeItem(REFRESH_TOKEN);
+
+                        navigate("/login");
+                    } else {
+                        navigate("/login");
+                    }
+                } else {
+                    setNotification({
+                        message: "There was an error deleting your account. Please try again later.",
+                        type: "error",
+                    });
+                }
+            }
+        });
     };
     
 
@@ -284,9 +341,40 @@ function ProfileEdit() {
             </div>
         )
       }
-    
+      const handleOpenDeleteModal = (action) => {
+        setConfirmAction(() => action); 
+        setShowModal(true); 
+    };
+
+    const confirmDelete = async () => {
+        if (confirmAction) {
+            await confirmAction(); 
+        }
+        setShowModal(false); 
+    };
+
+    const cancelDelete = () => {
+        setShowModal(false); 
+        setConfirmAction(null); 
+    };
     return (
+        
         <MainContainer>
+            {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+        
+      )}
+      {showModal && (
+                <ConfirmModal
+                    message="Are you sure you want to delete your account? This action cannot be undone."
+                    onConfirm={confirmDelete} 
+                    onCancel={cancelDelete} 
+                />
+            )}
         <TopPart nickname={profileData.username} selectedItem={"profile"} profilePhoto={profilePhoto}/>
         <div className="profile-container">
             <ProfileEditCard 

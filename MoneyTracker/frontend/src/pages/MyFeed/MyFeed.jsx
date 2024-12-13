@@ -4,6 +4,7 @@ import MainContainer from "../../components/MainContainer/MainContainer"
 import TopPart from "../../components/TopPart/TopPart";
 import MyFeedCard from "../../components/MyFeedCard/MyFeedCard"
 import { useNavigate } from 'react-router-dom'
+import Notification from "../../components/Notifications/Notifications";
 
 
 function MyFeed () {
@@ -19,7 +20,7 @@ function MyFeed () {
     const [publications, setPublications] = useState([]); 
 
     const navigate = useNavigate();
-
+    const [notification, setNotification] = useState(null); 
     const handleNewPost = () => {
         navigate('/create-post'); 
     };
@@ -27,6 +28,10 @@ function MyFeed () {
     const handleEditPost = (publicationId) => {
         navigate(`/edit-post/${publicationId}`);
     };
+
+    const closeNotification = () => {
+        setNotification(null); 
+      };
 
     const handleDeletePost = async (publicationId) => {
         try {
@@ -55,7 +60,11 @@ function MyFeed () {
                 console.log("Publications:: ", publicationsResponse.data);
 
             } catch (error) {
-                window.alert("Failed to fetch profile data", error);
+                
+                setNotification({
+                    message: "Failed to fetch profile data",
+                    type: "error",
+                  });
                 setIsLoaded(false);
             }
         }
@@ -84,6 +93,13 @@ function MyFeed () {
 
       return (
         <MainContainer>
+            {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={closeNotification}
+        />
+      )}
         <TopPart nickname={profileData?.firstname} selectedItem={"profile"} profilePhoto={profilePhoto} />        
         <div className="feed-container">
             {publications.length > 0 ? (
