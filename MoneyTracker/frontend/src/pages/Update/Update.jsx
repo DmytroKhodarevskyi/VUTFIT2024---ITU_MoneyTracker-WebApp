@@ -1,3 +1,13 @@
+/**
+ * File: Update.jsx
+ * Description: Page for creating new transactions and categories.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import { useState, useEffect } from "react"
 import api from "../../api"
 import "./Update.css"

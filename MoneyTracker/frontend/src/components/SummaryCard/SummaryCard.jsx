@@ -1,3 +1,13 @@
+/**
+ * File: SummaryCard.jsx
+ * Description: Component card for overview brief information.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - Flexible card for displaying brief information.
+ */
+
+
 import React from 'react'
 import "./SummaryCard.css"
 

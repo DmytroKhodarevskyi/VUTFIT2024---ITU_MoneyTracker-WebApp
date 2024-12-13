@@ -1,3 +1,13 @@
+/**
+ * File: BarChart.jsx
+ * Description: Component for a transactions chart.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - _
+ */
+
+
 'use client';
 import api from "../../api"
 

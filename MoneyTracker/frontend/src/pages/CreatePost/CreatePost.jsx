@@ -1,3 +1,13 @@
+/**
+ * File: CreatePost.jsx
+ * Description: Page for creating and editing a publication.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import { useState, useEffect, useRef } from "react";
 import React from "react";
 import FormPost from "../../components/CreatePostForm/FormPost";

@@ -1,3 +1,13 @@
+/**
+ * File: GroupList.jsx
+ * Description: Page for viewing a list of groups.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import { useState, useEffect } from "react";
 import TopPart from "../../components/TopPart/TopPart";

@@ -1,3 +1,13 @@
+/**
+ * File: ColoPicker.jsx
+ * Description: Component for color picker.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React, { useState } from "react";
 import "./NewTransactionCard.css"
 

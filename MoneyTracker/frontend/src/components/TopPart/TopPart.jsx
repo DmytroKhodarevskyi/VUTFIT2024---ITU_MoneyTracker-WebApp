@@ -1,3 +1,13 @@
+/**
+ * File: TopPart.jsx
+ * Description: Component for top bar navigation.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - Dynamic hero section text
+ */
+
+
 import React from 'react';
 import {useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react"

@@ -1,3 +1,13 @@
+/**
+ * File: ThreadDetail.jsx
+ * Description: Page for viewing a thread and its threaded comments.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react"

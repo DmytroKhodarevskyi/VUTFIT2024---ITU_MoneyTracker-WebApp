@@ -1,3 +1,13 @@
+/**
+ * File: DiscardForm.jsx
+ * Description: Component for confirming changes discard.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from 'react';
 import './DiscardForm.css'; 
 

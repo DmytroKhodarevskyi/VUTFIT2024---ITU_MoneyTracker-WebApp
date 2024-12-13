@@ -1,3 +1,13 @@
+/**
+ * File: ProfileEditCard.jsx
+ * Description: Component for editing profile.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from 'react';
 import "./ProfileEdit.css";
 

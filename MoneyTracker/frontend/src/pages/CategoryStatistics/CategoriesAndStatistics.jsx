@@ -1,3 +1,13 @@
+/**
+ * File: CategoriesAndStatistics.jsx
+ * Description: The page for managing categories and displaying statistics for them.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React, { useState, useEffect } from "react";
 import api from "../../api";
 import MainContainer from "../../components/MainContainer/MainContainer";

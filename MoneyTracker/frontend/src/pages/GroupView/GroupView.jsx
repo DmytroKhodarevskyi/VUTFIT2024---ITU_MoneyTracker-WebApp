@@ -1,3 +1,13 @@
+/**
+ * File: GroupView.jsx
+ * Description: Page for viewing a group.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

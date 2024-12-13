@@ -1,3 +1,13 @@
+/**
+ * File: ThreadRoot.jsx
+ * Description: Component of thread root.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import api from "../../api";
 import { useState, useEffect, useRef } from "react";

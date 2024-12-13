@@ -1,3 +1,13 @@
+/**
+ * File: NotFound.jsx
+ * Description: Page for non existing page.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import "./NotFound.css"
 
 function NotFound() {

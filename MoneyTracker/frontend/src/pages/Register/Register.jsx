@@ -1,3 +1,13 @@
+/**
+ * File: Register.jsx
+ * Description: Page for registering.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import Form from "../../components/RegistrationLoginForms/Form"
 
 function Register() {

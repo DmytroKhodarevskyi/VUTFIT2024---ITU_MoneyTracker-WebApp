@@ -1,3 +1,13 @@
+/**
+ * File: PublicationDetail.jsx
+ * Description: Page for viewing publication detail (from feed).
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import { useState, useEffect } from "react"
 import api from "../../api"
 import MainContainer from "../../components/MainContainer/MainContainer"

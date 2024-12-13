@@ -1,3 +1,13 @@
+/**
+ * File: ProfileEdit.jsx
+ * Description: Page for editing a profile.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import { useState, useRef, useEffect } from "react"
 import api from "../../api"
 import MainContainer from "../../components/MainContainer/MainContainer"

@@ -1,3 +1,13 @@
+/**
+ * File: NewCategory.jsx
+ * Description: Component card for creating new category.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React, { useState, useEffect } from 'react'
 import {useNavigate } from 'react-router-dom';
 import "./NewTransactionCard.css"

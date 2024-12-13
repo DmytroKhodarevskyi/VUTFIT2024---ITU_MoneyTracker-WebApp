@@ -1,3 +1,13 @@
+/**
+ * File: PublicationDetailCard.jsx
+ * Description: Component card for viewing publication details and comments.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from 'react';
 import "./PublicationDetailCard.css";
 import star_picture from "../../assets/star.svg";

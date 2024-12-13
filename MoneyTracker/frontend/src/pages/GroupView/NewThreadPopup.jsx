@@ -1,3 +1,13 @@
+/**
+ * File: NewThreadPopup.jsx
+ * Description: Popup for creating a new group thread (root of the thread).
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import "./NewThreadPopUp.css";
 import { useState, useEffect, useRef } from "react";

@@ -1,3 +1,13 @@
+/**
+ * File: ProfileCard.jsx
+ * Description: Component for viewing profile.
+ * Author: Denys Chernenko, Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - Dmytro Khodarevskyi: Added reminders viewing, added stars count view.
+ */
+
+
 import React from "react";
 import "./ProfileCard.css";
 import Arrow from "../../assets/ArrowRight.svg";

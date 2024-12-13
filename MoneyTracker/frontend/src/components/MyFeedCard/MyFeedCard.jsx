@@ -1,3 +1,13 @@
+/**
+ * File: MyFeedCard.jsx
+ * Description: Component for publication card in user publications list.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from 'react';
 import "./MyFeedCard.css";
 import star_picture from "../../assets/star.svg";

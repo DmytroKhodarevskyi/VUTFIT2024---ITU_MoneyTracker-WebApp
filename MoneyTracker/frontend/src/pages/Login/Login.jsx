@@ -1,3 +1,13 @@
+/**
+ * File: Login.jsx
+ * Description: Login page.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import Form from "../../components/RegistrationLoginForms/Form"
 
 function Login() {

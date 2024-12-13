@@ -1,3 +1,13 @@
+/**
+ * File: CreateReminderPopUp.jsx
+ * Description: Popup for creating a new reminder.
+ * Author: Dmytro Khodarevskyi, Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React, { useState } from "react";
 import api from "../../api"; 
 import { useEffect } from "react";

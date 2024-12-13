@@ -1,3 +1,13 @@
+/**
+ * File: ThreadDetailComment.jsx
+ * Description: Component for viewing a single thread comment card in thread.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import "./ThreadDetailComment.css";
 import { useState, useEffect } from "react"

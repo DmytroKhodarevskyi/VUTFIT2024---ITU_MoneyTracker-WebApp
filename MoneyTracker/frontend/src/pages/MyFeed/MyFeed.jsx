@@ -1,3 +1,13 @@
+/**
+ * File: MyFeed.jsx
+ * Description: Page for viewing and managing a list of publications created by user.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import { useState, useEffect } from "react"
 import api from "../../api"
 import MainContainer from "../../components/MainContainer/MainContainer"

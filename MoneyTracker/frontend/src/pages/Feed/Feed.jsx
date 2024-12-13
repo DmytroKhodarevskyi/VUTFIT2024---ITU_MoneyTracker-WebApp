@@ -1,3 +1,13 @@
+/**
+ * File: Feed.jsx
+ * Description: Page for viewing user publications in feed.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import { useState, useEffect } from "react";
 import api from "../../api"
 import MainContainer from "../../components/MainContainer/MainContainer";

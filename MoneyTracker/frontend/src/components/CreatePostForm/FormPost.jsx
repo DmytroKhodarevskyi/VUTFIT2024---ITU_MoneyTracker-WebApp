@@ -1,3 +1,13 @@
+/**
+ * File: FormPost.jsx
+ * Description: Component for post creation.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import "./FormPost.css";
 import gif_icon from "../../assets/gif_icon.svg";

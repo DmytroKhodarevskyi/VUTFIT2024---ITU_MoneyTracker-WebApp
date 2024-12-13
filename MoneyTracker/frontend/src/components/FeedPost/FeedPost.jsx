@@ -1,3 +1,13 @@
+/**
+ * File: FeedPost.jsx
+ * Description: Component for publication card view in feed.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigation } from "./NavigationContext";

@@ -1,3 +1,13 @@
+/**
+ * File: ProtectedRoute.jsx
+ * Description: Wrapper component for authorized page usage.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import {Navigate} from "react-router-dom"
 import {jwtDecode} from "jwt-decode"
 import api from "../api"

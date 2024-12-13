@@ -1,3 +1,13 @@
+/**
+ * File: Transactions.jsx
+ * Description: Component for viewing last transactions in overview.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from 'react'
 import api from "../../api"
 import { useState, useEffect } from "react"

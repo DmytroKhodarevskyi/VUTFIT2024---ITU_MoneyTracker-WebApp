@@ -1,3 +1,13 @@
+/**
+ * File: ConfirmModal.jsx
+ * Description: Confirmation Popup.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import "./ConfirmModal.css";
 

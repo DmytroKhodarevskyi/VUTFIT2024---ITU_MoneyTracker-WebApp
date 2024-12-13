@@ -1,3 +1,13 @@
+/**
+ * File: ReminderList.jsx
+ * Description: Page for viewing and managring reminders.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import api from "../../api";
 import MainContainer from "../../components/MainContainer/MainContainer";

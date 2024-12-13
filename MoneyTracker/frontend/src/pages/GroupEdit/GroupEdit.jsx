@@ -1,3 +1,12 @@
+/**
+ * File: GroupEdit.jsx
+ * Description: Page for editing a group a nd managing its users.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

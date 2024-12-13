@@ -1,3 +1,13 @@
+/**
+ * File: Home.jsx
+ * Description: Page for financial overview.
+ * Author: Dmytro Khodarevskyi, Rostyslav Kachan
+ * 
+ * Notes:
+ * - Rostyslav Kachan: Added the graphs for transactions.
+ */
+
+
 import { useState, useEffect } from "react"
 import api from "../../api"
 import "./Home.css"

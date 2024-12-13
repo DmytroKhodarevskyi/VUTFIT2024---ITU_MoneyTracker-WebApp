@@ -1,3 +1,13 @@
+/**
+ * File: Form.jsx
+ * Description: Component form for login and registration.
+ * Author: Dmytro Khodarevskyi, Denys Chernenko
+ * 
+ * Notes:
+ * - Denys Chernenko: Added additional logic for registration.
+ */
+
+
 import { useState, useEffect } from "react";
 import api from "../../api"
 import { Link, useNavigate } from "react-router-dom";

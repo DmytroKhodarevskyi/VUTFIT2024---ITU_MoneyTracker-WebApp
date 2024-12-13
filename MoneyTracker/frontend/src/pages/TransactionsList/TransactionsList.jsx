@@ -1,3 +1,13 @@
+/**
+ * File: TransactionList.jsx
+ * Description: Page for viewing and managing transactions.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React, { useState, useEffect } from "react";
 import api from "../../api";
 import MainContainer from "../../components/MainContainer/MainContainer";

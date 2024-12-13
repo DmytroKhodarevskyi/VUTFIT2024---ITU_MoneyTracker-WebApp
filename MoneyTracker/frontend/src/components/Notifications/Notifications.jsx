@@ -1,3 +1,13 @@
+/**
+ * File: Notifications.jsx
+ * Description: Component for notifiers.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React, { useEffect } from "react";
 import "./Notifications.css";
 import closeIcon from "./close.png"

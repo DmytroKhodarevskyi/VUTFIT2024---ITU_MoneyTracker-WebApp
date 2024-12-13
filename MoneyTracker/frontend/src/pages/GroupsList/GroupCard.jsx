@@ -1,3 +1,13 @@
+/**
+ * File: GroupCard.jsx
+ * Description: Component for viewing a specific group card in a list.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

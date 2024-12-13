@@ -1,3 +1,13 @@
+/**
+ * File: Profile.jsx
+ * Description: Page for viewing profile.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import { useState, useEffect } from "react"
 import api from "../../api"
 import MainContainer from "../../components/MainContainer/MainContainer"

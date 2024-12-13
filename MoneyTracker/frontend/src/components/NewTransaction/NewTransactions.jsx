@@ -1,3 +1,13 @@
+/**
+ * File: NewTransaction.jsx
+ * Description: Component card for creating new transaction.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React, { useState, useEffect } from 'react'
 import "./NewTransactionCard.css"
 import Plus from "../../assets/PlusIcon.svg"

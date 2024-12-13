@@ -1,3 +1,13 @@
+/**
+ * File: CommentPopUpCard.jsx
+ * Description: Component popup for creating new comment in publication.
+ * Author: Denys Chernenko
+ * 
+ * Notes:
+ * - _
+ */
+
+
 import React, { useState } from 'react';
 import api from "../../api"
 import "./CommentPopUpCard.css"

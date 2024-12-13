@@ -1,3 +1,13 @@
+/**
+ * File: GroupCreate.jsx
+ * Description: Page for creating new group.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - Accessible only if user has enough stars (for testing purposes it is 1).
+ */
+
+
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import TopPart from "../../components/TopPart/TopPart";
