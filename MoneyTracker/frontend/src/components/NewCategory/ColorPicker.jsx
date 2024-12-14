@@ -1,7 +1,7 @@
 /**
  * File: ColoPicker.jsx
  * Description: Component for color picker.
- * Author: Dmytro Khodarevskyi
+ * Author: Rostyslav Kachan
  * 
  * Notes:
  * - _

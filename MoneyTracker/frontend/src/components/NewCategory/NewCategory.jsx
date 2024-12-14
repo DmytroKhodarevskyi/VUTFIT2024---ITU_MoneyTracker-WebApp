@@ -1,7 +1,7 @@
 /**
  * File: NewCategory.jsx
  * Description: Component card for creating new category.
- * Author: Dmytro Khodarevskyi
+ * Author: Rostyslav Kachan
  * 
  * Notes:
  * - _
