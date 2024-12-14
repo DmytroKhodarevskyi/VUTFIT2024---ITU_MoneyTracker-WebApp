@@ -1,3 +1,12 @@
+/**
+ * File: UserList.jsx
+ * Description: This page displays a list of users for an admin panel. It allows navigation to user details and editing pages, and provides a feature to delete users with confirmation.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Key Features:
+ * -
+ */
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api"; 

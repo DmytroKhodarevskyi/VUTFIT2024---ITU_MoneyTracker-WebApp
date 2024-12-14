@@ -1,3 +1,12 @@
+/**
+ * File: GroupsEdit.jsx
+ * Description: A page for managing user groups. Administrators can view, edit, delete, and navigate to users and threads within a group.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - 
+ */
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";

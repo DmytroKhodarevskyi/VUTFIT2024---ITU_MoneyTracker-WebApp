@@ -1,3 +1,12 @@
+/**
+ * File: GroupThreadCommentsEdit.jsx
+ * Description: A page for managing comments in a specific thread. Administrators can view, edit, and delete comments.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - 
+ */
+
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api";

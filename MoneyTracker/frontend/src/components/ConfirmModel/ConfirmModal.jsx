@@ -1,7 +1,7 @@
 /**
  * File: ConfirmModal.jsx
  * Description: Confirmation Popup.
- * Author: Denys Chernenko
+ * Author: Rostyslav Kachan
  * 
  * Notes:
  * - _

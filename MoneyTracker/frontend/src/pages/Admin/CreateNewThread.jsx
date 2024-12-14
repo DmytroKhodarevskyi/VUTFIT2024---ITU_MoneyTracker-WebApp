@@ -1,3 +1,11 @@
+/**
+ * File: CreateNewThread.jsx
+ * Description: A page for creating a new thread within a specific group. It allows admin to input a thread title and content, validates the inputs, and submits the data to the backend.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * -
+ */
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";

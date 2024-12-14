@@ -1,3 +1,12 @@
+/**
+ * File: CreateNewReminder.jsx
+ * Description: A page for creating a new reminder for a user. It allows admin to input a title, deadline, and amount, validates the inputs, and submits the data to the backend.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * -
+ */
+
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api";

@@ -1,3 +1,12 @@
+/**
+ * File: GroupEditUsers.jsx
+ * Description: A page for managing users within a group. Administrators can view, edit, delete, and add users to the group.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * 
+ */
+
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api";

@@ -1,3 +1,12 @@
+/**
+ * File: CreateNewPublication.jsx
+ * Description: A page for creating a new publication. It allows admin to input a title, optional tags, and content, and validates the input before submitting it to the backend.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - 
+ */
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";

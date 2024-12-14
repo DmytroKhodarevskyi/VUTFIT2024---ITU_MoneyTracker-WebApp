@@ -1,3 +1,12 @@
+/**
+ * File: CreateNewUser.jsx
+ * Description: A page for creating a new user. It allows input for user details such as username, name, email, phone, address, gender, job, and password. Validates the inputs before submission to the backend.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * -
+ */
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";

@@ -1,3 +1,16 @@
+/**
+ * File: UserEditProfile.jsx
+ * Description: This page allows editing user details for an admin panel. It fetches existing user data, validates input fields, and updates the user information via an API call.
+ * Author: Rostyslav Kachan
+ * 
+ * Key Features:
+ * - Fetches and displays existing user data using the user's unique identifier (`pk`).
+ * - Provides real-time validation for inputs like email, phone number, and name fields.
+ * - Sends updated data to the backend through an API call.
+ * - Displays notifications for successful or failed operations.
+
+ */
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";

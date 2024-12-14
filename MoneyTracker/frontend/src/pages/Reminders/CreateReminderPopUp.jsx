@@ -1,7 +1,7 @@
 /**
  * File: CreateReminderPopUp.jsx
  * Description: Popup for creating a new reminder.
- * Author: Dmytro Khodarevskyi, Denys Chernenko
+ * Author: Dmytro Khodarevskyi, Rostyslav Kachan
  * 
  * Notes:
  * - _

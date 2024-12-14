@@ -1,3 +1,11 @@
+/**
+ * File: CreateNewCategory.jsx
+ * Description: A form for creating a new category, allowing admin to input a category name and select a color.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * 
+ */
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";

@@ -1,3 +1,13 @@
+/**
+ * File: UserEdit.jsx
+ * Description: Displays options for managing various user data types (Transactions, Categories, Publications, Groups, and Reminders) for a specific user identified by `pk`.
+ * Author: Rostyslav Kachan
+ * 
+ * Key Features:
+ * - Fetches and displays the username of the selected user.
+ * - Provides navigation buttons to manage different sections of user data.
+ * - Shows loading and error messages during data fetching.
+*/
 
 
 import React, { useEffect, useState } from "react";

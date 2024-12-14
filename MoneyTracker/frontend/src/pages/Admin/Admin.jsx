@@ -1,3 +1,11 @@
+/**
+ * File: Admin.jsx
+ * Description: The page for managing administrative tasks, including user management.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - Uses `UserList` to display a list of users.
+ */
 import { useState, useEffect } from "react"
 import {useNavigate } from 'react-router-dom';
 import "./Admin.css"

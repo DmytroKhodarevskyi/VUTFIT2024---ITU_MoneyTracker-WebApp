@@ -1,3 +1,11 @@
+/**
+ * File: CreateNewGroup.jsx
+ * Description: A page for creating a new admin group. It allows admin to input a group name and an optional description, checks for duplicate group names, and submits the group data to the backend.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * -
+ */
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";

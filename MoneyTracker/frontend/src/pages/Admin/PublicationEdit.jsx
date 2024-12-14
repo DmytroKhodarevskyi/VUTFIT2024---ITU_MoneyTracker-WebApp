@@ -1,3 +1,12 @@
+/**
+ * File: PublicationsEdit.jsx
+ * Description: A page for managing publications associated with a user. Administrators can view, edit, delete, and navigate to publication comments.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - 
+ */
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";

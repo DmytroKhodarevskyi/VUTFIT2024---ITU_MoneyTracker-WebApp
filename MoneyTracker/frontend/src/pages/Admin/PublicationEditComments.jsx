@@ -1,3 +1,12 @@
+/**
+ * File: PublicationEditComments.jsx
+ * Description: A page for managing comments on a specific publication. Administrators can view, edit, and delete comments.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - 
+ */
+
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api";

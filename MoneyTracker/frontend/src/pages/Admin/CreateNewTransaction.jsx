@@ -1,3 +1,12 @@
+/**
+ * File: CreateNewTransaction.jsx
+ * Description: A page for creating a new transaction for a user. It allows admin to input transaction details such as title, amount, category, currency, type, and date, validates the inputs, and submits the data to the backend.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * -
+ */
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api";

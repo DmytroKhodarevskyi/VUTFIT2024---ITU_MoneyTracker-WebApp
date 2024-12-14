@@ -1,3 +1,12 @@
+/**
+ * File: TransactionsEdit.jsx
+ * Description: A page for managing and editing user transactions. Administrators can view, edit, and delete transactions for a specific user.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - 
+ */
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";

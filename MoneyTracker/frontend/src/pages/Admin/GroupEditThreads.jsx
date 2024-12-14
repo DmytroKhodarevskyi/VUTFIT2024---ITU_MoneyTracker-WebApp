@@ -1,3 +1,12 @@
+/**
+ * File: GroupEditThreads.jsx
+ * Description: A page for managing threads within a group. It allows administrators to view, edit, delete, and navigate to thread comments.
+ * Author: Rostyslav Kachan
+ * 
+ * Notes:
+ * - 
+ */
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../api";

@@ -1,3 +1,12 @@
+/**
+ * File: AdminRoute.jsx
+ * Description: A protected route page for ensuring only admin users can access certain parts of the application.
+ * Author: Dmytro Khodarevskyi
+ * 
+ * Notes:
+ * - 
+ */
+
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import api from '../../api'; 
